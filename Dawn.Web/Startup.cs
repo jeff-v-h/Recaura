@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dawn.Application;
+using Dawn.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,7 @@ namespace Dawn.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
+            services.AddPersistence(Configuration);
 
             services.AddControllers();
         }
