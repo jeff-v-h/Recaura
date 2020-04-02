@@ -1,18 +1,12 @@
-﻿using Dawn.Application.Interfaces.Persistence;
-using Dawn.Domain.Entities;
+﻿using Dawn.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Dawn.Persistence
+namespace Dawn.Application.Interfaces.Persistence
 {
-    public class DawnDbContext : DbContext, IDawnDbContext
+    public interface IDawnDbContext
     {
-        public DawnDbContext(DbContextOptions options) : base(options)
-        {
-        }
-
-        #region - - - - - - - DbSets - - - - - - -
-
         public DbSet<Patient> Patients { get; set; }
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<InjuryFile> InjuryFiles { get; set; }
@@ -29,11 +23,6 @@ namespace Dawn.Persistence
         public DbSet<DiagnosticTest> NeurologicalTests { get; set; }
         public DbSet<DiagnosticTest> SpecialTests { get; set; }
 
-        #endregion DbSets
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
