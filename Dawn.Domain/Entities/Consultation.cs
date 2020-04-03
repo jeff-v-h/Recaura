@@ -8,13 +8,6 @@ namespace Dawn.Domain.Entities
         public int CaseFileId { get; set; }
         public DateTime Date { get; set; }
         public int Number { get; set; }
-        public int PhysioId { get; set; }
-
-        // Navgiation properties
-        public Physiotherapist Physio { get; set; }
-        public SubjectiveAssessment Subjective { get; set; }
-        public ObjectiveAssessment Objective { get; set; }
-        public Treatment Treatment { get; set; }
-        public ForwardPlan Plan { get; set; }
+        public int PractitionerId { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Dawn.Domain.Entities
 {
-    public class GenericTest: ActionBase
+    public class PassiveTest : ActionBase
     {
         public int ObjectiveAssessmentId { get; set; }
-        public string Result { get; set; }
+        public decimal Value { get; set; }
     }
 }

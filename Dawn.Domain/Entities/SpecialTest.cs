@@ -1,8 +1,9 @@
 ﻿using Dawn.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dawn.Domain.Entities
 {
-    public class DiagnosticTest : ActionBase
+    public class SpecialTest : ActionBase
     {
         public int ObjectiveAssessmentId { get; set; }
         public DiagnosticResult Result { get; set; }

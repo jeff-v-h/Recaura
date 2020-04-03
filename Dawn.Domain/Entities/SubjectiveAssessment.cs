@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Dawn.Domain.Entities
+﻿namespace Dawn.Domain.Entities
 {
     public class SubjectiveAssessment
     {

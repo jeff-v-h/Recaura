@@ -14,6 +14,6 @@ namespace Dawn.Domain.Entities
         public string CountryCode { get; set; }
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
     }
 }
