@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Dawn.Domain.Enums;
+using System;
 
 namespace Dawn.Domain.Entities
 {
     public abstract class Person
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public Honorific Honorific { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DOB { get; set; }
