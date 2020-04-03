@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Dawn.Domain.Entities
 {
-    public class InjuryFile
+    public class CaseFile
     {
         public int Id { get; set; }
         public int PatientId { get; set; }
