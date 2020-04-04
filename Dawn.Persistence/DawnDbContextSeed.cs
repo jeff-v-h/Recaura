@@ -22,7 +22,6 @@ namespace Dawn.Persistence
                 context.Patients.AddRange(
                     new Patient
                     {
-                        Id = 1,
                         Honorific = Honorific.Mr,
                         FirstName = "Jay",
                         LastName = "Valentine",
@@ -31,11 +30,11 @@ namespace Dawn.Persistence
                         CountryCode = "AUS",
                         HomePhone = "96498888",
                         MobilePhone = "0424999999",
-                        Gender = Gender.Male
+                        Gender = Gender.Male,
+                        Occupation = "Software Developer"
                     },
                     new Patient
                     {
-                        Id = 2,
                         Honorific = Honorific.Miss,
                         FirstName = "Kay",
                         LastName = "Smith",
@@ -44,7 +43,8 @@ namespace Dawn.Persistence
                         CountryCode = "AUS",
                         HomePhone = "96498877",
                         MobilePhone = "0424999777",
-                        Gender = Gender.Female
+                        Gender = Gender.Female,
+                        Occupation = "Professional Tennis Player"
                     }
                 );
                 context.SaveChanges();
