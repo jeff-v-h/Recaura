@@ -6,7 +6,7 @@ namespace Dawn.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class ApiController : ControllerBase
+    public abstract class ApiControllerBase : ControllerBase
     {
         private IMediator _mediator;
 
