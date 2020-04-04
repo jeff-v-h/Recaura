@@ -15,5 +15,8 @@ namespace Dawn.Domain.Entities
         public List<SpecialTest> SpecialTests { get; set; }
         public string Palpation { get; set; }
         public string Additional { get; set; }
+
+        // Navigation property
+        public Consultation Consultation { get; set; }
     }
 }

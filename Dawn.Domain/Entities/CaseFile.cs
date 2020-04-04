@@ -10,5 +10,8 @@ namespace Dawn.Domain.Entities
         public string Name { get; set; }
         public DateTime Created { get; set; }
         public List<Consultation> Consultations { get; set; }
+
+        // Navigation Property
+        public Patient Patient { get; set; }
     }
 }

@@ -34,46 +34,6 @@ namespace Dawn.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            modelBuilder.Entity<Patient>()
-                .HasMany(p => p.CaseFiles)
-                .WithOne()
-                .HasForeignKey(p => p.PatientId);
-
-            modelBuilder.Entity<CaseFile>()
-                .HasMany(p => p.Consultations)
-                .WithOne()
-                .HasForeignKey(p => p.CaseFileId);
-
-            modelBuilder.Entity<ObjectiveAssessment>()
-                .HasMany(p => p.Active)
-                .WithOne()
-                .HasForeignKey(p => p.ObjectiveAssessmentId);
-
-            modelBuilder.Entity<ObjectiveAssessment>()
-                .HasMany(p => p.Passive)
-                .WithOne()
-                .HasForeignKey(p => p.ObjectiveAssessmentId);
-
-            modelBuilder.Entity<ObjectiveAssessment>()
-                .HasMany(p => p.ResistedIsometric)
-                .WithOne()
-                .HasForeignKey(p => p.ObjectiveAssessmentId);
-
-            modelBuilder.Entity<ObjectiveAssessment>()
-                .HasMany(p => p.FunctionalTests)
-                .WithOne()
-                .HasForeignKey(p => p.ObjectiveAssessmentId);
-
-            modelBuilder.Entity<ObjectiveAssessment>()
-                .HasMany(p => p.NeurologicalTests)
-                .WithOne()
-                .HasForeignKey(p => p.ObjectiveAssessmentId);
-
-            modelBuilder.Entity<ObjectiveAssessment>()
-                .HasMany(p => p.SpecialTests)
-                .WithOne()
-                .HasForeignKey(p => p.ObjectiveAssessmentId);
         }
     }
 }
