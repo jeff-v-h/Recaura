@@ -14,7 +14,6 @@ namespace Dawn.Persistence
                     configuration.GetConnectionString("DawnDb"), b => b.EnableRetryOnFailure()));
                 //configuration.GetConnectionString("DawnDb"),
                 //b => b.MigrationsAssembly(typeof(DawnDbContext).Assembly.FullName)));
-            
 
             services.AddScoped<IDawnDbContext>(provider => provider.GetService<DawnDbContext>());
 
