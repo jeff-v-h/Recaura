@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dawn.Application.Exceptions
+namespace Dawn.Application.Common.Exceptions
 {
     public class ValidationException : Exception
     {

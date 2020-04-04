@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dawn.Application.Exceptions
+namespace Dawn.Application.Common.Exceptions
 {
     public class NotFoundException : Exception
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dawn.Application.Interfaces.Persistence
+namespace Dawn.Application.Common.Interfaces.Persistence
 {
     public interface IDawnDbContext
     {

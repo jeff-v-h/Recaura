@@ -1,4 +1,4 @@
-﻿using Dawn.Application.Interfaces.Persistence;
+﻿using Dawn.Application.Common.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,4 @@
-﻿using Dawn.Application.Interfaces.Persistence;
+﻿using Dawn.Application.Common.Interfaces.Persistence;
 using Dawn.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
