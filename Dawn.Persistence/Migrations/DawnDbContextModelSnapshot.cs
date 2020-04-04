@@ -27,16 +27,16 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ObjectiveAssessmentId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
@@ -53,9 +53,10 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PatientId")
@@ -79,17 +80,25 @@ namespace Dawn.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ObjectiveId")
                         .HasColumnType("int");
 
                     b.Property<int>("PractitionerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SubjectiveId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CaseFileId");
+
+                    b.HasIndex("PractitionerId");
 
                     b.ToTable("Consultations");
                 });
@@ -102,15 +111,17 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("ConsultationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConsultationId");
 
                     b.ToTable("ForwardPlans");
                 });
@@ -123,16 +134,16 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ObjectiveAssessmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Result")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -149,16 +160,17 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ObjectiveAssessmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Result")
-                        .HasColumnType("int");
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -188,6 +200,9 @@ namespace Dawn.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConsultationId")
+                        .IsUnique();
+
                     b.ToTable("ObjectiveAssessments");
                 });
 
@@ -199,16 +214,16 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ObjectiveAssessmentId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
@@ -225,34 +240,39 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CountryCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("HomePhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("Honorific")
-                        .HasColumnType("int");
+                    b.Property<string>("Honorific")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MobilePhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Occupation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -267,37 +287,42 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CountryCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("HomePhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("Honorific")
-                        .HasColumnType("int");
+                    b.Property<string>("Honorific")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("JobLevel")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MobilePhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("RegistrationID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -312,16 +337,16 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ObjectiveAssessmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
@@ -338,16 +363,17 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ObjectiveAssessmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Result")
-                        .HasColumnType("int");
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -364,7 +390,7 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AggravatingFactors")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("BodyChart")
                         .HasColumnType("nvarchar(max)");
@@ -376,7 +402,7 @@ namespace Dawn.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EasingFactors")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("GeneralHealth")
                         .HasColumnType("nvarchar(max)");
@@ -393,10 +419,13 @@ namespace Dawn.Persistence.Migrations
                     b.Property<string>("SocialHistory")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VAS")
+                    b.Property<int?>("VAS")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConsultationId")
+                        .IsUnique();
 
                     b.ToTable("SubjectiveAssessments");
                 });
@@ -409,25 +438,27 @@ namespace Dawn.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("ConsultationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Quantity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConsultationId");
 
                     b.ToTable("Treatments");
                 });
 
             modelBuilder.Entity("Dawn.Domain.Entities.ActiveTest", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", null)
+                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", "ObjectiveAssessment")
                         .WithMany("Active")
                         .HasForeignKey("ObjectiveAssessmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -436,7 +467,7 @@ namespace Dawn.Persistence.Migrations
 
             modelBuilder.Entity("Dawn.Domain.Entities.CaseFile", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.Patient", null)
+                    b.HasOne("Dawn.Domain.Entities.Patient", "Patient")
                         .WithMany("CaseFiles")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -445,16 +476,31 @@ namespace Dawn.Persistence.Migrations
 
             modelBuilder.Entity("Dawn.Domain.Entities.Consultation", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.CaseFile", null)
+                    b.HasOne("Dawn.Domain.Entities.CaseFile", "CaseFile")
                         .WithMany("Consultations")
                         .HasForeignKey("CaseFileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dawn.Domain.Entities.Practitioner", "Practitioner")
+                        .WithMany("Consultations")
+                        .HasForeignKey("PractitionerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Dawn.Domain.Entities.ForwardPlan", b =>
+                {
+                    b.HasOne("Dawn.Domain.Entities.Consultation", "Consultation")
+                        .WithMany("Plans")
+                        .HasForeignKey("ConsultationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Dawn.Domain.Entities.FunctionalTest", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", null)
+                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", "ObjectiveAssessment")
                         .WithMany("FunctionalTests")
                         .HasForeignKey("ObjectiveAssessmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -463,16 +509,25 @@ namespace Dawn.Persistence.Migrations
 
             modelBuilder.Entity("Dawn.Domain.Entities.NeurologicalTest", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", null)
+                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", "ObjectiveAssessment")
                         .WithMany("NeurologicalTests")
                         .HasForeignKey("ObjectiveAssessmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Dawn.Domain.Entities.ObjectiveAssessment", b =>
+                {
+                    b.HasOne("Dawn.Domain.Entities.Consultation", "Consultation")
+                        .WithOne("ObjectiveAssessment")
+                        .HasForeignKey("Dawn.Domain.Entities.ObjectiveAssessment", "ConsultationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Dawn.Domain.Entities.PassiveTest", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", null)
+                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", "ObjectiveAssessment")
                         .WithMany("Passive")
                         .HasForeignKey("ObjectiveAssessmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -481,7 +536,7 @@ namespace Dawn.Persistence.Migrations
 
             modelBuilder.Entity("Dawn.Domain.Entities.ResistedIsometricTest", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", null)
+                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", "ObjectiveAssessment")
                         .WithMany("ResistedIsometric")
                         .HasForeignKey("ObjectiveAssessmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -490,9 +545,27 @@ namespace Dawn.Persistence.Migrations
 
             modelBuilder.Entity("Dawn.Domain.Entities.SpecialTest", b =>
                 {
-                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", null)
+                    b.HasOne("Dawn.Domain.Entities.ObjectiveAssessment", "ObjectiveAssessment")
                         .WithMany("SpecialTests")
                         .HasForeignKey("ObjectiveAssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Dawn.Domain.Entities.SubjectiveAssessment", b =>
+                {
+                    b.HasOne("Dawn.Domain.Entities.Consultation", "Consultation")
+                        .WithOne("SubjectiveAssessment")
+                        .HasForeignKey("Dawn.Domain.Entities.SubjectiveAssessment", "ConsultationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Dawn.Domain.Entities.Treatment", b =>
+                {
+                    b.HasOne("Dawn.Domain.Entities.Consultation", "Consultation")
+                        .WithMany("Treatments")
+                        .HasForeignKey("ConsultationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

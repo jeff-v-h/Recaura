@@ -8,52 +8,21 @@ namespace Dawn.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ForwardPlans",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ConsultationId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ForwardPlans", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ObjectiveAssessments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ConsultationId = table.Column<int>(nullable: false),
-                    Observation = table.Column<string>(nullable: true),
-                    Palpation = table.Column<string>(nullable: true),
-                    Additional = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ObjectiveAssessments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Honorific = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    DOB = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    CountryCode = table.Column<string>(nullable: true),
-                    HomePhone = table.Column<string>(nullable: true),
-                    MobilePhone = table.Column<string>(nullable: true),
-                    Gender = table.Column<int>(nullable: false),
-                    Occupation = table.Column<string>(nullable: true)
+                    Honorific = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    DOB = table.Column<DateTime>(type: "date", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    CountryCode = table.Column<string>(type: "varchar(10)", nullable: true),
+                    HomePhone = table.Column<string>(type: "nvarchar(40)", nullable: true),
+                    MobilePhone = table.Column<string>(type: "nvarchar(40)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    Occupation = table.Column<string>(type: "nvarchar(50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,192 +35,21 @@ namespace Dawn.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Honorific = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    DOB = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    CountryCode = table.Column<string>(nullable: true),
-                    HomePhone = table.Column<string>(nullable: true),
-                    MobilePhone = table.Column<string>(nullable: true),
-                    Gender = table.Column<int>(nullable: false),
-                    JobLevel = table.Column<string>(nullable: true),
-                    RegistrationID = table.Column<string>(nullable: true)
+                    Honorific = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    DOB = table.Column<DateTime>(type: "date", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    CountryCode = table.Column<string>(type: "varchar(10)", nullable: true),
+                    HomePhone = table.Column<string>(type: "nvarchar(40)", nullable: true),
+                    MobilePhone = table.Column<string>(type: "nvarchar(40)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    JobLevel = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    RegistrationID = table.Column<string>(type: "nvarchar(50)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Practitioners", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubjectiveAssessments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ConsultationId = table.Column<int>(nullable: false),
-                    MOI = table.Column<string>(nullable: true),
-                    CurrentHistory = table.Column<string>(nullable: true),
-                    BodyChart = table.Column<string>(nullable: true),
-                    AggravatingFactors = table.Column<string>(nullable: true),
-                    EasingFactors = table.Column<string>(nullable: true),
-                    VAS = table.Column<int>(nullable: false),
-                    PastHistory = table.Column<string>(nullable: true),
-                    SocialHistory = table.Column<string>(nullable: true),
-                    Imaging = table.Column<string>(nullable: true),
-                    GeneralHealth = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubjectiveAssessments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Treatments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ConsultationId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Treatments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ActiveTests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
-                    Value = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ActiveTests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ActiveTests_ObjectiveAssessments_ObjectiveAssessmentId",
-                        column: x => x.ObjectiveAssessmentId,
-                        principalTable: "ObjectiveAssessments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FunctionalTests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
-                    Result = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FunctionalTests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FunctionalTests_ObjectiveAssessments_ObjectiveAssessmentId",
-                        column: x => x.ObjectiveAssessmentId,
-                        principalTable: "ObjectiveAssessments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NeurologicalTests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
-                    Result = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NeurologicalTests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_NeurologicalTests_ObjectiveAssessments_ObjectiveAssessmentId",
-                        column: x => x.ObjectiveAssessmentId,
-                        principalTable: "ObjectiveAssessments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PassiveTests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
-                    Value = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PassiveTests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PassiveTests_ObjectiveAssessments_ObjectiveAssessmentId",
-                        column: x => x.ObjectiveAssessmentId,
-                        principalTable: "ObjectiveAssessments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ResistedIsometricTests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
-                    Value = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ResistedIsometricTests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ResistedIsometricTests_ObjectiveAssessments_ObjectiveAssessmentId",
-                        column: x => x.ObjectiveAssessmentId,
-                        principalTable: "ObjectiveAssessments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SpecialTests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
-                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
-                    Result = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SpecialTests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SpecialTests_ObjectiveAssessments_ObjectiveAssessmentId",
-                        column: x => x.ObjectiveAssessmentId,
-                        principalTable: "ObjectiveAssessments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -261,8 +59,8 @@ namespace Dawn.Persistence.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    Created = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -282,9 +80,11 @@ namespace Dawn.Persistence.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CaseFileId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
                     Number = table.Column<int>(nullable: false),
-                    PractitionerId = table.Column<int>(nullable: false)
+                    PractitionerId = table.Column<int>(nullable: false),
+                    SubjectiveId = table.Column<int>(nullable: false),
+                    ObjectiveId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -293,6 +93,238 @@ namespace Dawn.Persistence.Migrations
                         name: "FK_Consultations_CaseFiles_CaseFileId",
                         column: x => x.CaseFileId,
                         principalTable: "CaseFiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Consultations_Practitioners_PractitionerId",
+                        column: x => x.PractitionerId,
+                        principalTable: "Practitioners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ForwardPlans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ConsultationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ForwardPlans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ForwardPlans_Consultations_ConsultationId",
+                        column: x => x.ConsultationId,
+                        principalTable: "Consultations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ObjectiveAssessments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConsultationId = table.Column<int>(nullable: false),
+                    Observation = table.Column<string>(nullable: true),
+                    Palpation = table.Column<string>(nullable: true),
+                    Additional = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObjectiveAssessments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ObjectiveAssessments_Consultations_ConsultationId",
+                        column: x => x.ConsultationId,
+                        principalTable: "Consultations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubjectiveAssessments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConsultationId = table.Column<int>(nullable: false),
+                    MOI = table.Column<string>(nullable: true),
+                    CurrentHistory = table.Column<string>(nullable: true),
+                    BodyChart = table.Column<string>(nullable: true),
+                    AggravatingFactors = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    EasingFactors = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    VAS = table.Column<int>(nullable: true),
+                    PastHistory = table.Column<string>(nullable: true),
+                    SocialHistory = table.Column<string>(nullable: true),
+                    Imaging = table.Column<string>(nullable: true),
+                    GeneralHealth = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectiveAssessments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubjectiveAssessments_Consultations_ConsultationId",
+                        column: x => x.ConsultationId,
+                        principalTable: "Consultations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Treatments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ConsultationId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Treatments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Treatments_Consultations_ConsultationId",
+                        column: x => x.ConsultationId,
+                        principalTable: "Consultations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ActiveTests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
+                    Value = table.Column<decimal>(type: "decimal", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActiveTests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ActiveTests_ObjectiveAssessments_ObjectiveAssessmentId",
+                        column: x => x.ObjectiveAssessmentId,
+                        principalTable: "ObjectiveAssessments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FunctionalTests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
+                    Result = table.Column<string>(type: "nvarchar(50)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FunctionalTests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FunctionalTests_ObjectiveAssessments_ObjectiveAssessmentId",
+                        column: x => x.ObjectiveAssessmentId,
+                        principalTable: "ObjectiveAssessments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NeurologicalTests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
+                    Result = table.Column<string>(type: "nvarchar(20)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NeurologicalTests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NeurologicalTests_ObjectiveAssessments_ObjectiveAssessmentId",
+                        column: x => x.ObjectiveAssessmentId,
+                        principalTable: "ObjectiveAssessments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PassiveTests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
+                    Value = table.Column<decimal>(type: "decimal", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PassiveTests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PassiveTests_ObjectiveAssessments_ObjectiveAssessmentId",
+                        column: x => x.ObjectiveAssessmentId,
+                        principalTable: "ObjectiveAssessments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResistedIsometricTests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
+                    Value = table.Column<decimal>(type: "decimal", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResistedIsometricTests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ResistedIsometricTests_ObjectiveAssessments_ObjectiveAssessmentId",
+                        column: x => x.ObjectiveAssessmentId,
+                        principalTable: "ObjectiveAssessments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SpecialTests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    ObjectiveAssessmentId = table.Column<int>(nullable: false),
+                    Result = table.Column<string>(type: "nvarchar(20)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpecialTests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SpecialTests_ObjectiveAssessments_ObjectiveAssessmentId",
+                        column: x => x.ObjectiveAssessmentId,
+                        principalTable: "ObjectiveAssessments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -313,6 +345,16 @@ namespace Dawn.Persistence.Migrations
                 column: "CaseFileId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Consultations_PractitionerId",
+                table: "Consultations",
+                column: "PractitionerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ForwardPlans_ConsultationId",
+                table: "ForwardPlans",
+                column: "ConsultationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FunctionalTests_ObjectiveAssessmentId",
                 table: "FunctionalTests",
                 column: "ObjectiveAssessmentId");
@@ -321,6 +363,12 @@ namespace Dawn.Persistence.Migrations
                 name: "IX_NeurologicalTests_ObjectiveAssessmentId",
                 table: "NeurologicalTests",
                 column: "ObjectiveAssessmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ObjectiveAssessments_ConsultationId",
+                table: "ObjectiveAssessments",
+                column: "ConsultationId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PassiveTests_ObjectiveAssessmentId",
@@ -336,15 +384,23 @@ namespace Dawn.Persistence.Migrations
                 name: "IX_SpecialTests_ObjectiveAssessmentId",
                 table: "SpecialTests",
                 column: "ObjectiveAssessmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubjectiveAssessments_ConsultationId",
+                table: "SubjectiveAssessments",
+                column: "ConsultationId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Treatments_ConsultationId",
+                table: "Treatments",
+                column: "ConsultationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ActiveTests");
-
-            migrationBuilder.DropTable(
-                name: "Consultations");
 
             migrationBuilder.DropTable(
                 name: "ForwardPlans");
@@ -359,9 +415,6 @@ namespace Dawn.Persistence.Migrations
                 name: "PassiveTests");
 
             migrationBuilder.DropTable(
-                name: "Practitioners");
-
-            migrationBuilder.DropTable(
                 name: "ResistedIsometricTests");
 
             migrationBuilder.DropTable(
@@ -374,10 +427,16 @@ namespace Dawn.Persistence.Migrations
                 name: "Treatments");
 
             migrationBuilder.DropTable(
+                name: "ObjectiveAssessments");
+
+            migrationBuilder.DropTable(
+                name: "Consultations");
+
+            migrationBuilder.DropTable(
                 name: "CaseFiles");
 
             migrationBuilder.DropTable(
-                name: "ObjectiveAssessments");
+                name: "Practitioners");
 
             migrationBuilder.DropTable(
                 name: "Patients");

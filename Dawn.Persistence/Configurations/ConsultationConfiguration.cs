@@ -11,9 +11,7 @@ namespace Dawn.Persistence.Configurations
             entity.ToTable("Consultations");
 
             entity.Property(e => e.Id).IsRequired();
-
-            entity.Property(e => e.CaseFileId)
-                .IsRequired();
+            entity.Property(e => e.CaseFileId).IsRequired();
 
             entity.Property(e => e.Date)
                 .IsRequired()

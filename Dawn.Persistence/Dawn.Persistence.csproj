@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Dawn.Application\Dawn.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configurations\" />
-  </ItemGroup>
-
 </Project>

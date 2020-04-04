@@ -11,10 +11,7 @@ namespace Dawn.Persistence.Configurations
             entity.ToTable("CaseFiles");
 
             entity.Property(e => e.Id).IsRequired();
-
-            entity.Property(e => e.PatientId)
-                .IsRequired()
-                .HasColumnType("nvarchar(10)");
+            entity.Property(e => e.PatientId).IsRequired();
 
             entity.Property(e => e.Name)
                 .IsRequired();
