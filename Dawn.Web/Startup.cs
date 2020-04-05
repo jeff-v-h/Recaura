@@ -31,7 +31,17 @@ namespace Dawn.Web
             services.AddApplication();
             services.AddPersistence(Configuration);
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+
+            services.AddSwaggerDocument(settings =>
+            {
+                settings.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Dawn API";
+                    document.Info.Description = "REST API for Dawn.";
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +60,9 @@ namespace Dawn.Web
 
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 
