@@ -3,7 +3,7 @@ using Dawn.Application.Features.Common;
 using Dawn.Domain.Entities;
 using System.Collections.Generic;
 
-namespace Dawn.Application.Features.Patients
+namespace Dawn.Application.Features.Patients.Queries.GetPatient
 {
     public class GetPatientVm : PersonVm, IMapFrom<Patient>
     {

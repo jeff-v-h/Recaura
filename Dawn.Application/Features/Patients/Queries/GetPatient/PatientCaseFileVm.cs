@@ -1,7 +1,7 @@
 ﻿using Dawn.Application.Common.Mappings;
 using Dawn.Domain.Entities;
 
-namespace Dawn.Application.Features.Patients
+namespace Dawn.Application.Features.Patients.Queries.GetPatient
 {
     public class PatientCaseFileVm : IMapFrom<CaseFile>
     {
