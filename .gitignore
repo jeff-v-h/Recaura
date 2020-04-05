@@ -229,3 +229,12 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+dist/
+config.Local.json
+.vscode/**
+!.vscode/settings.json
+Dawn.Web/Properties/launchSettings.json
+
+Dawn.Web/wwwroot/bundle/*
+Dawn.ClientApp/src/api/generated.ts
