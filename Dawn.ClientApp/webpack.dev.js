@@ -13,10 +13,9 @@ module.exports = function(env) {
     },
     devtool: "inline-source-map",
     devServer: {
-      contentBase: pathHelper("src"),
-      // hot: true,
-      // stats: 'errors-only',
-      open: false,
+      contentBase: pathHelper("./build"),
+      hot: true,
+      // open: false,
       proxy: {
         "/api": {
           target: "http://localhost:5555/",

@@ -6,3 +6,4 @@ namespace Dawn.Application.Common.Interfaces.Time
     {
         DateTime UtcNow { get; }
     }
+}

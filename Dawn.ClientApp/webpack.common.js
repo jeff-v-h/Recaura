@@ -5,15 +5,19 @@ const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const WarningsToErrorsPlugin = require("warnings-to-errors-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 function getOutputDir() {
-  return pathHelper("../Dawn.Web/wwwroot/bundle");
+  // return pathHelper("../Dawn.Web/wwwroot/bundle");
+  return pathHelper("dist", "bundle");
 }
 
 module.exports = function(env) {
   return {
     output: {
       path: getOutputDir(),
+      publicPath: "/",
       filename: env.production ? "[name].[contenthash].js" : "[name].js"
     },
     optimization: {
@@ -36,10 +40,9 @@ module.exports = function(env) {
         {
           test: /\.css$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader
-            },
-            "css-loader"
+            "style-loader", // creates style nodes from JS strings
+            "css-loader",
+            "postcss-loader"
           ]
         },
         {
@@ -58,10 +61,38 @@ module.exports = function(env) {
             },
             "sass-loader"
           ]
+        },
+        {
+          test: /\.less$/,
+          use: [
+            {
+              loader: "style-loader"
+            },
+            {
+              loader: "css-loader" // translates CSS into CommonJS
+            },
+            {
+              loader: "less-loader", // compiles Less to CSS
+              options: {
+                modifyVars: {
+                  "primary-color": "#1A95B6",
+                  "link-color": "#1A95B6",
+                  "border-radius-base": "4px"
+                },
+                javascriptEnabled: true
+              }
+            }
+          ]
         }
       ]
     },
     plugins: [
+      // new CleanWebpackPlugin(["dist"]),
+      new HtmlWebPackPlugin({
+        template: "./public/index.html",
+        filename: "./index.html",
+        inject: true
+      }),
       new WriteFilePlugin(),
       new AssetsPlugin({
         path: getOutputDir()

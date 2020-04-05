@@ -1,21 +1,33 @@
 import * as React from "react";
+import { Menu } from "antd";
 import { Link } from "react-router-dom";
+import { ClickParam } from "antd/lib/menu";
 
 export default class NavMenu extends React.PureComponent<
   {},
-  { isOpen: boolean }
+  { current: string }
 > {
   public state = {
-    isOpen: false
+    current: "home"
   };
 
   public render() {
-    return <header></header>;
+    return (
+      <Menu
+        onClick={this.handleClick}
+        selectedKeys={[this.state.current]}
+        mode="horizontal"
+      >
+        <Menu.Item key="home">
+          <Link to="/">Dawn</Link>
+        </Menu.Item>
+      </Menu>
+    );
   }
 
-  private toggle = () => {
+  private handleClick = (e: ClickParam) => {
     this.setState({
-      isOpen: !this.state.isOpen
+      current: e.key
     });
   };
 }
