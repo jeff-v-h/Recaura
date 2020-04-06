@@ -41,9 +41,10 @@ module.exports = function(env) {
         {
           test: /\.css$/,
           use: [
-            "style-loader", // creates style nodes from JS strings
-            "css-loader",
-            "postcss-loader"
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
+            "css-loader"
           ]
         },
         {
@@ -76,8 +77,8 @@ module.exports = function(env) {
               loader: "less-loader", // compiles Less to CSS
               options: {
                 modifyVars: {
-                  "primary-color": "#1A95B6",
-                  "link-color": "#1A95B6",
+                  "primary-color": "#f5950f",
+                  "link-color": "#0c93fa",
                   "border-radius-base": "4px"
                 },
                 javascriptEnabled: true
@@ -107,7 +108,7 @@ module.exports = function(env) {
       new ManifestPlugin()
     ],
     resolve: {
-      extensions: [".tsx", ".ts", ".js"],
+      extensions: [".tsx", ".ts", ".js", ".less"],
       alias: {
         App: pathHelper("app"),
         Components: pathHelper("app", "components"),
