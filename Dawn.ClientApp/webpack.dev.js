@@ -1,7 +1,6 @@
 const common = require("./webpack.common.js");
 const merge = require("webpack-merge");
 const { pathHelper, getVendorName } = require("./buildHelpers");
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = function(env) {
@@ -13,9 +12,8 @@ module.exports = function(env) {
     },
     devtool: "inline-source-map",
     devServer: {
-      contentBase: pathHelper("./build"),
+      contentBase: pathHelper("./dist"),
       hot: true,
-      // open: false,
       proxy: {
         "/api": {
           target: "http://localhost:5555/",

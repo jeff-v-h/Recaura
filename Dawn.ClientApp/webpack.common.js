@@ -6,6 +6,7 @@ const WarningsToErrorsPlugin = require("warnings-to-errors-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 function getOutputDir() {
@@ -91,6 +92,7 @@ module.exports = function(env) {
       new HtmlWebPackPlugin({
         template: "./public/index.html",
         filename: "./index.html",
+        favicon: "./public/favicon.ico",
         inject: true
       }),
       new WriteFilePlugin(),
@@ -101,7 +103,8 @@ module.exports = function(env) {
       new WarningsToErrorsPlugin(),
       new ForkTsCheckerWebpackPlugin({
         eslint: true
-      })
+      }),
+      new ManifestPlugin()
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
