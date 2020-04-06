@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Button } from "antd";
 
-const Home = () => (
+const Dashboard = () => (
   <div>
     <h1>Hello, world!</h1>
     <Button type="primary">Primary</Button>
@@ -49,4 +49,4 @@ const Home = () => (
   </div>
 );
 
-export default connect()(Home);
+export default connect()(Dashboard);

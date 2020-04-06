@@ -2,13 +2,16 @@ import * as React from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { ClickParam } from "antd/lib/menu";
+import style from "./NavMenu.scss";
+
+const Item = Menu.Item;
 
 export default class NavMenu extends React.PureComponent<
   {},
   { current: string }
 > {
   public state = {
-    current: "home"
+    current: "home",
   };
 
   public render() {
@@ -18,16 +21,19 @@ export default class NavMenu extends React.PureComponent<
         selectedKeys={[this.state.current]}
         mode="horizontal"
       >
-        <Menu.Item key="home">
+        <Item key="home">
           <Link to="/">Dawn</Link>
-        </Menu.Item>
+        </Item>
+        <Item key="patients">
+          <Link to="/">Patients</Link>
+        </Item>
       </Menu>
     );
   }
 
   private handleClick = (e: ClickParam) => {
     this.setState({
-      current: e.key
+      current: e.key,
     });
   };
 }

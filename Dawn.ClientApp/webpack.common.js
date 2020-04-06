@@ -14,38 +14,38 @@ function getOutputDir() {
   return pathHelper("dist", "bundle");
 }
 
-module.exports = function(env) {
+module.exports = function (env) {
   return {
     output: {
       path: getOutputDir(),
       publicPath: "/",
-      filename: env.production ? "[name].[contenthash].js" : "[name].js"
+      filename: env.production ? "[name].[contenthash].js" : "[name].js",
     },
     optimization: {
       noEmitOnErrors: true,
       splitChunks: {
         name: getVendorName(env),
-        chunks: "all"
-      }
+        chunks: "all",
+      },
     },
     performance: {
-      hints: false
+      hints: false,
     },
     module: {
       rules: [
         {
           test: /\.(ts|tsx)$/,
           include: [pathHelper("src")],
-          use: [{ loader: "ts-loader", options: { transpileOnly: true } }]
+          use: [{ loader: "ts-loader", options: { transpileOnly: true } }],
         },
         {
           test: /\.css$/,
           use: [
             {
-              loader: MiniCssExtractPlugin.loader
+              loader: MiniCssExtractPlugin.loader,
             },
-            "css-loader"
-          ]
+            "css-loader",
+          ],
         },
         {
           test: /\.scss$/,
@@ -56,22 +56,22 @@ module.exports = function(env) {
               loader: "css-loader",
               options: {
                 modules: {
-                  localIdentName: "[local]-[hash:base64:5]"
+                  localIdentName: "[local]-[hash:base64:5]",
                 },
-                importLoaders: 1
-              }
+                importLoaders: 1,
+              },
             },
-            "sass-loader"
-          ]
+            "sass-loader",
+          ],
         },
         {
           test: /\.less$/,
           use: [
             {
-              loader: "style-loader"
+              loader: "style-loader",
             },
             {
-              loader: "css-loader" // translates CSS into CommonJS
+              loader: "css-loader", // translates CSS into CommonJS
             },
             {
               loader: "less-loader", // compiles Less to CSS
@@ -79,14 +79,14 @@ module.exports = function(env) {
                 modifyVars: {
                   "primary-color": "#f5950f",
                   "link-color": "#0c93fa",
-                  "border-radius-base": "4px"
+                  "border-radius-base": "4px",
                 },
-                javascriptEnabled: true
-              }
-            }
-          ]
-        }
-      ]
+                javascriptEnabled: true,
+              },
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       // new CleanWebpackPlugin(["dist"]),
@@ -94,21 +94,21 @@ module.exports = function(env) {
         template: "./public/index.html",
         filename: "./index.html",
         favicon: "./public/favicon.ico",
-        inject: true
+        inject: true,
       }),
       new WriteFilePlugin(),
       new AssetsPlugin({
-        path: getOutputDir()
+        path: getOutputDir(),
       }),
       new CaseSensitivePathsPlugin(),
       new WarningsToErrorsPlugin(),
       new ForkTsCheckerWebpackPlugin({
-        eslint: true
+        eslint: true,
       }),
-      new ManifestPlugin()
+      new ManifestPlugin(),
     ],
     resolve: {
-      extensions: [".tsx", ".ts", ".js", ".less"],
+      extensions: [".tsx", ".ts", ".js", ".scss", ".less"],
       alias: {
         App: pathHelper("app"),
         Components: pathHelper("app", "components"),
@@ -117,8 +117,8 @@ module.exports = function(env) {
         Styles: pathHelper("app", "styles"),
         Helpers: pathHelper("app", "helpers"),
         Constants: pathHelper("app", "constants"),
-        Stores: pathHelper("app", "stores")
-      }
-    }
+        Stores: pathHelper("app", "stores"),
+      },
+    },
   };
 };
