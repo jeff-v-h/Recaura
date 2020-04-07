@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { compose } from "redux";
 import { Table } from "antd";
 import * as PatientsStore from "../../store/Patients";
 import { ApplicationState } from "../../store";
@@ -24,9 +25,16 @@ const columns = [
   },
 ];
 
+interface RowData {
+  key: number;
+  firstName: string;
+  lastName: string;
+  dob: string;
+}
+
 type Props = PatientsStore.PatientsState &
   typeof PatientsStore.actionCreators &
-  RouteComponentProps<{}>;
+  RouteComponentProps<any>;
 
 class DashboardTable extends React.Component<Props> {
   componentDidMount() {
@@ -36,14 +44,14 @@ class DashboardTable extends React.Component<Props> {
   render() {
     const { patients } = this.props;
     const data = this.parseDataForTable(patients);
-    return <Table columns={columns} dataSource={data} />;
+    return <Table onRow={this.onRow} columns={columns} dataSource={data} />;
   }
 
   private ensureDataFetched() {
     this.props.getPatients();
   }
 
-  private parseDataForTable(patients: IPatientVm[]) {
+  private parseDataForTable(patients: IPatientVm[]): RowData[] {
     return patients.map((patient) => ({
       key: patient.id,
       firstName: patient.firstName,
@@ -52,15 +60,20 @@ class DashboardTable extends React.Component<Props> {
     }));
   }
 
-  // private handleRowClick = (row: AgentOrder) => {
-  //   if (!row.isFocused) {
-  //     const { history } = this.props;
-  //     history.push('/agent/orders/' + row.ldmCoreOrderId);
-  //   }
-  // };
+  private onRow = (patientRow: RowData) => {
+    return {
+      onClick: (event: React.MouseEvent) => {
+        const { history } = this.props;
+        history.push(`/patients/${patientRow.key}`);
+      },
+    };
+  };
 }
 
-export default connect(
-  (state: ApplicationState) => state.patients, // Selects which state properties are merged into the component's props
-  PatientsStore.actionCreators // Selects which action creators are merged into the component's props
+export default compose(
+  withRouter,
+  connect(
+    (state: ApplicationState) => state.patients, // Selects which state properties are merged into the component's props
+    PatientsStore.actionCreators // Selects which action creators are merged into the component's props
+  )
 )(DashboardTable as any);

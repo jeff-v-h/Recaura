@@ -10,6 +10,7 @@ export default class Routes extends React.Component {
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route path="/patients" component={Dashboard} />
+        <Route path="/patients/:id" component={Counter} />
         {/* <Route path="/fetch-data/:startDateIndex?" component={FetchData} /> */}
       </Switch>
     );
