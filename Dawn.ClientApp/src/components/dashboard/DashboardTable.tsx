@@ -4,6 +4,7 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { Table } from "antd";
 import * as PatientsStore from "../../store/Patients";
 import { ApplicationState } from "../../store";
+import { IPatientVm } from "src/api/generated";
 
 const columns = [
   {
@@ -34,11 +35,21 @@ class DashboardTable extends React.Component<Props> {
 
   render() {
     const { patients } = this.props;
-    return <Table columns={columns} dataSource={patients} />;
+    const data = this.parseDataForTable(patients);
+    return <Table columns={columns} dataSource={data} />;
   }
 
   private ensureDataFetched() {
     this.props.getPatients();
+  }
+
+  private parseDataForTable(patients: IPatientVm[]) {
+    return patients.map((patient) => ({
+      key: patient.id,
+      firstName: patient.firstName,
+      lastName: patient.lastName,
+      dob: patient.dob,
+    }));
   }
 
   // private handleRowClick = (row: AgentOrder) => {

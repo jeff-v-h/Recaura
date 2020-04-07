@@ -32,11 +32,6 @@ export interface GetPatientsFailureAction {
   err: any;
 }
 
-// class HttpResponse {
-//   statusCode: number
-//   status: string
-//   message?: string
-// }
 //#endregion ACTIONS
 //--------------------
 
@@ -65,6 +60,12 @@ export const actionCreators = {
             type: C.GET_PATIENTS_SUCCESS,
             payload: data,
           });
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({
+            type: C.GET_PATIENTS_FAILURE,
+          });
         });
 
       dispatch({ type: C.GET_PATIENTS_REQUEST });
@@ -75,10 +76,6 @@ export const actionCreators = {
 /**
  * REDUCER
  */
-export function merge(prev: PatientsState, next: object) {
-  return Object.assign({}, prev, next) as PatientsState;
-}
-
 const unloadedState: PatientsState = {
   isFetching: false,
   patients: [],
@@ -95,10 +92,13 @@ export const reducer: Reducer<PatientsState> = (
   const action = incomingAction as KnownAction;
   switch (action.type) {
     case C.GET_PATIENTS_REQUEST:
-      return merge(state, { isFetching: true });
+      return { ...state, isFetching: true };
     case C.GET_PATIENTS_SUCCESS:
       const obj = action as GetPatientsSuccessAction;
-      return merge(state, { isFetching: false, patients: obj.payload });
+      return {
+        isFetching: false,
+        patients: obj.payload.patients,
+      };
     default:
       return state;
   }

@@ -3,12 +3,12 @@ const merge = require("webpack-merge");
 const { pathHelper, getVendorName } = require("./buildHelpers");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = function(env) {
+module.exports = function (env) {
   return merge(common(env), {
     mode: "development",
     entry: {
       // publicApp: pathHelper('src', 'components', 'public', 'PublicApp.tsx'),
-      app: pathHelper("src", "index.tsx")
+      app: pathHelper("src", "index.tsx"),
     },
     devtool: "inline-source-map",
     devServer: {
@@ -17,21 +17,21 @@ module.exports = function(env) {
       proxy: {
         "/api": {
           target: "http://localhost:5555/",
-          changeOrigin: true
+          changeOrigin: true,
         },
         "/images/*": {
           target: "http://localhost:5555/",
-          changeOrigin: true
+          changeOrigin: true,
           // pathRewrite: {"^/api" : "/"}
-        }
-      }
+        },
+      },
     },
     plugins: [
       new MiniCssExtractPlugin({
         filename: "[name].css",
         chunkFilename: `${getVendorName(env)}.css`,
-        ignoreOrder: true
-      })
-    ]
+        ignoreOrder: true,
+      }),
+    ],
   });
 };
