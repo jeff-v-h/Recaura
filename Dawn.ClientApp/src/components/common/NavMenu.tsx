@@ -25,7 +25,7 @@ export default class NavMenu extends React.PureComponent<
           <Link to="/">Dawn</Link>
         </Item>
         <Item key="patients">
-          <Link to="/">Patients</Link>
+          <Link to="/patients">Patients</Link>
         </Item>
       </Menu>
     );
