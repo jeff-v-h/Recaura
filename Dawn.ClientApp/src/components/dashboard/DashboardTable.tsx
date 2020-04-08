@@ -34,7 +34,7 @@ interface RowData {
 
 type Props = PatientsStore.PatientsState &
   typeof PatientsStore.actionCreators &
-  RouteComponentProps<any>;
+  RouteComponentProps<{}>;
 
 class DashboardTable extends React.Component<Props> {
   componentDidMount() {
@@ -52,6 +52,8 @@ class DashboardTable extends React.Component<Props> {
   }
 
   private parseDataForTable(patients: IPatientVm[]): RowData[] {
+    if (!patients) return [];
+
     return patients.map((patient) => ({
       key: patient.id,
       firstName: patient.firstName,
@@ -70,10 +72,10 @@ class DashboardTable extends React.Component<Props> {
   };
 }
 
-export default compose(
+export default compose<React.ComponentType>(
   withRouter,
   connect(
     (state: ApplicationState) => state.patients, // Selects which state properties are merged into the component's props
     PatientsStore.actionCreators // Selects which action creators are merged into the component's props
   )
-)(DashboardTable as any);
+)(DashboardTable);
