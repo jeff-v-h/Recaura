@@ -1,6 +1,8 @@
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { IPatientVm, IGetPatientVm } from "src/api/generated";
+import { get } from "../helpers/apiHelper";
+import { AxiosResponse } from "axios";
 
 const C = {
   GET_PATIENT_REQUEST: "GET_PATIENTS_REQUEST",
@@ -14,6 +16,7 @@ const C = {
 export interface PatientState {
   isFetching: boolean;
   patient: IGetPatientVm | null;
+  error: any;
 }
 
 //--------------------
@@ -46,28 +49,23 @@ export type KnownAction = GetPatientKnownAction;
  * ACTION CREATORS
  */
 export const actionCreators = {
-  getPatients: (id: number): AppThunkAction<GetPatientKnownAction> => (
+  getPatient: (id: number): AppThunkAction<GetPatientKnownAction> => async (
     dispatch,
     getState
   ) => {
     // Only load data if it's something we don't already have (and are not already loading)
     const appState = getState();
     if (appState && appState.patients) {
-      fetch(`api/patients/${id}`)
-        .then((response) => response.json() as Promise<IGetPatientVm>)
-        .then((data) => {
-          dispatch({
-            type: C.GET_PATIENT_SUCCESS,
-            payload: data,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          console.log(typeof err);
-          dispatch({
-            type: C.GET_PATIENT_FAILURE,
-          });
-        });
+      try {
+        const resp = (await get(`/api/patients/${id}`)) as AxiosResponse<
+          IGetPatientVm
+        >;
+        dispatch({ type: C.GET_PATIENT_SUCCESS, payload: resp.data });
+      } catch (err) {
+        console.log(err);
+        console.log(typeof err);
+        dispatch({ type: C.GET_PATIENT_FAILURE, err });
+      }
 
       dispatch({ type: C.GET_PATIENT_REQUEST });
     }
@@ -80,6 +78,7 @@ export const actionCreators = {
 const unloadedState: PatientState = {
   isFetching: false,
   patient: null,
+  error: null,
 };
 
 export const reducer: Reducer<PatientState> = (
@@ -91,14 +90,23 @@ export const reducer: Reducer<PatientState> = (
   }
 
   const action = incomingAction as KnownAction;
+  let obj;
   switch (action.type) {
     case C.GET_PATIENT_REQUEST:
       return { ...state, isFetching: true };
     case C.GET_PATIENT_SUCCESS:
-      const obj = action as GetPatientSuccessAction;
+      obj = action as GetPatientSuccessAction;
       return {
         isFetching: false,
         patient: obj.payload,
+        error: null,
+      };
+    case C.GET_PATIENT_FAILURE:
+      obj = action as GetPatientFailureAction;
+      return {
+        isFetching: false,
+        patient: null,
+        error: obj.err,
       };
     default:
       return state;

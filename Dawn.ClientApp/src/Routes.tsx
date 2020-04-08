@@ -1,17 +1,15 @@
 import * as React from "react";
 import { Switch, Route } from "react-router-dom";
 import Dashboard from "./components/dashboard/Dashboard";
-import Counter from "./components/Counter";
-import FetchData from "./components/FetchData";
+import Patient from "./components/patient/Patient";
 
 export default class Routes extends React.Component {
   render() {
     return (
       <Switch>
         <Route exact path="/" component={Dashboard} />
+        <Route path="/patients/:id" component={Patient as any} />
         <Route path="/patients" component={Dashboard} />
-        <Route path="/patients/:id" component={Counter} />
-        {/* <Route path="/fetch-data/:startDateIndex?" component={FetchData} /> */}
       </Switch>
     );
   }
