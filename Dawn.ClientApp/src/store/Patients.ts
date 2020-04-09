@@ -1,6 +1,8 @@
+import { AxiosResponse } from "axios";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { IPatientVm, IGetPatientsVm } from "src/api/generated";
+import { get } from "../helpers/apiHelper";
 
 const C = {
   GET_PATIENTS_REQUEST: "GET_PATIENTS_REQUEST",
@@ -14,6 +16,7 @@ const C = {
 export interface PatientsState {
   isFetching: boolean;
   patients: IPatientVm[];
+  err: any;
 }
 
 //--------------------
@@ -46,27 +49,24 @@ export type KnownAction = GetPatientsKnownAction;
  * ACTION CREATORS
  */
 export const actionCreators = {
-  getPatients: (): AppThunkAction<GetPatientsKnownAction> => (
+  getPatients: (): AppThunkAction<GetPatientsKnownAction> => async (
     dispatch,
     getState
   ) => {
     // Only load data if it's something we don't already have (and are not already loading)
     const appState = getState();
     if (appState && appState.patients) {
-      fetch(`api/patients`)
-        .then((response) => response.json() as Promise<IGetPatientsVm>)
-        .then((data) => {
-          dispatch({
-            type: C.GET_PATIENTS_SUCCESS,
-            payload: data,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          dispatch({
-            type: C.GET_PATIENTS_FAILURE,
-          });
+      try {
+        const url = `api/patients`;
+        const resp = (await get(url)) as AxiosResponse<IGetPatientsVm>;
+        dispatch({
+          type: C.GET_PATIENTS_SUCCESS,
+          payload: resp.data,
         });
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: C.GET_PATIENTS_FAILURE, err });
+      }
 
       dispatch({ type: C.GET_PATIENTS_REQUEST });
     }
@@ -79,6 +79,7 @@ export const actionCreators = {
 const unloadedState: PatientsState = {
   isFetching: false,
   patients: [],
+  err: null,
 };
 
 export const reducer: Reducer<PatientsState> = (
@@ -90,14 +91,23 @@ export const reducer: Reducer<PatientsState> = (
   }
 
   const action = incomingAction as KnownAction;
+  let obj;
   switch (action.type) {
     case C.GET_PATIENTS_REQUEST:
       return { ...state, isFetching: true };
     case C.GET_PATIENTS_SUCCESS:
-      const obj = action as GetPatientsSuccessAction;
+      obj = action as GetPatientsSuccessAction;
       return {
         isFetching: false,
         patients: obj.payload.patients,
+        err: null,
+      };
+    case C.GET_PATIENTS_FAILURE:
+      obj = action as GetPatientsFailureAction;
+      return {
+        isFetching: false,
+        patients: [],
+        err: obj.err,
       };
     default:
       return state;

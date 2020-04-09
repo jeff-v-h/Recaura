@@ -57,9 +57,8 @@ export const actionCreators = {
     const appState = getState();
     if (appState && appState.patients) {
       try {
-        const resp = (await get(`/api/patients/${id}`)) as AxiosResponse<
-          IGetPatientVm
-        >;
+        const url = `/api/patients/${id}`;
+        const resp = (await get(url)) as AxiosResponse<IGetPatientVm>;
         dispatch({ type: C.GET_PATIENT_SUCCESS, payload: resp.data });
       } catch (err) {
         console.log(err);
