@@ -1,8 +1,7 @@
+import { patientsService } from "./../api/patientsService";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
-import { IPatientVm, IGetPatientVm } from "src/api/generated";
-import { get } from "../helpers/apiHelper";
-import { AxiosResponse } from "axios";
+import { IGetPatientVm } from "src/api/generated";
 
 const C = {
   GET_PATIENT_REQUEST: "GET_PATIENTS_REQUEST",
@@ -16,7 +15,6 @@ const C = {
 export interface PatientState {
   isFetching: boolean;
   patient: IGetPatientVm | null;
-  error: any;
 }
 
 //--------------------
@@ -32,7 +30,6 @@ export interface GetPatientSuccessAction {
 
 export interface GetPatientFailureAction {
   type: typeof C.GET_PATIENT_REQUEST;
-  err: any;
 }
 
 //#endregion ACTIONS
@@ -57,13 +54,12 @@ export const actionCreators = {
     const appState = getState();
     if (appState && appState.patients) {
       try {
-        const url = `/api/patients/${id}`;
-        const resp = (await get(url)) as AxiosResponse<IGetPatientVm>;
-        dispatch({ type: C.GET_PATIENT_SUCCESS, payload: resp.data });
-      } catch (err) {
-        console.log(err);
-        console.log(typeof err);
-        dispatch({ type: C.GET_PATIENT_FAILURE, err });
+        dispatch({
+          type: C.GET_PATIENT_SUCCESS,
+          payload: await patientsService.getPatient(id),
+        });
+      } catch (e) {
+        dispatch({ type: C.GET_PATIENT_FAILURE });
       }
 
       dispatch({ type: C.GET_PATIENT_REQUEST });
@@ -77,7 +73,6 @@ export const actionCreators = {
 const unloadedState: PatientState = {
   isFetching: false,
   patient: null,
-  error: null,
 };
 
 export const reducer: Reducer<PatientState> = (
@@ -98,14 +93,12 @@ export const reducer: Reducer<PatientState> = (
       return {
         isFetching: false,
         patient: obj.payload,
-        error: null,
       };
     case C.GET_PATIENT_FAILURE:
       obj = action as GetPatientFailureAction;
       return {
         isFetching: false,
         patient: null,
-        error: obj.err,
       };
     default:
       return state;

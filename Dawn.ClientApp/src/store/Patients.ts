@@ -1,8 +1,7 @@
-import { AxiosResponse } from "axios";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { IPatientVm, IGetPatientsVm } from "src/api/generated";
-import { get } from "../helpers/apiHelper";
+import { patientsService } from "../api/patientsService";
 
 const C = {
   GET_PATIENTS_REQUEST: "GET_PATIENTS_REQUEST",
@@ -16,7 +15,6 @@ const C = {
 export interface PatientsState {
   isFetching: boolean;
   patients: IPatientVm[];
-  err: any;
 }
 
 //--------------------
@@ -32,7 +30,6 @@ export interface GetPatientsSuccessAction {
 
 export interface GetPatientsFailureAction {
   type: typeof C.GET_PATIENTS_REQUEST;
-  err: any;
 }
 
 //#endregion ACTIONS
@@ -57,15 +54,12 @@ export const actionCreators = {
     const appState = getState();
     if (appState && appState.patients) {
       try {
-        const url = `api/patients`;
-        const resp = (await get(url)) as AxiosResponse<IGetPatientsVm>;
         dispatch({
           type: C.GET_PATIENTS_SUCCESS,
-          payload: resp.data,
+          payload: await patientsService.getPatients(),
         });
-      } catch (err) {
-        console.log(err);
-        dispatch({ type: C.GET_PATIENTS_FAILURE, err });
+      } catch (e) {
+        dispatch({ type: C.GET_PATIENTS_FAILURE });
       }
 
       dispatch({ type: C.GET_PATIENTS_REQUEST });
@@ -79,7 +73,6 @@ export const actionCreators = {
 const unloadedState: PatientsState = {
   isFetching: false,
   patients: [],
-  err: null,
 };
 
 export const reducer: Reducer<PatientsState> = (
@@ -100,14 +93,12 @@ export const reducer: Reducer<PatientsState> = (
       return {
         isFetching: false,
         patients: obj.payload.patients,
-        err: null,
       };
     case C.GET_PATIENTS_FAILURE:
       obj = action as GetPatientsFailureAction;
       return {
         isFetching: false,
         patients: [],
-        err: obj.err,
       };
     default:
       return state;
