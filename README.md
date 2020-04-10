@@ -22,7 +22,7 @@ This repository houses both front and back-end components of the application. Th
 
 ### Installation
 
-The TypeScript api models are automatically generated/updated every time the back-end successfully builds. A base model has been originally committed for the front-end to be built without the need for the back-end. However this file (Dawn.ClientApp/src/api/generated.ts) has been ignored and will no longer be committed, so should the api models be updated, the backend will need to be built first.
+The TypeScript api models are automatically generated/updated every time the back-end successfully builds. This file (Dawn.ClientApp/src/api/generated.ts) is committed to source control but should it not be up-to-date, it may be necessary to build the backend first.
 
 #### Back-end
 

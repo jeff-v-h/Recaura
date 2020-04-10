@@ -9,6 +9,21 @@
 
 
 
+export interface IGetCaseFileVm {
+    id: number;
+    patientId: number;
+    name: string;
+    created: string;
+    consultations: ICaseFileConsultationVm[];
+}
+
+export interface ICaseFileConsultationVm {
+    id: number;
+    date: string;
+    number: number;
+    practitionerId: number;
+}
+
 export interface IGetPatientsVm {
     patients: IPatientVm[];
 }
