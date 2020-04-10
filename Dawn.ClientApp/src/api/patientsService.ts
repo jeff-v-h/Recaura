@@ -10,8 +10,7 @@ class PatientsService {
       const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientsVm>;
       return resp.data;
     } catch (e) {
-      console.log("Get Patients Error", e);
-      console.log("Get Patients Error type", typeof e);
+      console.error(e);
       message.error(e);
       return Promise.reject(e);
     }
@@ -23,7 +22,7 @@ class PatientsService {
       const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientVm>;
       return resp.data;
     } catch (e) {
-      console.log("Get Patient Error", e);
+      console.error(e);
       message.error(e);
       return Promise.reject(e);
     }

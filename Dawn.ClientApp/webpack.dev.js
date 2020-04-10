@@ -14,6 +14,7 @@ module.exports = function (env) {
     devServer: {
       contentBase: pathHelper("./dist"),
       hot: true,
+      historyApiFallback: true,
       proxy: {
         "/api": {
           target: "http://localhost:5555/",
