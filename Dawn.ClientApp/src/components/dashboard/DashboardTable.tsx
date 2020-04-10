@@ -47,11 +47,11 @@ class DashboardTable extends React.Component<Props> {
     return <Table onRow={this.onRow} columns={columns} dataSource={data} />;
   }
 
-  private ensureDataFetched() {
+  private ensureDataFetched = () => {
     this.props.getPatients();
-  }
+  };
 
-  private parseDataForTable(patients: IPatientVm[]): RowData[] {
+  private parseDataForTable = (patients: IPatientVm[]): RowData[] => {
     if (!patients) return [];
 
     return patients.map((patient) => ({
@@ -60,7 +60,7 @@ class DashboardTable extends React.Component<Props> {
       lastName: patient.lastName,
       dob: patient.dob,
     }));
-  }
+  };
 
   private onRow = (patientRow: RowData) => {
     return {

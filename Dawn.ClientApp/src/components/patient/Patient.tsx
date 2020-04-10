@@ -1,10 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import { compose } from "redux";
 import * as PatientStore from "../../store/Patient";
 import { ApplicationState } from "../../store";
 import PatientDescription from "./PatientDescription";
+import { List } from "antd";
 
 type Props = PatientStore.PatientState &
   typeof PatientStore.actionCreators &
@@ -19,23 +20,25 @@ class Patient extends React.Component<Props> {
     this.ensureDataFetched();
   }
 
-  renderDescription() {
+  render() {
     const { patient } = this.props;
-
     if (!patient) return null;
 
     return (
       <>
         <PatientDescription patient={patient} />
+        <List bordered>
+          {patient.caseFiles?.map((file) => (
+            <Link to="/" key={file.id}>
+              <List.Item>{file.name}</List.Item>
+            </Link>
+          ))}
+        </List>
       </>
     );
   }
 
-  render() {
-    return this.renderDescription();
-  }
-
-  private ensureDataFetched() {
+  private ensureDataFetched = () => {
     const { match } = this.props;
     const parsedId = parseInt(match.params.id, 10);
     if (isNaN(parsedId)) {
@@ -44,13 +47,12 @@ class Patient extends React.Component<Props> {
     }
 
     this.props.getPatient(parsedId);
-  }
+  };
 }
+
+const mapStateToProps = (state: ApplicationState) => state.patient;
 
 export default compose(
   withRouter,
-  connect(
-    (state: ApplicationState) => state.patient, // Selects which state properties are merged into the component's props
-    PatientStore.actionCreators // Selects which action creators are merged into the component's props
-  )
+  connect(mapStateToProps, PatientStore.actionCreators)
 )(Patient);
