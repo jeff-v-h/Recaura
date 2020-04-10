@@ -2,7 +2,7 @@ import * as React from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { ClickParam } from "antd/lib/menu";
-import style from "./NavMenu.scss";
+import style from "./navMenu.scss";
 
 const Item = Menu.Item;
 

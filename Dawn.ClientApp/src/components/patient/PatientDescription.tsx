@@ -9,7 +9,7 @@ interface Props {
 }
 
 const PatientDescription = ({ patient }: Props) => (
-  <Descriptions title="User Info" bordered>
+  <Descriptions bordered>
     <Item label="Title">{patient.honorific}</Item>
     <Item label="First Name">{patient.firstName}</Item>
     <Item label="Last Name">{patient.lastName}</Item>

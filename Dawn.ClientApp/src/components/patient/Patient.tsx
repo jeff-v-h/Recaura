@@ -1,11 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter, Link } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import * as PatientStore from "../../store/Patient";
 import { ApplicationState } from "../../store";
 import PatientDescription from "./PatientDescription";
-import { List } from "antd";
+import CaseFiles from "./CaseFiles";
 
 type Props = PatientStore.PatientState &
   typeof PatientStore.actionCreators &
@@ -27,13 +27,7 @@ class Patient extends React.Component<Props> {
     return (
       <>
         <PatientDescription patient={patient} />
-        <List bordered>
-          {patient.caseFiles?.map((file) => (
-            <Link to="/" key={file.id}>
-              <List.Item>{file.name}</List.Item>
-            </Link>
-          ))}
-        </List>
+        <CaseFiles files={patient.caseFiles} />
       </>
     );
   }
