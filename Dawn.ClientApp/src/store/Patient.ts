@@ -14,7 +14,7 @@ const C = {
  */
 export interface PatientState {
   isFetching: boolean;
-  patient: IGetPatientVm | null;
+  details: IGetPatientVm | null;
 }
 
 //--------------------
@@ -52,7 +52,7 @@ export const actionCreators = {
   ) => {
     // Only load data if it's something we don't already have (and are not already loading)
     const appState = getState();
-    if (appState && appState.patients) {
+    if (appState && appState.patient && id !== appState.patient.details?.id) {
       try {
         dispatch({
           type: C.GET_PATIENT_SUCCESS,
@@ -72,7 +72,7 @@ export const actionCreators = {
  */
 const unloadedState: PatientState = {
   isFetching: false,
-  patient: null,
+  details: null,
 };
 
 export const reducer: Reducer<PatientState> = (
@@ -92,13 +92,13 @@ export const reducer: Reducer<PatientState> = (
       obj = action as GetPatientSuccessAction;
       return {
         isFetching: false,
-        patient: obj.payload,
+        details: obj.payload,
       };
     case C.GET_PATIENT_FAILURE:
       obj = action as GetPatientFailureAction;
       return {
         isFetching: false,
-        patient: null,
+        details: null,
       };
     default:
       return state;
