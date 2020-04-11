@@ -1,4 +1,5 @@
 ﻿using Dawn.Application.Common.Mappings;
+using Dawn.Application.Features.Consultations.Queries.Common;
 using Dawn.Domain.Entities;
 using System;
 using System.Collections.Generic;

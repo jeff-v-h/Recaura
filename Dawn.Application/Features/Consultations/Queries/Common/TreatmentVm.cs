@@ -1,7 +1,7 @@
 ﻿using Dawn.Application.Common.Mappings;
 using Dawn.Domain.Entities;
 
-namespace Dawn.Application.Features.Consultations.Queries.GetConsultation
+namespace Dawn.Application.Features.Consultations.Queries.Common
 {
     public class TreatmentVm : IMapFrom<Treatment>
     {
