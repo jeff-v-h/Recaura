@@ -11,6 +11,6 @@ namespace Dawn.Application.Features.CaseFiles.Queries.GetCaseFile
         public int PatientId { get; set; }
         public string Name { get; set; }
         public DateTime Created { get; set; }
-        public List<CaseFileConsultationVm> Consultations { get; set; }
+        public IReadOnlyCollection<ConsultationVm> Consultations { get; set; }
     }
 }

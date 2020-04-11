@@ -4,7 +4,7 @@ using System;
 
 namespace Dawn.Application.Features.CaseFiles.Queries.GetCaseFile
 {
-    public class CaseFileConsultationVm : IMapFrom<Consultation>
+    public class ConsultationVm : IMapFrom<Consultation>
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

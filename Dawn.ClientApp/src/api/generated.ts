@@ -14,14 +14,122 @@ export interface IGetCaseFileVm {
     patientId: number;
     name: string;
     created: string;
-    consultations: ICaseFileConsultationVm[];
+    consultations: IConsultationVm[];
 }
 
-export interface ICaseFileConsultationVm {
+export interface IConsultationVm {
     id: number;
     date: string;
     number: number;
     practitionerId: number;
+}
+
+export interface IGetConsultationVm {
+    id: number;
+    caseFileId: number;
+    date: string;
+    number: number;
+    practitioner: IPractitionerVm;
+    subjectiveAssessment: ISubjectiveAssessmentVm;
+    objectiveAssessment: IObjectiveAssessmentVm;
+    treatments: ITreatmentVm[];
+    plans: IForwardPlanVm[];
+}
+
+export interface IPractitionerVm {
+    id: number;
+    firstName: string;
+    lastName: string;
+    jobLevel: string;
+}
+
+export interface ISubjectiveAssessmentVm {
+    id: number;
+    moi: string;
+    currentHistory: string;
+    bodyChart: string;
+    aggravatingFactors: string;
+    easingFactors: string;
+    vas: number | null;
+    pastHistory: string;
+    socialHistory: string;
+    imaging: string;
+    generalHealth: string;
+}
+
+export interface IObjectiveAssessmentVm {
+    id: number;
+    observation: string;
+    active: IActiveTestVm[];
+    passive: IPassiveTestVm[];
+    resistedIsometric: IResistedIsometricTestVm[];
+    functionalTests: IFunctionalTestVm[];
+    neurologicalTests: INeurologicalTestVm[];
+    specialTests: ISpecialTestVm[];
+    palpation: string;
+    additional: string;
+}
+
+export interface IActiveTestVm {
+    id: number;
+    name: string;
+    comment: string;
+    value: number;
+}
+
+export interface IPassiveTestVm {
+    id: number;
+    name: string;
+    comment: string;
+    value: number;
+}
+
+export interface IResistedIsometricTestVm {
+    id: number;
+    name: string;
+    comment: string;
+    value: number;
+}
+
+export interface IFunctionalTestVm {
+    id: number;
+    name: string;
+    comment: string;
+    result: string;
+}
+
+export interface INeurologicalTestVm {
+    id: number;
+    name: string;
+    comment: string;
+    result: DiagnosticResult;
+}
+
+/** 0 = Negative 1 = Positive 2 = Inconclusive */
+export enum DiagnosticResult {
+    Negative = 0,
+    Positive = 1,
+    Inconclusive = 2,
+}
+
+export interface ISpecialTestVm {
+    id: number;
+    name: string;
+    comment: string;
+    result: DiagnosticResult;
+}
+
+export interface ITreatmentVm {
+    id: number;
+    name: string;
+    comment: string;
+    quantity: string;
+}
+
+export interface IForwardPlanVm {
+    id: number;
+    name: string;
+    comment: string;
 }
 
 export interface IGetPatientsVm {
@@ -50,10 +158,10 @@ export interface IPersonVm {
 
 export interface IGetPatientVm extends IPersonVm {
     occupation: string;
-    caseFiles: IPatientCaseFileVm[];
+    caseFiles: ICaseFileVm[];
 }
 
-export interface IPatientCaseFileVm {
+export interface ICaseFileVm {
     id: number;
     name: string;
 }
