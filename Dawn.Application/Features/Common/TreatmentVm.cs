@@ -1,12 +1,13 @@
 ﻿using Dawn.Application.Common.Mappings;
 using Dawn.Domain.Entities;
 
-namespace Dawn.Application.Features.Consultations.Queries.Common
+namespace Dawn.Application.Features.Common
 {
-    public class ForwardPlanVm : IMapFrom<ForwardPlan>
+    public class TreatmentVm : IMapFrom<Treatment>
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Comment { get; set; }
+        public string Quantity { get; set; }
     }
 }

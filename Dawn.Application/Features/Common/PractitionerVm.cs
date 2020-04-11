@@ -1,7 +1,7 @@
 ﻿using Dawn.Application.Common.Mappings;
 using Dawn.Domain.Entities;
 
-namespace Dawn.Application.Features.Consultations.Queries.Common
+namespace Dawn.Application.Features.Common
 {
     public class PractitionerVm : IMapFrom<Practitioner>
     {
