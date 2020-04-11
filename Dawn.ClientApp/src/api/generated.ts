@@ -132,6 +132,9 @@ export interface IForwardPlanVm {
     comment: string;
 }
 
+export interface IGetObjectiveAssessmentVm extends IObjectiveAssessmentVm {
+}
+
 export interface IGetPatientsVm {
     patients: IPatientVm[];
 }
