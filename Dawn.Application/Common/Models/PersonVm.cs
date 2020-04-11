@@ -1,7 +1,7 @@
 ﻿using Dawn.Domain.Enums;
 using System;
 
-namespace Dawn.Application.Features.Common
+namespace Dawn.Application.Common.Models
 {
     public abstract class PersonVm
     {

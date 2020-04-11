@@ -3,7 +3,7 @@ using Dawn.Domain.Entities;
 using Dawn.Domain.Enums;
 using System.Collections.Generic;
 
-namespace Dawn.Application.Features.Common
+namespace Dawn.Application.Common.Models
 {
     public class ObjectiveAssessmentVm : IMapFrom<ObjectiveAssessment>
     {

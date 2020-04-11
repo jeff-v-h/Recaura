@@ -188,3 +188,6 @@ export enum Gender {
     Female = 2,
     Other = 3,
 }
+
+export interface IGetSubjectiveAssessmentVm extends ISubjectiveAssessmentVm {
+}

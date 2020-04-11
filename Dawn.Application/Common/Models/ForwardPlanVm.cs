@@ -1,7 +1,7 @@
 ﻿using Dawn.Application.Common.Mappings;
 using Dawn.Domain.Entities;
 
-namespace Dawn.Application.Features.Common
+namespace Dawn.Application.Common.Models
 {
     public class ForwardPlanVm : IMapFrom<ForwardPlan>
     {

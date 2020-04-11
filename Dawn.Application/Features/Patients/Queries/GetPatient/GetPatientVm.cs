@@ -1,5 +1,5 @@
 ﻿using Dawn.Application.Common.Mappings;
-using Dawn.Application.Features.Common;
+using Dawn.Application.Common.Models;
 using Dawn.Domain.Entities;
 using System.Collections.Generic;
 
