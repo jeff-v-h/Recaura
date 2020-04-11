@@ -1,5 +1,6 @@
 ﻿using Dawn.Application.Common.Mappings;
 using Dawn.Domain.Entities;
+using Dawn.Domain.Enums;
 using System.Collections.Generic;
 
 namespace Dawn.Application.Features.Consultations.Queries.GetConsultation
@@ -16,5 +17,53 @@ namespace Dawn.Application.Features.Consultations.Queries.GetConsultation
         public IReadOnlyCollection<SpecialTestVm> SpecialTests { get; set; }
         public string Palpation { get; set; }
         public string Additional { get; set; }
+    }
+
+    public class ActiveTestVm : IMapFrom<ActiveTest>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public decimal Value { get; set; }
+    }
+
+    public class PassiveTestVm : IMapFrom<PassiveTest>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public decimal Value { get; set; }
+    }
+
+    public class ResistedIsometricTestVm : IMapFrom<ResistedIsometricTest>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public int Value { get; set; }
+    }
+
+    public class FunctionalTestVm : IMapFrom<FunctionalTest>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public string Result { get; set; }
+    }
+
+    public class NeurologicalTestVm : IMapFrom<NeurologicalTest>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public DiagnosticResult Result { get; set; }
+    }
+
+    public class SpecialTestVm : IMapFrom<SpecialTest>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public DiagnosticResult Result { get; set; }
     }
 }
