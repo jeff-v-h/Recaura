@@ -121,6 +121,7 @@ export interface ISpecialTestVm {
 
 export interface ITreatmentVm {
     id: number;
+    consultationId: number;
     name: string;
     comment: string;
     quantity: string;
@@ -193,4 +194,8 @@ export enum Gender {
 }
 
 export interface IGetSubjectiveAssessmentVm extends ISubjectiveAssessmentVm {
+}
+
+export interface IGetTreatmentsVm {
+    treatments: ITreatmentVm[];
 }
