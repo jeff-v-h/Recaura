@@ -10,7 +10,6 @@ class PatientsService {
       const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientsVm>;
       return resp.data;
     } catch (e) {
-      console.error(e);
       message.error(e);
       return Promise.reject(e);
     }
@@ -22,7 +21,6 @@ class PatientsService {
       const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientVm>;
       return resp.data;
     } catch (e) {
-      console.error(e);
       message.error(e);
       return Promise.reject(e);
     }
