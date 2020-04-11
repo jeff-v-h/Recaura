@@ -129,6 +129,7 @@ export interface ITreatmentVm {
 
 export interface IForwardPlanVm {
     id: number;
+    consultationId: number;
     name: string;
     comment: string;
 }
@@ -191,6 +192,10 @@ export enum Gender {
     Male = 1,
     Female = 2,
     Other = 3,
+}
+
+export interface IGetPlansVm {
+    plans: IForwardPlanVm[];
 }
 
 export interface IGetSubjectiveAssessmentVm extends ISubjectiveAssessmentVm {
