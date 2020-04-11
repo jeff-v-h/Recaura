@@ -27,7 +27,10 @@ namespace Dawn.Application.Features.Plans.Queries.GetPlans
 
             public async Task<GetPlansVm> Handle(GetPlansQuery query, CancellationToken token)
             {
-                var vm = new GetPlansVm();
+                var vm = new GetPlansVm
+                {
+                    ConsultationId = query.ConsultationId
+                };
 
                 vm.Plans = await _dbContext.ForwardPlans.AsNoTracking()
                     .ProjectTo<ForwardPlanVm>(_mapper.ConfigurationProvider)

@@ -12,7 +12,7 @@ namespace Dawn.Application.Features.SubjectiveAx.Queries.GetSubjectiveAssessment
 {
     public class GetSubjectiveAssessmentQuery : IRequest<GetSubjectiveAssessmentVm>
     {
-        public int Id { get; set; }
+        public int ConsultationId { get; set; }
 
         public class GetSubjectiveAssessmentQueryHandler : IRequestHandler<GetSubjectiveAssessmentQuery, GetSubjectiveAssessmentVm>
         {
@@ -28,8 +28,8 @@ namespace Dawn.Application.Features.SubjectiveAx.Queries.GetSubjectiveAssessment
             public async Task<GetSubjectiveAssessmentVm> Handle(GetSubjectiveAssessmentQuery query, CancellationToken token)
             {
                 var subjective = await _dbContext.SubjectiveAssessments.AsNoTracking()
-                    .Where(c => c.Id == query.Id)
-                    .FirstOrNotFoundAsync(nameof(SubjectiveAssessment), query.Id, token);
+                    .Where(s => s.ConsultationId == query.ConsultationId)
+                    .FirstOrNotFoundAsync(nameof(SubjectiveAssessment), $"ConsultationId {query.ConsultationId}", token);
 
                 return _mapper.Map<GetSubjectiveAssessmentVm>(subjective);
             }

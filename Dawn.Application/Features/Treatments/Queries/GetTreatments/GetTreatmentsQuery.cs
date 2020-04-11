@@ -27,7 +27,10 @@ namespace Dawn.Application.Features.Treatments.Queries.GetTreatments
 
             public async Task<GetTreatmentsVm> Handle(GetTreatmentsQuery query, CancellationToken token)
             {
-                var vm = new GetTreatmentsVm();
+                var vm = new GetTreatmentsVm
+                {
+                    ConsultationId = query.ConsultationId
+                };
 
                 vm.Treatments = await _dbContext.Treatments.AsNoTracking()
                     .ProjectTo<TreatmentVm>(_mapper.ConfigurationProvider)

@@ -8,6 +8,7 @@ namespace Dawn.Application.Common.Models
     public class ObjectiveAssessmentVm : IMapFrom<ObjectiveAssessment>
     {
         public int Id { get; set; }
+        public int ConsultationId { get; set; }
         public string Observation { get; set; }
         public IReadOnlyCollection<ActiveTestVm> Active { get; set; }
         public IReadOnlyCollection<PassiveTestVm> Passive { get; set; }

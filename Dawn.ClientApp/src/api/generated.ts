@@ -45,6 +45,7 @@ export interface IPractitionerVm {
 
 export interface ISubjectiveAssessmentVm {
     id: number;
+    consultationId: number;
     moi: string;
     currentHistory: string;
     bodyChart: string;
@@ -59,6 +60,7 @@ export interface ISubjectiveAssessmentVm {
 
 export interface IObjectiveAssessmentVm {
     id: number;
+    consultationId: number;
     observation: string;
     active: IActiveTestVm[];
     passive: IPassiveTestVm[];
@@ -195,6 +197,7 @@ export enum Gender {
 }
 
 export interface IGetPlansVm {
+    consultationId: number;
     plans: IForwardPlanVm[];
 }
 
@@ -202,5 +205,6 @@ export interface IGetSubjectiveAssessmentVm extends ISubjectiveAssessmentVm {
 }
 
 export interface IGetTreatmentsVm {
+    consultationId: number;
     treatments: ITreatmentVm[];
 }

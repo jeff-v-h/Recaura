@@ -12,7 +12,7 @@ namespace Dawn.Application.Features.ObjectiveAx.Queries.GetObjectiveAssessment
 {
     public class GetObjectiveAssessmentQuery : IRequest<GetObjectiveAssessmentVm>
     {
-        public int Id { get; set; }
+        public int ConsultationId { get; set; }
 
         public class GetObjectiveAssessmentQueryHandler : IRequestHandler<GetObjectiveAssessmentQuery, GetObjectiveAssessmentVm>
         {
@@ -34,8 +34,8 @@ namespace Dawn.Application.Features.ObjectiveAx.Queries.GetObjectiveAssessment
                     .Include(o => o.FunctionalTests)
                     .Include(o => o.NeurologicalTests)
                     .Include(o => o.SpecialTests)
-                    .Where(o => o.Id == query.Id)
-                    .FirstOrNotFoundAsync(nameof(ObjectiveAssessment), query.Id, token);
+                    .Where(o => o.ConsultationId == query.ConsultationId)
+                    .FirstOrNotFoundAsync(nameof(ObjectiveAssessment), $"ConsultationId {query.ConsultationId}", token);
 
                 return _mapper.Map<GetObjectiveAssessmentVm>(objective);
             }

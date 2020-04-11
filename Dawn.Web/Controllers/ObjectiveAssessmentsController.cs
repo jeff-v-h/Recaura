@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 namespace Dawn.Web.Controllers
 {
     [ApiController]
-    [Route("api/objective")]
+    [Route("api")]
     public class ObjectiveAssessmentsController : ApiControllerBase
     {
-        [HttpGet("{id}")]
-        public async Task<ActionResult<GetObjectiveAssessmentVm>> Get(int id)
+        [HttpGet("consultations/{consultationId}/objective")]
+        public async Task<ActionResult<GetObjectiveAssessmentVm>> Get(int consultationId)
         {
-            return await Mediator.Send(new GetObjectiveAssessmentQuery { Id = id });
+            return await Mediator.Send(new GetObjectiveAssessmentQuery { ConsultationId = consultationId });
         }
     }
 }

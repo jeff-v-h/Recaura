@@ -6,6 +6,7 @@ namespace Dawn.Application.Common.Models
     public class SubjectiveAssessmentVm : IMapFrom<SubjectiveAssessment>
     {
         public int Id { get; set; }
+        public int ConsultationId { get; set; }
         public string MOI { get; set; }
         public string CurrentHistory { get; set; }
         public string BodyChart { get; set; }
