@@ -50,7 +50,7 @@ export const actionCreators = {
     consultId: number
   ): AppThunkAction<GetSubjectiveKnownAction> => async (dispatch, getState) => {
     const appState = getState();
-    if (appState && appState.subjective) {
+    if (appState?.subjective?.assessment?.consultationId !== consultId) {
       try {
         dispatch({
           type: C.GET_SUBJECTIVE_SUCCESS,
@@ -85,7 +85,7 @@ export const reducer: Reducer<SubjectiveState> = (
   let obj;
   switch (action.type) {
     case C.GET_SUBJECTIVE_REQUEST:
-      return { ...state, isFetching: true };
+      return { ...unloadedState, isFetching: true };
     case C.GET_SUBJECTIVE_SUCCESS:
       obj = action as GetSubjectiveSuccessAction;
       return {
@@ -94,10 +94,7 @@ export const reducer: Reducer<SubjectiveState> = (
       };
     case C.GET_SUBJECTIVE_FAILURE:
       obj = action as GetSubjectiveFailureAction;
-      return {
-        isFetching: false,
-        assessment: null,
-      };
+      return unloadedState;
     default:
       return state;
   }
