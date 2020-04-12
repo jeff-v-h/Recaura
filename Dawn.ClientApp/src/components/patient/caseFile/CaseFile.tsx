@@ -6,6 +6,7 @@ import * as CaseFileStore from "../../../store/CaseFile";
 import { ApplicationState } from "../../../store";
 import { List, message } from "antd";
 import style from "./caseFile.scss";
+import moment from "moment";
 
 type Props = CaseFileStore.CaseFileState &
   typeof CaseFileStore.actionCreators &
@@ -16,41 +17,44 @@ class CaseFile extends React.Component<Props> {
     this.ensureDataFetched();
   }
 
+  getFormattedDate(date: string) {
+    return moment(date).format("Do MMM YYYY");
+  }
+
   render() {
     const { file } = this.props;
     if (!file) return null;
 
     return (
-      <>
-        <div className={style.list}>
-          <div className={style.header}>
-            <h3>Case File: {file.name}</h3>
-          </div>
-          {file.consultations && (
-            <List bordered>
-              {file.consultations?.map((consult) => (
-                <Link to="/" key={file.id}>
-                  <List.Item>
-                    {consult.number} {consult.date}
-                  </List.Item>
-                </Link>
-              ))}
-            </List>
-          )}
+      <div className={style.list}>
+        <div className={style.header}>
+          <h3>Case File: {file.name}</h3>
         </div>
-      </>
+        {file.consultations && (
+          <List bordered>
+            {file.consultations?.map((consult) => (
+              <Link to="/" key={file.id}>
+                <List.Item>
+                  Consultation {consult.number}:{" "}
+                  {this.getFormattedDate(consult.date)}
+                </List.Item>
+              </Link>
+            ))}
+          </List>
+        )}
+      </div>
     );
   }
 
   private ensureDataFetched = () => {
-    const { match } = this.props;
+    const { match, getCaseFile } = this.props;
     const parsedId = parseInt(match.params.id, 10);
     if (isNaN(parsedId)) {
       message.error(`${match.params.id} is not a number`);
       return;
     }
 
-    this.props.getCaseFile(parsedId);
+    getCaseFile(parsedId);
   };
 }
 
