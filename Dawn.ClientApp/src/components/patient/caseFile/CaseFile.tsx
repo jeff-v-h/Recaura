@@ -1,25 +1,43 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import { compose } from "redux";
-import * as PatientStore from "../../../store/Patient";
+import * as CaseFileStore from "../../../store/CaseFile";
 import { ApplicationState } from "../../../store";
-import { message } from "antd";
+import { List, message } from "antd";
+import style from "./caseFile.scss";
 
-type Props = PatientStore.PatientState &
-  typeof PatientStore.actionCreators &
+type Props = CaseFileStore.CaseFileState &
+  typeof CaseFileStore.actionCreators &
   RouteComponentProps<{ id: string }>;
 
 class CaseFile extends React.Component<Props> {
-  componentDidMount() {}
+  componentDidMount() {
+    this.ensureDataFetched();
+  }
 
   render() {
-    const { details } = this.props;
-    if (!details) return null;
+    const { file } = this.props;
+    if (!file) return null;
 
     return (
       <>
-        <div></div>
+        <div className={style.list}>
+          <div className={style.header}>
+            <h3>Case File: {file.name}</h3>
+          </div>
+          {file.consultations && (
+            <List bordered>
+              {file.consultations?.map((consult) => (
+                <Link to="/" key={file.id}>
+                  <List.Item>
+                    {consult.number} {consult.date}
+                  </List.Item>
+                </Link>
+              ))}
+            </List>
+          )}
+        </div>
       </>
     );
   }
@@ -32,13 +50,13 @@ class CaseFile extends React.Component<Props> {
       return;
     }
 
-    this.props.getPatient(parsedId);
+    this.props.getCaseFile(parsedId);
   };
 }
 
-const mapStateToProps = (state: ApplicationState) => state.patient;
+const mapStateToProps = (state: ApplicationState) => state.casefile;
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, PatientStore.actionCreators)
+  connect(mapStateToProps, CaseFileStore.actionCreators)
 )(CaseFile);

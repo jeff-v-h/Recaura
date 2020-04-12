@@ -16,7 +16,7 @@ const CaseFiles = ({ files }: Props) => (
     {files && (
       <List bordered>
         {files.map((file) => (
-          <Link to="/" key={file.id}>
+          <Link to={`/casefiles/${file.id}`} key={file.id}>
             <List.Item>{file.name}</List.Item>
           </Link>
         ))}
