@@ -51,6 +51,8 @@ export const actionCreators = {
   ): AppThunkAction<GetCaseFileKnownAction> => async (dispatch, getState) => {
     const appState = getState();
     if (appState?.plans?.consultationId !== consultId) {
+      dispatch({ type: C.GET_CASEFILE_REQUEST });
+
       try {
         dispatch({
           type: C.GET_CASEFILE_SUCCESS,
@@ -59,8 +61,6 @@ export const actionCreators = {
       } catch (e) {
         dispatch({ type: C.GET_CASEFILE_FAILURE });
       }
-
-      dispatch({ type: C.GET_CASEFILE_REQUEST });
     }
   },
 };

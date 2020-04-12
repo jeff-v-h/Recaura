@@ -51,6 +51,8 @@ export const actionCreators = {
   ): AppThunkAction<GetSubjectiveKnownAction> => async (dispatch, getState) => {
     const appState = getState();
     if (appState?.subjective?.assessment?.consultationId !== consultId) {
+      dispatch({ type: C.GET_SUBJECTIVE_REQUEST });
+
       try {
         dispatch({
           type: C.GET_SUBJECTIVE_SUCCESS,
@@ -59,8 +61,6 @@ export const actionCreators = {
       } catch (e) {
         dispatch({ type: C.GET_SUBJECTIVE_FAILURE });
       }
-
-      dispatch({ type: C.GET_SUBJECTIVE_REQUEST });
     }
   },
 };

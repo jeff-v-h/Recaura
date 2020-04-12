@@ -52,6 +52,8 @@ export const actionCreators = {
   ): AppThunkAction<GetTreatmentsKnownAction> => async (dispatch, getState) => {
     const appState = getState();
     if (appState?.treatments?.consultationId !== consultId) {
+      dispatch({ type: C.GET_TREATMENTS_REQUEST });
+
       try {
         dispatch({
           type: C.GET_TREATMENTS_SUCCESS,
@@ -60,8 +62,6 @@ export const actionCreators = {
       } catch (e) {
         dispatch({ type: C.GET_TREATMENTS_FAILURE });
       }
-
-      dispatch({ type: C.GET_TREATMENTS_REQUEST });
     }
   },
 };

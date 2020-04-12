@@ -53,6 +53,8 @@ export const actionCreators = {
   ) => {
     const appState = getState();
     if (appState?.plans?.consultationId !== consultId) {
+      dispatch({ type: C.GET_PLANS_REQUEST });
+
       try {
         dispatch({
           type: C.GET_PLANS_SUCCESS,
@@ -61,8 +63,6 @@ export const actionCreators = {
       } catch (e) {
         dispatch({ type: C.GET_PLANS_FAILURE });
       }
-
-      dispatch({ type: C.GET_PLANS_REQUEST });
     }
   },
 };

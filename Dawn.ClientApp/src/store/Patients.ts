@@ -53,6 +53,8 @@ export const actionCreators = {
     // Only load data if it's something we don't already have (and are not already loading)
     const appState = getState();
     if (appState && appState.patients) {
+      dispatch({ type: C.GET_PATIENTS_REQUEST });
+
       try {
         dispatch({
           type: C.GET_PATIENTS_SUCCESS,
@@ -61,8 +63,6 @@ export const actionCreators = {
       } catch (e) {
         dispatch({ type: C.GET_PATIENTS_FAILURE });
       }
-
-      dispatch({ type: C.GET_PATIENTS_REQUEST });
     }
   },
 };
