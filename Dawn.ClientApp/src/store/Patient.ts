@@ -24,12 +24,12 @@ export interface GetPatientRequestAction {
 }
 
 export interface GetPatientSuccessAction {
-  type: typeof C.GET_PATIENT_REQUEST;
+  type: typeof C.GET_PATIENT_SUCCESS;
   payload: IGetPatientVm;
 }
 
 export interface GetPatientFailureAction {
-  type: typeof C.GET_PATIENT_REQUEST;
+  type: typeof C.GET_PATIENT_FAILURE;
 }
 
 //#endregion ACTIONS

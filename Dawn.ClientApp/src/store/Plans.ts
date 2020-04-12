@@ -25,12 +25,12 @@ export interface GetPlansRequestAction {
 }
 
 export interface GetPlansSuccessAction {
-  type: typeof C.GET_PLANS_REQUEST;
+  type: typeof C.GET_PLANS_SUCCESS;
   payload: IGetPlansVm;
 }
 
 export interface GetPlansFailureAction {
-  type: typeof C.GET_PLANS_REQUEST;
+  type: typeof C.GET_PLANS_FAILURE;
 }
 
 //#endregion ACTIONS

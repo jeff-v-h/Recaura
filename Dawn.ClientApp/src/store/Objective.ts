@@ -24,12 +24,12 @@ export interface GetObjectiveRequestAction {
 }
 
 export interface GetObjectiveSuccessAction {
-  type: typeof C.GET_OBJECTIVE_REQUEST;
+  type: typeof C.GET_OBJECTIVE_SUCCESS;
   payload: IGetObjectiveAssessmentVm;
 }
 
 export interface GetObjectiveFailureAction {
-  type: typeof C.GET_OBJECTIVE_REQUEST;
+  type: typeof C.GET_OBJECTIVE_FAILURE;
 }
 
 //#endregion ACTIONS

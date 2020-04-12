@@ -25,12 +25,12 @@ export interface GetTreatmentsRequestAction {
 }
 
 export interface GetTreatmentsSuccessAction {
-  type: typeof C.GET_TREATMENTS_REQUEST;
+  type: typeof C.GET_TREATMENTS_SUCCESS;
   payload: IGetTreatmentsVm;
 }
 
 export interface GetTreatmentsFailureAction {
-  type: typeof C.GET_TREATMENTS_REQUEST;
+  type: typeof C.GET_TREATMENTS_FAILURE;
 }
 
 //#endregion ACTIONS
