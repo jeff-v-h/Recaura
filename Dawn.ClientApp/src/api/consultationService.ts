@@ -64,4 +64,4 @@ class ConsultationService {
   };
 }
 
-export const patientsService = new ConsultationService();
+export const consultationService = new ConsultationService();
