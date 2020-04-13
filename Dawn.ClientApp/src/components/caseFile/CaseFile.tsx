@@ -2,8 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import { compose } from "redux";
-import * as CaseFileStore from "../../../store/CaseFile";
-import { ApplicationState } from "../../../store";
+import * as CaseFileStore from "../../store/CaseFile";
+import { ApplicationState } from "../../store";
 import { List, message } from "antd";
 import style from "./caseFile.scss";
 import moment from "moment";
@@ -11,7 +11,7 @@ import {
   IGetCaseFileVm,
   IFilesPatientVm,
   Honorific,
-} from "../../../api/generated";
+} from "../../api/generated";
 
 type Props = CaseFileStore.CaseFileState &
   typeof CaseFileStore.actionCreators &
@@ -51,7 +51,7 @@ class CaseFile extends React.Component<Props> {
         {file.consultations && (
           <List bordered>
             {file.consultations?.map((consult) => (
-              <Link to="/" key={file.id}>
+              <Link to={`/consultations/${consult.id}`} key={file.id}>
                 <List.Item>
                   Consultation {consult.number}:{" "}
                   {this.getFormattedDate(consult.date)}
