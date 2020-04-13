@@ -2,14 +2,9 @@ import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import style from "./consultation.scss";
 import Subjective from "./Subjective";
-import { getParsedUrlId } from "../../helpers/utils";
-
-enum ConsultPart {
-  Subjective,
-  Objective,
-  Treatments,
-  Plans,
-}
+import { getParsedUrlId, ConsultPart } from "../../helpers/utils";
+import { RadioChangeEvent } from "antd/lib/radio";
+import NavPills from "./NavPills";
 
 type Props = RouteComponentProps<{ consultId: string }>;
 
@@ -24,11 +19,15 @@ class Consultation extends React.Component<Props, State> {
     display: ConsultPart.Subjective,
   };
 
+  onChange = (e: RadioChangeEvent) => {
+    this.setState({ display: e.target.value });
+  };
+
   render() {
     const { consultId, display } = this.state;
     return (
       <div className={style.container}>
-        <div>horizontal index bar goes here</div>
+        <NavPills value={display} onChange={this.onChange} />
         {display === ConsultPart.Subjective ? (
           <Subjective consultId={consultId} />
         ) : (

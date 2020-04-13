@@ -4,18 +4,19 @@ import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import * as SubjectiveStore from "../../store/Subjective";
 import { ApplicationState } from "../../store";
-import { Form, message, Button, Input } from "antd";
+import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
 import { FormInstance } from "antd/lib/form";
 import FormSelect from "../common/FormSelect";
+import style from "./subjective.scss";
 
 const layout = {
-  labelCol: { span: 4 },
+  labelCol: { span: 5 },
   wrapperCol: { span: 14 },
 };
 
 const tailLayout = {
-  wrapperCol: { offset: 16, span: 2 },
+  wrapperCol: { offset: 14, span: 5 },
 };
 
 type ParentProps = { consultId: number };
@@ -80,7 +81,7 @@ class Subjective extends React.Component<Props> {
         <FormTextArea label="Imaging" />
         <FormTextArea label="General Health" />
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" className={style.submit}>
             Submit
           </Button>
         </Form.Item>

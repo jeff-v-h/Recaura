@@ -9,3 +9,10 @@ export function getParsedUrlId(id: string) {
 
   return parsedId;
 }
+
+export enum ConsultPart {
+  Subjective,
+  Objective,
+  Treatments,
+  Plans,
+}
