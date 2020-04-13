@@ -11,10 +11,10 @@
 
 export interface IGetCaseFileVm {
     id: number;
-    patientId: number;
     name: string;
     created: string;
     consultations: IConsultationVm[];
+    patient: IPatientVm;
 }
 
 export interface IConsultationVm {
@@ -22,6 +22,30 @@ export interface IConsultationVm {
     date: string;
     number: number;
     practitionerId: number;
+}
+
+export interface IPatientVm {
+    id: number;
+    honorific: Honorific;
+    firstName: string;
+    lastName: string;
+    dob: string;
+    occupation: string;
+}
+
+/** 0 = Mr 1 = Mrs 2 = Miss 3 = Ms 4 = Master 5 = Mx 6 = M 7 = Sir 8 = Madam 9 = Dr 10 = Prof */
+export enum Honorific {
+    Mr = 0,
+    Mrs = 1,
+    Miss = 2,
+    Ms = 3,
+    Master = 4,
+    Mx = 5,
+    M = 6,
+    Sir = 7,
+    Madam = 8,
+    Dr = 9,
+    Prof = 10,
 }
 
 export interface IGetConsultationVm {
@@ -140,10 +164,10 @@ export interface IGetObjectiveAssessmentVm extends IObjectiveAssessmentVm {
 }
 
 export interface IGetPatientsVm {
-    patients: IPatientVm[];
+    patients: IPatientVm2[];
 }
 
-export interface IPatientVm {
+export interface IPatientVm2 {
     id: number;
     firstName: string;
     lastName: string;
@@ -171,21 +195,6 @@ export interface IGetPatientVm extends IPersonVm {
 export interface ICaseFileVm {
     id: number;
     name: string;
-}
-
-/** 0 = Mr 1 = Mrs 2 = Miss 3 = Ms 4 = Master 5 = Mx 6 = M 7 = Sir 8 = Madam 9 = Dr 10 = Prof */
-export enum Honorific {
-    Mr = 0,
-    Mrs = 1,
-    Miss = 2,
-    Ms = 3,
-    Master = 4,
-    Mx = 5,
-    M = 6,
-    Sir = 7,
-    Madam = 8,
-    Dr = 9,
-    Prof = 10,
 }
 
 /** 0 = PreferNotToSay 1 = Male 2 = Female 3 = Other */

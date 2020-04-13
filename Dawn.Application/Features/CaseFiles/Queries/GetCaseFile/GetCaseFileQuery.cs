@@ -29,7 +29,8 @@ namespace Dawn.Application.Features.CaseFiles.Queries.GetCaseFile
             {
                 var file = await _dbContext.CaseFiles
                     .AsNoTracking()
-                    .Include(p => p.Consultations)
+                    .Include(c => c.Consultations)
+                    .Include(c => c.Patient)
                     .Where(p => p.Id == query.Id)
                     .FirstOrNotFoundAsync(nameof(CaseFile), query.Id, token);
 
