@@ -8,6 +8,12 @@ namespace Dawn.Application.Features.Patients.Queries.GetPatient
     public class GetPatientVm : PersonVm, IMapFrom<Patient>
     {
         public string Occupation { get; set; }
-        public IReadOnlyCollection<CaseFileVm> CaseFiles { get; set; }
+        public IReadOnlyCollection<PatientCaseFileVm> CaseFiles { get; set; }
+    }
+
+    public class PatientCaseFileVm : IMapFrom<CaseFile>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

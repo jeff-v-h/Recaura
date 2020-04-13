@@ -7,6 +7,11 @@ import { ApplicationState } from "../../../store";
 import { List, message } from "antd";
 import style from "./caseFile.scss";
 import moment from "moment";
+import {
+  IGetCaseFileVm,
+  IFilesPatientVm,
+  Honorific,
+} from "../../../api/generated";
 
 type Props = CaseFileStore.CaseFileState &
   typeof CaseFileStore.actionCreators &
@@ -21,6 +26,19 @@ class CaseFile extends React.Component<Props> {
     return moment(date).format("Do MMM YYYY");
   }
 
+  getHeader(file: IGetCaseFileVm) {
+    if (!file?.patient) return file.name;
+
+    return this.getPatientName(file.patient) + ": " + file.name;
+  }
+
+  getPatientName(patient: IFilesPatientVm) {
+    return (
+      `${Honorific[patient.honorific]} ` +
+      `${patient.firstName} ${patient.lastName}`
+    );
+  }
+
   render() {
     const { file } = this.props;
     if (!file) return null;
@@ -28,7 +46,7 @@ class CaseFile extends React.Component<Props> {
     return (
       <div className={style.list}>
         <div className={style.header}>
-          <h3>Case File: {file.name}</h3>
+          <h3>{this.getHeader(file)}</h3>
         </div>
         {file.consultations && (
           <List bordered>

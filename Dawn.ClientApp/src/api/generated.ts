@@ -13,18 +13,18 @@ export interface IGetCaseFileVm {
     id: number;
     name: string;
     created: string;
-    consultations: IConsultationVm[];
-    patient: IPatientVm;
+    consultations: IConsultVm[];
+    patient: IFilesPatientVm;
 }
 
-export interface IConsultationVm {
+export interface IConsultVm {
     id: number;
     date: string;
     number: number;
     practitionerId: number;
 }
 
-export interface IPatientVm {
+export interface IFilesPatientVm {
     id: number;
     honorific: Honorific;
     firstName: string;
@@ -164,10 +164,10 @@ export interface IGetObjectiveAssessmentVm extends IObjectiveAssessmentVm {
 }
 
 export interface IGetPatientsVm {
-    patients: IPatientVm2[];
+    patients: IPatientVm[];
 }
 
-export interface IPatientVm2 {
+export interface IPatientVm {
     id: number;
     firstName: string;
     lastName: string;
@@ -189,10 +189,10 @@ export interface IPersonVm {
 
 export interface IGetPatientVm extends IPersonVm {
     occupation: string;
-    caseFiles: ICaseFileVm[];
+    caseFiles: IPatientCaseFileVm[];
 }
 
-export interface ICaseFileVm {
+export interface IPatientCaseFileVm {
     id: number;
     name: string;
 }
