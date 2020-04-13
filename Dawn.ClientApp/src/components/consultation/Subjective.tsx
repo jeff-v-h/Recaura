@@ -8,16 +8,8 @@ import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
 import { FormInstance } from "antd/lib/form";
 import FormSelect from "../common/FormSelect";
-import style from "./subjective.scss";
-
-const layout = {
-  labelCol: { span: 5 },
-  wrapperCol: { span: 14 },
-};
-
-const tailLayout = {
-  wrapperCol: { offset: 14, span: 5 },
-};
+import style from "./formCommon.scss";
+import { formLayout, tailLayout } from "../../helpers/formHelper";
 
 type ParentProps = { consultId: number };
 type Props = SubjectiveStore.SubjectiveState &
@@ -61,7 +53,7 @@ class Subjective extends React.Component<Props> {
 
     return (
       <Form
-        {...layout}
+        {...formLayout}
         name="subjective"
         initialValues={initialValues}
         onFinish={this.onSubmit}

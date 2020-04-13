@@ -5,6 +5,7 @@ import Subjective from "./Subjective";
 import { getParsedUrlId, ConsultPart } from "../../helpers/utils";
 import { RadioChangeEvent } from "antd/lib/radio";
 import NavPills from "./NavPills";
+import Objective from "./Objective";
 
 type Props = RouteComponentProps<{ consultId: string }>;
 
@@ -31,7 +32,7 @@ class Consultation extends React.Component<Props, State> {
         {display === ConsultPart.Subjective ? (
           <Subjective consultId={consultId} />
         ) : (
-          <div>Objective here</div>
+          <Objective consultId={consultId} />
         )}
       </div>
     );
