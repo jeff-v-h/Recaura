@@ -6,7 +6,8 @@ export const get = (
 ): Promise<AxiosResponse | AxiosError> => {
   return axios.get(url).catch((e: AxiosError) => {
     if (showDefaultErrorMsg) {
-      defaultErrorMessage(e);
+      const msg = defaultErrorMessage(e);
+      return Promise.reject(msg);
     }
     return Promise.reject(e);
   });
@@ -20,7 +21,8 @@ export const post = (
   // const newPayload = AxisPayload(payload);
   return axios.post(url, payload, AxiosConfig).catch((e: AxiosError) => {
     if (showDefaultErrorMsg) {
-      defaultErrorMessage(e);
+      const msg = defaultErrorMessage(e);
+      return Promise.reject(msg);
     }
     return Promise.reject(e);
   });

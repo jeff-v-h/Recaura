@@ -6,7 +6,7 @@ import { message } from "antd";
 class PatientsService {
   getPatients = async (): Promise<IGetPatientsVm> => {
     try {
-      const url = `api/patients`;
+      const url = `/api/patients`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientsVm>;
       return resp.data;
     } catch (e) {
