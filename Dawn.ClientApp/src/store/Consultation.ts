@@ -13,6 +13,7 @@ const C = {
   GET_CONSULTATION_SUCCESS: "GET_CONSULTATION_SUCCESS",
   GET_CONSULTATION_FAILURE: "GET_CONSULTATION_FAILURE",
   MODIFY_SUBJECTIVE: "MODIFY_SUBJECTIVE",
+  MODIFY_OBJECTIVE: "MODIFY_OBJECTIVE",
 };
 
 /**
@@ -51,6 +52,11 @@ interface ModifySubjective {
   payload: ISubjectiveAssessmentVm;
 }
 
+interface ModifyObjective {
+  type: typeof C.MODIFY_SUBJECTIVE;
+  payload: IObjectiveAssessmentVm;
+}
+
 //#endregion ACTIONS
 //--------------------
 
@@ -59,7 +65,10 @@ export type GetConsultKnownAction =
   | GetConsultRequestAction
   | GetConsultSuccessAction
   | GetConsultFailureAction;
-export type KnownAction = GetConsultKnownAction;
+export type KnownAction =
+  | GetConsultKnownAction
+  | ModifySubjective
+  | ModifyObjective;
 
 /**
  * ACTION CREATORS
@@ -85,6 +94,8 @@ export const actionCreators = {
   },
   modifySubjective: (subjective: ISubjectiveAssessmentVm) =>
     ({ type: C.MODIFY_SUBJECTIVE, payload: subjective } as ModifySubjective),
+  modifyObjective: (objective: IObjectiveAssessmentVm) =>
+    ({ type: C.MODIFY_OBJECTIVE, payload: objective } as ModifyObjective),
 };
 
 /**
@@ -129,6 +140,9 @@ export const reducer: Reducer<ConsultationState> = (
     case C.MODIFY_SUBJECTIVE:
       obj = action as ModifySubjective;
       return { ...state, subjectiveAssessment: obj.payload };
+    case C.MODIFY_OBJECTIVE:
+      obj = action as ModifyObjective;
+      return { ...state, objectiveAssessment: obj.payload };
     default:
       return state;
   }

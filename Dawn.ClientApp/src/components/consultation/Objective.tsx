@@ -8,6 +8,7 @@ import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
 import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
+import { FormInstance } from "antd/lib/form";
 
 type ParentProps = { consultId: number };
 type Props = ConsultationStore.ConsultationState &
@@ -15,6 +16,27 @@ type Props = ConsultationStore.ConsultationState &
   ParentProps;
 
 class Objective extends React.Component<Props> {
+  formRef: React.RefObject<FormInstance> = React.createRef();
+
+  componentWillUnmount() {
+    this.updateStoreWithFormChanges();
+  }
+
+  updateStoreWithFormChanges = () => {
+    const { modifyObjective, objectiveAssessment } = this.props;
+    if (this.formRef.current && objectiveAssessment) {
+      const { getFieldValue } = this.formRef.current;
+      const newObjective: any = {};
+
+      Object.keys(objectiveAssessment).forEach((key, i) => {
+        const fieldValue = getFieldValue(key);
+        newObjective[key] = fieldValue;
+      });
+
+      modifyObjective(newObjective);
+    }
+  };
+
   onSubmit = (values: any) => {
     console.log(values);
   };
@@ -35,6 +57,7 @@ class Objective extends React.Component<Props> {
     return (
       <Form
         {...formLayout}
+        ref={this.formRef}
         name="objective"
         initialValues={initialValues}
         onFinish={this.onSubmit}
