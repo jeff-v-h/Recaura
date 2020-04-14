@@ -128,7 +128,7 @@ export const reducer: Reducer<ConsultationState> = (
 
     case C.MODIFY_SUBJECTIVE:
       obj = action as ModifySubjective;
-      return { ...unloadedState, subjectiveAssessment: obj.payload };
+      return { ...state, subjectiveAssessment: obj.payload };
     default:
       return state;
   }

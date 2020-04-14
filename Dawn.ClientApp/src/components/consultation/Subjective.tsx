@@ -9,6 +9,7 @@ import FormTextArea from "../common/FormTextArea";
 import FormSelect from "../common/FormSelect";
 import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
+import { FormInstance } from "antd/lib/form";
 
 type ParentProps = { consultId: number };
 type Props = ConsultationStore.ConsultationState &
@@ -16,10 +17,31 @@ type Props = ConsultationStore.ConsultationState &
   ParentProps;
 
 class Subjective extends React.Component<Props> {
+  formRef: React.RefObject<FormInstance> = React.createRef();
+
+  componentWillUnmount() {
+    this.updateStoreWithFormChanges();
+  }
+
+  updateStoreWithFormChanges = () => {
+    const { modifySubjective, subjectiveAssessment } = this.props;
+    if (this.formRef.current && subjectiveAssessment) {
+      const { getFieldValue } = this.formRef.current;
+      const newSubjective: any = {};
+
+      Object.keys(subjectiveAssessment).forEach((key, i) => {
+        const fieldValue = getFieldValue(key);
+        newSubjective[key] = fieldValue;
+      });
+
+      modifySubjective(newSubjective);
+    }
+  };
+
   onSubmit = (values: any) => {
     const { modifySubjective } = this.props;
     console.log(values);
-    modifySubjective({ ...values });
+    // modifySubjective({ ...values });
   };
 
   onSubmitFail = () => {
@@ -38,6 +60,7 @@ class Subjective extends React.Component<Props> {
     return (
       <Form
         {...formLayout}
+        ref={this.formRef}
         name="subjective"
         initialValues={initialValues}
         onFinish={this.onSubmit}

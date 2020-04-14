@@ -6,7 +6,6 @@ import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
 import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
-import { FormInstance } from "antd/lib/form";
 import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
 
@@ -16,7 +15,7 @@ type Props = ConsultationStore.ConsultationState &
   ParentProps;
 
 class Objective extends React.Component<Props> {
-  onSubmit = (values: React.RefAttributes<FormInstance>) => {
+  onSubmit = (values: any) => {
     console.log(values);
   };
 
@@ -30,15 +29,7 @@ class Objective extends React.Component<Props> {
 
     const initialValues = {
       remember: true,
-      Observation: objectiveAssessment.observation,
-      Active: objectiveAssessment.active,
-      Passive: objectiveAssessment.passive,
-      Isometric: objectiveAssessment.resistedIsometric,
-      Functional: objectiveAssessment.functionalTests,
-      Neurological: objectiveAssessment.neurologicalTests,
-      Special: objectiveAssessment.specialTests,
-      Palpation: objectiveAssessment.palpation,
-      Additional: objectiveAssessment.additional,
+      ...objectiveAssessment,
     };
 
     return (
@@ -49,15 +40,15 @@ class Objective extends React.Component<Props> {
         onFinish={this.onSubmit}
         onFinishFailed={this.onSubmitFail}
       >
-        <FormTextArea label="Observation" />
-        <FormTextArea label="Active" />
-        <FormTextArea label="Passive" />
-        <FormTextArea label="Isometric" />
-        <FormTextArea label="Functional" />
-        <FormTextArea label="Neurological" />
-        <FormTextArea label="Special" />
-        <FormTextArea label="Palpation" />
-        <FormTextArea label="Additional" />
+        <FormTextArea label="Observation" name="observation" />
+        <FormTextArea label="Active" name="active" />
+        <FormTextArea label="Passive" name="passive" />
+        <FormTextArea label="Isometric" name="isometric" />
+        <FormTextArea label="Functional" name="functional" />
+        <FormTextArea label="Neurological" name="neurological" />
+        <FormTextArea label="Special" name="special" />
+        <FormTextArea label="Palpation" name="palpation" />
+        <FormTextArea label="Additional" name="additional" />
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className={style.submit}>
             Submit

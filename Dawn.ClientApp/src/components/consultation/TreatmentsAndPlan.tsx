@@ -29,8 +29,8 @@ class TreatmentsAndPlan extends React.Component<Props> {
 
     const initialValues = {
       remember: true,
-      Treatments: treatments,
-      Plan: plans,
+      treatments,
+      plans,
     };
 
     return (
@@ -41,8 +41,8 @@ class TreatmentsAndPlan extends React.Component<Props> {
         onFinish={this.onSubmit}
         onFinishFailed={this.onSubmitFail}
       >
-        <FormTextArea label="Treatments" />
-        <FormTextArea label="Plan" />
+        <FormTextArea label="Treatments" name="treatments" />
+        <FormTextArea label="Plan" name="plans" />
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className={style.submit}>
             Submit
