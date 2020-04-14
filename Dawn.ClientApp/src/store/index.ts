@@ -3,6 +3,7 @@ import * as Patient from "./Patient";
 import * as Subjective from "./Subjective";
 import * as Objective from "./Objective";
 import * as CaseFile from "./CaseFile";
+import * as Consultation from "./Consultation";
 
 // The top-level state object
 export interface ApplicationState {
@@ -11,6 +12,7 @@ export interface ApplicationState {
   subjective: Subjective.SubjectiveState | undefined;
   objective: Objective.ObjectiveState | undefined;
   casefile: CaseFile.CaseFileState | undefined;
+  consultation: Consultation.ConsultationState | undefined;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -22,6 +24,7 @@ export const reducers = {
   subjective: Subjective.reducer,
   objective: Objective.reducer,
   casefile: CaseFile.reducer,
+  consultation: Consultation.reducer,
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

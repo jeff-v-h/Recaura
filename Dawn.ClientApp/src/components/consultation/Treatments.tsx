@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
-import * as TreatmentsStore from "../../store/Treatments";
+import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
 import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
@@ -11,8 +11,8 @@ import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
 
 type ParentProps = { consultId: number };
-type Props = TreatmentsStore.TreatmentsState &
-  typeof TreatmentsStore.actionCreators &
+type Props = ConsultationStore.ConsultationState &
+  typeof ConsultationStore.actionCreators &
   ParentProps;
 
 class Treatments extends React.Component<Props> {
@@ -29,8 +29,8 @@ class Treatments extends React.Component<Props> {
   };
 
   render() {
-    const { list } = this.props;
-    if (!list) return null;
+    const { details } = this.props;
+    if (!details) return null;
 
     const initialValues = {
       remember: true,
@@ -54,14 +54,14 @@ class Treatments extends React.Component<Props> {
   }
 
   private ensureDataFetched = () => {
-    const { consultId, getTreatments } = this.props;
-    getTreatments(consultId);
+    const { consultId, getConsult } = this.props;
+    getConsult(consultId);
   };
 }
 
-const mapStateToProps = (state: ApplicationState) => state.treatments;
+const mapStateToProps = (state: ApplicationState) => state.consultation;
 
 export default compose<React.ComponentType<ParentProps>>(
   withRouter,
-  connect(mapStateToProps, TreatmentsStore.actionCreators)
+  connect(mapStateToProps, ConsultationStore.actionCreators)
 )(Treatments);
