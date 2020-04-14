@@ -10,6 +10,7 @@ import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import Treatments from "./Treatments";
 
 type Props = ConsultationStore.ConsultationState &
   typeof ConsultationStore.actionCreators &
@@ -35,16 +36,27 @@ class Consultation extends React.Component<Props, State> {
     this.setState({ display: e.target.value });
   };
 
+  renderConsultSection = (consultPart: ConsultPart, consultId: number) => {
+    switch (consultPart) {
+      case ConsultPart.Subjective:
+        return <Subjective consultId={consultId} />;
+      case ConsultPart.Objective:
+        return <Objective consultId={consultId} />;
+      case ConsultPart.Treatments:
+        return <Treatments consultId={consultId} />;
+      case ConsultPart.Plans:
+        return null;
+      default:
+        return null;
+    }
+  };
+
   render() {
     const { consultId, display } = this.state;
     return (
       <div className={style.container}>
         <NavPills value={display} onChange={this.onChange} />
-        {display === ConsultPart.Subjective ? (
-          <Subjective consultId={consultId} />
-        ) : (
-          <Objective consultId={consultId} />
-        )}
+        {this.renderConsultSection(display, consultId)}
       </div>
     );
   }

@@ -16,10 +16,6 @@ type Props = ConsultationStore.ConsultationState &
   ParentProps;
 
 class Treatments extends React.Component<Props> {
-  componentDidMount() {
-    this.ensureDataFetched();
-  }
-
   onSubmit = (values: React.RefAttributes<FormInstance>) => {
     console.log(values);
   };
@@ -33,6 +29,7 @@ class Treatments extends React.Component<Props> {
 
     const initialValues = {
       remember: true,
+      Treatments: treatments,
     };
 
     return (
@@ -43,6 +40,7 @@ class Treatments extends React.Component<Props> {
         onFinish={this.onSubmit}
         onFinishFailed={this.onSubmitFail}
       >
+        <FormTextArea label="Treatments" />
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className={style.submit}>
             Submit
@@ -51,11 +49,6 @@ class Treatments extends React.Component<Props> {
       </Form>
     );
   }
-
-  private ensureDataFetched = () => {
-    const { consultId, getConsult } = this.props;
-    getConsult(consultId);
-  };
 }
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
