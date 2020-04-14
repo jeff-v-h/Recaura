@@ -18,10 +18,7 @@ export default ({ value, onChange }: Props) => {
           {ConsultPart[ConsultPart.Objective]}
         </Button>
         <Button value={ConsultPart.Treatments}>
-          {ConsultPart[ConsultPart.Treatments]}
-        </Button>
-        <Button value={ConsultPart.Plans}>
-          {ConsultPart[ConsultPart.Plans]}
+          {ConsultPart[ConsultPart.Treatments]}/{ConsultPart[ConsultPart.Plan]}
         </Button>
       </Group>
     </div>

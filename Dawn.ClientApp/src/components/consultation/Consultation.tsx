@@ -10,7 +10,7 @@ import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import Treatments from "./Treatments";
+import TreatmentsAndPlan from "./TreatmentsAndPlan";
 
 type Props = ConsultationStore.ConsultationState &
   typeof ConsultationStore.actionCreators &
@@ -28,7 +28,6 @@ class Consultation extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    console.log("mount");
     this.ensureDataFetched();
   }
 
@@ -43,9 +42,8 @@ class Consultation extends React.Component<Props, State> {
       case ConsultPart.Objective:
         return <Objective consultId={consultId} />;
       case ConsultPart.Treatments:
-        return <Treatments consultId={consultId} />;
-      case ConsultPart.Plans:
-        return null;
+      case ConsultPart.Plan:
+        return <TreatmentsAndPlan consultId={consultId} />;
       default:
         return null;
     }

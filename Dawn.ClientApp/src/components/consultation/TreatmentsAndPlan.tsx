@@ -15,7 +15,7 @@ type Props = ConsultationStore.ConsultationState &
   typeof ConsultationStore.actionCreators &
   ParentProps;
 
-class Treatments extends React.Component<Props> {
+class TreatmentsAndPlan extends React.Component<Props> {
   onSubmit = (values: React.RefAttributes<FormInstance>) => {
     console.log(values);
   };
@@ -25,11 +25,12 @@ class Treatments extends React.Component<Props> {
   };
 
   render() {
-    const { treatments } = this.props;
+    const { treatments, plans } = this.props;
 
     const initialValues = {
       remember: true,
       Treatments: treatments,
+      Plan: plans,
     };
 
     return (
@@ -41,6 +42,7 @@ class Treatments extends React.Component<Props> {
         onFinishFailed={this.onSubmitFail}
       >
         <FormTextArea label="Treatments" />
+        <FormTextArea label="Plan" />
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className={style.submit}>
             Submit
@@ -56,4 +58,4 @@ const mapStateToProps = (state: ApplicationState) => state.consultation;
 export default compose<React.ComponentType<ParentProps>>(
   withRouter,
   connect(mapStateToProps, ConsultationStore.actionCreators)
-)(Treatments);
+)(TreatmentsAndPlan);

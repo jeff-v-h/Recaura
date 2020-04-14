@@ -14,7 +14,7 @@ export enum ConsultPart {
   Subjective,
   Objective,
   Treatments,
-  Plans,
+  Plan,
 }
 
 export function capitalise(word: string) {
