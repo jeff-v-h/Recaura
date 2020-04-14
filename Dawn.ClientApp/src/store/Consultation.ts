@@ -1,4 +1,9 @@
-import { IGetConsultationVm } from "../api/generated";
+import {
+  IGetConsultationVm,
+  IPractitionerVm,
+  ISubjectiveAssessmentVm,
+  IObjectiveAssessmentVm,
+} from "../api/generated";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { consultationService } from "../api/consultationService";
@@ -14,7 +19,15 @@ const C = {
  */
 export interface ConsultationState {
   isFetching: boolean;
-  details: IGetConsultationVm | null;
+  id: number;
+  caseFileId: number;
+  date: string;
+  number: number;
+  practitioner: IPractitionerVm | null;
+  subjectiveAssessment: ISubjectiveAssessmentVm | null;
+  objectiveAssessment: IObjectiveAssessmentVm | null;
+  treatments: string;
+  plans: string;
 }
 
 //--------------------
@@ -51,7 +64,7 @@ export const actionCreators = {
     getState
   ) => {
     const appState = getState();
-    if (appState?.casefile?.file?.id !== id) {
+    if (appState?.consultation?.id !== id) {
       dispatch({ type: C.GET_CONSULTATION_REQUEST });
 
       try {
@@ -71,7 +84,15 @@ export const actionCreators = {
  */
 const unloadedState: ConsultationState = {
   isFetching: false,
-  details: null,
+  id: 0,
+  caseFileId: 0,
+  date: "",
+  number: 0,
+  practitioner: null,
+  subjectiveAssessment: null,
+  objectiveAssessment: null,
+  treatments: "",
+  plans: "",
 };
 
 export const reducer: Reducer<ConsultationState> = (
@@ -91,7 +112,7 @@ export const reducer: Reducer<ConsultationState> = (
       obj = action as GetConsultSuccessAction;
       return {
         isFetching: false,
-        details: obj.payload,
+        ...obj.payload,
       };
     case C.GET_CONSULTATION_FAILURE:
       obj = action as GetConsultFailureAction;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
-import * as ObjectiveStore from "../../store/Objective";
+import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
 import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
@@ -11,15 +11,11 @@ import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
 
 type ParentProps = { consultId: number };
-type Props = ObjectiveStore.ObjectiveState &
-  typeof ObjectiveStore.actionCreators &
+type Props = ConsultationStore.ConsultationState &
+  typeof ConsultationStore.actionCreators &
   ParentProps;
 
 class Objective extends React.Component<Props> {
-  componentDidMount() {
-    this.ensureDataFetched();
-  }
-
   onSubmit = (values: React.RefAttributes<FormInstance>) => {
     console.log(values);
   };
@@ -29,20 +25,20 @@ class Objective extends React.Component<Props> {
   };
 
   render() {
-    const { assessment } = this.props;
-    if (!assessment) return null;
+    const { objectiveAssessment } = this.props;
+    if (!objectiveAssessment) return null;
 
     const initialValues = {
       remember: true,
-      Observation: assessment.observation,
-      Active: assessment.active,
-      Passive: assessment.passive,
-      Isometric: assessment.resistedIsometric,
-      Functional: assessment.functionalTests,
-      Neurological: assessment.neurologicalTests,
-      Special: assessment.specialTests,
-      Palpation: assessment.palpation,
-      Additional: assessment.additional,
+      Observation: objectiveAssessment.observation,
+      Active: objectiveAssessment.active,
+      Passive: objectiveAssessment.passive,
+      Isometric: objectiveAssessment.resistedIsometric,
+      Functional: objectiveAssessment.functionalTests,
+      Neurological: objectiveAssessment.neurologicalTests,
+      Special: objectiveAssessment.specialTests,
+      Palpation: objectiveAssessment.palpation,
+      Additional: objectiveAssessment.additional,
     };
 
     return (
@@ -70,16 +66,11 @@ class Objective extends React.Component<Props> {
       </Form>
     );
   }
-
-  private ensureDataFetched = () => {
-    const { consultId, getObjectiveAssessment } = this.props;
-    getObjectiveAssessment(consultId);
-  };
 }
 
-const mapStateToProps = (state: ApplicationState) => state.objective;
+const mapStateToProps = (state: ApplicationState) => state.consultation;
 
 export default compose<React.ComponentType<ParentProps>>(
   withRouter,
-  connect(mapStateToProps, ObjectiveStore.actionCreators)
+  connect(mapStateToProps, ConsultationStore.actionCreators)
 )(Objective);

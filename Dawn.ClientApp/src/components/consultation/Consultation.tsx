@@ -27,6 +27,7 @@ class Consultation extends React.Component<Props, State> {
   };
 
   componentDidMount() {
+    console.log("mount");
     this.ensureDataFetched();
   }
 
@@ -50,7 +51,7 @@ class Consultation extends React.Component<Props, State> {
 
   private ensureDataFetched = () => {
     const { getConsult } = this.props;
-    getConsult(this.getUrlConsultId());
+    getConsult(this.state.consultId);
   };
 
   private getUrlConsultId(): number {

@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
-import * as SubjectiveStore from "../../store/Subjective";
+import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
 import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
@@ -12,15 +12,11 @@ import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
 
 type ParentProps = { consultId: number };
-type Props = SubjectiveStore.SubjectiveState &
-  typeof SubjectiveStore.actionCreators &
+type Props = ConsultationStore.ConsultationState &
+  typeof ConsultationStore.actionCreators &
   ParentProps;
 
 class Subjective extends React.Component<Props> {
-  componentDidMount() {
-    this.ensureDataFetched();
-  }
-
   onSubmit = (values: React.RefAttributes<FormInstance>) => {
     console.log(values);
   };
@@ -30,21 +26,21 @@ class Subjective extends React.Component<Props> {
   };
 
   render() {
-    const { assessment } = this.props;
-    if (!assessment) return null;
+    const { subjectiveAssessment } = this.props;
+    if (!subjectiveAssessment) return null;
 
     const initialValues = {
       remember: true,
-      MOI: assessment.moi,
-      "Current History": assessment.currentHistory,
-      "Body Chart": assessment.bodyChart,
-      Agg: assessment.aggravatingFactors,
-      Ease: assessment.easingFactors,
-      VAS: assessment.vas,
-      "Past History": assessment.pastHistory,
-      "Social History": assessment.socialHistory,
-      Imaging: assessment.imaging,
-      "General Health": assessment.generalHealth,
+      MOI: subjectiveAssessment.moi,
+      "Current History": subjectiveAssessment.currentHistory,
+      "Body Chart": subjectiveAssessment.bodyChart,
+      Agg: subjectiveAssessment.aggravatingFactors,
+      Ease: subjectiveAssessment.easingFactors,
+      VAS: subjectiveAssessment.vas,
+      "Past History": subjectiveAssessment.pastHistory,
+      "Social History": subjectiveAssessment.socialHistory,
+      Imaging: subjectiveAssessment.imaging,
+      "General Health": subjectiveAssessment.generalHealth,
     };
 
     return (
@@ -76,16 +72,11 @@ class Subjective extends React.Component<Props> {
       </Form>
     );
   }
-
-  private ensureDataFetched = () => {
-    const { consultId, getSubjectiveAssessment } = this.props;
-    getSubjectiveAssessment(consultId);
-  };
 }
 
-const mapStateToProps = (state: ApplicationState) => state.subjective;
+const mapStateToProps = (state: ApplicationState) => state.consultation;
 
 export default compose<React.ComponentType<ParentProps>>(
   withRouter,
-  connect(mapStateToProps, SubjectiveStore.actionCreators)
+  connect(mapStateToProps, ConsultationStore.actionCreators)
 )(Subjective);

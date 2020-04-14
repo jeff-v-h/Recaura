@@ -29,8 +29,7 @@ class Treatments extends React.Component<Props> {
   };
 
   render() {
-    const { details } = this.props;
-    if (!details) return null;
+    const { treatments } = this.props;
 
     const initialValues = {
       remember: true,
