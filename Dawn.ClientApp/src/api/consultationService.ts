@@ -10,7 +10,7 @@ import { message } from "antd";
 class ConsultationService {
   getConsultation = async (id: number): Promise<IGetConsultationVm> => {
     try {
-      const url = `/api/casefiles/${id}`;
+      const url = `/api/consultations/${id}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<
         IGetConsultationVm
       >;

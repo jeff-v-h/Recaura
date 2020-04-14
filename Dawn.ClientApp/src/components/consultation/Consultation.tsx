@@ -6,8 +6,14 @@ import { getParsedUrlId, ConsultPart } from "../../helpers/utils";
 import { RadioChangeEvent } from "antd/lib/radio";
 import NavPills from "./NavPills";
 import Objective from "./Objective";
+import * as ConsultationStore from "../../store/Consultation";
+import { ApplicationState } from "../../store";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
-type Props = RouteComponentProps<{ consultId: string }>;
+type Props = ConsultationStore.ConsultationState &
+  typeof ConsultationStore.actionCreators &
+  RouteComponentProps<{ consultId: string }>;
 
 type State = {
   consultId: number;
@@ -19,6 +25,10 @@ class Consultation extends React.Component<Props, State> {
     consultId: this.getUrlConsultId(),
     display: ConsultPart.Subjective,
   };
+
+  componentDidMount() {
+    this.ensureDataFetched();
+  }
 
   onChange = (e: RadioChangeEvent) => {
     this.setState({ display: e.target.value });
@@ -38,10 +48,20 @@ class Consultation extends React.Component<Props, State> {
     );
   }
 
+  private ensureDataFetched = () => {
+    const { getConsult } = this.props;
+    getConsult(this.getUrlConsultId());
+  };
+
   private getUrlConsultId(): number {
     const { match } = this.props;
     return getParsedUrlId(match.params.consultId);
   }
 }
 
-export default withRouter(Consultation);
+const mapStateToProps = (state: ApplicationState) => state.subjective;
+
+export default compose<React.ComponentType>(
+  withRouter,
+  connect(mapStateToProps, ConsultationStore.actionCreators)
+)(Consultation);
