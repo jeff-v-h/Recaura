@@ -56,8 +56,8 @@ export interface IGetConsultationVm {
     practitioner: IPractitionerVm;
     subjectiveAssessment: ISubjectiveAssessmentVm;
     objectiveAssessment: IObjectiveAssessmentVm;
-    treatments: ITreatmentVm[];
-    plans: IForwardPlanVm[];
+    treatments: string;
+    plans: string;
 }
 
 export interface IPractitionerVm {
@@ -86,78 +86,14 @@ export interface IObjectiveAssessmentVm {
     id: number;
     consultationId: number;
     observation: string;
-    active: IActiveTestVm[];
-    passive: IPassiveTestVm[];
-    resistedIsometric: IResistedIsometricTestVm[];
-    functionalTests: IFunctionalTestVm[];
-    neurologicalTests: INeurologicalTestVm[];
-    specialTests: ISpecialTestVm[];
+    active: string;
+    passive: string;
+    resistedIsometric: string;
+    functionalTests: string;
+    neurologicalTests: string;
+    specialTests: string;
     palpation: string;
     additional: string;
-}
-
-export interface IActiveTestVm {
-    id: number;
-    name: string;
-    comment: string;
-    value: number;
-}
-
-export interface IPassiveTestVm {
-    id: number;
-    name: string;
-    comment: string;
-    value: number;
-}
-
-export interface IResistedIsometricTestVm {
-    id: number;
-    name: string;
-    comment: string;
-    value: number;
-}
-
-export interface IFunctionalTestVm {
-    id: number;
-    name: string;
-    comment: string;
-    result: string;
-}
-
-export interface INeurologicalTestVm {
-    id: number;
-    name: string;
-    comment: string;
-    result: DiagnosticResult;
-}
-
-/** 0 = Negative 1 = Positive 2 = Inconclusive */
-export enum DiagnosticResult {
-    Negative = 0,
-    Positive = 1,
-    Inconclusive = 2,
-}
-
-export interface ISpecialTestVm {
-    id: number;
-    name: string;
-    comment: string;
-    result: DiagnosticResult;
-}
-
-export interface ITreatmentVm {
-    id: number;
-    consultationId: number;
-    name: string;
-    comment: string;
-    quantity: string;
-}
-
-export interface IForwardPlanVm {
-    id: number;
-    consultationId: number;
-    name: string;
-    comment: string;
 }
 
 export interface IGetObjectiveAssessmentVm extends IObjectiveAssessmentVm {
@@ -205,15 +141,5 @@ export enum Gender {
     Other = 3,
 }
 
-export interface IGetPlansVm {
-    consultationId: number;
-    plans: IForwardPlanVm[];
-}
-
 export interface IGetSubjectiveAssessmentVm extends ISubjectiveAssessmentVm {
-}
-
-export interface IGetTreatmentsVm {
-    consultationId: number;
-    treatments: ITreatmentVm[];
 }

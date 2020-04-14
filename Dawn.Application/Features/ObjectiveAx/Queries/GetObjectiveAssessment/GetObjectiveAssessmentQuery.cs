@@ -28,12 +28,6 @@ namespace Dawn.Application.Features.ObjectiveAx.Queries.GetObjectiveAssessment
             public async Task<GetObjectiveAssessmentVm> Handle(GetObjectiveAssessmentQuery query, CancellationToken token)
             {
                 var objective = await _dbContext.ObjectiveAssessments.AsNoTracking()
-                    .Include(o => o.Active)
-                    .Include(o => o.Passive)
-                    .Include(o => o.ResistedIsometric)
-                    .Include(o => o.FunctionalTests)
-                    .Include(o => o.NeurologicalTests)
-                    .Include(o => o.SpecialTests)
                     .Where(o => o.ConsultationId == query.ConsultationId)
                     .FirstOrNotFoundAsync(nameof(ObjectiveAssessment), $"ConsultationId {query.ConsultationId}", token);
 

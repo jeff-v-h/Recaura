@@ -2,7 +2,6 @@
 using Dawn.Application.Common.Models;
 using Dawn.Domain.Entities;
 using System;
-using System.Collections.Generic;
 
 namespace Dawn.Application.Features.Consultations.Queries.GetConsultation
 {
@@ -15,7 +14,7 @@ namespace Dawn.Application.Features.Consultations.Queries.GetConsultation
         public PractitionerVm Practitioner { get; set; }
         public SubjectiveAssessmentVm SubjectiveAssessment { get; set; }
         public ObjectiveAssessmentVm ObjectiveAssessment { get; set; }
-        public List<TreatmentVm> Treatments { get; set; }
-        public List<ForwardPlanVm> Plans { get; set; }
+        public string Treatments { get; set; }
+        public string Plans { get; set; }
     }
 }
