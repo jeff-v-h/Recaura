@@ -12,6 +12,7 @@ const C = {
   GET_CONSULTATION_REQUEST: "GET_CONSULTATION_REQUEST",
   GET_CONSULTATION_SUCCESS: "GET_CONSULTATION_SUCCESS",
   GET_CONSULTATION_FAILURE: "GET_CONSULTATION_FAILURE",
+  MODIFY_SUBJECTIVE: "MODIFY_SUBJECTIVE",
 };
 
 /**
@@ -32,17 +33,22 @@ export interface ConsultationState {
 
 //--------------------
 //#region ACTIONS
-export interface GetConsultRequestAction {
+interface GetConsultRequestAction {
   type: typeof C.GET_CONSULTATION_REQUEST;
 }
 
-export interface GetConsultSuccessAction {
+interface GetConsultSuccessAction {
   type: typeof C.GET_CONSULTATION_SUCCESS;
   payload: IGetConsultationVm;
 }
 
-export interface GetConsultFailureAction {
+interface GetConsultFailureAction {
   type: typeof C.GET_CONSULTATION_FAILURE;
+}
+
+interface ModifySubjective {
+  type: typeof C.MODIFY_SUBJECTIVE;
+  payload: ISubjectiveAssessmentVm;
 }
 
 //#endregion ACTIONS
@@ -77,6 +83,8 @@ export const actionCreators = {
       }
     }
   },
+  modifySubjective: (subjective: ISubjectiveAssessmentVm) =>
+    ({ type: C.MODIFY_SUBJECTIVE, payload: subjective } as ModifySubjective),
 };
 
 /**
@@ -117,6 +125,10 @@ export const reducer: Reducer<ConsultationState> = (
     case C.GET_CONSULTATION_FAILURE:
       obj = action as GetConsultFailureAction;
       return unloadedState;
+
+    case C.MODIFY_SUBJECTIVE:
+      obj = action as ModifySubjective;
+      return { ...unloadedState, subjectiveAssessment: obj.payload };
     default:
       return state;
   }

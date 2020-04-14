@@ -3,9 +3,14 @@ import style from "./formTextArea.scss";
 import { Select, Form } from "antd";
 
 const { Option } = Select;
-type Props = { label: string; options: string[]; required?: boolean };
+type Props = {
+  label: string;
+  name: string;
+  options: string[];
+  required?: boolean;
+};
 
-export default ({ label, options, required = false }: Props) => {
+export default ({ label, name, options, required = false }: Props) => {
   const rules = required
     ? { required: true, message: `${label} required!` }
     : { required: false };

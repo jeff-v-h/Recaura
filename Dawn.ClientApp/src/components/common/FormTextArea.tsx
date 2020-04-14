@@ -2,9 +2,9 @@ import * as React from "react";
 import style from "./formTextArea.scss";
 import { Input, Form } from "antd";
 
-type Props = { label: string; required?: boolean };
+type Props = { label: string; name: string; required?: boolean };
 
-export default ({ label, required = false }: Props) => {
+export default ({ label, name, required = false }: Props) => {
   const rules = required
     ? { required: true, message: `${label} required!` }
     : { required: false };
@@ -12,7 +12,7 @@ export default ({ label, required = false }: Props) => {
   return (
     <Form.Item
       label={label}
-      name={label}
+      name={name}
       rules={[rules]}
       className={style.textSection}
     >

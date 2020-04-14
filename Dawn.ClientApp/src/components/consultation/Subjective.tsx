@@ -6,7 +6,6 @@ import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
 import { Form, message, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
-import { FormInstance } from "antd/lib/form";
 import FormSelect from "../common/FormSelect";
 import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
@@ -17,8 +16,10 @@ type Props = ConsultationStore.ConsultationState &
   ParentProps;
 
 class Subjective extends React.Component<Props> {
-  onSubmit = (values: React.RefAttributes<FormInstance>) => {
+  onSubmit = (values: any) => {
+    const { modifySubjective } = this.props;
     console.log(values);
+    modifySubjective({ ...values });
   };
 
   onSubmitFail = () => {
@@ -31,16 +32,7 @@ class Subjective extends React.Component<Props> {
 
     const initialValues = {
       remember: true,
-      MOI: subjectiveAssessment.moi,
-      "Current History": subjectiveAssessment.currentHistory,
-      "Body Chart": subjectiveAssessment.bodyChart,
-      Agg: subjectiveAssessment.aggravatingFactors,
-      Ease: subjectiveAssessment.easingFactors,
-      VAS: subjectiveAssessment.vas,
-      "Past History": subjectiveAssessment.pastHistory,
-      "Social History": subjectiveAssessment.socialHistory,
-      Imaging: subjectiveAssessment.imaging,
-      "General Health": subjectiveAssessment.generalHealth,
+      ...subjectiveAssessment,
     };
 
     return (
@@ -51,19 +43,20 @@ class Subjective extends React.Component<Props> {
         onFinish={this.onSubmit}
         onFinishFailed={this.onSubmitFail}
       >
-        <FormTextArea label="MOI" />
-        <FormTextArea label="Current History" />
-        <FormTextArea label="Body Chart" />
-        <FormTextArea label="Agg" />
-        <FormTextArea label="Ease" />
+        <FormTextArea label="MOI" name="moi" />
+        <FormTextArea label="Current History" name="currentHistory" />
+        <FormTextArea label="Body Chart" name="bodyChart" />
+        <FormTextArea label="Agg" name="aggravatingFactors" />
+        <FormTextArea label="Ease" name="easingFactors" />
         <FormSelect
           label="VAS"
+          name="vas"
           options={["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}
         />
-        <FormTextArea label="Past History" />
-        <FormTextArea label="Social History" />
-        <FormTextArea label="Imaging" />
-        <FormTextArea label="General Health" />
+        <FormTextArea label="Past History" name="pastHistory" />
+        <FormTextArea label="Social History" name="socialHistory" />
+        <FormTextArea label="Imaging" name="imaging" />
+        <FormTextArea label="General Health" name="generalHealth" />
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className={style.submit}>
             Submit
