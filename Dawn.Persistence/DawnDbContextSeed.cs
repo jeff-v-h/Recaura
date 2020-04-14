@@ -139,7 +139,8 @@ namespace Dawn.Persistence
                     Treatments = "L1-5 PA mobs. Each level 3 x 20sec. grade 2 comfortable. easied into grade 3 by 3rd set"
                         + "\nTrA activation - 5x5sec"
                         + "\nHip Flexor stretch - 3x15sec. kneel on pillow"
-                        + "\nPlank 3x20sec"
+                        + "\nPlank 3x20sec",
+                    Plans = "rv by end of week. ease into hydrotherapy when able"
                 },
                 new Consultation
                 {
@@ -153,7 +154,8 @@ namespace Dawn.Persistence
                     Treatments = "glut, quad and hamstring contractions. 3x10. short of pain"
                         + "\ncompression bandage, 1x med size"
                         + "\nleft knee distractions. 2x30sec in sitting"
-                        + "\nelevated I/T compression with ice pack. 5 min"
+                        + "\nelevated I/T compression with ice pack. 5 min",
+                    Plans = "rv daily this week. gradual increase strength and reduce swelling."
                 });
             context.SaveChanges();
             context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Consultations OFF");
