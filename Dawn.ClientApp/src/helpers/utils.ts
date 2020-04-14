@@ -16,3 +16,7 @@ export enum ConsultPart {
   Treatments,
   Plans,
 }
+
+export function capitalise(word: string) {
+  return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
+}

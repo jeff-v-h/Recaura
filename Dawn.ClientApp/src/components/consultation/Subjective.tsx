@@ -17,10 +17,6 @@ type Props = SubjectiveStore.SubjectiveState &
   ParentProps;
 
 class Subjective extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.ensureDataFetched();
   }

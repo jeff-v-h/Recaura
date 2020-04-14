@@ -16,10 +16,6 @@ type Props = ObjectiveStore.ObjectiveState &
   ParentProps;
 
 class Objective extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.ensureDataFetched();
   }
