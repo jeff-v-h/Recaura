@@ -29,14 +29,6 @@ namespace Dawn.Persistence
                     AddConsultations(context);
                     AddSubjectiveAssessments(context);
                     AddObjectiveAssessments(context);
-                    AddActiveTests(context);
-                    AddPassiveTests(context);
-                    AddResistedIsometricTests(context);
-                    AddFunctionalTests(context);
-                    AddNeurologicalTests(context);
-                    AddSpecialTests(context);
-                    AddTreatments(context);
-                    AddForwardPlans(context);
                 }
                 finally
                 {
@@ -143,7 +135,11 @@ namespace Dawn.Persistence
                     Number = 1,
                     PractitionerId = 1,
                     SubjectiveId = 1,
-                    ObjectiveId = 1
+                    ObjectiveId = 1,
+                    Treatments = "L1-5 PA mobs. Each level 3 x 20sec. grade 2 comfortable. easied into grade 3 by 3rd set"
+                        + "\nTrA activation - 5x5sec"
+                        + "\nHip Flexor stretch - 3x15sec. kneel on pillow"
+                        + "\nPlank 3x20sec"
                 },
                 new Consultation
                 {
@@ -153,7 +149,11 @@ namespace Dawn.Persistence
                     Number = 1,
                     PractitionerId = 1,
                     SubjectiveId = 2,
-                    ObjectiveId = 2
+                    ObjectiveId = 2,
+                    Treatments = "glut, quad and hamstring contractions. 3x10. short of pain"
+                        + "\ncompression bandage, 1x med size"
+                        + "\nleft knee distractions. 2x30sec in sitting"
+                        + "\nelevated I/T compression with ice pack. 5 min"
                 });
             context.SaveChanges();
             context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Consultations OFF");
@@ -208,6 +208,12 @@ namespace Dawn.Persistence
                     Id = 1,
                     ConsultationId = 1,
                     Observation = "cautious movements. slow sit to stand.",
+                    Active = "Standing flexion -fingertips to 1/2 thigh",
+                    Passive = "",
+                    ResistedIsometric = "knee ext 4+/5",
+                    FunctionalTests = "STS x10. pain at 7",
+                    NeurologicalTests = "sensation testing thigh and calf. -ve",
+                    SpecialTests = "",
                     Palpation = "Slight tenderness in right lower back",
                     Additional = "poor posture"
                 },
@@ -216,233 +222,16 @@ namespace Dawn.Persistence
                     Id = 2,
                     ConsultationId = 2,
                     Observation = "swollen left knee. mild limp when walking",
+                    Active = "L knee ext - 20 deg from full ext",
+                    Passive = "L knee ext 15 from full ext",
+                    ResistedIsometric = "knee ext 4/5",
+                    FunctionalTests = "step up x10. unable without arm assist. pain with arm assist",
+                    NeurologicalTests = "",
+                    SpecialTests = "lachmans -ve. mcmurrays +ve",
                     Palpation = "Slight tenderness in all around knee. most tender medial knee joint line"
                 });
             context.SaveChanges();
             context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ObjectiveAssessments OFF");
-        }
-
-        private static void AddActiveTests(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ActiveTests ON");
-            context.ActiveTests.AddRange(
-                new ActiveTest
-                {
-                    Id = 1,
-                    ObjectiveAssessmentId = 1,
-                    Name = "Standing Flexion",
-                    Value = 0,
-                    Comment = "to 1/2 thigh"
-                },
-                new ActiveTest
-                {
-                    Id = 2,
-                    ObjectiveAssessmentId = 2,
-                    Name = "L knee ext",
-                    Value = 20,
-                    Comment = "from full ext"
-                });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ActiveTests OFF");
-        }
-
-        private static void AddPassiveTests(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.PassiveTests ON");
-            context.PassiveTests.Add(new PassiveTest
-            {
-                Id = 1,
-                ObjectiveAssessmentId = 2,
-                Name = "L knee ext",
-                Value = 15,
-                Comment = "from full ext"
-            });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.PassiveTests OFF");
-        }
-
-        private static void AddResistedIsometricTests(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ResistedIsometricTests ON");
-            context.ResistedIsometricTests.AddRange(
-                new ResistedIsometricTest
-                {
-                    Id = 1,
-                    ObjectiveAssessmentId = 1,
-                    Name = "Knee Extension",
-                    Value = 4,
-                    Comment = "4+/5"
-                },
-                new ResistedIsometricTest
-                {
-                    Id = 2,
-                    ObjectiveAssessmentId = 2,
-                    Name = "L knee ext",
-                    Value = 4
-                });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ResistedIsometricTests OFF");
-        }
-
-        private static void AddFunctionalTests(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.FunctionalTests ON");
-            context.FunctionalTests.AddRange(
-                new FunctionalTest
-                {
-                    Id = 1,
-                    ObjectiveAssessmentId = 1,
-                    Name = "Sit to stand x10",
-                    Result = "Stopped at 7",
-                    Comment = "pain initially. increased from 4. too much by 7"
-                },
-                new FunctionalTest
-                {
-                    Id = 2,
-                    ObjectiveAssessmentId = 2,
-                    Name = "step up x10",
-                    Result = "unable without arm assist",
-                    Comment = "able with arm assist but still with pain+"
-                });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.FunctionalTests OFF");
-        }
-
-        private static void AddNeurologicalTests(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.NeurologicalTests ON");
-            context.NeurologicalTests.Add(new NeurologicalTest
-            {
-                Id = 1,
-                ObjectiveAssessmentId = 1,
-                Name = "Sensation",
-                Result = DiagnosticResult.Negative
-            });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.NeurologicalTests OFF");
-        }
-
-        private static void AddSpecialTests(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.SpecialTests ON");
-            context.SpecialTests.AddRange(
-                new SpecialTest
-                {
-                    Id = 1,
-                    ObjectiveAssessmentId = 2,
-                    Name = "Lachman's Test",
-                    Result = DiagnosticResult.Negative
-                },
-                new SpecialTest
-                {
-                    Id = 2,
-                    ObjectiveAssessmentId = 2,
-                    Name = "McMurray's Test",
-                    Result = DiagnosticResult.Positive,
-                    Comment = "more pain medial side"
-                });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.SpecialTests OFF");
-        }
-
-        private static void AddTreatments(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Treatments ON");
-            context.Treatments.AddRange(
-                new Treatment
-                {
-                    Id = 1,
-                    ConsultationId = 1,
-                    Name = "L1-5 PA mobs",
-                    Quantity = "Each 3 x 20sec",
-                    Comment = "grade 2 comfortable. easied into grade 3 by 3rd set"
-                },
-                new Treatment
-                {
-                    Id = 2,
-                    ConsultationId = 1,
-                    Name = "TrA activation",
-                    Quantity = "5x5sec"
-                },
-                new Treatment
-                {
-                    Id = 3,
-                    ConsultationId = 1,
-                    Name = "Hip Flexor stretch",
-                    Quantity = "3x15sec",
-                    Comment = "kneel on pillow"
-                },
-                new Treatment
-                {
-                    Id = 4,
-                    ConsultationId = 1,
-                    Name = "Plank",
-                    Quantity = "3x 30sec"
-                },
-                new Treatment
-                {
-                    Id = 5,
-                    ConsultationId = 2,
-                    Name = "glut, quad and hamstring contractions",
-                    Quantity = "3x10",
-                    Comment = "short of pain"
-                },
-                new Treatment
-                {
-                    Id = 6,
-                    ConsultationId = 2,
-                    Name = "compression bandage",
-                    Quantity = "1x med size"
-                },
-                new Treatment
-                {
-                    Id = 7,
-                    ConsultationId = 2,
-                    Name = "left knee distractions",
-                    Quantity = "2x30sec",
-                    Comment = "in sitting"
-                },
-                new Treatment
-                {
-                    Id = 8,
-                    ConsultationId = 2,
-                    Name = "elevated I/T compression with ice pack",
-                    Quantity = "5 min"
-                });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Treatments OFF");
-        }
-
-        private static void AddForwardPlans(DawnDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ForwardPlans ON");
-            context.ForwardPlans.AddRange(
-                new ForwardPlan
-                {
-                    Id = 1,
-                    ConsultationId = 1,
-                    Name = "strengthen core gradually"
-                },
-                new ForwardPlan
-                {
-                    Id = 2,
-                    ConsultationId = 1,
-                    Name = "Review tomorrow"
-                },
-                new ForwardPlan
-                {
-                    Id = 3,
-                    ConsultationId = 2,
-                    Name = "aqua exs in 2 days"
-                },
-                new ForwardPlan
-                {
-                    Id = 4,
-                    ConsultationId = 2,
-                    Name = "Review daily this week"
-                });
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ForwardPlans OFF");
         }
     }
 }

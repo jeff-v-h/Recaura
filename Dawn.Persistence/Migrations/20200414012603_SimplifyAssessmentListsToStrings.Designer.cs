@@ -4,14 +4,16 @@ using Dawn.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dawn.Persistence.Migrations
 {
     [DbContext(typeof(DawnDbContext))]
-    partial class DawnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200414012603_SimplifyAssessmentListsToStrings")]
+    partial class SimplifyAssessmentListsToStrings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
