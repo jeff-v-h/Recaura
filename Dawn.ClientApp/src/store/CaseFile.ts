@@ -46,17 +46,18 @@ export type KnownAction = GetCaseFileKnownAction;
  * ACTION CREATORS
  */
 export const actionCreators = {
-  getCaseFile: (
-    consultId: number
-  ): AppThunkAction<GetCaseFileKnownAction> => async (dispatch, getState) => {
+  getCaseFile: (id: number): AppThunkAction<GetCaseFileKnownAction> => async (
+    dispatch,
+    getState
+  ) => {
     const appState = getState();
-    if (appState?.plans?.consultationId !== consultId) {
+    if (appState?.casefile?.file?.id !== id) {
       dispatch({ type: C.GET_CASEFILE_REQUEST });
 
       try {
         dispatch({
           type: C.GET_CASEFILE_SUCCESS,
-          payload: await patientsService.getCaseFile(consultId),
+          payload: await patientsService.getCaseFile(id),
         });
       } catch (e) {
         dispatch({ type: C.GET_CASEFILE_FAILURE });

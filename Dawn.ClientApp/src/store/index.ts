@@ -2,8 +2,6 @@ import * as Patients from "./Patients";
 import * as Patient from "./Patient";
 import * as Subjective from "./Subjective";
 import * as Objective from "./Objective";
-import * as Treatments from "./Treatments";
-import * as Plans from "./Plans";
 import * as CaseFile from "./CaseFile";
 
 // The top-level state object
@@ -12,8 +10,6 @@ export interface ApplicationState {
   patients: Patients.PatientsState | undefined;
   subjective: Subjective.SubjectiveState | undefined;
   objective: Objective.ObjectiveState | undefined;
-  treatments: Treatments.TreatmentsState | undefined;
-  plans: Plans.PlansState | undefined;
   casefile: CaseFile.CaseFileState | undefined;
 }
 
@@ -25,8 +21,6 @@ export const reducers = {
   patients: Patients.reducer,
   subjective: Subjective.reducer,
   objective: Objective.reducer,
-  treatments: Treatments.reducer,
-  plans: Plans.reducer,
   casefile: CaseFile.reducer,
 };
 
