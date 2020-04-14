@@ -16,6 +16,23 @@ type Props = ConsultationStore.ConsultationState &
   ParentProps;
 
 class TreatmentsAndPlan extends React.Component<Props> {
+  formRef: React.RefObject<FormInstance> = React.createRef();
+
+  componentWillUnmount() {
+    this.updateStoreWithFormChanges();
+  }
+
+  updateStoreWithFormChanges = () => {
+    const { modifyTreatmentsAndPlans } = this.props;
+    if (this.formRef.current) {
+      const { getFieldValue } = this.formRef.current;
+      modifyTreatmentsAndPlans({
+        treatments: getFieldValue("treatments"),
+        plans: getFieldValue("plans"),
+      });
+    }
+  };
+
   onSubmit = (values: React.RefAttributes<FormInstance>) => {
     console.log(values);
   };
@@ -36,6 +53,7 @@ class TreatmentsAndPlan extends React.Component<Props> {
     return (
       <Form
         {...formLayout}
+        ref={this.formRef}
         name="treatments"
         initialValues={initialValues}
         onFinish={this.onSubmit}

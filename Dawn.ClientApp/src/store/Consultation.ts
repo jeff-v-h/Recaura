@@ -14,7 +14,13 @@ const C = {
   GET_CONSULTATION_FAILURE: "GET_CONSULTATION_FAILURE",
   MODIFY_SUBJECTIVE: "MODIFY_SUBJECTIVE",
   MODIFY_OBJECTIVE: "MODIFY_OBJECTIVE",
+  MODIFY_TREATMENTS_AND_PLANS: "MODIFY_TREATMENTS_AND_PLANS",
 };
+
+interface TreatmentsAndPlans {
+  treatments: string;
+  plans: string;
+}
 
 /**
  * STATE
@@ -57,18 +63,24 @@ interface ModifyObjective {
   payload: IObjectiveAssessmentVm;
 }
 
+interface ModifyTreatmentsAndPlans {
+  type: typeof C.MODIFY_SUBJECTIVE;
+  payload: TreatmentsAndPlans;
+}
+
 //#endregion ACTIONS
 //--------------------
 
 // ACTION TYPE
-export type GetConsultKnownAction =
+type GetConsultKnownAction =
   | GetConsultRequestAction
   | GetConsultSuccessAction
   | GetConsultFailureAction;
-export type KnownAction =
+type KnownAction =
   | GetConsultKnownAction
   | ModifySubjective
-  | ModifyObjective;
+  | ModifyObjective
+  | ModifyTreatmentsAndPlans;
 
 /**
  * ACTION CREATORS
@@ -96,6 +108,11 @@ export const actionCreators = {
     ({ type: C.MODIFY_SUBJECTIVE, payload: subjective } as ModifySubjective),
   modifyObjective: (objective: IObjectiveAssessmentVm) =>
     ({ type: C.MODIFY_OBJECTIVE, payload: objective } as ModifyObjective),
+  modifyTreatmentsAndPlans: (treatmentAndPlans: TreatmentsAndPlans) =>
+    ({
+      type: C.MODIFY_TREATMENTS_AND_PLANS,
+      payload: treatmentAndPlans,
+    } as ModifyTreatmentsAndPlans),
 };
 
 /**
@@ -143,6 +160,9 @@ export const reducer: Reducer<ConsultationState> = (
     case C.MODIFY_OBJECTIVE:
       obj = action as ModifyObjective;
       return { ...state, objectiveAssessment: obj.payload };
+    case C.MODIFY_TREATMENTS_AND_PLANS:
+      obj = action as ModifyTreatmentsAndPlans;
+      return { ...state, ...obj.payload };
     default:
       return state;
   }
