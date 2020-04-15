@@ -3,7 +3,7 @@ using Dawn.Domain.Entities;
 
 namespace Dawn.Application.Common.Models
 {
-    public class ObjectiveAssessmentVm : IMapFrom<ObjectiveAssessment>
+    public class ObjectiveAssessmentVm : IMapFrom<ObjectiveAssessment>, IMapTo<ObjectiveAssessment>
     {
         public int Id { get; set; }
         public int ConsultationId { get; set; }

@@ -47,6 +47,16 @@ namespace Dawn.Application.Features.Consultations.UpdateConsultation
                     consultation.PractitionerId = command.Practitioner.Id;
                 }
 
+                if (command.SubjectiveAssessment != null)
+                {
+                    consultation.SubjectiveAssessment = _mapper.Map<SubjectiveAssessment>(command.SubjectiveAssessment);
+                }
+
+                if (command.ObjectiveAssessment != null)
+                {
+                    consultation.ObjectiveAssessment = _mapper.Map<ObjectiveAssessment>(command.ObjectiveAssessment);
+                }
+
                 // Objective changed here
                 consultation.Treatments = command.Treatments;
                 consultation.Plans = command.Plans;
