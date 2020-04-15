@@ -96,6 +96,17 @@ export interface IObjectiveAssessmentVm {
     additional: string;
 }
 
+export interface IUpdateConsultationCommand {
+    id: number;
+    date: string;
+    number: number;
+    practitioner: IPractitionerVm;
+    subjectiveAssessment: ISubjectiveAssessmentVm;
+    objectiveAssessment: IObjectiveAssessmentVm;
+    treatments: string;
+    plans: string;
+}
+
 export interface IGetObjectiveAssessmentVm extends IObjectiveAssessmentVm {
 }
 
@@ -142,4 +153,11 @@ export enum Gender {
 }
 
 export interface IGetSubjectiveAssessmentVm extends ISubjectiveAssessmentVm {
+}
+
+export interface FileResponse {
+    data: Blob;
+    status: number;
+    fileName?: string;
+    headers?: { [name: string]: any };
 }

@@ -1,0 +1,61 @@
+﻿using AutoMapper;
+using Dawn.Application.Common.Extensions;
+using Dawn.Application.Common.Interfaces.Persistence;
+using Dawn.Application.Common.Models;
+using Dawn.Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Dawn.Application.Features.Consultations.UpdateConsultation
+{
+    public class UpdateConsultationCommand : IRequest
+    {
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public int Number { get; set; }
+        public PractitionerVm Practitioner { get; set; }
+        public SubjectiveAssessmentVm SubjectiveAssessment { get; set; }
+        public ObjectiveAssessmentVm ObjectiveAssessment { get; set; }
+        public string Treatments { get; set; }
+        public string Plans { get; set; }
+
+        public class UpdateConsultationCommandHandler : IRequestHandler<UpdateConsultationCommand>
+        {
+            private readonly IDawnDbContext _dbContext;
+            private readonly IMapper _mapper;
+
+            public UpdateConsultationCommandHandler(IDawnDbContext context, IMapper mapper)
+            {
+                _dbContext = context;
+                _mapper = mapper;
+            }
+
+            public async Task<Unit> Handle(UpdateConsultationCommand command, CancellationToken cancelToken)
+            {
+                var consultation = await _dbContext.Consultations.AsNoTracking()
+                    .Where(c => c.Id == command.Id)
+                    .FirstOrNotFoundAsync(nameof(Consultation), command.Id, cancelToken);
+                
+                consultation.Date = command.Date;
+                consultation.Number = command.Number;
+                if (consultation.Practitioner != null)
+                {
+                    consultation.PractitionerId = command.Practitioner.Id;
+                }
+
+                // Objective changed here
+                consultation.Treatments = command.Treatments;
+                consultation.Plans = command.Plans;
+
+                _dbContext.Consultations.Update(consultation);
+                await _dbContext.SaveChangesAsync(cancelToken);
+
+                return Unit.Value;
+            }
+        }
+    }
+}
