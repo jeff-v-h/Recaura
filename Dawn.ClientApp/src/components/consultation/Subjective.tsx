@@ -74,7 +74,7 @@ class Subjective extends React.Component<Props> {
         <FormSelect
           label="VAS"
           name="vas"
-          options={["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}
+          options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         />
         <FormTextArea label="Past History" name="pastHistory" />
         <FormTextArea label="Social History" name="socialHistory" />
