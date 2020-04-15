@@ -1,4 +1,4 @@
-﻿using Dawn.Application.Features.CaseFiles.Queries.GetCaseFile;
+﻿using Dawn.Application.Features.CaseFiles.GetCaseFile;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

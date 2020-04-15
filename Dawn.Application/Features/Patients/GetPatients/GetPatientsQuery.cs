@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dawn.Application.Features.Patients.Queries.GetPatients
+namespace Dawn.Application.Features.Patients.GetPatients
 {
     public class GetPatientsQuery : IRequest<GetPatientsVm>
     {

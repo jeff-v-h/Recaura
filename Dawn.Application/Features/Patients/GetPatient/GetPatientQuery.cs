@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dawn.Application.Features.Patients.Queries.GetPatient
+namespace Dawn.Application.Features.Patients.GetPatient
 {
     public class GetPatientQuery : IRequest<GetPatientVm>
     {

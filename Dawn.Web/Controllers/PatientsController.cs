@@ -1,5 +1,5 @@
-﻿using Dawn.Application.Features.Patients.Queries.GetPatient;
-using Dawn.Application.Features.Patients.Queries.GetPatients;
+﻿using Dawn.Application.Features.Patients.GetPatient;
+using Dawn.Application.Features.Patients.GetPatients;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

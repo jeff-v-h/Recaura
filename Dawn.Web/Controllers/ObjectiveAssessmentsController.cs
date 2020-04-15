@@ -1,4 +1,4 @@
-﻿using Dawn.Application.Features.ObjectiveAx.Queries.GetObjectiveAssessment;
+﻿using Dawn.Application.Features.ObjectiveAx.GetObjectiveAssessment;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

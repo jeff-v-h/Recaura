@@ -3,7 +3,7 @@ using Dawn.Application.Common.Models;
 using Dawn.Domain.Entities;
 using System;
 
-namespace Dawn.Application.Features.Consultations.Queries.GetConsultation
+namespace Dawn.Application.Features.Consultations.GetConsultation
 {
     public class GetConsultationVm : IMapFrom<Consultation>
     {

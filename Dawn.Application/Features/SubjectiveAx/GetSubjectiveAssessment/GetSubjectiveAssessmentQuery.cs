@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dawn.Application.Features.SubjectiveAx.Queries.GetSubjectiveAssessment
+namespace Dawn.Application.Features.SubjectiveAx.GetSubjectiveAssessment
 {
     public class GetSubjectiveAssessmentQuery : IRequest<GetSubjectiveAssessmentVm>
     {

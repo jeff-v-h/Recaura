@@ -1,4 +1,4 @@
-﻿using Dawn.Application.Features.Consultations.Queries.GetConsultation;
+﻿using Dawn.Application.Features.Consultations.GetConsultation;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

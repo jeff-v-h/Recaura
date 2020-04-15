@@ -4,7 +4,7 @@ using Dawn.Domain.Enums;
 using System;
 using System.Collections.Generic;
 
-namespace Dawn.Application.Features.CaseFiles.Queries.GetCaseFile
+namespace Dawn.Application.Features.CaseFiles.GetCaseFile
 {
     public class GetCaseFileVm : IMapFrom<CaseFile>
     {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dawn.Application.Features.Consultations.Queries.GetConsultation
+namespace Dawn.Application.Features.Consultations.GetConsultation
 {
     public class GetConsultationQuery : IRequest<GetConsultationVm>
     {

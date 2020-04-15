@@ -1,4 +1,4 @@
-﻿using Dawn.Application.Features.SubjectiveAx.Queries.GetSubjectiveAssessment;
+﻿using Dawn.Application.Features.SubjectiveAx.GetSubjectiveAssessment;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

@@ -4,7 +4,7 @@ using Dawn.Domain.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace Dawn.Application.Features.Patients.Queries.GetPatients
+namespace Dawn.Application.Features.Patients.GetPatients
 {
     public class GetPatientsVm : IMapFrom<List<Patient>>
     {

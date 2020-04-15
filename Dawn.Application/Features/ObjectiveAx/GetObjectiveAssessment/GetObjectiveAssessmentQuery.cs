@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dawn.Application.Features.ObjectiveAx.Queries.GetObjectiveAssessment
+namespace Dawn.Application.Features.ObjectiveAx.GetObjectiveAssessment
 {
     public class GetObjectiveAssessmentQuery : IRequest<GetObjectiveAssessmentVm>
     {
