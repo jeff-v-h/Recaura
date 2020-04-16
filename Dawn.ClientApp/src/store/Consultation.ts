@@ -3,6 +3,7 @@ import {
   IPractitionerVm,
   ISubjectiveAssessmentVm,
   IObjectiveAssessmentVm,
+  IUpdateConsultationCommand,
 } from "../api/generated";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
@@ -12,6 +13,9 @@ const C = {
   GET_CONSULTATION_REQUEST: "GET_CONSULTATION_REQUEST",
   GET_CONSULTATION_SUCCESS: "GET_CONSULTATION_SUCCESS",
   GET_CONSULTATION_FAILURE: "GET_CONSULTATION_FAILURE",
+  UPDATE_CONSULTATION_REQUEST: "UPDATE_CONSULTATION_REQUEST",
+  UPDATE_CONSULTATION_SUCCESS: "UPDATE_CONSULTATION_SUCCESS",
+  UPDATE_CONSULTATION_FAILURE: "UPDATE_CONSULTATION_FAILURE",
   MODIFY_SUBJECTIVE: "MODIFY_SUBJECTIVE",
   MODIFY_OBJECTIVE: "MODIFY_OBJECTIVE",
   MODIFY_TREATMENTS_AND_PLANS: "MODIFY_TREATMENTS_AND_PLANS",
@@ -53,6 +57,19 @@ interface GetConsultFailureAction {
   type: typeof C.GET_CONSULTATION_FAILURE;
 }
 
+interface UpdateConsultRequestAction {
+  type: typeof C.UPDATE_CONSULTATION_REQUEST;
+  payload: IUpdateConsultationCommand;
+}
+
+interface UpdateConsultSuccessAction {
+  type: typeof C.UPDATE_CONSULTATION_SUCCESS;
+}
+
+interface UpdateConsultFailureAction {
+  type: typeof C.UPDATE_CONSULTATION_FAILURE;
+}
+
 interface ModifySubjective {
   type: typeof C.MODIFY_SUBJECTIVE;
   payload: ISubjectiveAssessmentVm;
@@ -76,8 +93,13 @@ type GetConsultKnownAction =
   | GetConsultRequestAction
   | GetConsultSuccessAction
   | GetConsultFailureAction;
+type UpdateConsultKnownAction =
+  | UpdateConsultRequestAction
+  | UpdateConsultSuccessAction
+  | UpdateConsultFailureAction;
 type KnownAction =
   | GetConsultKnownAction
+  | UpdateConsultKnownAction
   | ModifySubjective
   | ModifyObjective
   | ModifyTreatmentsAndPlans;
@@ -104,6 +126,25 @@ export const actionCreators = {
       }
     }
   },
+
+  updateConsult: (): AppThunkAction<UpdateConsultKnownAction> => async (
+    dispatch,
+    getState
+  ) => {
+    const appState = getState();
+    const consult = appState?.consultation;
+    if (consult?.id) {
+      dispatch({ type: C.UPDATE_CONSULTATION_REQUEST });
+
+      try {
+        await consultationService.updateConsultation(consult.id, consult);
+        dispatch({ type: C.UPDATE_CONSULTATION_SUCCESS });
+      } catch (e) {
+        dispatch({ type: C.UPDATE_CONSULTATION_FAILURE });
+      }
+    }
+  },
+
   modifySubjective: (subjective: ISubjectiveAssessmentVm) =>
     ({ type: C.MODIFY_SUBJECTIVE, payload: subjective } as ModifySubjective),
   modifyObjective: (objective: IObjectiveAssessmentVm) =>
@@ -153,6 +194,13 @@ export const reducer: Reducer<ConsultationState> = (
     case C.GET_CONSULTATION_FAILURE:
       obj = action as GetConsultFailureAction;
       return unloadedState;
+
+    case C.UPDATE_CONSULTATION_REQUEST:
+      obj = action as UpdateConsultRequestAction;
+      return { ...state, isFetching: true, ...obj.payload };
+    case C.UPDATE_CONSULTATION_SUCCESS:
+    case C.UPDATE_CONSULTATION_FAILURE:
+      return { ...state, isFetching: false };
 
     case C.MODIFY_SUBJECTIVE:
       obj = action as ModifySubjective;

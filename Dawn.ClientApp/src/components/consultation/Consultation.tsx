@@ -70,7 +70,7 @@ class Consultation extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => state.subjective;
+const mapStateToProps = (state: ApplicationState) => state.consultation;
 
 export default compose<React.ComponentType>(
   withRouter,

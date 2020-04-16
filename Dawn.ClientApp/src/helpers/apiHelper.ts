@@ -28,6 +28,21 @@ export const post = (
   });
 };
 
+export const put = (
+  url: string,
+  payload: any,
+  showDefaultErrorMsg: boolean = true
+): Promise<AxiosResponse | AxiosError> => {
+  // const newPayload = AxisPayload(payload);
+  return axios.put(url, payload, AxiosConfig).catch((e: AxiosError) => {
+    if (showDefaultErrorMsg) {
+      const msg = defaultErrorMessage(e);
+      return Promise.reject(msg);
+    }
+    return Promise.reject(e);
+  });
+};
+
 // when do the post directly, asp.net core controller is using the low camera case
 const AxiosConfig = {
   headers: {

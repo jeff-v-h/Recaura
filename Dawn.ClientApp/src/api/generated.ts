@@ -100,9 +100,9 @@ export interface IUpdateConsultationCommand {
     id: number;
     date: string;
     number: number;
-    practitioner: IPractitionerVm;
-    subjectiveAssessment: ISubjectiveAssessmentVm;
-    objectiveAssessment: IObjectiveAssessmentVm;
+    practitioner: IPractitionerVm | null;
+    subjectiveAssessment: ISubjectiveAssessmentVm | null;
+    objectiveAssessment: IObjectiveAssessmentVm | null;
     treatments: string;
     plans: string;
 }

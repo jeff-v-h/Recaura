@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
-import { Form, message, Button } from "antd";
+import { Form, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
 import { FormInstance } from "antd/lib/form";
 import style from "./formCommon.scss";
@@ -33,12 +33,10 @@ class TreatmentsAndPlan extends React.Component<Props> {
     }
   };
 
-  onSubmit = (values: React.RefAttributes<FormInstance>) => {
-    console.log(values);
-  };
-
-  onSubmitFail = () => {
-    message.error("form failed");
+  onSubmit = (values: any) => {
+    const { updateConsult } = this.props;
+    this.updateStoreWithFormChanges();
+    updateConsult();
   };
 
   render() {
@@ -57,7 +55,6 @@ class TreatmentsAndPlan extends React.Component<Props> {
         name="treatments"
         initialValues={initialValues}
         onFinish={this.onSubmit}
-        onFinishFailed={this.onSubmitFail}
       >
         <FormTextArea label="Treatments" name="treatments" />
         <FormTextArea label="Plan" name="plans" />

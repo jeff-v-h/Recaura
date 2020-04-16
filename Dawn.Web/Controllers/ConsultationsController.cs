@@ -15,7 +15,7 @@ namespace Dawn.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Post(int id, [FromBody] UpdateConsultationCommand command)
+        public async Task<ActionResult> Update(int id, [FromBody] UpdateConsultationCommand command)
         {
             await Mediator.Send(command);
 

@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
-import { Form, message, Button } from "antd";
+import { Form, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
 import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
@@ -38,11 +38,9 @@ class Objective extends React.Component<Props> {
   };
 
   onSubmit = (values: any) => {
-    console.log(values);
-  };
-
-  onSubmitFail = () => {
-    message.error("form failed");
+    const { updateConsult } = this.props;
+    this.updateStoreWithFormChanges();
+    updateConsult();
   };
 
   render() {
@@ -61,7 +59,6 @@ class Objective extends React.Component<Props> {
         name="objective"
         initialValues={initialValues}
         onFinish={this.onSubmit}
-        onFinishFailed={this.onSubmitFail}
       >
         <FormTextArea label="Observation" name="observation" />
         <FormTextArea label="Active" name="active" />

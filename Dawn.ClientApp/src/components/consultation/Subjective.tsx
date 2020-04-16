@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import * as ConsultationStore from "../../store/Consultation";
 import { ApplicationState } from "../../store";
-import { Form, message, Button } from "antd";
+import { Form, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
 import FormSelect from "../common/FormSelect";
 import style from "./formCommon.scss";
@@ -39,13 +39,9 @@ class Subjective extends React.Component<Props> {
   };
 
   onSubmit = (values: any) => {
-    const { modifySubjective } = this.props;
-    console.log(values);
-    // modifySubjective({ ...values });
-  };
-
-  onSubmitFail = () => {
-    message.error("form failed");
+    const { updateConsult } = this.props;
+    this.updateStoreWithFormChanges();
+    updateConsult();
   };
 
   render() {
@@ -64,7 +60,6 @@ class Subjective extends React.Component<Props> {
         name="subjective"
         initialValues={initialValues}
         onFinish={this.onSubmit}
-        onFinishFailed={this.onSubmitFail}
       >
         <FormTextArea label="MOI" name="moi" />
         <FormTextArea label="Current History" name="currentHistory" />

@@ -4,6 +4,7 @@ import {
   IGetConsultationVm,
   IGetSubjectiveAssessmentVm,
   IGetObjectiveAssessmentVm,
+  IUpdateConsultationCommand,
 } from "./generated";
 import { message } from "antd";
 
@@ -15,6 +16,19 @@ class ConsultationService {
         IGetConsultationVm
       >;
       return resp.data;
+    } catch (e) {
+      message.error(e);
+      return Promise.reject(e);
+    }
+  };
+
+  updateConsultation = async (
+    id: number,
+    consult: IUpdateConsultationCommand
+  ): Promise<void> => {
+    try {
+      const url = `/api/consultations/${id}`;
+      (await apiHelper.put(url, consult)) as AxiosResponse<void>;
     } catch (e) {
       message.error(e);
       return Promise.reject(e);
