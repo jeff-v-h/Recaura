@@ -29,6 +29,7 @@ class ConsultationService {
     try {
       const url = `/api/consultations/${id}`;
       (await apiHelper.put(url, consult)) as AxiosResponse<void>;
+      message.success("Consultation saved");
     } catch (e) {
       message.error(e);
       return Promise.reject(e);
