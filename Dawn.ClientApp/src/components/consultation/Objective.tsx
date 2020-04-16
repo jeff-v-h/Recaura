@@ -63,10 +63,10 @@ class Objective extends React.Component<Props> {
         <FormTextArea label="Observation" name="observation" />
         <FormTextArea label="Active" name="active" />
         <FormTextArea label="Passive" name="passive" />
-        <FormTextArea label="Isometric" name="isometric" />
-        <FormTextArea label="Functional" name="functional" />
-        <FormTextArea label="Neurological" name="neurological" />
-        <FormTextArea label="Special" name="special" />
+        <FormTextArea label="Isometric" name="resistedIsometric" />
+        <FormTextArea label="Functional" name="functionalTests" />
+        <FormTextArea label="Neurological" name="neurologicalTests" />
+        <FormTextArea label="Special" name="specialTests" />
         <FormTextArea label="Palpation" name="palpation" />
         <FormTextArea label="Additional" name="additional" />
         <Form.Item {...tailLayout}>
