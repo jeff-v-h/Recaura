@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
+using MediatR;
 using Recaura.Application.Common.Extensions;
 using Recaura.Application.Common.Interfaces.Persistence;
 using Recaura.Application.Common.Models;
 using Recaura.Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;

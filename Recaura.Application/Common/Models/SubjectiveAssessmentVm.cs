@@ -1,9 +1,6 @@
-﻿using Recaura.Application.Common.Mappings;
-using Recaura.Domain.Entities;
-
-namespace Recaura.Application.Common.Models
+﻿namespace Recaura.Application.Common.Models
 {
-    public class SubjectiveAssessmentVm : IMapFrom<SubjectiveAssessment>, IMapTo<SubjectiveAssessment>
+    public class SubjectiveAssessmentVm
     {
         public int Id { get; set; }
         public int ConsultationId { get; set; }

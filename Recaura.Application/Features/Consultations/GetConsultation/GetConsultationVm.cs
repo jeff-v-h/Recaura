@@ -1,11 +1,9 @@
-﻿using Recaura.Application.Common.Mappings;
-using Recaura.Application.Common.Models;
-using Recaura.Domain.Entities;
+﻿using Recaura.Application.Common.Models;
 using System;
 
 namespace Recaura.Application.Features.Consultations.GetConsultation
 {
-    public class GetConsultationVm : IMapFrom<Consultation>
+    public class GetConsultationVm
     {
         public int Id { get; set; }
         public int CaseFileId { get; set; }

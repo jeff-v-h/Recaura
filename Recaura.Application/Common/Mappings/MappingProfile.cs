@@ -1,7 +1,13 @@
 ﻿using AutoMapper;
-using System;
-using System.Linq;
-using System.Reflection;
+using Recaura.Application.Common.Models;
+using Recaura.Application.Features.CaseFiles.GetCaseFile;
+using Recaura.Application.Features.Consultations.GetConsultation;
+using Recaura.Application.Features.ObjectiveAx.GetObjectiveAssessment;
+using Recaura.Application.Features.Patients.GetPatient;
+using Recaura.Application.Features.Patients.GetPatients;
+using Recaura.Application.Features.SubjectiveAx.GetSubjectiveAssessment;
+using Recaura.Domain.Entities;
+using System.Collections.Generic;
 
 namespace Recaura.Application.Common.Mappings
 {
@@ -9,41 +15,29 @@ namespace Recaura.Application.Common.Mappings
     {
         public MappingProfile()
         {
-            ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-        }
+            CreateMap<List<Patient>, GetPatientsVm>()
+                .ForMember(d => d.Patients, opt => opt.MapFrom(s => s));
+            CreateMap<Patient, PatientVm>();
 
-        private void ApplyMappingsFromAssembly(Assembly assembly)
-        {
-            var exportedTypes = assembly.GetExportedTypes();
-            var mapFromTypes = exportedTypes
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
-                .ToList();
+            CreateMap<Patient, GetPatientVm>();
+            CreateMap<CaseFile, PatientCaseFileVm>();
 
-            var mapToTypes = exportedTypes
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapTo<>)))
-                .ToList();
+            CreateMap<CaseFile, GetCaseFileVm>();
+            CreateMap<Consultation, ConsultVm>();
+            CreateMap<Patient, FilesPatientVm>();
 
-            foreach (var type in mapFromTypes)
-            {
-                var instance = Activator.CreateInstance(type);
+            CreateMap<Consultation, GetConsultationVm>();
+            CreateMap<Practitioner, PractitionerVm>();
+            CreateMap<SubjectiveAssessment, SubjectiveAssessmentVm>();
+            CreateMap<SubjectiveAssessmentVm, SubjectiveAssessment>()
+                .ForMember(d => d.Consultation, opt => opt.Ignore());
+            CreateMap<ObjectiveAssessment, ObjectiveAssessmentVm>();
+            CreateMap<ObjectiveAssessmentVm, ObjectiveAssessment>()
+                .ForMember(d => d.Consultation, opt => opt.Ignore());
 
-                var methodInfo = type.GetMethod("Mapping")
-                    ?? type.GetInterface("IMapFrom`1").GetMethod("Mapping");
+            CreateMap<SubjectiveAssessment, GetSubjectiveAssessmentVm>();
 
-                methodInfo?.Invoke(instance, new object[] { this });
-            }
-
-            foreach (var type in mapToTypes)
-            {
-                var instance = Activator.CreateInstance(type);
-
-                var methodInfo = type.GetMethod("ReverseMapping")
-                    ?? type.GetInterface("IMapTo`1").GetMethod("ReverseMapping");
-
-                methodInfo?.Invoke(instance, new object[] { this });
-            }
+            CreateMap<ObjectiveAssessment, GetObjectiveAssessmentVm>();
         }
     }
 }

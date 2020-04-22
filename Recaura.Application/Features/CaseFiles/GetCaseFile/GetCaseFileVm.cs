@@ -1,12 +1,10 @@
-﻿using Recaura.Application.Common.Mappings;
-using Recaura.Domain.Entities;
-using Recaura.Domain.Enums;
+﻿using Recaura.Domain.Enums;
 using System;
 using System.Collections.Generic;
 
 namespace Recaura.Application.Features.CaseFiles.GetCaseFile
 {
-    public class GetCaseFileVm : IMapFrom<CaseFile>
+    public class GetCaseFileVm
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +13,7 @@ namespace Recaura.Application.Features.CaseFiles.GetCaseFile
         public FilesPatientVm Patient { get; set; }
     }
 
-    public class ConsultVm : IMapFrom<Consultation>
+    public class ConsultVm
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
@@ -23,7 +21,7 @@ namespace Recaura.Application.Features.CaseFiles.GetCaseFile
         public int PractitionerId { get; set; }
     }
 
-    public class FilesPatientVm : IMapFrom<Patient>
+    public class FilesPatientVm
     {
         public int Id { get; set; }
         public Honorific Honorific { get; set; }

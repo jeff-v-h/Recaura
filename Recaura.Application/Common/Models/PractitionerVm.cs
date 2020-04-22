@@ -1,9 +1,6 @@
-﻿using Recaura.Application.Common.Mappings;
-using Recaura.Domain.Entities;
-
-namespace Recaura.Application.Common.Models
+﻿namespace Recaura.Application.Common.Models
 {
-    public class PractitionerVm : IMapFrom<Practitioner>
+    public class PractitionerVm
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
