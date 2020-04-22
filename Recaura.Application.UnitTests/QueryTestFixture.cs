@@ -8,6 +8,9 @@ namespace Recaura.Application.UnitTests
 {
     public sealed class QueryTestFixture : IDisposable
     {
+        public RecauraDbContext Context { get; }
+        public IMapper Mapper { get; }
+
         public QueryTestFixture()
         {
             Context = RecauraDbContextFactory.Create();
@@ -19,9 +22,6 @@ namespace Recaura.Application.UnitTests
 
             Mapper = configurationProvider.CreateMapper();
         }
-        public RecauraDbContext Context { get; }
-
-        public IMapper Mapper { get; }
 
         public void Dispose()
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Recaura.Domain.Entities;
 using Recaura.Domain.Enums;
 using Recaura.Persistence;

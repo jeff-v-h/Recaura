@@ -30,17 +30,6 @@ namespace Recaura.Application.UnitTests.Features.Patients.GetPatients
             var result = await handler.Handle(query, CancellationToken.None);
 
             result.Should().BeOfType<GetPatientsVm>();
-        }
-
-        [Fact]
-        public async Task Handle_ReturnsCorrectCount()
-        {
-            var query = new GetPatientsQuery();
-
-            var handler = new GetPatientsQuery.GetPatientsQueryHandler(_context, _mapper);
-
-            var result = await handler.Handle(query, CancellationToken.None);
-
             result.Patients.Count.Should().Be(2);
         }
     }
