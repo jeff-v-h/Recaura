@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build:dev",
     "build:dev": "webpack-dev-server --env.development --config webpack.dev.js --port 3000 --progress",
-    "test": "jest --colors"
+    "test": "jest"
   },
   "author": "Jeffrey Huang",
   "license": "ISC",
