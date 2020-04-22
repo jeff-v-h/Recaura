@@ -36,13 +36,13 @@ namespace Recaura.Application.Features.Consultations.UpdateConsultation
 
             public async Task<Unit> Handle(UpdateConsultationCommand command, CancellationToken cancelToken)
             {
-                var consultation = await _dbContext.Consultations.AsNoTracking()
+                var consultation = await _dbContext.Consultations
                     .Where(c => c.Id == command.Id)
                     .FirstOrNotFoundAsync(nameof(Consultation), command.Id, cancelToken);
                 
                 consultation.Date = command.Date;
                 consultation.Number = command.Number;
-                if (consultation.Practitioner != null)
+                if (command.Practitioner != null)
                 {
                     consultation.PractitionerId = command.Practitioner.Id;
                 }
