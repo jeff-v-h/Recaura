@@ -9,12 +9,12 @@ namespace Recaura.Application.Features.Patients.GetPatients
 {
     public class GetPatientsQuery : IRequest<GetPatientsVm>
     {
-        public class GetPatientQueryHandler : IRequestHandler<GetPatientsQuery, GetPatientsVm>
+        public class GetPatientsQueryHandler : IRequestHandler<GetPatientsQuery, GetPatientsVm>
         {
             private readonly IRecauraDbContext _dbContext;
             private readonly IMapper _mapper;
 
-            public GetPatientQueryHandler(IRecauraDbContext context, IMapper mapper)
+            public GetPatientsQueryHandler(IRecauraDbContext context, IMapper mapper)
             {
                 _dbContext = context;
                 _mapper = mapper;
