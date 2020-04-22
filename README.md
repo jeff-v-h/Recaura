@@ -1,10 +1,10 @@
-# Dawn
+# Recaura
 
 A project in the midst of development to practice using Clean Architecture in the backend. Physiotherapy management software for entering and storing data for consultations.
 
 ## Getting started
 
-This repository houses both front and back-end components of the application. The front-end application sits within the Dawn.ClientApp directory.
+This repository houses both front and back-end components of the application. The front-end application sits within the Recaura.ClientApp directory.
 
 ### Requirements
 
@@ -22,16 +22,16 @@ This repository houses both front and back-end components of the application. Th
 
 ### Installation
 
-The TypeScript api models are automatically generated/updated every time the back-end successfully builds. This file (Dawn.ClientApp/src/api/generated.ts) is committed to source control but should it not be up-to-date, it may be necessary to build the backend first.
+The TypeScript api models are automatically generated/updated every time the back-end successfully builds. This file (Recaura.ClientApp/src/api/generated.ts) is committed to source control but should it not be up-to-date, it may be necessary to build the backend first.
 
 #### Back-end
 
 1. Open solution in Visual Studio
-2. Target Dawn.Web as starting project and run on IIS Express.
+2. Target Recaura.Web as starting project and run on IIS Express.
 
 #### Front-end
 
-1. Navigate to Dawn.ClientApp and install project dependencies `npm install`
+1. Navigate to Recaura.ClientApp and install project dependencies `npm install`
 2. Build and run the app with `npm start`
 3. Open up a browser and visit "localhost:3000"
 
