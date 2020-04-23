@@ -43,12 +43,12 @@ export interface ConsultationState {
 }
 
 //--------------------
-//#region ACTIONS
+//#region ACTION INTERFACES
 interface GetConsultRequestAction {
   type: typeof C.GET_CONSULTATION_REQUEST;
 }
 
-export interface GetConsultSuccessAction {
+interface GetConsultSuccessAction {
   type: typeof C.GET_CONSULTATION_SUCCESS;
   payload: IGetConsultationVm;
 }
@@ -85,7 +85,7 @@ interface ModifyTreatmentsAndPlans {
   payload: TreatmentsAndPlans;
 }
 
-//#endregion ACTIONS
+//#endregion ACTION INTERFACES
 //--------------------
 
 // ACTION TYPE
@@ -104,6 +104,24 @@ type KnownAction =
   | ModifyObjective
   | ModifyTreatmentsAndPlans;
 
+
+//#region ACTIONS
+export const getConsultRequest = (): GetConsultRequestAction => {
+  return { type: C.GET_CONSULTATION_REQUEST }
+}
+
+export const getConsultSuccess = async (id: number): Promise<GetConsultSuccessAction> => {
+  return {
+    type: C.GET_CONSULTATION_SUCCESS,
+    payload: await consultationService.getConsultation(id),
+  }
+}
+
+export const getConsultFailure = (): GetConsultFailureAction => {
+  return { type: C.GET_CONSULTATION_FAILURE }
+}
+//#endregion ACTIONS
+
 /**
  * ACTION CREATORS
  */
@@ -114,15 +132,12 @@ export const actionCreators = {
   ) => {
     const appState = getState();
     if (appState?.consultation?.id !== id) {
-      dispatch({ type: C.GET_CONSULTATION_REQUEST });
+      dispatch(getConsultRequest());
 
       try {
-        dispatch({
-          type: C.GET_CONSULTATION_SUCCESS,
-          payload: await consultationService.getConsultation(id),
-        });
+        dispatch(await getConsultSuccess(id));
       } catch (e) {
-        dispatch({ type: C.GET_CONSULTATION_FAILURE });
+        dispatch(getConsultFailure());
       }
     }
   },

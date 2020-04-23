@@ -12,7 +12,6 @@ describe('Consultation Redux Store', () => {
       ...ConsultationStore.unloadedState
     }
   }
-  const C = ConsultationStore.C;
   let store;
 
   beforeEach(() => {
@@ -26,7 +25,7 @@ describe('Consultation Redux Store', () => {
       const getState = jest.fn();
       await ConsultationStore.actionCreators.getConsult(1)(dispatch, getState);
 
-      expect(dispatch).toHaveBeenCalledWith({ type: C.GET_CONSULTATION_REQUEST })
+      expect(dispatch).toHaveBeenCalledWith(ConsultationStore.getConsultRequest())
     })
 
     it('should dispatch a get consult success', async () => {
@@ -38,7 +37,19 @@ describe('Consultation Redux Store', () => {
       const dispatch = jest.fn();
       await ConsultationStore.actionCreators.getConsult(123)(dispatch, jest.fn());
 
-      expect(dispatch).toHaveBeenLastCalledWith({ type: C.GET_CONSULTATION_SUCCESS, payload: returnedConsultation })
+      expect(dispatch).toHaveBeenLastCalledWith(await ConsultationStore.getConsultSuccess(123))
+      
+      spy.mockRestore();
+    })
+
+    it('should dispatch a get consult failure when error occurs', async () => {
+      const spy = jest.spyOn(consultationService, 'getConsultation');
+      spy.mockReturnValue(Promise.reject());
+
+      const dispatch = jest.fn();
+      await ConsultationStore.actionCreators.getConsult(123)(dispatch, jest.fn());
+
+      expect(dispatch).toHaveBeenLastCalledWith(ConsultationStore.getConsultFailure())
       
       spy.mockRestore();
     })
