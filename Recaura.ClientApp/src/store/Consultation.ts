@@ -9,7 +9,7 @@ import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { consultationService } from "../api/consultationService";
 
-const C = {
+export const C = {
   GET_CONSULTATION_REQUEST: "GET_CONSULTATION_REQUEST",
   GET_CONSULTATION_SUCCESS: "GET_CONSULTATION_SUCCESS",
   GET_CONSULTATION_FAILURE: "GET_CONSULTATION_FAILURE",
@@ -48,7 +48,7 @@ interface GetConsultRequestAction {
   type: typeof C.GET_CONSULTATION_REQUEST;
 }
 
-interface GetConsultSuccessAction {
+export interface GetConsultSuccessAction {
   type: typeof C.GET_CONSULTATION_SUCCESS;
   payload: IGetConsultationVm;
 }

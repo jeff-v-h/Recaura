@@ -1,28 +1,33 @@
 import React from 'react';
 import CaseFiles from './CaseFiles';
-import { mount, shallow } from 'enzyme';
+import { mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import { IPatientCaseFileVm } from 'src/api/generated';
 import { MemoryRouter } from 'react-router';
 
-const files: IPatientCaseFileVm[] = [
-  {
-    id: 1,
-    name: "An injury"
-  },
-  {
-    id: 2,
-    name: "another injury"
-  }
-]
-const component = <CaseFiles files={files} />;
-const wrapper = shallow(component);
-const mountedWrapper = mount(<MemoryRouter>{component}</MemoryRouter>);
-
-afterAll(() => {
-  mountedWrapper.unmount();
-})
-
 describe('<CaseFiles/>', () => {
+  const files: IPatientCaseFileVm[] = [
+    {
+      id: 1,
+      name: "An injury"
+    },
+    {
+      id: 2,
+      name: "another injury"
+    }
+  ]
+  let wrapper: ShallowWrapper;
+  let mountedWrapper: ReactWrapper;
+
+  beforeAll(() => {
+    const component = <CaseFiles files={files} />;
+    wrapper = shallow(component);
+    mountedWrapper = mount(<MemoryRouter>{component}</MemoryRouter>);
+  })
+  
+  afterAll(() => {
+    mountedWrapper.unmount();
+  })
+
   it('should have a header', () => {
     expect(wrapper.find('h3').exists()).toBe(true);
   });

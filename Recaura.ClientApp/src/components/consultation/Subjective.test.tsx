@@ -3,15 +3,16 @@ import Subjective from './Subjective';
 import { shallow, ShallowWrapper, mount, ReactWrapper } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { MockStore } from 'redux-mock-store';
 import * as ConsultationStore from "../../store/Consultation";
+import { generateMockStore } from "../../../__tests__/setup/mockStore";
 
 describe('<Subjective />', () => {
   let component: JSX.Element;
   let wrapper: ShallowWrapper;
   let mountWrapper: ReactWrapper;
-  const mockStore = configureStore([ /* middlewares */ ]);
-  const initialState = {
+  
+  const mockState = {
     consultation: {
       ...ConsultationStore.unloadedState,
       subjectiveAssessment: {
@@ -30,14 +31,14 @@ describe('<Subjective />', () => {
       }
     }
   }
-  let store;
+  let store: MockStore;
 
   describe('as a component', () => {
     beforeEach(() => {
-      store = mockStore(initialState);
+      store = generateMockStore(mockState);
       const props = {
         consultId: 1,
-        ...initialState.consultation,
+        ...mockState.consultation,
         ...ConsultationStore.actionCreators
       }
       wrapper = shallow(<Subjective {...props} />);
@@ -48,17 +49,17 @@ describe('<Subjective />', () => {
   });
 
   describe('when mounted', () => {
-    beforeAll(() => {
-      store = mockStore(initialState);
+    beforeEach(async () => {
+      store = generateMockStore(mockState);
       component = <MemoryRouter><Subjective consultId={1} /></MemoryRouter>;
       mountWrapper = mount(<Provider store={store}>{component}</Provider>);
     })
 
-    afterAll(() => {
+    afterEach(() => {
       mountWrapper.unmount();
     })
 
-    it('should have at least one button', () => {
+    it('should have at least one button when subjectiveAssessment is available', () => {
       expect(mountWrapper.find('button').exists()).toBe(true);
     });
 

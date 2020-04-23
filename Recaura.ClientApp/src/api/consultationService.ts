@@ -7,8 +7,9 @@ import {
   IUpdateConsultationCommand,
 } from "./generated";
 import { message } from "antd";
+import { IConsultationService } from "./apiService";
 
-class ConsultationService {
+class ConsultationService implements IConsultationService {
   getConsultation = async (id: number): Promise<IGetConsultationVm> => {
     try {
       const url = `/api/consultations/${id}`;
