@@ -3,9 +3,9 @@ import Subjective from './Subjective';
 import { shallow, ShallowWrapper, mount, ReactWrapper } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import { MockStore } from 'redux-mock-store';
 import * as ConsultationStore from "../../store/Consultation";
 import { generateMockStore } from "../../../__tests__/setup/mockStore";
+import { MockStore } from "redux-mock-store";
 
 describe('<Subjective />', () => {
   let component: JSX.Element;

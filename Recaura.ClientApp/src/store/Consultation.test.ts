@@ -3,6 +3,8 @@ import thunk from 'redux-thunk';
 import * as ConsultationStore from './Consultation';
 import { consultationService } from '../api/consultationService';
 import { IGetConsultationVm } from 'src/api/generated';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
 describe('Consultation Redux Store', () => {
   const middlewares = [thunk];
@@ -13,9 +15,16 @@ describe('Consultation Redux Store', () => {
     }
   }
   let store;
+  const mockAxios = new MockAdapter(axios);
 
   beforeEach(() => {
     store = mockStore(initialState);
+    const mockConsultation = getReturnedConsultation();
+    mockAxios.onGet("/api/consultations/123").reply(200, mockConsultation);
+  })
+
+  afterEach(() => {
+    mockAxios.restore();
   })
 
   describe('getConsult', () => {
