@@ -14,12 +14,12 @@ describe('Consultation Redux Store', () => {
       ...ConsultationStore.unloadedState
     }
   }
+  const mockConsultation = getReturnedConsultation();
   let store;
   const mockAxios = new MockAdapter(axios);
 
   beforeEach(() => {
     store = mockStore(initialState);
-    const mockConsultation = getReturnedConsultation();
     mockAxios.onGet("/api/consultations/123").reply(200, mockConsultation);
   })
 
@@ -38,10 +38,8 @@ describe('Consultation Redux Store', () => {
     })
 
     it('should dispatch a get consult success', async () => {
-      const returnedConsultation = getReturnedConsultation();
-
       const spy = jest.spyOn(consultationService, 'getConsultation');
-      spy.mockReturnValue(Promise.resolve(returnedConsultation));
+      spy.mockReturnValue(Promise.resolve(mockConsultation));
 
       const dispatch = jest.fn();
       await ConsultationStore.actionCreators.getConsult(123)(dispatch, jest.fn());
