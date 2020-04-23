@@ -159,7 +159,7 @@ export const actionCreators = {
 /**
  * REDUCER
  */
-const unloadedState: ConsultationState = {
+export const unloadedState: ConsultationState = {
   isFetching: false,
   id: 0,
   caseFileId: 0,
