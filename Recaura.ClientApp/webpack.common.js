@@ -110,14 +110,9 @@ module.exports = function (env) {
     resolve: {
       extensions: [".tsx", ".ts", ".js", ".scss", ".less"],
       alias: {
-        App: pathHelper("app"),
-        Components: pathHelper("app", "components"),
-        Api: pathHelper("app", "api"),
-        Enums: pathHelper("app", "enums"),
-        Styles: pathHelper("app", "styles"),
-        Helpers: pathHelper("app", "helpers"),
-        Constants: pathHelper("app", "constants"),
-        Stores: pathHelper("app", "stores"),
+        Src: pathHelper("src"),
+        Components: pathHelper("src", "components"),
+        Api: pathHelper("src", "api")
       },
     },
   };

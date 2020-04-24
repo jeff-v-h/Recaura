@@ -10,11 +10,13 @@ module.exports = function (env) {
       // publicApp: pathHelper('src', 'components', 'public', 'PublicApp.tsx'),
       app: pathHelper("src", "index.tsx"),
     },
-    devtool: "inline-source-map",
+    devtool: "eval-cheap-module-source-map",
     devServer: {
       contentBase: pathHelper("./dist"),
       hot: true,
       historyApiFallback: true,
+      host: '0.0.0.0',
+      port: 3000,
       proxy: {
         "/api": {
           target: "http://localhost:5555/",
