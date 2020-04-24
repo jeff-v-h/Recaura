@@ -1,0 +1,31 @@
+version: '3.4'  
+  
+services:
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    stdin_open: true
+  api:
+    build:  
+      context: ./api 
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/app/publish
+    depends_on:
+      - db
+  db:  
+    image: "mcr.microsoft.com/mssql/server"  
+    hostname: 'sqlserver'  
+    environment:  
+      ACCEPT_EULA: Y  
+      SA_PASSWORD: "testpw123"  
+    volumes:  
+      - ./data/mssql:/var/opt/mssql3  
+    ports:  
+      - '1433:1433'  
+    expose:  
+      - 1433
