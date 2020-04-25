@@ -17,7 +17,7 @@ services:
     image: "mcr.microsoft.com/mssql/server"
     environment:  
       ACCEPT_EULA: Y  
-      SA_PASSWORD: "testPW123" 
+      SA_PASSWORD: "recApp123" 
     ports:  
       - '1433:1433'  
     expose:  
