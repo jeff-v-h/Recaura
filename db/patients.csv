@@ -1,3 +1,3 @@
-Id,Honorific,FirstName,LastName,DOB,Email,CountryCode,HomePhone,MobilePhone,Gender,Occupation
-1,Mr,Jay,Valentine,1991-09-07,random.person@mail.com,AUS,96498888,0424999999,Male,Software Developer
-2,Miss,Kay,Smith,1995-02-21,other.person@mail.com,AUS,96498877,0424999777,Female,Professional Tennis Player
+Id|Honorific|FirstName|LastName|DOB|Email|CountryCode|HomePhone|MobilePhone|Gender|Occupation
+1|Mr|Jay|Valentine|1991-09-07|random.person@mail.com|AUS|96498888|0424999999|Male|Software Developer
+2|Miss|Kay|Smith|1995-02-21|other.person@mail.com|AUS|96498877|0424999777|Female|Professional Tennis Player

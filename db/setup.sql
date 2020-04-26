@@ -7,7 +7,7 @@ CREATE TABLE Patients (
     Honorific NVARCHAR(10),
     FirstName NVARCHAR(50),
     LastName NVARCHAR(50),
-    DOB  DATE,
+    DOB DATE,
     Email NVARCHAR(255),
     CountryCode VARCHAR(10),
     HomePhone NVARCHAR(40),
@@ -22,7 +22,7 @@ CREATE TABLE Practitioners (
     Honorific NVARCHAR(10),
     FirstName NVARCHAR(50),
     LastName NVARCHAR(50),
-    DOB  DATE,
+    DOB DATE,
     Email NVARCHAR(255),
     CountryCode VARCHAR(10),
     HomePhone NVARCHAR(40),
@@ -34,10 +34,10 @@ CREATE TABLE Practitioners (
 );
 GO
 CREATE TABLE CaseFiles (
-    Id INT IDENTITY (1, 1),
-    PatientId INT,
-    [Name] NVARCHAR(MAX),
-    Created DATE,
+    [Id] INT IDENTITY (1, 1),
+    [PatientId] INT,
+    [Name] NVARCHAR(100),
+    [Created] DATE,
     CONSTRAINT PK_CaseFiles PRIMARY KEY (Id),
     CONSTRAINT FK_CaseFiles_Patients_PatientId FOREIGN KEY (PatientId) REFERENCES Patients(Id) ON DELETE CASCADE
 );
@@ -63,6 +63,12 @@ CREATE TABLE ObjectiveAssessments (
     Observation NVARCHAR(MAX),
     Palpation NVARCHAR(MAX),
     Additional NVARCHAR(MAX),
+    Active NVARCHAR(MAX),
+    FunctionalTests NVARCHAR(MAX),
+    NeurologicalTests NVARCHAR(MAX),
+    Passive NVARCHAR(MAX),
+    ResistedIsometric NVARCHAR(MAX),
+    SpecialTests NVARCHAR(MAX),
     CONSTRAINT PK_ObjectiveAssessments PRIMARY KEY (Id),
     CONSTRAINT FK_ObjectiveAssessments_Consultations_ConsultationId FOREIGN KEY (ConsultationId) REFERENCES Consultations(Id) ON DELETE CASCADE
 );
