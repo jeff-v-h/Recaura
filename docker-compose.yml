@@ -15,6 +15,12 @@ services:
     build:
       context: ./db
       dockerfile: Dockerfile
+    volumes:
+      # Reasons for below mapping: https://sqldbawithabeard.com/2019/03/26/persisting-databases-with-named-volumes-on-windows-with-docker-compose/
+      # - ./db/mssql:/var/opt/mssql
+      - ./db/backup:/var/opt/mssql/backup
+      - /var/lib/docker/volumes/mssqluser/_data:/var/opt/sqlserver
+      - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
     environment:  
       ACCEPT_EULA: Y  
       SA_PASSWORD: "recApp123" 

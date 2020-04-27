@@ -36,7 +36,7 @@ GO
 CREATE TABLE CaseFiles (
     [Id] INT IDENTITY (1, 1),
     [PatientId] INT,
-    [Name] NVARCHAR(100),
+    [Name] NVARCHAR(MAX),
     [Created] DATE,
     CONSTRAINT PK_CaseFiles PRIMARY KEY (Id),
     CONSTRAINT FK_CaseFiles_Patients_PatientId FOREIGN KEY (PatientId) REFERENCES Patients(Id) ON DELETE CASCADE

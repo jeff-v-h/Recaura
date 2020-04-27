@@ -8,6 +8,8 @@ This repository houses both front and back-end components of the application. Th
 
 ### Requirements
 
+- Docker 19.03.1
+
 #### Front-end
 
 - TypeScript 3.8
@@ -18,26 +20,32 @@ This repository houses both front and back-end components of the application. Th
 
 - C# .NET Core 3.1
 - Entity Framework Core 3.1
-- SQL Server
+- SQL Server 2019
 
 ### Installation
 
 The TypeScript api models are automatically generated/updated every time the back-end successfully builds. This file (Recaura.ClientApp/src/api/generated.ts) is committed to source control but should it not be up-to-date, it may be necessary to build the backend first.
 
-#### Back-end
+When starting up for the first time, for data to seed properly, it will be necessary to allow the database to start up first before the api is initiated.
+There are currently [open issues](https://github.com/Microsoft/mssql-docker/issues/229) for ease of seeding data into SQL Server Docker container.
 
-1. Open solution in Visual Studio
-2. Target Recaura.Web as starting project and run on IIS Express.
+#### Database
 
-#### Front-end
+1. Make sure [Docker](https://docs.docker.com/get-docker/) is installed on your local machine.
+2. In your command terminal, navigate to the root of the directory where docker-compose.yml file is located.
+3. Run `docker-compose up sqlserver`.
 
-1. Navigate to Recaura.ClientApp and install project dependencies `npm install`
-2. Build and run the app with `npm start`
-3. Open up a browser and visit "localhost:3000"
+#### Application
+
+Note: For data to be seeded initially, allow the database container to be completed
+
+1. In your command terminal, navigate to the root of the directory where docker-compose.yml file is located.
+2. Run `docker-compose up`.
+3. You may visit [localhost:3000](http://localhost:3000) to view the application. The api swagger can be viewed at [localhost:5555/swagger](http://localhost:5555/swagger). If Docker toolbox is being used (such as for Windows 10 Home), replace localhost with 192.168.99.100 (eg. [http://192.168.99.100:5555/swagger](http://192.168.99.100:5555/swagger))
 
 ## Production
 
-This app is not currently deployed anywhere
+This app is not currently deployed.
 
 ## Authors
 

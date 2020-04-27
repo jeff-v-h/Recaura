@@ -41,7 +41,7 @@ namespace Recaura.Web
                     var context = services.GetRequiredService<RecauraDbContext>();
                     context.Database.Migrate();
 
-                    //RecauraDbContextSeed.Initialise(services);
+                    RecauraDbContextSeed.Initialise(services);
                 }
                 catch (Exception ex)
                 {

@@ -9,6 +9,10 @@ COPY . /usr/work/
 
 # Change to root user and then grant permissions for the import-data script to be executable
 USER root
-RUN chmod +x /usr/work/import-data.sh
+# RUN chmod +x /usr/work/import-data.sh
 EXPOSE 1433
-CMD /bin/bash ./entrypoint.sh
+
+# ENTRYPOINT ["/bin/bash", "/usr/work/entrypoint.sh"]
+CMD ["/opt/mssql/bin/sqlservr"]
+
+# CMD /bin/bash ./entrypoint.sh
