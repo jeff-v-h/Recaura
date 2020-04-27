@@ -5,16 +5,16 @@ services:
     build:  
       context: ./api 
       dockerfile: Dockerfile
-    volumes:
-      - ./api:/app/publish
     ports:
       - '5555:5555'
     expose:
       - 5555
     depends_on:
       - sqlserver
-  sqlserver:  
-    image: "mcr.microsoft.com/mssql/server"
+  sqlserver:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     environment:  
       ACCEPT_EULA: Y  
       SA_PASSWORD: "recApp123" 
