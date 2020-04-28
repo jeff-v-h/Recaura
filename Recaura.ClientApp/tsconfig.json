@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "target": "es5",
+    "jsx": "react",
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "lib": ["es2015", "dom"]
+  },
+  "include": ["./src/**/*"]
+}
