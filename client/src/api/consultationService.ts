@@ -8,11 +8,14 @@ import {
 } from "./generated";
 import { message } from "antd";
 import { IConsultationService } from "./apiService";
+import { keys } from "../helpers/keys";
+
+const { apiUrl } = keys;
 
 class ConsultationService implements IConsultationService {
   getConsultation = async (id: number): Promise<IGetConsultationVm> => {
     try {
-      const url = `/api/consultations/${id}`;
+      const url = `${apiUrl}/api/consultations/${id}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<
         IGetConsultationVm
       >;
@@ -28,7 +31,7 @@ class ConsultationService implements IConsultationService {
     consult: IUpdateConsultationCommand
   ): Promise<void> => {
     try {
-      const url = `/api/consultations/${id}`;
+      const url = `${apiUrl}/api/consultations/${id}`;
       (await apiHelper.put(url, consult)) as AxiosResponse<void>;
       message.success("Consultation saved");
     } catch (e) {
@@ -41,7 +44,7 @@ class ConsultationService implements IConsultationService {
     consultId: number
   ): Promise<IGetSubjectiveAssessmentVm> => {
     try {
-      const url = `/api/consultations/${consultId}/subjective`;
+      const url = `${apiUrl}/api/consultations/${consultId}/subjective`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<
         IGetSubjectiveAssessmentVm
       >;
@@ -56,7 +59,7 @@ class ConsultationService implements IConsultationService {
     consultId: number
   ): Promise<IGetObjectiveAssessmentVm> => {
     try {
-      const url = `/api/consultations/${consultId}/objective`;
+      const url = `${apiUrl}/api/consultations/${consultId}/objective`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<
         IGetObjectiveAssessmentVm
       >;

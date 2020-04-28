@@ -18,12 +18,24 @@ namespace Recaura.Web
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
             services.AddInfrastructure();
             services.AddPersistence(Configuration);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://192.168.99.100:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
 
             services.AddControllers().AddNewtonsoftJson();
 
@@ -58,6 +70,8 @@ namespace Recaura.Web
             app.UseSwaggerUi3();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 

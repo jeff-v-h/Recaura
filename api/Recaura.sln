@@ -7,21 +7,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1837768D-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9BAE5E40-A81F-4D57-AA53-E7317D50D78F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Infrastructure", "Recaura.Infrastructure\Recaura.Infrastructure.csproj", "{2A01E282-06E1-43B2-A248-E09A56210001}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Infrastructure", "src\Recaura.Infrastructure\Recaura.Infrastructure.csproj", "{2A01E282-06E1-43B2-A248-E09A56210001}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{2C79A2CB-F50D-40A0-A728-91F51E65E596}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Web", "Recaura.Web\Recaura.Web.csproj", "{E35D4375-F996-49C6-81AF-9DF4DC36FC9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Web", "src\Recaura.Web\Recaura.Web.csproj", "{E35D4375-F996-49C6-81AF-9DF4DC36FC9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Application", "Recaura.Application\Recaura.Application.csproj", "{B9D1A412-B725-4249-98AF-F13332158F20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Application", "src\Recaura.Application\Recaura.Application.csproj", "{B9D1A412-B725-4249-98AF-F13332158F20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Domain", "Recaura.Domain\Recaura.Domain.csproj", "{06858E5D-4D5A-4E8F-8FDE-F98F12FBCE05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Domain", "src\Recaura.Domain\Recaura.Domain.csproj", "{06858E5D-4D5A-4E8F-8FDE-F98F12FBCE05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Persistence", "Recaura.Persistence\Recaura.Persistence.csproj", "{84EFF949-4C2D-4F20-96FE-FA8229BA94E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Persistence", "src\Recaura.Persistence\Recaura.Persistence.csproj", "{84EFF949-4C2D-4F20-96FE-FA8229BA94E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5B0571FD-D13F-4F8C-AB4F-709F840785AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recaura.Application.UnitTests", "Recaura.Application.UnitTests\Recaura.Application.UnitTests.csproj", "{25E18D99-C223-41A9-A742-7AB2AD632E54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recaura.Application.UnitTests", "tests\Recaura.Application.UnitTests\Recaura.Application.UnitTests.csproj", "{25E18D99-C223-41A9-A742-7AB2AD632E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recaura.Web.IntegrationTests", "tests\Recaura.Web.IntegrationTests\Recaura.Web.IntegrationTests.csproj", "{17343B3B-90ED-4FC1-AA59-2692C11ED088}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{25E18D99-C223-41A9-A742-7AB2AD632E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25E18D99-C223-41A9-A742-7AB2AD632E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E18D99-C223-41A9-A742-7AB2AD632E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17343B3B-90ED-4FC1-AA59-2692C11ED088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17343B3B-90ED-4FC1-AA59-2692C11ED088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17343B3B-90ED-4FC1-AA59-2692C11ED088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17343B3B-90ED-4FC1-AA59-2692C11ED088}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{06858E5D-4D5A-4E8F-8FDE-F98F12FBCE05} = {1837768D-236B-4AEE-93DF-A9BB99562845}
 		{84EFF949-4C2D-4F20-96FE-FA8229BA94E8} = {9BAE5E40-A81F-4D57-AA53-E7317D50D78F}
 		{25E18D99-C223-41A9-A742-7AB2AD632E54} = {5B0571FD-D13F-4F8C-AB4F-709F840785AE}
+		{17343B3B-90ED-4FC1-AA59-2692C11ED088} = {5B0571FD-D13F-4F8C-AB4F-709F840785AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EDF8ED79-D025-4AFE-A647-08D9541D0B1A}

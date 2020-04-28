@@ -1,0 +1,41 @@
+version: '3.4'  
+  
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client:/app
+      - client_node_modules:/app/node_modules
+    working_dir: /app
+    command: npm run start
+    ports:
+      - 3000:3000
+    stdin_open: true
+  api:
+    build:  
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 5555:5555
+    depends_on:
+      - sqlserver
+  sqlserver:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    volumes:
+      # Reasons for below mapping: https://sqldbawithabeard.com/2019/03/26/persisting-databases-with-named-volumes-on-windows-with-docker-compose/
+      # The data below is saved within the VM. If the VM is removed, data is removed. Removing container or image will continue to persist data.
+      - ./db/backup:/var/opt/mssql/backup
+      - /var/lib/docker/volumes/mssqluser/_data:/var/opt/sqlserver
+      - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
+    environment:  
+      ACCEPT_EULA: Y  
+      SA_PASSWORD: recApp123"
+    ports:  
+      - 1433:1433
+  
+volumes:
+  client_node_modules:

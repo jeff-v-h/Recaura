@@ -10,29 +10,24 @@ module.exports = function (env) {
       // publicApp: pathHelper('src', 'components', 'public', 'PublicApp.tsx'),
       app: pathHelper("src", "index.tsx"),
     },
-    devtool: "inline-source-map",
+    devtool: "eval-cheap-module-source-map",
     devServer: {
       contentBase: pathHelper("./dist"),
       hot: true,
       historyApiFallback: true,
-      proxy: {
-        "/api": {
-          target: "http://localhost:5555/",
-          changeOrigin: true,
-        },
-        "/images/*": {
-          target: "http://localhost:5555/",
-          changeOrigin: true,
-          // pathRewrite: {"^/api" : "/"}
-        },
-      },
+      port: 3000,
+      host: '0.0.0.0'
+      // watchOptions: {
+      //   aggregateTimeout: 500, // delay before reloading
+      //   poll: 1000 // enable polling since fsevents are not supported in docker
+      // }
     },
     plugins: [
       new MiniCssExtractPlugin({
         filename: "[name].css",
         chunkFilename: `${getVendorName(env)}.css`,
         ignoreOrder: true,
-      }),
+      })
     ],
   });
 };

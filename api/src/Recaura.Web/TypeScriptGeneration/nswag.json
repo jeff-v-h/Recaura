@@ -109,7 +109,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "../../Recaura.ClientApp/src/api/generated.ts"
+      "output": "../../../../client/src/api/generated.ts"
     }
   }
 }

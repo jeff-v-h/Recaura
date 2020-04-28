@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Recaura.Application\Recaura.Application.csproj" />
-    <ProjectReference Include="..\Recaura.Persistence\Recaura.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\Recaura.Application\Recaura.Application.csproj" />
+    <ProjectReference Include="..\..\src\Recaura.Persistence\Recaura.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
