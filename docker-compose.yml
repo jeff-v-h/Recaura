@@ -3,22 +3,22 @@ version: '3.4'
 services:
   client:
     build:
-      dockerfile: Dockerfile.dev
       context: ./client
+      dockerfile: Dockerfile.dev
     volumes:
       - ./client:/app
       - client_node_modules:/app/node_modules
+    working_dir: /app
+    command: npm run start
     ports:
-      - '3000:3000'
-    links:
-      - api:api
+      - 3000:3000
     stdin_open: true
   api:
     build:  
       context: ./api
       dockerfile: Dockerfile
     ports:
-      - '5555:5555'
+      - 5555:5555
     depends_on:
       - sqlserver
   sqlserver:
@@ -33,9 +33,9 @@ services:
       - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
     environment:  
       ACCEPT_EULA: Y  
-      SA_PASSWORD: "recApp123" 
+      SA_PASSWORD: recApp123"
     ports:  
-      - '1433:1433'
+      - 1433:1433
   
 volumes:
   client_node_modules:

@@ -14,7 +14,13 @@ module.exports = function (env) {
     devServer: {
       contentBase: pathHelper("./dist"),
       hot: true,
-      historyApiFallback: true
+      historyApiFallback: true,
+      port: 3000,
+      host: '0.0.0.0',
+      watchOptions: {
+        aggregateTimeout: 500, // delay before reloading
+        poll: 1000 // enable polling since fsevents are not supported in docker
+      }
     },
     plugins: [
       new MiniCssExtractPlugin({
