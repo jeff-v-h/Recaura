@@ -1,14 +1,22 @@
 version: '3.4'  
   
 services:
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    ports:
+      - '3000:3000'
+    stdin_open: true
   api:
     build:  
-      context: ./api 
+      context: ./api
       dockerfile: Dockerfile
     ports:
       - '5555:5555'
-    expose:
-      - 5555
     depends_on:
       - sqlserver
   sqlserver:
@@ -25,6 +33,4 @@ services:
       ACCEPT_EULA: Y  
       SA_PASSWORD: "recApp123" 
     ports:  
-      - '1433:1433'  
-    expose:  
-      - 1433
+      - '1433:1433'
