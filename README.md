@@ -1,10 +1,8 @@
 # Recaura
 
-A project in the midst of development to practice using Clean Architecture in the backend. Physiotherapy management software for entering and storing data for consultations.
+A project in the midst of development to practice using Docker and Clean Architecture. Physiotherapy management software for entering and storing data for consultations.
 
 ## Getting started
-
-This repository houses both front and back-end components of the application. The front-end application sits within the Recaura.ClientApp directory.
 
 ### Requirements
 
@@ -28,6 +26,15 @@ The TypeScript api models are automatically generated/updated every time the bac
 
 When starting up for the first time, for data to seed properly, it will be necessary to allow the database to start up first before the api is initiated.
 There are currently [open issues](https://github.com/Microsoft/mssql-docker/issues/229) for ease of seeding data into SQL Server Docker container.
+
+#### Pre-Installation
+
+For eventually building the client, there needs to be sufficient space allocated to the virtual machine that will be used to run this project. The following instructions apply to VirtualBox.
+
+1. Open up VirtualBox Manager. Ensure the VM intended to contain this project is not running.
+2. Select the VM to be used and click on System heading. This should open up settings at the System tab.
+3. Increase the memory capacity if needed. (At time of writing, author's capacity was set to 4096 MB).
+4. Click OK.
 
 #### Database
 
