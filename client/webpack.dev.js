@@ -14,27 +14,14 @@ module.exports = function (env) {
     devServer: {
       contentBase: pathHelper("./dist"),
       hot: true,
-      historyApiFallback: true,
-      host: '0.0.0.0',
-      port: 3000,
-      proxy: {
-        "/api": {
-          target: "http://localhost:5555/",
-          changeOrigin: true,
-        },
-        "/images/*": {
-          target: "http://localhost:5555/",
-          changeOrigin: true,
-          // pathRewrite: {"^/api" : "/"}
-        },
-      },
+      historyApiFallback: true
     },
     plugins: [
       new MiniCssExtractPlugin({
         filename: "[name].css",
         chunkFilename: `${getVendorName(env)}.css`,
         ignoreOrder: true,
-      }),
+      })
     ],
   });
 };

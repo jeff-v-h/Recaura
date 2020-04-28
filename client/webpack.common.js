@@ -7,14 +7,24 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 function getOutputDir() {
-  // return pathHelper("../Recaura.Web/wwwroot/bundle");
   return pathHelper("dist", "bundle");
 }
 
 module.exports = function (env) {
+  // call dotenv and it will return an Object with a parsed key 
+  const envVars = dotenv.config().parsed;
+  
+  // reduce it to a nice object, the same as before
+  const envKeys = Object.keys(envVars).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(envVars[next]);
+    return prev;
+  }, {});
+
   return {
     output: {
       path: getOutputDir(),
@@ -106,6 +116,7 @@ module.exports = function (env) {
         eslint: true,
       }),
       new ManifestPlugin(),
+      new webpack.DefinePlugin(envKeys)
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".js", ".scss", ".less"],

@@ -6,10 +6,12 @@ services:
       dockerfile: Dockerfile.dev
       context: ./client
     volumes:
-      - /app/node_modules
       - ./client:/app
+      - client_node_modules:/app/node_modules
     ports:
       - '3000:3000'
+    links:
+      - api:api
     stdin_open: true
   api:
     build:  
@@ -34,3 +36,6 @@ services:
       SA_PASSWORD: "recApp123" 
     ports:  
       - '1433:1433'
+  
+volumes:
+  client_node_modules:
