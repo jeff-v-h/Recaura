@@ -33,7 +33,7 @@ services:
       - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
     environment:  
       ACCEPT_EULA: Y  
-      SA_PASSWORD: recApp123"
+      SA_PASSWORD: recApp123
     ports:  
       - 1433:1433
   
