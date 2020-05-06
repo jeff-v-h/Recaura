@@ -16,7 +16,8 @@ module.exports = function (env) {
       hot: true,
       historyApiFallback: true,
       port: 3000,
-      host: '0.0.0.0'
+      host: '0.0.0.0',
+      disableHostCheck: true
       // watchOptions: {
       //   aggregateTimeout: 500, // delay before reloading
       //   poll: 1000 // enable polling since fsevents are not supported in docker

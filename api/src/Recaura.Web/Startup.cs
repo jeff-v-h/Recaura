@@ -18,7 +18,7 @@ namespace Recaura.Web
         }
 
         public IConfiguration Configuration { get; }
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly string CorsAllowOrigins = "_corsAllowOrigins";
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -26,12 +26,14 @@ namespace Recaura.Web
             services.AddInfrastructure();
             services.AddPersistence(Configuration);
 
+            var origins = Configuration["AllowedOrigins"].Split(";");
+
             services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
+                options.AddPolicy(name: CorsAllowOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("http://192.168.99.100:3000")
+                        builder.WithOrigins(origins)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
@@ -71,7 +73,7 @@ namespace Recaura.Web
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(CorsAllowOrigins);
 
             app.UseAuthorization();
 
