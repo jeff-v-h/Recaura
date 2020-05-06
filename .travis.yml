@@ -17,17 +17,17 @@ after_success:
   # Take those images and push them to docker hub
   - docker push jeffvh/recaura-client
   - docker push jeffvh/recaura-nginx
-  - docker push jeffvh/recaura-server
+  - docker push jeffvh/recaura-api
 
-# deploy:
-#   edge: true
-#   provider: elasticbeanstalk
-#   region: ap-southeast-2
-#   app: recaura
-#   env: Recaura-env
-#   bucket_name: elasticbeanstalk-ap-southeast-2-788408921554
-#   bucket_path: recaura
-#   on:
-#     branch: master
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key: $AWS_SECRET_KEY
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: ap-southeast-2
+  app: recaura
+  env: Recaura-env-1
+  bucket_name: elasticbeanstalk-ap-southeast-2-788408921554
+  bucket_path: recaura
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
