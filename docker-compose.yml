@@ -26,6 +26,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5555:5555
+    # environment:
+    #   - ConnectionStrings__RecauraDb=Server=sqlserver;Database=Recauradb;User=sa;Password=recApp123;
     depends_on:
       - sqlserver
   sqlserver:
