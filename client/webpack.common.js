@@ -12,7 +12,7 @@ const dotenv = require('dotenv');
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 function getOutputDir() {
-  return pathHelper("dist", "bundle");
+  return pathHelper("dist");
 }
 
 module.exports = function (env) {

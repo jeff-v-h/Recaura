@@ -1,5 +1,7 @@
 version: '3.4'  
-  
+
+# Below configuration is to test production environment
+
 services:
   nginx:
     restart: always
@@ -11,12 +13,12 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - ./client:/app
       - client_node_modules:/app/node_modules
     working_dir: /app
-    command: npm run start
+    # command: npm run start
     ports:
       - 3000:3000
     stdin_open: true
