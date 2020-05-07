@@ -15,7 +15,7 @@ module.exports = function(env) {
     plugins: [
       new MiniCssExtractPlugin({
         filename: "[name].[contenthash].css",
-        chunkFilename: `${getVendorName(env)}.[contenthash].css`
+        chunkFilename: `${getVendorName(env.ENVIRONMENT)}.[contenthash].css`
       })
     ],
 

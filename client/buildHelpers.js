@@ -13,6 +13,6 @@ exports.root = function(args) {
   return path.join.apply(path, [_root].concat(args));
 };
 
-exports.getVendorName = function(env) {
-  return env.public ? "publicVendor" : "vendor";
+exports.getVendorName = function(environment) {
+  return environment === "public" ? "publicVendor" : "vendor";
 };
