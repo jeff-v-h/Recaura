@@ -5,6 +5,7 @@ export const get = (
   showDefaultErrorMsg: boolean = true
 ): Promise<AxiosResponse | AxiosError> => {
   return axios.get(url).catch((e: AxiosError) => {
+    console.log('axios get error', e)
     if (showDefaultErrorMsg) {
       const msg = defaultErrorMessage(e);
       return Promise.reject(msg);
