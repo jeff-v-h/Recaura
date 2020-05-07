@@ -9,9 +9,11 @@ const { apiUrl } = keys;
 class PatientsService {
   getPatients = async (): Promise<IGetPatientsVm> => {
     try {
-      console.log('apiUrl', apiUrl)
+      console.log('apiUrl', apiUrl);
       const url = `${apiUrl}/api/patients`;
+      console.log('request url:', url)
       const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientsVm>;
+      console.log('data', resp.data)
       return resp.data;
     } catch (e) {
       message.error(e);

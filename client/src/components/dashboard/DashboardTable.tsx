@@ -5,7 +5,9 @@ import { compose } from "redux";
 import { Table } from "antd";
 import * as PatientsStore from "../../store/Patients";
 import { ApplicationState } from "../../store";
-import { IPatientVm } from "src/api/generated";
+import { IPatientVm, IGetPatientVm } from "src/api/generated";
+import { get } from '../../helpers/apiHelper';
+import { AxiosResponse } from "axios";
 
 const columns = [
   {
@@ -41,10 +43,38 @@ class DashboardTable extends React.Component<Props> {
     this.ensureDataFetched();
   }
 
+  fetch1 = (host: string) => async () => {
+    console.log("-----------------------------")
+    try {
+      const url = `${host}/api/patients`;
+      const resp = (await get(url)) as AxiosResponse<IGetPatientVm>;
+      console.log('data: ', resp.data);
+    } catch (e) {
+      console.log('error fetch ' + host, e);
+    }
+  }
+
   render() {
     const { patients } = this.props;
     const data = this.parseDataForTable(patients);
-    return <Table onRow={this.onRow} columns={columns} dataSource={data} />;
+    return (
+      <>
+        <Table onRow={this.onRow} columns={columns} dataSource={data} />
+        <button onClick={this.fetch1('http://192.168.99.100:5555')}>http://192.168.99.100:5555</button>
+        <button onClick={this.fetch1('')}>/api/patients</button>
+        <button onClick={this.fetch1('http://127.0.0.1:5555')}>http://127.0.0.1:5555</button>
+        <button onClick={this.fetch1('http://0.0.0.0:5555')}>http://0.0.0.0:5555</button>
+        <button onClick={this.fetch1('http://api:5555')}>http://api:5555</button>
+        <button onClick={this.fetch1('http://api')}>http://api</button>
+        <button onClick={this.fetch1('http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com')}>http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com</button>
+        <button onClick={this.fetch1('http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5555')}>http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5555</button>
+        <button onClick={this.fetch1('http://192.168.99.100:5000')}>http://192.168.99.100:5000</button>
+        <button onClick={this.fetch1('http://127.0.0.1:5000')}>http://127.0.0.1:5000</button>
+        <button onClick={this.fetch1('http://0.0.0.0:5000')}>http://0.0.0.0:5000</button>
+        <button onClick={this.fetch1('http://api:5000')}>http://api:5000</button>
+        <button onClick={this.fetch1('http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5000')}>http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5000</button>
+      </>
+    );
   }
 
   private ensureDataFetched = () => {
