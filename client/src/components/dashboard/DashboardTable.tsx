@@ -5,7 +5,9 @@ import { compose } from "redux";
 import { Table } from "antd";
 import * as PatientsStore from "../../store/Patients";
 import { ApplicationState } from "../../store";
-import { IPatientVm } from "src/api/generated";
+import { IPatientVm, IGetPatientVm } from "src/api/generated";
+import { get } from '../../helpers/apiHelper';
+import { AxiosResponse } from "axios";
 
 const columns = [
   {
@@ -37,15 +39,36 @@ type Props = PatientsStore.PatientsState &
   RouteComponentProps<{}>;
 
 class DashboardTable extends React.Component<Props> {
+  state = {
+    url: ""
+  }
   componentDidMount() {
     this.ensureDataFetched();
+  }
+
+  setUrl = (e: any) => {
+    this.setState({ url: e.target.value })
+  }
+
+  fetchUrl = async () => {
+    console.log("-----------------------------")
+    try {
+      const resp = (await get(this.state.url)) as AxiosResponse<IGetPatientVm>;
+      console.log('data: ', resp.data);
+    } catch (e) {
+      console.log('error fetch ' + this.state.url, e);
+    }
   }
 
   render() {
     const { patients } = this.props;
     const data = this.parseDataForTable(patients);
     return (
-      <Table onRow={this.onRow} columns={columns} dataSource={data} />
+      <>
+        <Table onRow={this.onRow} columns={columns} dataSource={data} />
+        <input value={this.state.url} onChange={this.setUrl} />
+        <button onClick={this.fetchUrl}>fetch</button>
+      </>
     );
   }
 
