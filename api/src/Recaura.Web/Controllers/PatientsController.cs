@@ -2,8 +2,6 @@
 using Recaura.Application.Features.Patients.GetPatients;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
 
 namespace Recaura.Web.Controllers
 {
@@ -13,20 +11,7 @@ namespace Recaura.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<GetPatientsVm>> Get()
         {
-            //return await Mediator.Send(new GetPatientsQuery());
-            return new GetPatientsVm
-            {
-                Patients = new List<PatientVm>
-                {
-                    new PatientVm
-                    {
-                        Id = 1111,
-                        FirstName = "Test",
-                        LastName = "Person",
-                        DOB = DateTime.UtcNow
-                    }
-                }
-            };
+            return await Mediator.Send(new GetPatientsQuery());
         }
 
         [HttpGet("{id}")]

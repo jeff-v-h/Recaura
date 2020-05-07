@@ -5,9 +5,7 @@ import { compose } from "redux";
 import { Table } from "antd";
 import * as PatientsStore from "../../store/Patients";
 import { ApplicationState } from "../../store";
-import { IPatientVm, IGetPatientVm } from "src/api/generated";
-import { get } from '../../helpers/apiHelper';
-import { AxiosResponse } from "axios";
+import { IPatientVm } from "src/api/generated";
 
 const columns = [
   {
@@ -39,61 +37,15 @@ type Props = PatientsStore.PatientsState &
   RouteComponentProps<{}>;
 
 class DashboardTable extends React.Component<Props> {
-  state = {
-    url: ""
-  }
   componentDidMount() {
     this.ensureDataFetched();
-  }
-
-  fetch1 = (host: string) => async () => {
-    console.log("-----------------------------")
-    try {
-      const url = `${host}/api/patients`;
-      const resp = (await get(url)) as AxiosResponse<IGetPatientVm>;
-      console.log('data: ', resp.data);
-    } catch (e) {
-      console.log('error fetch ' + host, e);
-    }
-  }
-
-  setUrl = (e: any) => {
-    this.setState({ url: e.target.value })
-  }
-
-  fetchUrl = async () => {
-    console.log("-----------------------------")
-    try {
-      const resp = (await get(this.state.url)) as AxiosResponse<IGetPatientVm>;
-      console.log('data: ', resp.data);
-    } catch (e) {
-      console.log('error fetch ' + this.state.url, e);
-    }
   }
 
   render() {
     const { patients } = this.props;
     const data = this.parseDataForTable(patients);
     return (
-      <>
-        <Table onRow={this.onRow} columns={columns} dataSource={data} />
-        <input value={this.state.url} onChange={this.setUrl} />
-        <button onClick={this.fetchUrl}>fetch</button>
-
-        <button onClick={this.fetch1('http://192.168.99.100:5555')}>http://192.168.99.100:5555</button>
-        <button onClick={this.fetch1('')}>/api/patients</button>
-        <button onClick={this.fetch1('http://127.0.0.1:5555')}>http://127.0.0.1:5555</button>
-        <button onClick={this.fetch1('http://0.0.0.0:5555')}>http://0.0.0.0:5555</button>
-        <button onClick={this.fetch1('http://api:5555')}>http://api:5555</button>
-        <button onClick={this.fetch1('http://api')}>http://api</button>
-        <button onClick={this.fetch1('http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com')}>http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com</button>
-        <button onClick={this.fetch1('http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5555')}>http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5555</button>
-        <button onClick={this.fetch1('http://192.168.99.100:5000')}>http://192.168.99.100:5000</button>
-        <button onClick={this.fetch1('http://127.0.0.1:5000')}>http://127.0.0.1:5000</button>
-        <button onClick={this.fetch1('http://0.0.0.0:5000')}>http://0.0.0.0:5000</button>
-        <button onClick={this.fetch1('http://api:5000')}>http://api:5000</button>
-        <button onClick={this.fetch1('http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5000')}>http://recaura-env-1.eba-7tkitnxc.ap-southeast-2.elasticbeanstalk.com:5000</button>
-      </>
+      <Table onRow={this.onRow} columns={columns} dataSource={data} />
     );
   }
 
