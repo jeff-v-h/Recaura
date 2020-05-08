@@ -4,16 +4,24 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace Recaura.Web.Controllers
 {
     [ApiController]
     public class PatientsController : ApiControllerBase
     {
+        private IConfiguration _configuration;
+        public PatientsController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [HttpGet]
         public async Task<ActionResult<GetPatientsVm>> Get()
         {
             //return await Mediator.Send(new GetPatientsQuery());
+            var connString = _configuration["ConnectionStrings:RecauraDb"];
             return new GetPatientsVm
             {
                 Patients = new List<PatientVm>
@@ -21,7 +29,7 @@ namespace Recaura.Web.Controllers
                     new PatientVm
                     {
                         Id = 1111,
-                        FirstName = "Test",
+                        FirstName = connString,
                         LastName = "Person",
                         DOB = DateTime.UtcNow
                     }

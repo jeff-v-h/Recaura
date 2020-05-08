@@ -18,7 +18,7 @@ namespace Recaura.Web
         {
             var host = CreateHostBuilder(args).Build();
 
-            CreateAndSeedDbIfNotExists(host);
+            //CreateAndSeedDbIfNotExists(host);
 
             host.Run();
         }
