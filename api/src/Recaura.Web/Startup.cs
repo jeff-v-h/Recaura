@@ -33,7 +33,8 @@ namespace Recaura.Web
                 options.AddPolicy(name: CorsAllowOrigins,
                     builder =>
                     {
-                        builder.WithOrigins(origins)
+                        builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins(origins)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
