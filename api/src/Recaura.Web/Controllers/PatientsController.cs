@@ -22,6 +22,7 @@ namespace Recaura.Web.Controllers
         {
             //return await Mediator.Send(new GetPatientsQuery());
             var connString = _configuration["ConnectionStrings:RecauraDb"];
+            var conn = _configuration.GetConnectionString("RecauraDb");
             return new GetPatientsVm
             {
                 Patients = new List<PatientVm>
@@ -30,7 +31,7 @@ namespace Recaura.Web.Controllers
                     {
                         Id = 1111,
                         FirstName = connString,
-                        LastName = "Person",
+                        LastName = conn,
                         DOB = DateTime.UtcNow
                     }
                 }
