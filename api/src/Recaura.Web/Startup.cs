@@ -24,11 +24,6 @@ namespace Recaura.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.KnownProxies.Add(IPAddress.Parse("192.168.99.100"));
-            });
-
             services.AddApplication();
             services.AddInfrastructure();
             services.AddPersistence(Configuration);
@@ -62,11 +57,6 @@ namespace Recaura.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
