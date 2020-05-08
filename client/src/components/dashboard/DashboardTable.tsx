@@ -67,7 +67,7 @@ class DashboardTable extends React.Component<Props> {
       <>
         <Table onRow={this.onRow} columns={columns} dataSource={data} />
         <input value={this.state.url} onChange={this.setUrl} />
-        <button onClick={this.fetchUrl}>fetch</button>
+        <button onClick={this.fetchUrl}>fetch2</button>
       </>
     );
   }
