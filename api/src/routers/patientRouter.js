@@ -58,7 +58,7 @@ router.get('/api/patients/:id', async (req, res) => {
 
 router.patch('/api/patients/:id', async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['honorific', 'firstName', 'lastName', 'dob', 'email', 'countryCode', 'homePhone', 'mobilePhone', 'gender', 'occupation']
+    const allowedUpdates = ['honorific', 'firstName', 'lastName', 'dob', 'email', 'countryCode', 'homePhone', 'mobilePhone', 'gender', 'occupation', 'casefiles']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -84,10 +84,9 @@ router.delete('/api/patients/:id', async (req, res) => {
     try {
         const patient = await Patient.findOneAndDelete({ _id: req.params.id });
         if (!patient) {
-            res.status(404).send({ error: "Patient not found" })
-        } else {
-            res.send(patient)
+            return res.status(404).send({ error: "Patient not found" })
         }
+        res.send(patient)
     } catch (e) {
         res.status(500).send({ error: e.message });
     }
