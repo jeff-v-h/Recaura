@@ -1,5 +1,15 @@
 const mongoose = require('mongoose')
 
+const casefileSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    }
+}, {
+    timestamps: true
+})
+
 const patientSchema = new mongoose.Schema({
     honorific: {
         type: String,
@@ -45,9 +55,17 @@ const patientSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    casefiles: [casefileSchema]
 }, {
     timestamps: true
 })
+
+// setup virtual property to reference casefiles for user
+// patientSchema.virtual('casefiles', {
+//     ref: 'Casefile',
+//     localField: '_id',
+//     foreignField: 'patientId'
+// })
 
 const Patient = mongoose.model('Patient', patientSchema)
 

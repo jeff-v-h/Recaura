@@ -1,6 +1,7 @@
 const express = require('express')
 const router = new express.Router()
 const Patient = require('../models/patient.model')
+const Casefile = require('../models/casefile.schema')
 
 router.post('/api/patients', async (req, res) => {
     const patient = new Patient(req.body);
@@ -34,7 +35,7 @@ router.get('/api/patients', async (req, res) => {
             limit: parseInt(req.query.limit),
             skip: parseInt(req.query.skip),
             sort
-        })
+        });
         res.send(patients)
     } catch (e) {
         res.status(500).send()
@@ -44,9 +45,11 @@ router.get('/api/patients', async (req, res) => {
 router.get('/api/patients/:id', async (req, res) => {
     try {
         const patient = await Patient.findOne({ _id: req.params.id })
+
         if (!patient) {
             return res.status(404).send({ error: "Patient not found" })
         }
+       
         res.send(patient)
     } catch (e) {
         res.status(500).send()
