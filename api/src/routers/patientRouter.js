@@ -1,7 +1,7 @@
 const express = require('express')
 const router = new express.Router()
 const Patient = require('../models/patient.model')
-const Casefile = require('../models/casefile.schema')
+const Consultation = require('../models/consultation.model')
 
 router.post('/api/patients', async (req, res) => {
     const patient = new Patient(req.body);

@@ -1,12 +1,6 @@
 const mongoose = require('mongoose')
 
-const casefileSchema = new mongoose.Schema({
-    name: { type: String, required: true, trim: true }
-}, {
-    timestamps: true
-})
-
-const patientSchema = new mongoose.Schema({
+const practitionerSchema = new mongoose.Schema({
     honorific: {
         type: String,
         enum: ['Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
@@ -24,19 +18,13 @@ const patientSchema = new mongoose.Schema({
         enum: ['preferNotToSay', 'male', 'female', 'other'],
         default: 'preferNotToSay'
     },
-    occupation: { type: String, trim: true },
+    profession: { type: String, trim: true },
+    jobLevel: { type: String, trim: true },
     casefiles: [casefileSchema]
 }, {
     timestamps: true
 })
 
-// setup virtual property to reference casefiles for user
-// patientSchema.virtual('casefiles', {
-//     ref: 'Casefile',
-//     localField: '_id',
-//     foreignField: 'patientId'
-// })
+const Practitioner = mongoose.model('Practitioner', practitionerSchema)
 
-const Patient = mongoose.model('Patient', patientSchema)
-
-module.exports = Patient
+module.exports = Practitioner
