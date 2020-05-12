@@ -9,8 +9,8 @@ const casefileSchema = new mongoose.Schema({
 const patientSchema = new mongoose.Schema({
     honorific: {
         type: String,
-        enum: ['Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
-        default: 'Mr'
+        enum: ['', 'Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
+        default: ''
     },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },

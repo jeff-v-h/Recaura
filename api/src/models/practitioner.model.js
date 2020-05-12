@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 const practitionerSchema = new mongoose.Schema({
     honorific: {
         type: String,
-        enum: ['Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
-        default: 'Mr'
+        enum: ['', 'Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
+        default: ''
     },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
@@ -19,8 +19,7 @@ const practitionerSchema = new mongoose.Schema({
         default: 'preferNotToSay'
     },
     profession: { type: String, trim: true },
-    jobLevel: { type: String, trim: true },
-    casefiles: [casefileSchema]
+    jobLevel: { type: String, trim: true }
 }, {
     timestamps: true
 })
