@@ -237,4 +237,7 @@ config.Local.json
 Recaura.Web/Properties/launchSettings.json
 
 Recaura.Web/wwwroot/bundle/*
-Recaura.ClientApp/src/api/generated.ts
+
+.env
+.env.development
+.env.test
