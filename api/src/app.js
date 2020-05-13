@@ -3,6 +3,7 @@ require('./db/mongoose')
 const appCors = require('./helpers/appCors')
 const patientRouter = require('./routers/patientRouter')
 const practitionerRouter = require('./routers/practitionerRouter')
+const consultationRouter = require('./routers/consultationRouter')
 // const swaggerUi = require('swagger-ui-express');
 // const YAML = require('yamljs');
 // Path for the following YAML.load is relative to root
@@ -16,5 +17,6 @@ app.use(express.json())
 
 app.use(patientRouter)
 app.use(practitionerRouter)
+app.use(consultationRouter)
 
 module.exports = app

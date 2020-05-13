@@ -7,7 +7,7 @@ const subjectiveSchema = new Schema({
     bodyChart: { type: String },
     aggravatingFactors: { type: String },
     easingFactors: { type: String },
-    vas: { type: String },
+    vas: { type: String, min: 0, max: 10 },
     pastHistory: { type: String },
     socialHistory: { type: String },
     imaging: { type: String },
@@ -27,13 +27,15 @@ const objectiveSchema = new Schema({
 })
 
 const consultationSchema = new Schema({
+    patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
+    casefileId: { type: Schema.Types.ObjectId, ref: 'Patient.casefiles', required: true },
     date: { type: Date,  default: new Date() },
-    number: { type: Number, default: 1 },
-    practitioner: { type: Schema.Types.ObjectId, ref: 'Practitioner' },
+    number: { type: Number, default: 1, min: 1 },
+    practitionerId: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
     subjectiveAssessment: subjectiveSchema,
     objectiveAssessment: objectiveSchema,
-    treatments: { type: String, required: true },
-    plans: { type: String, required: true }
+    treatments: { type: String },
+    plans: { type: String }
 }, {
     timestamps: true
 })
