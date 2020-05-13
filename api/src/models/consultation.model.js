@@ -27,25 +27,30 @@ const objectiveSchema = new Schema({
 })
 
 const consultationSchema = new Schema({
-    patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
-    casefileId: { type: Schema.Types.ObjectId, ref: 'Patient.casefiles', required: true },
+    patient: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
+    casefile: { type: Schema.Types.ObjectId, ref: 'Patient.casefile', required: true },
     date: { type: Date,  default: new Date() },
     number: { type: Number, default: 1, min: 1 },
-    practitionerId: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
+    practitioner: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
     subjectiveAssessment: subjectiveSchema,
     objectiveAssessment: objectiveSchema,
     treatments: { type: String },
     plans: { type: String }
 }, {
-    timestamps: true
+    timestamps: true,
+    // Add the following if adding virtuals
+    // toJSON: { virtual: true },
+    // toObject: { virtual: true }
 })
 
-// setup virtual property to reference casefiles for user
-// patientSchema.virtual('casefiles', {
-//     ref: 'Casefile',
-//     localField: '_id',
-//     foreignField: 'patientId'
-// })
+consultationSchema.methods.toJSON = function() {
+    const consultation = this;
+    const consultationObject = consultation.toObject()
+
+    delete consultationObject.__v
+
+    return consultationObject
+}
 
 const Consultation = mongoose.model('Consultation', consultationSchema)
 

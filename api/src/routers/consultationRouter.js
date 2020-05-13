@@ -3,6 +3,18 @@ const router = new express.Router()
 const Consultation = require('../models/consultation.model')
 
 router.post('/api/consultations', async (req, res) => {
+    if (req.body.patientId) {
+        req.body.patient = req.body.patientId
+    }
+
+    if (req.body.casefileId) {
+        req.body.casefile = req.body.casefileId
+    }
+
+    if (req.body.practitionerId) {
+        req.body.practitioner = req.body.practitionerId
+    }
+
     const consultation = new Consultation(req.body);
 
     try {
@@ -24,15 +36,15 @@ router.get('/api/consultations', async (req, res) => {
     const sort = {}
 
     if (req.query.patientId) {
-        match.patientId = req.query.patientId
+        match.patient = req.query.patientId
     }
 
     if (req.query.casefileId) {
-        match.casefileId = req.query.casefileId
+        match.casefile = req.query.casefileId
     }
 
     if (req.query.practitionerId) {
-        match.practitionerId = req.query.practitionerId
+        match.practitioner = req.query.practitionerId
     }
 
     if (req.query.number) {
@@ -59,6 +71,8 @@ router.get('/api/consultations', async (req, res) => {
 router.get('/api/consultations/:id', async (req, res) => {
     try {
         const consultation = await Consultation.findOne({ _id: req.params.id })
+            .populate('practitioner')
+            // .populate('casefile')
 
         if (!consultation) {
             return res.status(404).send({ error: "Consultation not found" })
@@ -71,8 +85,23 @@ router.get('/api/consultations/:id', async (req, res) => {
 })
 
 router.patch('/api/consultations/:id', async (req, res) => {
+    if (req.body.patientId) {
+        req.body.patient = req.body.patientId
+        delete req.body.patientId
+    }
+
+    if (req.body.casefileId) {
+        req.body.casefile = req.body.casefileId
+        delete req.body.casefileId
+    }
+
+    if (req.body.practitionerId) {
+        req.body.practitioner = req.body.practitionerId
+        delete req.body.practitionerId
+    }
+
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['patientId', 'casefileId', 'date', 'number', 'practitionerId', 'subjectiveAssessment', 'objectiveAssessment', 'treatments', 'plans']
+    const allowedUpdates = ['patient', 'casefile', 'date', 'number', 'practitioner', 'subjectiveAssessment', 'objectiveAssessment', 'treatments', 'plans']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
