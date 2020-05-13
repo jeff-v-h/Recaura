@@ -82,10 +82,11 @@ router.patch('/api/patients/:id', async (req, res) => {
 
 router.delete('/api/patients/:id', async (req, res) => {
     try {
-        const patient = await Patient.findOneAndDelete({ _id: req.params.id });
+        const patient = await Patient.findOne({ _id: req.params.id });
         if (!patient) {
             return res.status(404).send({ error: "Patient not found" })
         }
+        await patient.remove()
         res.send(patient)
     } catch (e) {
         res.status(500).send({ error: e.message });

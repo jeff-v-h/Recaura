@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Casefile = require('./casefile.model')
 
 const patientSchema = new mongoose.Schema({
     honorific: {
@@ -29,6 +30,14 @@ patientSchema.virtual('casefiles', {
     ref: 'Casefile',
     localField: '_id',
     foreignField: 'patientId'
+})
+
+// Delete cascade - delete all casefiles for patient when the patient is removed
+patientSchema.pre('remove', async function(next) {
+    const patient = this
+    const casefiles = await Casefile.find({ patientId: patient._id })
+    casefiles.forEach(c => c.remove())
+    next()
 })
 
 const Patient = mongoose.model('Patient', patientSchema)
