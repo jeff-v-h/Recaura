@@ -27,11 +27,11 @@ const objectiveSchema = new Schema({
 })
 
 const consultationSchema = new Schema({
-    patient: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
+    patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
     casefileId: { type: Schema.Types.ObjectId, ref: 'Patient.casefiles', required: true },
     date: { type: Date,  default: new Date() },
     number: { type: Number, default: 1, min: 1 },
-    practitioner: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
+    practitionerId: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
     subjectiveAssessment: subjectiveSchema,
     objectiveAssessment: objectiveSchema,
     treatments: { type: String },
@@ -42,10 +42,22 @@ const consultationSchema = new Schema({
     toObject: { virtuals: true, getters: true }
 })
 
-// These virtuals will be automatically populated without needing to call .populate
-consultationSchema.virtual('casefile').get(function() {
-    return this.patient.casefiles.id(this.casefileId)
+consultationSchema.virtual('patient', {
+    ref: 'Patient',
+    localField: 'patientId',
+    foreignField: '_id'
 })
+
+consultationSchema.virtual('practitioner', {
+    ref: 'Practitioner',
+    localField: 'practitionerId',
+    foreignField: '_id'
+})
+
+// These virtuals will be automatically populated without needing to call .populate
+// consultationSchema.virtual('casefile').get(function() {
+//     return this.patient.casefiles ? this.patient.casefiles.id(this.casefileId) : null
+// })
 
 // consultationSchema.virtual('casefile').set(function(casefile) {
 //     this.casefileId = casefile;
