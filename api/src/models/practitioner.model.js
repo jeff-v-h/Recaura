@@ -21,7 +21,15 @@ const practitionerSchema = new mongoose.Schema({
     profession: { type: String, trim: true },
     jobLevel: { type: String, trim: true }
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+})
+
+practitionerSchema.virtual('consultations', {
+    ref: 'Consultation',
+    localField: '_id',
+    foreignField: 'practitioner'
 })
 
 practitionerSchema.methods.toJSON = function() {

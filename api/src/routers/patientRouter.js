@@ -1,7 +1,6 @@
 const express = require('express')
 const router = new express.Router()
 const Patient = require('../models/patient.model')
-const Consultation = require('../models/consultation.model')
 
 router.post('/api/patients', async (req, res) => {
     const patient = new Patient(req.body);
@@ -45,6 +44,7 @@ router.get('/api/patients', async (req, res) => {
 router.get('/api/patients/:id', async (req, res) => {
     try {
         const patient = await Patient.findOne({ _id: req.params.id })
+            // .populate('consultations')
 
         if (!patient) {
             return res.status(404).send({ error: "Patient not found" })

@@ -44,6 +44,7 @@ router.get('/api/practitioners', async (req, res) => {
 router.get('/api/practitioners/:id', async (req, res) => {
     try {
         const practitioner = await Practitioner.findOne({ _id: req.params.id })
+            // .populate('consultations')
 
         if (!practitioner) {
             return res.status(404).send({ error: "Practitioner not found" })

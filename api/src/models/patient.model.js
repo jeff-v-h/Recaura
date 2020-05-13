@@ -27,15 +27,17 @@ const patientSchema = new mongoose.Schema({
     occupation: { type: String, trim: true },
     casefiles: [casefileSchema]
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 })
 
 // setup virtual property to reference casefiles for user
-// patientSchema.virtual('casefiles', {
-//     ref: 'Casefile',
-//     localField: '_id',
-//     foreignField: 'patientId'
-// })
+patientSchema.virtual('consultations', {
+    ref: 'Consultation',
+    localField: '_id',
+    foreignField: 'patient'
+})
 
 const Patient = mongoose.model('Patient', patientSchema)
 
