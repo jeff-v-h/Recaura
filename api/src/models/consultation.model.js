@@ -28,7 +28,7 @@ const objectiveSchema = new Schema({
 
 const consultationSchema = new Schema({
     patient: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
-    casefile: { type: Schema.Types.ObjectId, ref: 'Patient.casefile', required: true },
+    casefileId: { type: Schema.Types.ObjectId, ref: 'Patient.casefiles', required: true },
     date: { type: Date,  default: new Date() },
     number: { type: Number, default: 1, min: 1 },
     practitioner: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
@@ -38,10 +38,18 @@ const consultationSchema = new Schema({
     plans: { type: String }
 }, {
     timestamps: true,
-    // Add the following if adding virtuals
-    // toJSON: { virtual: true },
-    // toObject: { virtual: true }
+    toJSON: { virtuals: true, getters: true },
+    toObject: { virtuals: true, getters: true }
 })
+
+// These virtuals will be automatically populated without needing to call .populate
+consultationSchema.virtual('casefile').get(function() {
+    return this.patient.casefiles.id(this.casefileId)
+})
+
+// consultationSchema.virtual('casefile').set(function(casefile) {
+//     this.casefileId = casefile;
+// })
 
 consultationSchema.methods.toJSON = function() {
     const consultation = this;

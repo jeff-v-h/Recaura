@@ -1,6 +1,7 @@
 const express = require('express')
 const router = new express.Router()
 const Consultation = require('../models/consultation.model')
+const mongoose = require('mongoose')
 
 router.post('/api/consultations', async (req, res) => {
     if (req.body.patientId) {
@@ -72,7 +73,7 @@ router.get('/api/consultations/:id', async (req, res) => {
     try {
         const consultation = await Consultation.findOne({ _id: req.params.id })
             .populate('practitioner')
-            // .populate('casefile')
+            .populate('patient')
 
         if (!consultation) {
             return res.status(404).send({ error: "Consultation not found" })
