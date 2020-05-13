@@ -46,7 +46,7 @@ router.get('/api/casefiles/:id', async (req, res) => {
     try {
         const casefile = await Casefile.findOne({ _id: req.params.id })
             .populate('consultations', 'number date practitionerId')
-            .populate('patient', 'gender firstName lastName dob occupation')
+            // .populate('patient', 'gender firstName lastName dob occupation')
 
         if (!casefile) {
             return res.status(404).send({ error: "Casefile not found" })
@@ -84,10 +84,11 @@ router.patch('/api/casefiles/:id', async (req, res) => {
 
 router.delete('/api/casefiles/:id', async (req, res) => {
     try {
-        const casefile = await Casefile.findOneAndDelete({ _id: req.params.id });
+        const casefile = await Casefile.findOne({ _id: req.params.id });
         if (!casefile) {
             return res.status(404).send({ error: "Casefile not found" })
         }
+        await casefile.remove()
         res.send(casefile)
     } catch (e) {
         res.status(500).send({ error: e.message });

@@ -60,15 +60,6 @@ consultationSchema.virtual('practitioner', {
     foreignField: '_id'
 })
 
-// These virtuals will be automatically populated without needing to call .populate
-// consultationSchema.virtual('casefile').get(function() {
-//     return this.patient.casefiles ? this.patient.casefiles.id(this.casefileId) : null
-// })
-
-// consultationSchema.virtual('casefile').set(function(casefile) {
-//     this.casefileId = casefile;
-// })
-
 consultationSchema.methods.toJSON = function() {
     const consultation = this;
     const consultationObject = consultation.toObject()

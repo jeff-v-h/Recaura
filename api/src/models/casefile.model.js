@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Consultation = require('./consultation.model')
 
 const casefileSchema = new mongoose.Schema({
     patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
@@ -34,6 +35,13 @@ casefileSchema.methods.toJSON = function() {
 
     return casefileObject
 }
+
+// Delete cascade - delete all consultations for casefile when the file is removed
+casefileSchema.pre('remove', async function(next) {
+    const casefile = this
+    await Consultation.deleteMany({ casefileId: casefile._id })
+    next()
+})
 
 const Casefile = mongoose.model('Casefile', casefileSchema)
 
