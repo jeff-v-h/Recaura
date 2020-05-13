@@ -24,6 +24,18 @@ const practitionerSchema = new mongoose.Schema({
     timestamps: true
 })
 
+practitionerSchema.methods.toJSON = function() {
+    const practitioner = this;
+    const practitionerObject = practitioner.toObject()
+
+    delete practitionerObject.createdAt
+    delete practitionerObject.updatedAt
+    delete practitionerObject.__v
+
+    return practitionerObject
+}
+
 const Practitioner = mongoose.model('Practitioner', practitionerSchema)
+
 
 module.exports = Practitioner
