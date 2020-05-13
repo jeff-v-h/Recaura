@@ -32,6 +32,17 @@ patientSchema.virtual('casefiles', {
     foreignField: 'patientId'
 })
 
+patientSchema.methods.toJSON = function() {
+    const patient = this;
+    const patientObject = patient.toObject()
+
+    delete patientObject.__v
+    delete patientObject._id
+    delete patientObject.createdAt
+
+    return patientObject
+}
+
 // Delete cascade - delete all casefiles for patient when the patient is removed
 patientSchema.pre('remove', async function(next) {
     const patient = this

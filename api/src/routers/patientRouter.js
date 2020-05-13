@@ -44,7 +44,7 @@ router.get('/api/patients', async (req, res) => {
 router.get('/api/patients/:id', async (req, res) => {
     try {
         const patient = await Patient.findOne({ _id: req.params.id })
-            // .populate('consultations')
+            // .populate('casefiles')
 
         if (!patient) {
             return res.status(404).send({ error: "Patient not found" })
