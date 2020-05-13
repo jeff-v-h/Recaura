@@ -27,8 +27,7 @@ const objectiveSchema = new Schema({
 })
 
 const consultationSchema = new Schema({
-    patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
-    casefileId: { type: Schema.Types.ObjectId, ref: 'Patient.casefiles', required: true },
+    casefileId: { type: Schema.Types.ObjectId, ref: 'Casefile', required: true },
     date: { type: Date,  default: new Date() },
     number: { type: Number, default: 1, min: 1 },
     practitionerId: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
@@ -38,13 +37,13 @@ const consultationSchema = new Schema({
     plans: { type: String }
 }, {
     timestamps: true,
-    toJSON: { virtuals: true, getters: true },
-    toObject: { virtuals: true, getters: true }
+    toJSON: { virtuals: true},
+    toObject: { virtuals: true }
 })
 
-consultationSchema.virtual('patient', {
-    ref: 'Patient',
-    localField: 'patientId',
+consultationSchema.virtual('casefile', {
+    ref: 'Casefile',
+    localField: 'casefileId',
     foreignField: '_id'
 })
 
