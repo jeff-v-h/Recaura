@@ -29,6 +29,8 @@ casefileSchema.methods.toJSON = function() {
     delete casefileObject.__v
     delete casefileObject._id
     delete casefileObject.updatedAt
+    if (casefileObject.patient)
+        delete casefileObject.patient._id
 
     return casefileObject
 }
