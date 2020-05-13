@@ -29,7 +29,7 @@ const practitionerSchema = new mongoose.Schema({
 practitionerSchema.virtual('consultations', {
     ref: 'Consultation',
     localField: '_id',
-    foreignField: 'practitioner'
+    foreignField: 'practitionerId'
 })
 
 practitionerSchema.methods.toJSON = function() {
