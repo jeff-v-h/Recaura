@@ -39,6 +39,7 @@ practitionerSchema.methods.toJSON = function() {
     delete practitionerObject.createdAt
     delete practitionerObject.updatedAt
     delete practitionerObject.__v
+    delete practitionerObject._id
 
     return practitionerObject
 }

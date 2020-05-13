@@ -1,7 +1,6 @@
 const express = require('express')
 const router = new express.Router()
 const Consultation = require('../models/consultation.model')
-const mongoose = require('mongoose')
 
 router.post('/api/consultations', async (req, res) => {
     const consultation = new Consultation(req.body);
@@ -24,9 +23,17 @@ router.get('/api/consultations', async (req, res) => {
     const match = {}
     const sort = {}
 
-    if (req.query.number) {
+    if (req.query.patientId) 
+        match.patientId = req.query.patientId
+
+    if (req.query.casefileId)
+        match.casefileId = req.query.casefileId
+
+    if (req.query.practitionerId)
+        match.practitionerId = req.query.practitionerId
+
+    if (req.query.number)
         match.number = req.query.number
-    }
 
     if (req.query.sortBy) {
         const parts = req.query.sortBy.split(':')
@@ -48,8 +55,8 @@ router.get('/api/consultations', async (req, res) => {
 router.get('/api/consultations/:id', async (req, res) => {
     try {
         const consultation = await Consultation.findOne({ _id: req.params.id })
-            .populate('practitioner')
-            // .populate('patient')
+            .populate('practitioner', 'firstName lastName')
+            // .populate('patient', 'gender firstName lastName dob occupation')
 
         if (!consultation) {
             return res.status(404).send({ error: "Consultation not found" })

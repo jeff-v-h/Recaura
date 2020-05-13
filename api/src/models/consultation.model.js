@@ -45,19 +45,22 @@ const consultationSchema = new Schema({
 consultationSchema.virtual('patient', {
     ref: 'Patient',
     localField: 'patientId',
-    foreignField: '_id'
+    foreignField: '_id',
+    justOne: true
 })
 
 consultationSchema.virtual('casefile', {
     ref: 'Casefile',
     localField: 'casefileId',
-    foreignField: '_id'
+    foreignField: '_id',
+    justOne: true
 })
 
 consultationSchema.virtual('practitioner', {
     ref: 'Practitioner',
     localField: 'practitionerId',
-    foreignField: '_id'
+    foreignField: '_id',
+    justOne: true
 })
 
 consultationSchema.methods.toJSON = function() {
@@ -65,6 +68,17 @@ consultationSchema.methods.toJSON = function() {
     const consultationObject = consultation.toObject()
 
     delete consultationObject.__v
+    delete consultationObject._id
+    delete consultationObject.createdAt
+    delete consultationObject.updatedAt
+    if (consultationObject.subjectiveAssessment)
+        delete consultationObject.subjectiveAssessment._id
+    if (consultationObject.objectiveAssessment)
+        delete consultationObject.objectiveAssessment._id
+    if (consultationObject.practitioner)
+        delete consultationObject.practitioner._id
+    if (consultationObject.patient)
+        delete consultationObject.patient._id
 
     return consultationObject
 }
