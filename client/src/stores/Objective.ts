@@ -1,4 +1,4 @@
-import { IGetObjectiveAssessmentVm } from "src/models/commonModels";
+import { ObjectiveAssessment } from "src/models/commonModels";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { consultationService } from "../api/consultationService";
@@ -14,7 +14,7 @@ const C = {
  */
 export interface ObjectiveState {
   isFetching: boolean;
-  assessment: IGetObjectiveAssessmentVm | null;
+  assessment: ObjectiveAssessment | null;
 }
 
 //--------------------
@@ -25,7 +25,7 @@ export interface GetObjectiveRequestAction {
 
 export interface GetObjectiveSuccessAction {
   type: typeof C.GET_OBJECTIVE_SUCCESS;
-  payload: IGetObjectiveAssessmentVm;
+  payload: ObjectiveAssessment;
 }
 
 export interface GetObjectiveFailureAction {

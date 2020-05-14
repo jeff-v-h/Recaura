@@ -48,26 +48,26 @@
 //     Prof = 10,
 // }
 
-// export interface IGetConsultationVm {
+// export interface Consultation {
 //     id: string;
 //     caseFileId: number;
 //     date: string;
 //     number: number;
-//     practitioner: IPractitionerVm;
-//     subjectiveAssessment: ISubjectiveAssessmentVm;
-//     objectiveAssessment: IObjectiveAssessmentVm;
+//     practitioner: ConsultPractitioner;
+//     subjectiveAssessment: SubjectiveAssessment;
+//     objectiveAssessment: ObjectiveAssessment;
 //     treatments: string;
 //     plans: string;
 // }
 
-// export interface IPractitionerVm {
+// export interface ConsultPractitioner {
 //     id: string;
 //     firstName: string;
 //     lastName: string;
 //     jobLevel: string;
 // }
 
-// export interface ISubjectiveAssessmentVm {
+// export interface SubjectiveAssessment {
 //     id: string;
 //     consultationId: number;
 //     moi: string;
@@ -82,7 +82,7 @@
 //     generalHealth: string;
 // }
 
-// export interface IObjectiveAssessmentVm {
+// export interface ObjectiveAssessment {
 //     id: string;
 //     consultationId: number;
 //     observation: string;
@@ -100,14 +100,14 @@
 //     id: string;
 //     date: string;
 //     number: number;
-//     practitioner: IPractitionerVm | null;
-//     subjectiveAssessment: ISubjectiveAssessmentVm | null;
-//     objectiveAssessment: IObjectiveAssessmentVm | null;
+//     practitioner: ConsultPractitioner | null;
+//     subjectiveAssessment: SubjectiveAssessment | null;
+//     objectiveAssessment: ObjectiveAssessment | null;
 //     treatments: string;
 //     plans: string;
 // }
 
-// export interface IGetObjectiveAssessmentVm extends IObjectiveAssessmentVm {
+// export interface ObjectiveAssessment extends ObjectiveAssessment {
 // }
 
 // export interface Patient[] {
@@ -152,7 +152,7 @@
 //     Other = 3,
 // }
 
-// export interface IGetSubjectiveAssessmentVm extends ISubjectiveAssessmentVm {
+// export interface SubjectiveAssessment extends SubjectiveAssessment {
 // }
 
 // export interface FileResponse {

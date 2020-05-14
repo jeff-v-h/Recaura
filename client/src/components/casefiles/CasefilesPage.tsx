@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter, Link } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import * as casefileActions from "../../stores/casefiles/casefileActions";
 import { CasefileState } from '../../stores/casefiles/casefileTypes';

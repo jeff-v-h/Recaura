@@ -1,11 +1,10 @@
 import * as apiHelper from "../helpers/apiHelper";
 import { AxiosResponse } from "axios";
 import {
-  IGetConsultationVm,
-  IGetSubjectiveAssessmentVm,
-  IGetObjectiveAssessmentVm,
-  IUpdateConsultationCommand,
-} from "src/models/commonModels";
+  Consultation,
+  SubjectiveAssessment,
+  ObjectiveAssessment
+} from "../models/consultationModels";
 import { message } from "antd";
 import { IConsultationService } from "./apiService";
 import { keys } from "../helpers/keys";
@@ -13,12 +12,10 @@ import { keys } from "../helpers/keys";
 const { apiUrl } = keys;
 
 class ConsultationService implements IConsultationService {
-  getConsultation = async (id: string): Promise<IGetConsultationVm> => {
+  getConsultation = async (id: string): Promise<Consultation> => {
     try {
       const url = `${apiUrl}/api/consultations/${id}`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<
-        IGetConsultationVm
-      >;
+      const resp = (await apiHelper.get(url)) as AxiosResponse<Consultation>;
       return resp.data;
     } catch (e) {
       message.error(e);
@@ -28,11 +25,11 @@ class ConsultationService implements IConsultationService {
 
   updateConsultation = async (
     id: string,
-    consult: IUpdateConsultationCommand
+    consult: Consultation
   ): Promise<void> => {
     try {
       const url = `${apiUrl}/api/consultations/${id}`;
-      (await apiHelper.put(url, consult)) as AxiosResponse<void>;
+      (await apiHelper.patch(url, consult)) as AxiosResponse<void>;
       message.success("Consultation saved");
     } catch (e) {
       message.error(e);
@@ -40,14 +37,10 @@ class ConsultationService implements IConsultationService {
     }
   };
 
-  getSubjectiveAssessment = async (
-    consultId: string
-  ): Promise<IGetSubjectiveAssessmentVm> => {
+  getSubjectiveAssessment = async (consultId: string): Promise<SubjectiveAssessment> => {
     try {
       const url = `${apiUrl}/api/consultations/${consultId}/subjective`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<
-        IGetSubjectiveAssessmentVm
-      >;
+      const resp = (await apiHelper.get(url)) as AxiosResponse<SubjectiveAssessment>;
       return resp.data;
     } catch (e) {
       message.error(e);
@@ -55,14 +48,10 @@ class ConsultationService implements IConsultationService {
     }
   };
 
-  getObjectiveAssessment = async (
-    consultId: string
-  ): Promise<IGetObjectiveAssessmentVm> => {
+  getObjectiveAssessment = async (consultId: string): Promise<ObjectiveAssessment> => {
     try {
       const url = `${apiUrl}/api/consultations/${consultId}/objective`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<
-        IGetObjectiveAssessmentVm
-      >;
+      const resp = (await apiHelper.get(url)) as AxiosResponse<ObjectiveAssessment>;
       return resp.data;
     } catch (e) {
       message.error(e);
@@ -71,4 +60,5 @@ class ConsultationService implements IConsultationService {
   };
 }
 
-export const consultationService = new ConsultationService();
+const consultationService = new ConsultationService();
+export default consultationService

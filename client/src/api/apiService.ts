@@ -1,7 +1,7 @@
-import { IGetConsultationVm, IUpdateConsultationCommand, IGetSubjectiveAssessmentVm, IGetObjectiveAssessmentVm } from "../models/commonModels";
+import { Consultation, IUpdateConsultationCommand, SubjectiveAssessment, ObjectiveAssessment } from "../models/commonModels";
 
 export interface IConsultationService {
-  getConsultation(id: string): Promise<IGetConsultationVm>;
+  getConsultation(id: string): Promise<Consultation>;
 
   updateConsultation(
     id: string,
@@ -10,9 +10,9 @@ export interface IConsultationService {
 
   getSubjectiveAssessment(
     consultId: string
-  ): Promise<IGetSubjectiveAssessmentVm>;
+  ): Promise<SubjectiveAssessment>;
 
   getObjectiveAssessment(
     consultId: string
-  ): Promise<IGetObjectiveAssessmentVm>;
+  ): Promise<ObjectiveAssessment>;
 }

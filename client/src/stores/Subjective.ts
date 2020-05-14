@@ -1,4 +1,4 @@
-import { IGetSubjectiveAssessmentVm } from "src/models/commonModels";
+import { SubjectiveAssessment } from "src/models/commonModels";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { consultationService } from "../api/consultationService";
@@ -14,7 +14,7 @@ const C = {
  */
 export interface SubjectiveState {
   isFetching: boolean;
-  assessment: IGetSubjectiveAssessmentVm | null;
+  assessment: SubjectiveAssessment | null;
 }
 
 //--------------------
@@ -25,7 +25,7 @@ export interface GetSubjectiveRequestAction {
 
 export interface GetSubjectiveSuccessAction {
   type: typeof C.GET_SUBJECTIVE_SUCCESS;
-  payload: IGetSubjectiveAssessmentVm;
+  payload: SubjectiveAssessment;
 }
 
 export interface GetSubjectiveFailureAction {

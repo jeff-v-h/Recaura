@@ -1,8 +1,9 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as ConsultationStore from './Consultation';
-import { consultationService } from '../api/consultationService';
-import { IGetConsultationVm } from 'src/models/commonModels';
+import { unloadedState } from './consultationReducer';
+import * as consultActions from './consultationActions'
+import consultationService from '../../api/consultationService';
+import { Consultation } from '../../models/consultationModels';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
@@ -11,7 +12,7 @@ describe('Consultation Redux Store', () => {
   const mockStore = configureStore(middlewares);
   const initialState = {
     consultation: {
-      ...ConsultationStore.unloadedState
+      ...unloadedState
     }
   }
   const mockConsultation = getReturnedConsultation();
@@ -32,9 +33,9 @@ describe('Consultation Redux Store', () => {
       // Use jest to create spies for the dispatch and getState parameter functions
       const dispatch = jest.fn();
       const getState = jest.fn();
-      await ConsultationStore.actionCreators.getConsult('1')(dispatch, getState);
+      await consultActions.getConsult('1')(dispatch, getState);
 
-      expect(dispatch).toHaveBeenCalledWith(ConsultationStore.getConsultRequest())
+      expect(dispatch).toHaveBeenCalledWith(consultActions.getConsultRequest())
     })
 
     it('should dispatch a get consult success', async () => {
@@ -42,9 +43,9 @@ describe('Consultation Redux Store', () => {
       spy.mockReturnValue(Promise.resolve(mockConsultation));
 
       const dispatch = jest.fn();
-      await ConsultationStore.actionCreators.getConsult('123')(dispatch, jest.fn());
+      await consultActions.getConsult('123')(dispatch, jest.fn());
 
-      expect(dispatch).toHaveBeenLastCalledWith(await ConsultationStore.getConsultSuccess('123'))
+      expect(dispatch).toHaveBeenLastCalledWith(await consultActions.getConsultSuccess('123'))
       
       spy.mockRestore();
     })
@@ -54,9 +55,9 @@ describe('Consultation Redux Store', () => {
       spy.mockReturnValue(Promise.reject());
 
       const dispatch = jest.fn();
-      await ConsultationStore.actionCreators.getConsult('123')(dispatch, jest.fn());
+      await consultActions.getConsult('123')(dispatch, jest.fn());
 
-      expect(dispatch).toHaveBeenLastCalledWith(ConsultationStore.getConsultFailure())
+      expect(dispatch).toHaveBeenLastCalledWith(consultActions.getConsultFailure())
       
       spy.mockRestore();
     })
@@ -64,19 +65,16 @@ describe('Consultation Redux Store', () => {
   
 })
 
-function getReturnedConsultation(): IGetConsultationVm {
+function getReturnedConsultation(): Consultation {
   return {
-    ...ConsultationStore.unloadedState,
+    ...unloadedState,
     id: '123',
     practitioner: {
       id: '0',
       firstName: "",
-      lastName: "",
-      jobLevel: ""
+      lastName: ""
     },
     objectiveAssessment: {
-      id:'0',
-      consultationId: '0',
       observation: "",
       active: "",
       passive: "",
@@ -88,8 +86,6 @@ function getReturnedConsultation(): IGetConsultationVm {
       additional: ""
     },
     subjectiveAssessment: {
-      id:'1',
-      consultationId:'1',
       moi: "",
       currentHistory: "",
       bodyChart: "",
