@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { Table } from "antd";
 import * as PatientsStore from "../../store/Patients";
 import { ApplicationState } from "../../store";
-import { IPatientVm } from "src/api/generated";
+import { Patient } from "src/models/patientModels";
 
 const columns = [
   {
@@ -51,11 +51,11 @@ class DashboardTable extends React.Component<Props> {
     this.props.getPatients();
   };
 
-  private parseDataForTable = (patients: IPatientVm[]): RowData[] => {
+  private parseDataForTable = (patients: Patient[]): RowData[] => {
     if (!patients) return [];
 
-    return patients.map((patient) => ({
-      key: patient.id,
+    return patients.map((patient, i) => ({
+      key: i,
       firstName: patient.firstName,
       lastName: patient.lastName,
       dob: patient.dob,

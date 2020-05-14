@@ -1,4 +1,4 @@
-import { IGetObjectiveAssessmentVm } from "../api/generated";
+import { IGetObjectiveAssessmentVm } from "src/models/commonModels";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { consultationService } from "../api/consultationService";
@@ -47,7 +47,7 @@ export type KnownAction = GetObjectiveKnownAction;
  */
 export const actionCreators = {
   getObjectiveAssessment: (
-    consultId: number
+    consultId: string
   ): AppThunkAction<GetObjectiveKnownAction> => async (dispatch, getState) => {
     const appState = getState();
     if (appState?.objective?.assessment?.consultationId !== consultId) {

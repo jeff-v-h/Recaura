@@ -5,7 +5,7 @@ import {
   IGetSubjectiveAssessmentVm,
   IGetObjectiveAssessmentVm,
   IUpdateConsultationCommand,
-} from "./generated";
+} from "src/models/commonModels";
 import { message } from "antd";
 import { IConsultationService } from "./apiService";
 import { keys } from "../helpers/keys";
@@ -13,7 +13,7 @@ import { keys } from "../helpers/keys";
 const { apiUrl } = keys;
 
 class ConsultationService implements IConsultationService {
-  getConsultation = async (id: number): Promise<IGetConsultationVm> => {
+  getConsultation = async (id: string): Promise<IGetConsultationVm> => {
     try {
       const url = `${apiUrl}/api/consultations/${id}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<
@@ -27,7 +27,7 @@ class ConsultationService implements IConsultationService {
   };
 
   updateConsultation = async (
-    id: number,
+    id: string,
     consult: IUpdateConsultationCommand
   ): Promise<void> => {
     try {
@@ -41,7 +41,7 @@ class ConsultationService implements IConsultationService {
   };
 
   getSubjectiveAssessment = async (
-    consultId: number
+    consultId: string
   ): Promise<IGetSubjectiveAssessmentVm> => {
     try {
       const url = `${apiUrl}/api/consultations/${consultId}/subjective`;
@@ -56,7 +56,7 @@ class ConsultationService implements IConsultationService {
   };
 
   getObjectiveAssessment = async (
-    consultId: number
+    consultId: string
   ): Promise<IGetObjectiveAssessmentVm> => {
     try {
       const url = `${apiUrl}/api/consultations/${consultId}/objective`;

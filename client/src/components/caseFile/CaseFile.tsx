@@ -7,11 +7,8 @@ import { ApplicationState } from "../../store";
 import { List, message } from "antd";
 import style from "./caseFile.scss";
 import moment from "moment";
-import {
-  IGetCaseFileVm,
-  IFilesPatientVm,
-  Honorific,
-} from "../../api/generated";
+import { IGetCaseFileVm, IFilesPatientVm } from "src/models/commonModels";
+import { Honorific } from '../../models/enums'
 
 type Props = CaseFileStore.CaseFileState &
   typeof CaseFileStore.actionCreators &
@@ -66,13 +63,7 @@ class CaseFile extends React.Component<Props> {
 
   private ensureDataFetched = () => {
     const { match, getCaseFile } = this.props;
-    const parsedId = parseInt(match.params.id, 10);
-    if (isNaN(parsedId)) {
-      message.error(`${match.params.id} is not a number`);
-      return;
-    }
-
-    getCaseFile(parsedId);
+    getCaseFile(match.params.id);
   };
 }
 

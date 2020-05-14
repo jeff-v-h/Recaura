@@ -1,16 +1,17 @@
 import * as apiHelper from "../helpers/apiHelper";
 import { AxiosResponse } from "axios";
-import { IGetPatientsVm, IGetPatientVm, IGetCaseFileVm } from "./generated";
+import { Patient } from "src/models/patientModels";
+import { IGetCaseFileVm } from "src/models/commonModels";
 import { message } from "antd";
 import { keys } from "../helpers/keys";
 
 const { apiUrl } = keys;
 
 class PatientsService {
-  getPatients = async (): Promise<IGetPatientsVm> => {
+  getPatients = async (): Promise<Patient[]> => {
     try {
       const url = `${apiUrl}/api/patients`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientsVm>;
+      const resp = (await apiHelper.get(url)) as AxiosResponse<Patient[]>;
       return resp.data;
     } catch (e) {
       message.error(e);
@@ -18,10 +19,10 @@ class PatientsService {
     }
   };
 
-  getPatient = async (id: number): Promise<IGetPatientVm> => {
+  getPatient = async (id: string): Promise<Patient> => {
     try {
       const url = `${apiUrl}/api/patients/${id}`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<IGetPatientVm>;
+      const resp = (await apiHelper.get(url)) as AxiosResponse<Patient>;
       return resp.data;
     } catch (e) {
       message.error(e);
@@ -29,7 +30,7 @@ class PatientsService {
     }
   };
 
-  getCaseFile = async (id: number): Promise<IGetCaseFileVm> => {
+  getCaseFile = async (id: string): Promise<IGetCaseFileVm> => {
     try {
       const url = `${apiUrl}/api/casefiles/${id}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<IGetCaseFileVm>;

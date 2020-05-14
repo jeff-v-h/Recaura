@@ -4,7 +4,7 @@ import {
   ISubjectiveAssessmentVm,
   IObjectiveAssessmentVm,
   IUpdateConsultationCommand,
-} from "../api/generated";
+} from "src/models/commonModels";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { consultationService } from "../api/consultationService";
@@ -31,8 +31,8 @@ interface TreatmentsAndPlans {
  */
 export interface ConsultationState {
   isFetching: boolean;
-  id: number;
-  caseFileId: number;
+  id: string;
+  caseFileId: string;
   date: string;
   number: number;
   practitioner: IPractitionerVm | null;
@@ -110,7 +110,7 @@ export const getConsultRequest = (): GetConsultRequestAction => {
   return { type: C.GET_CONSULTATION_REQUEST }
 }
 
-export const getConsultSuccess = async (id: number): Promise<GetConsultSuccessAction> => {
+export const getConsultSuccess = async (id: string): Promise<GetConsultSuccessAction> => {
   return {
     type: C.GET_CONSULTATION_SUCCESS,
     payload: await consultationService.getConsultation(id),
@@ -126,7 +126,7 @@ export const getConsultFailure = (): GetConsultFailureAction => {
  * ACTION CREATORS
  */
 export const actionCreators = {
-  getConsult: (id: number): AppThunkAction<GetConsultKnownAction> => async (
+  getConsult: (id: string): AppThunkAction<GetConsultKnownAction> => async (
     dispatch,
     getState
   ) => {
@@ -176,8 +176,8 @@ export const actionCreators = {
  */
 export const unloadedState: ConsultationState = {
   isFetching: false,
-  id: 0,
-  caseFileId: 0,
+  id:'0',
+  caseFileId:'0',
   date: "",
   number: 0,
   practitioner: null,

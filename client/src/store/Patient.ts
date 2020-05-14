@@ -1,7 +1,7 @@
 import { patientsService } from "./../api/patientsService";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
-import { IGetPatientVm } from "src/api/generated";
+import { Patient } from "src/models/patientModels";
 
 const C = {
   GET_PATIENT_REQUEST: "GET_PATIENT_REQUEST",
@@ -14,7 +14,7 @@ const C = {
  */
 export interface PatientState {
   isFetching: boolean;
-  details: IGetPatientVm | null;
+  details: Patient | null;
 }
 
 //--------------------
@@ -25,7 +25,7 @@ export interface GetPatientRequestAction {
 
 export interface GetPatientSuccessAction {
   type: typeof C.GET_PATIENT_SUCCESS;
-  payload: IGetPatientVm;
+  payload: Patient;
 }
 
 export interface GetPatientFailureAction {
@@ -46,7 +46,7 @@ export type KnownAction = GetPatientKnownAction;
  * ACTION CREATORS
  */
 export const actionCreators = {
-  getPatient: (id: number): AppThunkAction<GetPatientKnownAction> => async (
+  getPatient: (id: string): AppThunkAction<GetPatientKnownAction> => async (
     dispatch,
     getState
   ) => {

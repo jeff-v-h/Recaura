@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as ConsultationStore from './Consultation';
 import { consultationService } from '../api/consultationService';
-import { IGetConsultationVm } from 'src/api/generated';
+import { IGetConsultationVm } from 'src/models/commonModels';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
@@ -32,7 +32,7 @@ describe('Consultation Redux Store', () => {
       // Use jest to create spies for the dispatch and getState parameter functions
       const dispatch = jest.fn();
       const getState = jest.fn();
-      await ConsultationStore.actionCreators.getConsult(1)(dispatch, getState);
+      await ConsultationStore.actionCreators.getConsult('1')(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(ConsultationStore.getConsultRequest())
     })
@@ -42,9 +42,9 @@ describe('Consultation Redux Store', () => {
       spy.mockReturnValue(Promise.resolve(mockConsultation));
 
       const dispatch = jest.fn();
-      await ConsultationStore.actionCreators.getConsult(123)(dispatch, jest.fn());
+      await ConsultationStore.actionCreators.getConsult('123')(dispatch, jest.fn());
 
-      expect(dispatch).toHaveBeenLastCalledWith(await ConsultationStore.getConsultSuccess(123))
+      expect(dispatch).toHaveBeenLastCalledWith(await ConsultationStore.getConsultSuccess('123'))
       
       spy.mockRestore();
     })
@@ -54,7 +54,7 @@ describe('Consultation Redux Store', () => {
       spy.mockReturnValue(Promise.reject());
 
       const dispatch = jest.fn();
-      await ConsultationStore.actionCreators.getConsult(123)(dispatch, jest.fn());
+      await ConsultationStore.actionCreators.getConsult('123')(dispatch, jest.fn());
 
       expect(dispatch).toHaveBeenLastCalledWith(ConsultationStore.getConsultFailure())
       
@@ -67,16 +67,16 @@ describe('Consultation Redux Store', () => {
 function getReturnedConsultation(): IGetConsultationVm {
   return {
     ...ConsultationStore.unloadedState,
-    id: 123,
+    id: '123',
     practitioner: {
-      id: 0,
+      id: '0',
       firstName: "",
       lastName: "",
       jobLevel: ""
     },
     objectiveAssessment: {
-      id: 0,
-      consultationId: 0,
+      id:'0',
+      consultationId: '0',
       observation: "",
       active: "",
       passive: "",
@@ -88,8 +88,8 @@ function getReturnedConsultation(): IGetConsultationVm {
       additional: ""
     },
     subjectiveAssessment: {
-      id: 1,
-      consultationId: 1,
+      id:'1',
+      consultationId:'1',
       moi: "",
       currentHistory: "",
       bodyChart: "",

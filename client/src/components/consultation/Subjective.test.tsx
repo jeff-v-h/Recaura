@@ -37,7 +37,7 @@ describe('<Subjective />', () => {
     beforeEach(() => {
       store = generateMockStore(mockState);
       const props = {
-        consultId: 1,
+        consultId: '1',
         ...mockState.consultation,
         ...ConsultationStore.actionCreators
       }
@@ -51,7 +51,7 @@ describe('<Subjective />', () => {
   describe('when mounted', () => {
     beforeEach(async () => {
       store = generateMockStore(mockState);
-      component = <MemoryRouter><Subjective consultId={1} /></MemoryRouter>;
+      component = <MemoryRouter><Subjective consultId={'1'} /></MemoryRouter>;
       mountWrapper = mount(<Provider store={store}>{component}</Provider>);
     })
 

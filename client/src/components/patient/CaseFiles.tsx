@@ -1,11 +1,11 @@
 import * as React from "react";
 import { List } from "antd";
-import { IPatientCaseFileVm } from "../../api/generated";
+import { PatientCasefile } from "src/models/patientModels";
 import { Link } from "react-router-dom";
 import style from "./caseFiles.scss";
 
 interface Props {
-  files: IPatientCaseFileVm[];
+  files: PatientCasefile[];
 }
 
 const CaseFiles = ({ files }: Props) => (

@@ -9,21 +9,33 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const webpack = require('webpack');
 const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 function getOutputDir() {
-  return pathHelper("dist", "bundle");
+  return pathHelper("dist");
 }
 
-module.exports = function (env) {
+function getEnvionmentVariableKeys(env) {
+  // Determin which .env file to use for environment variables
+  const currentPath = path.join(__dirname);
+  const basePath = currentPath + '/.env';
+  const envPath = basePath + '.' + env.ENVIRONMENT;
+  const finalPath = fs.existsSync(envPath) ? envPath : basePath;
+
   // call dotenv and it will return an Object with a parsed key 
-  const envVars = dotenv.config().parsed;
-  
+  const envVars = dotenv.config({ path: finalPath }).parsed;
+
   // reduce it to a nice object, the same as before
-  const envKeys = Object.keys(envVars).reduce((prev, next) => {
+  return Object.keys(envVars).reduce((prev, next) => {
     prev[`process.env.${next}`] = JSON.stringify(envVars[next]);
     return prev;
   }, {});
+}
+
+module.exports = function (env) {
+  const envKeys = getEnvionmentVariableKeys(env);
 
   return {
     output: {

@@ -1,4 +1,4 @@
-import { IGetCaseFileVm } from "../api/generated";
+import { IGetCaseFileVm } from "src/models/commonModels";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
 import { patientsService } from "../api/patientsService";
@@ -46,7 +46,7 @@ export type KnownAction = GetCaseFileKnownAction;
  * ACTION CREATORS
  */
 export const actionCreators = {
-  getCaseFile: (id: number): AppThunkAction<GetCaseFileKnownAction> => async (
+  getCaseFile: (id: string): AppThunkAction<GetCaseFileKnownAction> => async (
     dispatch,
     getState
   ) => {

@@ -4,8 +4,8 @@ const Casefile = require('./casefile.model')
 const patientSchema = new mongoose.Schema({
     honorific: {
         type: String,
-        enum: ['', 'Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
-        default: ''
+        enum: ['NoTitle', 'Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
+        default: 'NoTitle'
     },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
@@ -39,6 +39,13 @@ patientSchema.methods.toJSON = function() {
     delete patientObject.__v
     delete patientObject._id
     delete patientObject.createdAt
+    if (patientObject.casefiles) {
+        patientObject.casefiles.forEach(c => {
+            c.id = c._id;
+            delete c._id;
+            delete c.updatedAt
+        })
+    }
 
     return patientObject
 }

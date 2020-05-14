@@ -1,17 +1,17 @@
 import React from 'react';
 import CaseFiles from './CaseFiles';
 import { mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
-import { IPatientCaseFileVm } from 'src/api/generated';
+import { PatientCasefile } from 'src/models/patientModels';
 import { MemoryRouter } from 'react-router';
 
 describe('<CaseFiles/>', () => {
-  const files: IPatientCaseFileVm[] = [
+  const files: PatientCasefile[] = [
     {
-      id: 1,
+      id: "1",
       name: "An injury"
     },
     {
-      id: 2,
+      id: "2",
       name: "another injury"
     }
   ]

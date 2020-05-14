@@ -10,7 +10,7 @@ import { FormInstance } from "antd/lib/form";
 import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
 
-type ParentProps = { consultId: number };
+type ParentProps = { consultId: string };
 type Props = ConsultationStore.ConsultationState &
   typeof ConsultationStore.actionCreators &
   ParentProps;

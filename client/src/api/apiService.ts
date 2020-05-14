@@ -1,18 +1,18 @@
-import { IGetConsultationVm, IUpdateConsultationCommand, IGetSubjectiveAssessmentVm, IGetObjectiveAssessmentVm } from "./generated";
+import { IGetConsultationVm, IUpdateConsultationCommand, IGetSubjectiveAssessmentVm, IGetObjectiveAssessmentVm } from "../models/commonModels";
 
 export interface IConsultationService {
-  getConsultation(id: number): Promise<IGetConsultationVm>;
+  getConsultation(id: string): Promise<IGetConsultationVm>;
 
   updateConsultation(
-    id: number,
+    id: string,
     consult: IUpdateConsultationCommand
   ): Promise<void>;
 
   getSubjectiveAssessment(
-    consultId: number
+    consultId: string
   ): Promise<IGetSubjectiveAssessmentVm>;
 
   getObjectiveAssessment(
-    consultId: number
+    consultId: string
   ): Promise<IGetObjectiveAssessmentVm>;
 }

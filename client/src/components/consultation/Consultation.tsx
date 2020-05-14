@@ -17,13 +17,13 @@ type Props = ConsultationStore.ConsultationState &
   RouteComponentProps<{ consultId: string }>;
 
 type State = {
-  consultId: number;
+  consultId: string;
   display: ConsultPart;
 };
 
 class Consultation extends React.Component<Props, State> {
   state = {
-    consultId: this.getUrlConsultId(),
+    consultId: this.props.match.params.consultId,
     display: ConsultPart.Subjective,
   };
 
@@ -35,7 +35,7 @@ class Consultation extends React.Component<Props, State> {
     this.setState({ display: e.target.value });
   };
 
-  renderConsultSection = (consultPart: ConsultPart, consultId: number) => {
+  renderConsultSection = (consultPart: ConsultPart, consultId: string) => {
     switch (consultPart) {
       case ConsultPart.Subjective:
         return <Subjective consultId={consultId} />;
@@ -63,11 +63,6 @@ class Consultation extends React.Component<Props, State> {
     const { getConsult } = this.props;
     getConsult(this.state.consultId);
   };
-
-  private getUrlConsultId(): number {
-    const { match } = this.props;
-    return getParsedUrlId(match.params.consultId);
-  }
 }
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;

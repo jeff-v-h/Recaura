@@ -1,6 +1,6 @@
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
-import { IPatientVm, IGetPatientsVm } from "src/api/generated";
+import { Patient } from "src/models/patientModels";
 import { patientsService } from "../api/patientsService";
 
 const C = {
@@ -14,7 +14,7 @@ const C = {
  */
 export interface PatientsState {
   isFetching: boolean;
-  patients: IPatientVm[];
+  patients: Patient[];
 }
 
 //--------------------
@@ -25,7 +25,7 @@ export interface GetPatientsRequestAction {
 
 export interface GetPatientsSuccessAction {
   type: typeof C.GET_PATIENTS_SUCCESS;
-  payload: IGetPatientsVm;
+  payload: Patient[];
 }
 
 export interface GetPatientsFailureAction {
@@ -92,7 +92,7 @@ export const reducer: Reducer<PatientsState> = (
       obj = action as GetPatientsSuccessAction;
       return {
         isFetching: false,
-        patients: obj.payload.patients,
+        patients: obj.payload,
       };
     case C.GET_PATIENTS_FAILURE:
       obj = action as GetPatientsFailureAction;
