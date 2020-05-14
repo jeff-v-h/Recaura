@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { History } from "history";
-import { ApplicationState, reducers } from "./";
+import { ApplicationState, reducers } from ".";
 
 export default function configureStore(
   history: History,

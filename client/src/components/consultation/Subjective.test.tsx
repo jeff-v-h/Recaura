@@ -3,7 +3,7 @@ import Subjective from './Subjective';
 import { shallow, ShallowWrapper, mount, ReactWrapper } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import * as ConsultationStore from "../../store/Consultation";
+import * as ConsultationStore from "../../stores/Consultation";
 import { generateMockStore } from "../../../__tests__/setup/mockStore";
 import { MockStore } from "redux-mock-store";
 

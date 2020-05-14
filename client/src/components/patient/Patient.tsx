@@ -2,9 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
-import { actionCreators } from "../../store/patient/patientActions";
-import { PatientState } from "../../store/patient/patientTypes";
-import { ApplicationState } from "../../store";
+import { actionCreators } from "../../stores/patients/patientActions";
+import { PatientState } from "../../stores/patients/patientTypes";
+import { ApplicationState } from "../../stores";
 import PatientDescription from "./PatientDescription";
 import CaseFiles from "./CaseFiles";
 

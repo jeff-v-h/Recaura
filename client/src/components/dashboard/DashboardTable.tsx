@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { Table } from "antd";
-import { actionCreators } from "../../store/patient/patientActions";
-import { PatientState } from "../../store/patient/patientTypes";
-import { ApplicationState } from "../../store";
+import { actionCreators } from "../../stores/patients/patientActions";
+import { PatientState } from "../../stores/patients/patientTypes";
+import { ApplicationState } from "../../stores";
 import { Patient } from "src/models/patientModels";
 
 const columns = [

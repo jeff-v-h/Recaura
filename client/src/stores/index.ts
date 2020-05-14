@@ -1,5 +1,5 @@
-import patientReducer from './patient/patientReducer'
-import { PatientState } from './patient/patientTypes'
+import patientReducer from './patients/patientReducer'
+import { PatientState } from './patients/patientTypes'
 import * as Subjective from "./Subjective";
 import * as Objective from "./Objective";
 import * as CaseFile from "./CaseFile";
