@@ -4,6 +4,21 @@ import casefileService from '../../api/casefileService'
 
 const { C } = T
 
+export const getCasefiles = (patientId: string): AppThunkAction<T.GetCasefilesKnownAction> => async (
+    dispatch
+) => {
+    dispatch({ type: C.GET_CASEFILES_REQUEST });
+
+    try {
+        dispatch({
+            type: C.GET_CASEFILES_SUCCESS,
+            payload: await casefileService.getCasefiles(patientId),
+        });
+    } catch (e) {
+        dispatch({ type: C.GET_CASEFILES_FAILURE });
+    }
+}
+
 export const getCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction> => async (
     dispatch,
     getState

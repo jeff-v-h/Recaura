@@ -5,6 +5,7 @@ const { C } = T
 
 const unloadedState: T.CasefileState = {
     isFetching: false,
+    list: [],
     id: '',
     name:'',
     createdAt: '',
@@ -23,14 +24,24 @@ const reducer: Reducer<T.CasefileState> = (
     const action = incomingAction as T.KnownAction;
     let obj;
     switch (action.type) {
+        case C.GET_CASEFILES_REQUEST:
+            return { ...state, isFetching: true, list: [] };
+        case C.GET_CASEFILES_SUCCESS:
+            obj = action as T.GetCasefilesSuccessAction;
+            return { ...state, isFetching: false, list: obj.payload };
+        case C.GET_CASEFILE_FAILURE:
+            obj = action as T.GetCasefilesFailureAction;
+            return { ...state, isFetching: false, list: [] };
+
         case C.GET_CASEFILE_REQUEST:
-            return { ...unloadedState, isFetching: true };
+            return { ...unloadedState, list: state.list, isFetching: true };
         case C.GET_CASEFILE_SUCCESS:
             obj = action as T.GetCasefileSuccessAction;
-            return { isFetching: false, ...obj.payload };
+            return { ...state, isFetching: false, ...obj.payload };
         case C.GET_CASEFILE_FAILURE:
             obj = action as T.GetCasefileFailureAction;
-            return unloadedState;
+            return { ...state, isFetching: false };
+
         default:
             return state;
     }

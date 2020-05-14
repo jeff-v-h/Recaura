@@ -4,6 +4,9 @@ export const C = {
     CREATE_CASEFILE_REQUEST: "CREATE_CASEFILE_REQUEST",
     CREATE_CASEFILE_SUCCESS: "CREATE_CASEFILE_SUCCESS",
     CREATE_CASEFILE_FAILURE: "CREATE_CASEFILE_FAILURE",
+    GET_CASEFILES_REQUEST: "GET_CASEFILES_REQUEST",
+    GET_CASEFILES_SUCCESS: "GET_CASEFILES_SUCCESS",
+    GET_CASEFILES_FAILURE: "GET_CASEFILES_FAILURE",
     GET_CASEFILE_REQUEST: "GET_CASEFILE_REQUEST",
     GET_CASEFILE_SUCCESS: "GET_CASEFILE_SUCCESS",
     GET_CASEFILE_FAILURE: "GET_CASEFILE_FAILURE",
@@ -17,6 +20,7 @@ export const C = {
 
 export interface CasefileState extends Casefile {
     isFetching: boolean;
+    list: Casefile[]
 }
 
 //#region actions
@@ -31,6 +35,13 @@ export interface GetCasefileRequestAction { type: string }
 export interface GetCasefileSuccessAction {
     type: string
     payload: Casefile;
+}
+export interface GetCasefilesFailureAction { type: string }
+
+export interface GetCasefilesRequestAction { type: string }
+export interface GetCasefilesSuccessAction {
+    type: string
+    payload: Casefile[];
 }
 export interface GetCasefileFailureAction { type: string }
 
@@ -53,5 +64,9 @@ export type GetCasefileKnownAction =
     GetCasefileRequestAction
     | GetCasefileSuccessAction
     | GetCasefileFailureAction;
-export type KnownAction = CeateCasefileKnownAction | GetCasefileKnownAction;
+export type GetCasefilesKnownAction =
+    GetCasefilesRequestAction
+    | GetCasefilesSuccessAction
+    | GetCasefilesFailureAction;
+export type KnownAction = CeateCasefileKnownAction | GetCasefilesKnownAction | GetCasefileKnownAction;
 //#endregion actions
