@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { Table } from "antd";
-import { actionCreators } from "../../stores/patients/patientActions";
+import * as patientActions from "../../stores/patients/patientActions";
 import { PatientState } from "../../stores/patients/patientTypes";
 import { ApplicationState } from "../../stores";
 import { Patient } from "src/models/patientModels";
@@ -34,7 +34,7 @@ interface RowData {
 }
 
 type Props = PatientState &
-  typeof actionCreators &
+  typeof patientActions &
   RouteComponentProps<{}>;
 
 class DashboardTable extends React.Component<Props> {
@@ -75,6 +75,6 @@ export default compose<React.ComponentType>(
   withRouter,
   connect(
     (state: ApplicationState) => state.patient,
-    actionCreators
+    patientActions
   )
 )(DashboardTable);

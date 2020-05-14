@@ -30,7 +30,7 @@ class PatientsService {
     }
   };
 
-  GetCasefile = async (id: string): Promise<Casefile> => {
+  getCasefile = async (id: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/api/casefiles/${id}?patientInfo=true`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<Casefile>;

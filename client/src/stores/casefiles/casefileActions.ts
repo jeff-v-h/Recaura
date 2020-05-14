@@ -15,10 +15,10 @@ export const GetCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction
         try {
             dispatch({
                 type: C.GET_CASEFILE_SUCCESS,
-                payload: await patientsService.GetCasefile(id),
+                payload: await patientsService.getCasefile(id),
             });
         } catch (e) {
             dispatch({ type: C.GET_CASEFILE_FAILURE });
         }
     }
-},
+}

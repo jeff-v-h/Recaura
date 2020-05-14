@@ -2,14 +2,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
-import { actionCreators } from "../../stores/patients/patientActions";
+import * as patientActions from "../../stores/patients/patientActions";
 import { PatientState } from "../../stores/patients/patientTypes";
 import { ApplicationState } from "../../stores";
 import PatientDescription from "./PatientDescription";
 import CaseFiles from "./CaseFiles";
 
 type Props = PatientState &
-  typeof actionCreators &
+  typeof patientActions &
   RouteComponentProps<{ id: string }>;
 
 class Patient extends React.Component<Props> {
@@ -36,5 +36,5 @@ const mapStateToProps = (state: ApplicationState) => state.patient;
 
 export default compose<React.ComponentType>(
   withRouter,
-  connect(mapStateToProps, actionCreators)
+  connect(mapStateToProps, patientActions)
 )(Patient);
