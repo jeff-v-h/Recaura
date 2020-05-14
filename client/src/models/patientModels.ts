@@ -12,7 +12,7 @@ export interface Patient {
     mobilePhone: string;
     gender: Gender;
     occupation: string;
-    caseFiles: PatientCasefile[];
+    casefiles: PatientCasefile[];
 }
 
 export interface PatientCasefile {

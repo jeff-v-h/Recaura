@@ -29,7 +29,7 @@ class Patient extends React.Component<Props> {
     return (
       <>
         <PatientDescription patient={this.props} />
-        <CaseFiles files={this.props.caseFiles} />
+        <CaseFiles files={this.props.casefiles} />
       </>
     );
   }

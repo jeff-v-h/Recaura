@@ -18,7 +18,7 @@ const unloadedState: T.PatientState = {
     mobilePhone: '',
     gender: Gender.preferNotToSay,
     occupation: '',
-    caseFiles: []
+    casefiles: []
 };
 
 const reducer: Reducer<T.PatientState> = (
