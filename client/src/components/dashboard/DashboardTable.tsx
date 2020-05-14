@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { Table } from "antd";
-import * as PatientsStore from "../../store/Patients";
+import { actionCreators } from "../../store/patient/patientActions";
+import { PatientState } from "../../store/patient/patientTypes";
 import { ApplicationState } from "../../store";
 import { Patient } from "src/models/patientModels";
 
@@ -32,8 +33,8 @@ interface RowData {
   dob: string;
 }
 
-type Props = PatientsStore.PatientsState &
-  typeof PatientsStore.actionCreators &
+type Props = PatientState &
+  typeof actionCreators &
   RouteComponentProps<{}>;
 
 class DashboardTable extends React.Component<Props> {
@@ -42,8 +43,8 @@ class DashboardTable extends React.Component<Props> {
   }
 
   render() {
-    const { patients } = this.props;
-    const data = this.parseDataForTable(patients);
+    const { list } = this.props;
+    const data = this.parseDataForTable(list);
     return <Table onRow={this.onRow} columns={columns} dataSource={data} />;
   }
 
@@ -75,7 +76,7 @@ class DashboardTable extends React.Component<Props> {
 export default compose<React.ComponentType>(
   withRouter,
   connect(
-    (state: ApplicationState) => state.patients, // Selects which state properties are merged into the component's props
-    PatientsStore.actionCreators // Selects which action creators are merged into the component's props
+    (state: ApplicationState) => state.patient,
+    actionCreators
   )
 )(DashboardTable);

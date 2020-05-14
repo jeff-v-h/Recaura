@@ -42,4 +42,5 @@ class PatientsService {
   };
 }
 
-export const patientsService = new PatientsService();
+const patientsService = new PatientsService();
+export default patientsService;

@@ -1,5 +1,5 @@
-import * as Patients from "./Patients";
-import * as Patient from "./Patient";
+import patientReducer from './patient/patientReducer'
+import { PatientState } from './patient/patientTypes'
 import * as Subjective from "./Subjective";
 import * as Objective from "./Objective";
 import * as CaseFile from "./CaseFile";
@@ -7,8 +7,7 @@ import * as Consultation from "./Consultation";
 
 // The top-level state object
 export interface ApplicationState {
-  patient: Patient.PatientState | undefined;
-  patients: Patients.PatientsState | undefined;
+  patient: PatientState | undefined;
   subjective: Subjective.SubjectiveState | undefined;
   objective: Objective.ObjectiveState | undefined;
   casefile: CaseFile.CaseFileState | undefined;
@@ -19,8 +18,7 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
-  patient: Patient.reducer,
-  patients: Patients.reducer,
+  patient: patientReducer,
   subjective: Subjective.reducer,
   objective: Objective.reducer,
   casefile: CaseFile.reducer,

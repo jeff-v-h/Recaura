@@ -1,7 +1,7 @@
 import { IGetCaseFileVm } from "src/models/commonModels";
 import { AppThunkAction } from "./index";
 import { Action, Reducer } from "redux";
-import { patientsService } from "../api/patientsService";
+import patientsService from "../api/patientsService";
 
 const C = {
   GET_CASEFILE_REQUEST: "GET_CASEFILE_REQUEST",
