@@ -1,12 +1,5 @@
 import { Honorific, Gender } from "./enums";
 
-export interface IPatientVm {
-    id: string;
-    firstName: string;
-    lastName: string;
-    dob: string;
-}
-
 export interface Patient {
     id: string;
     honorific: Honorific;

@@ -17,9 +17,15 @@ class Patient extends React.Component<Props> {
     this.ensureDataFetched();
   }
 
-  render() {
-    // const { id, honorific, firstName, lastName, dob, email, countryCode, homePhone, mobilePhone, gender, occupation } = this.props;
+  ensureDataFetched = () => {
+    const { match, getPatient, list, selectPatient } = this.props;
+    const { id } = match.params;
+    if (list.findIndex(p => p.id === id) !== -1)
+      return selectPatient(id)
+    getPatient(id);
+  };
 
+  render() {
     return (
       <>
         <PatientDescription patient={this.props} />
@@ -27,11 +33,6 @@ class Patient extends React.Component<Props> {
       </>
     );
   }
-
-  private ensureDataFetched = () => {
-    const { match, getPatient } = this.props;
-    getPatient(match.params.id);
-  };
 }
 
 const mapStateToProps = (state: ApplicationState) => state.patient;

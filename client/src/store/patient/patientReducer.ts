@@ -1,4 +1,4 @@
-import { Action, Reducer } from "redux";
+import { Reducer } from "redux";
 import * as T from "./patientTypes";
 import { Honorific, Gender } from "../../models/enums";
 
@@ -23,23 +23,29 @@ const unloadedState: T.PatientState = {
 
 const reducer: Reducer<T.PatientState> = (
     state: T.PatientState | undefined,
-    incomingAction: Action
+    incomingAction: T.KnownAction
 ): T.PatientState => {
     if (state === undefined) {
         return unloadedState;
     }
 
-    const action = incomingAction as T.KnownAction;
+    const action = incomingAction;
     let obj;
     switch (action.type) {
         case C.GET_PATIENTS_REQUEST:
             return { ...state, isFetching: true, list: [] };
         case C.GET_PATIENTS_SUCCESS:
             obj = action as T.GetPatientsSuccessAction;
-            return { ...state, isFetching: false, list: [...obj.payload] };
+            return { ...state, isFetching: false, list: obj.payload };
         case C.GET_PATIENTS_FAILURE:
             obj = action as T.GetPatientsFailureAction;
             return { ...state, isFetching: false, list: [] };
+
+        case C.SELECT_PATIENT:
+            obj = action as T.SelectPatientAction;
+            const id = obj.payload
+            const patient = state.list.find(p => p.id === id)
+            return { ...state, ...patient }
         
         case C.GET_PATIENT_REQUEST:
             return { ...unloadedState, isFetching: true, list: state.list };

@@ -24,6 +24,7 @@ export const actionCreators = {
             }
         }
     },
+    selectPatient: (id: string): T.SelectPatientAction => ({ type: C.SELECT_PATIENT, payload: id }),
     getPatient: (id: string): AppThunkAction<T.GetPatientKnownAction> => async (
         dispatch,
         getState

@@ -27,7 +27,7 @@ const columns = [
 ];
 
 interface RowData {
-  key: number;
+  key: string;
   firstName: string;
   lastName: string;
   dob: string;
@@ -42,28 +42,20 @@ class DashboardTable extends React.Component<Props> {
     this.ensureDataFetched();
   }
 
-  render() {
-    const { list } = this.props;
-    const data = this.parseDataForTable(list);
-    return <Table onRow={this.onRow} columns={columns} dataSource={data} />;
-  }
+  ensureDataFetched = () => this.props.getPatients();
 
-  private ensureDataFetched = () => {
-    this.props.getPatients();
-  };
-
-  private parseDataForTable = (patients: Patient[]): RowData[] => {
+  parseDataForTable = (patients: Patient[]): RowData[] => {
     if (!patients) return [];
 
-    return patients.map((patient, i) => ({
-      key: i,
+    return patients.map((patient) => ({
+      key: patient.id,
       firstName: patient.firstName,
       lastName: patient.lastName,
       dob: patient.dob,
     }));
   };
 
-  private onRow = (patientRow: RowData) => {
+  onRow = (patientRow: RowData) => {
     return {
       onClick: (event: React.MouseEvent) => {
         const { history } = this.props;
@@ -71,6 +63,12 @@ class DashboardTable extends React.Component<Props> {
       },
     };
   };
+
+  render() {
+    const { list } = this.props;
+    const data = this.parseDataForTable(list);
+    return <Table onRow={this.onRow} columns={columns} dataSource={data} />;
+  }
 }
 
 export default compose<React.ComponentType>(

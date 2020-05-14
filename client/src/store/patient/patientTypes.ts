@@ -4,6 +4,7 @@ export const C = {
     GET_PATIENTS_REQUEST: "GET_PATIENTS_REQUEST",
     GET_PATIENTS_SUCCESS: "GET_PATIENTS_SUCCESS",
     GET_PATIENTS_FAILURE: "GET_PATIENTS_FAILURE",
+    SELECT_PATIENT: 'SELECT_PATIENT',
     GET_PATIENT_REQUEST: "GET_PATIENT_REQUEST",
     GET_PATIENT_SUCCESS: "GET_PATIENT_SUCCESS",
     GET_PATIENT_FAILURE: "GET_PATIENT_FAILURE",
@@ -33,6 +34,11 @@ export interface GetPatientsFailureAction {
     type: typeof C.GET_PATIENTS_FAILURE;
 }
 
+export interface SelectPatientAction {
+    type: typeof C.SELECT_PATIENT;
+    payload: string;
+}
+
 export interface GetPatientRequestAction {
     type: typeof C.GET_PATIENT_REQUEST;
 }
@@ -51,14 +57,17 @@ export interface GetPatientFailureAction {
 
 // ACTION TYPE
 export type GetPatientsKnownAction =
-    | GetPatientsRequestAction
+    GetPatientsRequestAction
     | GetPatientsSuccessAction
     | GetPatientsFailureAction;
 export type GetPatientKnownAction =
-    | GetPatientRequestAction
+    GetPatientRequestAction
     | GetPatientSuccessAction
     | GetPatientFailureAction;
-export type KnownAction = GetPatientsKnownAction | GetPatientKnownAction;
+export type KnownAction = 
+    GetPatientsKnownAction 
+    | SelectPatientAction 
+    | GetPatientKnownAction;
 
 export interface PatientState extends Patient {
     isFetching: boolean;
