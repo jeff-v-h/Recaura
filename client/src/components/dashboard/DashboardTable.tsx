@@ -59,7 +59,7 @@ class DashboardTable extends React.Component<Props> {
     return {
       onClick: (event: React.MouseEvent) => {
         const { history } = this.props;
-        history.push(`/patients/${patientRow.key}`);
+        history.push(`/patients/${patientRow.key}/casefiles`);
       },
     };
   };

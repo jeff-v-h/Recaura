@@ -5,8 +5,8 @@ export interface Casefile {
     name: string;
     createdAt: string;
     patientId: string;
-    consultations: CasefileConsult[];
-    patient: CasefilePatient | null;
+    consultations: CasefileConsult[] | undefined;
+    patient: CasefilePatient | undefined;
 }
 
 export interface CasefileConsult {

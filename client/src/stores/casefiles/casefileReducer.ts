@@ -11,7 +11,7 @@ const unloadedState: T.CasefileState = {
     createdAt: '',
     patientId: '',
     consultations: [],
-    patient: null
+    patient: undefined
 }
 
 const reducer: Reducer<T.CasefileState> = (

@@ -9,7 +9,7 @@ const { apiUrl } = keys;
 class CasefileService {
   getCasefile = async (id: string): Promise<Casefile> => {
     try {
-      const url = `${apiUrl}/api/casefiles/${id}?patientInfo=true`;
+      const url = `${apiUrl}/api/casefiles/${id}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {
