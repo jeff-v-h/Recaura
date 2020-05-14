@@ -1,10 +1,10 @@
 import { AppThunkAction } from '../index'
 import * as T from './casefileTypes'
-import patientsService from '../../api/patientsService'
+import casefileService from '../../api/casefileService'
 
 const { C } = T
 
-export const GetCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction> => async (
+export const getCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction> => async (
     dispatch,
     getState
 ) => {
@@ -15,7 +15,7 @@ export const GetCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction
         try {
             dispatch({
                 type: C.GET_CASEFILE_SUCCESS,
-                payload: await patientsService.getCasefile(id),
+                payload: await casefileService.getCasefile(id),
             });
         } catch (e) {
             dispatch({ type: C.GET_CASEFILE_FAILURE });

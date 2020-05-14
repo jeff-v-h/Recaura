@@ -1,7 +1,6 @@
 import * as apiHelper from "../helpers/apiHelper";
 import { AxiosResponse } from "axios";
 import { Patient } from "src/models/patientModels";
-import { Casefile } from "src/models/casefileModels";
 import { message } from "antd";
 import { keys } from "../helpers/keys";
 
@@ -23,17 +22,6 @@ class PatientsService {
     try {
       const url = `${apiUrl}/api/patients/${id}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<Patient>;
-      return resp.data;
-    } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
-    }
-  };
-
-  getCasefile = async (id: string): Promise<Casefile> => {
-    try {
-      const url = `${apiUrl}/api/casefiles/${id}?patientInfo=true`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {
       message.error(e);
