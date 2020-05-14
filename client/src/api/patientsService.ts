@@ -1,7 +1,7 @@
 import * as apiHelper from "../helpers/apiHelper";
 import { AxiosResponse } from "axios";
 import { Patient } from "src/models/patientModels";
-import { IGetCaseFileVm } from "src/models/commonModels";
+import { Casefile } from "src/models/casefileModels";
 import { message } from "antd";
 import { keys } from "../helpers/keys";
 
@@ -30,10 +30,10 @@ class PatientsService {
     }
   };
 
-  getCaseFile = async (id: string): Promise<IGetCaseFileVm> => {
+  GetCasefile = async (id: string): Promise<Casefile> => {
     try {
-      const url = `${apiUrl}/api/casefiles/${id}`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<IGetCaseFileVm>;
+      const url = `${apiUrl}/api/casefiles/${id}?patientInfo=true`;
+      const resp = (await apiHelper.get(url)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {
       message.error(e);

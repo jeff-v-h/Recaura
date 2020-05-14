@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Recaura.Application.Common.Models;
-using Recaura.Application.Features.CaseFiles.GetCaseFile;
+using Recaura.Application.Features.CaseFiles.GetCasefile;
 using Recaura.Application.Features.Consultations.GetConsultation;
 using Recaura.Application.Features.ObjectiveAx.GetObjectiveAssessment;
 using Recaura.Application.Features.Patients.GetPatient;

@@ -47,10 +47,12 @@ router.get('/api/casefiles/:id', async (req, res) => {
     try {
         const casefile = await Casefile.findOne({ _id: req.params.id })
             .populate('consultations', 'number date practitionerId')
-            
+
         if (req.query.patientInfo === "true") {
             await casefile.populate('patient', 'gender firstName lastName dob occupation')
                 .execPopulate()
+        } else {
+            casefile.patient = null;
         }
 
         if (!casefile) {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Recaura.Application.Features.CaseFiles.GetCaseFile;
+using Recaura.Application.Features.CaseFiles.GetCasefile;
 using Recaura.Application.Features.Consultations.GetConsultation;
 using Recaura.Application.Features.Patients.GetPatient;
 using Recaura.Application.Features.Patients.GetPatients;

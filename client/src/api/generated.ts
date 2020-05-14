@@ -9,7 +9,7 @@
 
 
 
-// export interface IGetCaseFileVm {
+// export interface Casefile {
 //     id: string;
 //     name: string;
 //     created: string;

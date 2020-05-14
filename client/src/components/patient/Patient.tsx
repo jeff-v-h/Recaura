@@ -18,11 +18,8 @@ class Patient extends React.Component<Props> {
   }
 
   ensureDataFetched = () => {
-    const { match, getPatient, list, selectPatient } = this.props;
-    const { id } = match.params;
-    if (list.findIndex(p => p.id === id) !== -1)
-      return selectPatient(id)
-    getPatient(id);
+    const { match, getPatient } = this.props;
+    getPatient(match.params.id);
   };
 
   render() {
@@ -37,7 +34,7 @@ class Patient extends React.Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => state.patient;
 
-export default compose(
+export default compose<React.ComponentType>(
   withRouter,
   connect(mapStateToProps, actionCreators)
 )(Patient);

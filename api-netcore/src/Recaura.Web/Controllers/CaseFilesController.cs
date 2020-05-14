@@ -1,4 +1,4 @@
-﻿using Recaura.Application.Features.CaseFiles.GetCaseFile;
+﻿using Recaura.Application.Features.CaseFiles.GetCasefile;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

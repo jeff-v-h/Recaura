@@ -2,16 +2,16 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import { compose } from "redux";
-import * as CaseFileStore from "../../stores/CaseFile";
+import * as casefileActions from "../../stores/casefiles/casefileActions";
+import { CasefileState } from '../../stores/casefiles/casefileTypes';
+import {  CasefilePatient } from "../../models/casefileModels";
 import { ApplicationState } from "../../stores";
-import { List, message } from "antd";
-import style from "./caseFile.scss";
+import { List } from "antd";
+import style from "./casefile.scss";
 import moment from "moment";
-import { IGetCaseFileVm, IFilesPatientVm } from "src/models/commonModels";
-import { Honorific } from '../../models/enums'
 
-type Props = CaseFileStore.CaseFileState &
-  typeof CaseFileStore.actionCreators &
+type Props = CasefileState &
+  typeof casefileActions &
   RouteComponentProps<{ id: string }>;
 
 class CaseFile extends React.Component<Props> {
@@ -19,36 +19,36 @@ class CaseFile extends React.Component<Props> {
     this.ensureDataFetched();
   }
 
+  private ensureDataFetched = () => {
+    const { match, GetCasefile } = this.props;
+    GetCasefile(match.params.id);
+  };
+
   getFormattedDate(date: string) {
     return moment(date).format("Do MMM YYYY");
   }
 
-  getHeader(file: IGetCaseFileVm) {
-    if (!file?.patient) return file.name;
-
-    return this.getPatientName(file.patient) + ": " + file.name;
+  getHeader() {
+    const { patient, name } = this.props
+    if (!patient)
+      return name;
+    return this.getPatientName(patient) + ": " + name;
   }
 
-  getPatientName(patient: IFilesPatientVm) {
-    return (
-      `${Honorific[patient.honorific]} ` +
-      `${patient.firstName} ${patient.lastName}`
-    );
+  getPatientName(patient: CasefilePatient) {
+    return `${patient.firstName} ${patient.lastName}`
   }
 
   render() {
-    const { file } = this.props;
-    if (!file) return null;
-
     return (
       <div className={style.list}>
         <div className={style.header}>
-          <h3>{this.getHeader(file)}</h3>
+          <h3>{this.getHeader()}</h3>
         </div>
-        {file.consultations && (
+        {this.props.consultations && (
           <List bordered>
-            {file.consultations?.map((consult) => (
-              <Link to={`/consultations/${consult.id}`} key={file.id}>
+            {this.props.consultations?.map((consult) => (
+              <Link to={`/consultations/${consult.id}`} key={this.props.id}>
                 <List.Item>
                   Consultation {consult.number}:{" "}
                   {this.getFormattedDate(consult.date)}
@@ -60,16 +60,11 @@ class CaseFile extends React.Component<Props> {
       </div>
     );
   }
-
-  private ensureDataFetched = () => {
-    const { match, getCaseFile } = this.props;
-    getCaseFile(match.params.id);
-  };
 }
 
-const mapStateToProps = (state: ApplicationState) => state.casefile;
+const mapStateToProps = (state: ApplicationState) => state.casefile
 
-export default compose(
+export default compose<React.ComponentType>(
   withRouter,
-  connect(mapStateToProps, CaseFileStore.actionCreators)
+  connect(mapStateToProps, casefileActions)
 )(CaseFile);

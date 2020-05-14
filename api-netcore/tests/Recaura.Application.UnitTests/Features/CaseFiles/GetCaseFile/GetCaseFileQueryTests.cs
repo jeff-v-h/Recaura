@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Recaura.Application.Common.Exceptions;
-using Recaura.Application.Features.CaseFiles.GetCaseFile;
+using Recaura.Application.Features.CaseFiles.GetCasefile;
 using Recaura.Persistence;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Recaura.Application.UnitTests.Features.CaseFiles.GetCaseFile
+namespace Recaura.Application.UnitTests.Features.CaseFiles.GetCasefile
 {
     [Collection("QueryTests")]
     public class GetCaseFileQueryTests

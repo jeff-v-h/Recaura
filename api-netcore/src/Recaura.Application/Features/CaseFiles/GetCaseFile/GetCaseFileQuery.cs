@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Recaura.Application.Features.CaseFiles.GetCaseFile
+namespace Recaura.Application.Features.CaseFiles.GetCasefile
 {
     public class GetCaseFileQuery : IRequest<GetCaseFileVm>
     {

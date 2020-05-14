@@ -1,8 +1,9 @@
 import patientReducer from './patients/patientReducer'
 import { PatientState } from './patients/patientTypes'
+import casefileReducer from './casefiles/casefileReducer'
+import { CasefileState } from './casefiles/casefileTypes'
 import * as Subjective from "./Subjective";
 import * as Objective from "./Objective";
-import * as CaseFile from "./CaseFile";
 import * as Consultation from "./Consultation";
 
 // The top-level state object
@@ -10,7 +11,7 @@ export interface ApplicationState {
   patient: PatientState | undefined;
   subjective: Subjective.SubjectiveState | undefined;
   objective: Objective.ObjectiveState | undefined;
-  casefile: CaseFile.CaseFileState | undefined;
+  casefile: CasefileState | undefined;
   consultation: Consultation.ConsultationState | undefined;
 }
 
@@ -19,9 +20,9 @@ export interface ApplicationState {
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
   patient: patientReducer,
+  casefile: casefileReducer,
   subjective: Subjective.reducer,
   objective: Objective.reducer,
-  casefile: CaseFile.reducer,
   consultation: Consultation.reducer,
 };
 

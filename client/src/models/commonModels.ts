@@ -1,31 +1,3 @@
-import { Honorific } from "./enums";
-
-export interface IGetCaseFileVm {
-    id: string;
-    name: string;
-    created: string;
-    consultations: IConsultVm[];
-    patient: IFilesPatientVm;
-}
-
-export interface IConsultVm {
-    id: string;
-    date: string;
-    number: number;
-    practitionerId: number;
-}
-
-export interface IFilesPatientVm {
-    id: string;
-    honorific: Honorific;
-    firstName: string;
-    lastName: string;
-    dob: string;
-    occupation: string;
-}
-
-
-
 export interface IGetConsultationVm {
     id: string;
     caseFileId: string;
