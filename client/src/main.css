@@ -1,0 +1,16 @@
+:root {
+  font-size: 6.25%;
+}
+
+body {
+  font-size: 16rem;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  font-family: calibri;
+}
+
+#root {
+  background: #fdfdfd;
+  flex-grow: 1;
+}

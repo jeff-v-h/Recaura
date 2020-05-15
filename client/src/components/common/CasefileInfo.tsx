@@ -31,7 +31,7 @@ class CasefileInfo extends React.Component<Props> {
     return (
       <>
         <div className={style.subHeader}>
-          <h3>{this.props.name}</h3>
+          <h3 className="sub-header">{this.props.name}</h3>
         </div>
       </>
     );

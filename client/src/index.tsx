@@ -6,12 +6,9 @@ import { createBrowserHistory } from 'history';
 import configureStore from './stores/configureStore';
 import 'antd/dist/antd.less';
 import App from './App';
-import './app.scss';
+import './main.css';
 
-// Create browser history to use in the Redux store
 const history = createBrowserHistory();
-
-// Get the application-wide store instance, prepopulating with state from the server where available.
 const store = configureStore(history);
 
 ReactDOM.render(
