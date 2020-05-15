@@ -38,7 +38,6 @@ const reducer: Reducer<T.PatientState> = (
       obj = action as T.GetPatientsSuccessAction;
       return { ...state, isFetching: false, list: obj.payload };
     case C.GET_PATIENTS_FAILURE:
-      obj = action as T.GetPatientsFailureAction;
       return { ...state, isFetching: false, list: [] };
 
     case C.SELECT_PATIENT:
@@ -51,7 +50,6 @@ const reducer: Reducer<T.PatientState> = (
       obj = action as T.GetPatientSuccessAction;
       return { ...state, isFetching: false, ...obj.payload };
     case C.GET_PATIENT_FAILURE:
-      obj = action as T.GetPatientFailureAction;
       return { ...state, isFetching: false };
     default:
       return state;

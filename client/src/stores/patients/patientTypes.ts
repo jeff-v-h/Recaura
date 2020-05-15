@@ -1,4 +1,5 @@
 import { Patient } from 'src/models/patientModels';
+import { ReduxAction } from '../common/types';
 
 export const C = {
   GET_PATIENTS_REQUEST: 'GET_PATIENTS_REQUEST',
@@ -21,49 +22,23 @@ export const C = {
 
 //--------------------
 //#region ACTIONS
-export interface GetPatientsRequestAction {
-  type: typeof C.GET_PATIENTS_REQUEST;
-}
-
-export interface GetPatientsSuccessAction {
-  type: typeof C.GET_PATIENTS_SUCCESS;
+export interface GetPatientsSuccessAction extends ReduxAction {
   payload: Patient[];
 }
 
-export interface GetPatientsFailureAction {
-  type: typeof C.GET_PATIENTS_FAILURE;
-}
-
-export interface SelectPatientAction {
-  type: typeof C.SELECT_PATIENT;
+export interface SelectPatientAction extends ReduxAction {
   payload: Patient;
 }
 
-export interface GetPatientRequestAction {
-  type: typeof C.GET_PATIENT_REQUEST;
-}
-
-export interface GetPatientSuccessAction {
-  type: typeof C.GET_PATIENT_SUCCESS;
+export interface GetPatientSuccessAction extends ReduxAction {
   payload: Patient;
 }
-
-export interface GetPatientFailureAction {
-  type: typeof C.GET_PATIENT_FAILURE;
-}
-
 //#endregion ACTIONS
 //--------------------
 
 // ACTION TYPE
-export type GetPatientsKnownAction =
-  | GetPatientsRequestAction
-  | GetPatientsSuccessAction
-  | GetPatientsFailureAction;
-export type GetPatientKnownAction =
-  | GetPatientRequestAction
-  | GetPatientSuccessAction
-  | GetPatientFailureAction;
+export type GetPatientsKnownAction = ReduxAction | GetPatientsSuccessAction;
+export type GetPatientKnownAction = ReduxAction | GetPatientSuccessAction;
 export type KnownAction = GetPatientsKnownAction | SelectPatientAction | GetPatientKnownAction;
 
 export interface PatientState extends Patient {

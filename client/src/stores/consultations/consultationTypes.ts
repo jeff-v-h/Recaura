@@ -4,6 +4,7 @@ import {
   ObjectiveAssessment,
   TreatmentsAndPlans
 } from 'src/models/consultationModels';
+import { ReduxAction } from '../common/types';
 
 export const C = {
   GET_CONSULTATIONS_REQUEST: 'GET_CONSULTATIONS_REQUEST',
@@ -25,72 +26,41 @@ export interface ConsultationState extends Consultation {
   list: Consultation[];
 }
 
-export interface GetConsultsRequestAction {
-  type: typeof C.GET_CONSULTATIONS_REQUEST;
-}
-
-export interface GetConsultsSuccessAction {
-  type: typeof C.GET_CONSULTATIONS_SUCCESS;
+export interface GetConsultsSuccessAction extends ReduxAction {
   payload: Consultation[];
 }
 
-export interface GetConsultsFailureAction {
-  type: typeof C.GET_CONSULTATIONS_FAILURE;
-}
-
-export interface GetConsultRequestAction {
-  type: typeof C.GET_CONSULTATION_REQUEST;
-}
-
-export interface GetConsultSuccessAction {
-  type: typeof C.GET_CONSULTATION_SUCCESS;
+export interface GetConsultSuccessAction extends ReduxAction {
   payload: Consultation;
 }
 
-export interface GetConsultFailureAction {
-  type: typeof C.GET_CONSULTATION_FAILURE;
-}
-
-export interface UpdateConsultRequestAction {
-  type: typeof C.UPDATE_CONSULTATION_REQUEST;
+export interface UpdateConsultRequestAction extends ReduxAction {
   payload: Consultation;
 }
 
-export interface UpdateConsultSuccessAction {
-  type: typeof C.UPDATE_CONSULTATION_SUCCESS;
+export interface UpdateConsultSuccessAction extends ReduxAction {
+  payload: Consultation;
 }
 
-export interface UpdateConsultFailureAction {
-  type: typeof C.UPDATE_CONSULTATION_FAILURE;
-}
-
-export interface ModifySubjective {
-  type: typeof C.MODIFY_SUBJECTIVE;
+export interface ModifySubjective extends ReduxAction {
   payload: SubjectiveAssessment;
 }
 
-export interface ModifyObjective {
-  type: typeof C.MODIFY_SUBJECTIVE;
+export interface ModifyObjective extends ReduxAction {
   payload: ObjectiveAssessment;
 }
 
-export interface ModifyTreatmentsAndPlans {
-  type: typeof C.MODIFY_SUBJECTIVE;
+export interface ModifyTreatmentsAndPlans extends ReduxAction {
   payload: TreatmentsAndPlans;
 }
 
-export type GetConsultsKnownAction =
-  | GetConsultsRequestAction
-  | GetConsultsSuccessAction
-  | GetConsultsFailureAction;
-export type GetConsultKnownAction =
-  | GetConsultRequestAction
-  | GetConsultSuccessAction
-  | GetConsultFailureAction;
+export type GetConsultsKnownAction = ReduxAction | GetConsultsSuccessAction;
+export type GetConsultKnownAction = ReduxAction | GetConsultSuccessAction;
 export type UpdateConsultKnownAction =
+  | ReduxAction
   | UpdateConsultRequestAction
-  | UpdateConsultSuccessAction
-  | UpdateConsultFailureAction;
+  | UpdateConsultSuccessAction;
+
 export type KnownAction =
   | GetConsultsKnownAction
   | GetConsultKnownAction
