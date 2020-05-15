@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { CasefileState } from '../../stores/casefiles/casefileTypes';
 import { ApplicationState } from '../../stores';
+import style from './common.scss';
 
 type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ casefileId: string }>;
 
@@ -29,7 +30,7 @@ class CasefileInfo extends React.Component<Props> {
   render() {
     return (
       <>
-        <div className="sub-header">
+        <div className={style.subHeader}>
           <h3>{this.props.name}</h3>
         </div>
       </>
