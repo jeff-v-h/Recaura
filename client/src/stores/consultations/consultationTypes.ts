@@ -10,6 +10,7 @@ export const C = {
   GET_CONSULTATIONS_REQUEST: 'GET_CONSULTATIONS_REQUEST',
   GET_CONSULTATIONS_SUCCESS: 'GET_CONSULTATIONS_SUCCESS',
   GET_CONSULTATIONS_FAILURE: 'GET_CONSULTATIONS_FAILURE',
+  SELECT_CONSULT: 'SELECT_CONSULT',
   GET_CONSULTATION_REQUEST: 'GET_CONSULTATION_REQUEST',
   GET_CONSULTATION_SUCCESS: 'GET_CONSULTATION_SUCCESS',
   GET_CONSULTATION_FAILURE: 'GET_CONSULTATION_FAILURE',
@@ -28,6 +29,10 @@ export interface ConsultationState extends Consultation {
 
 export interface GetConsultsSuccessAction extends ReduxAction {
   payload: Consultation[];
+}
+
+export interface SelectConsultAction extends ReduxAction {
+  payload: Consultation;
 }
 
 export interface GetConsultSuccessAction extends ReduxAction {

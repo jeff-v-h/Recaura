@@ -13,17 +13,16 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import TreatmentsAndPlan from './TreatmentsAndPlan';
 import PatientInfo from '../common/PatientInfo';
+import CasefileInfo from '../common/CasefileInfo';
 
 type Props = ConsultationState & typeof consultActions & RouteComponentProps<{ consultId: string }>;
 
 type State = {
-  consultId: string;
   display: ConsultPart;
 };
 
 class Consultation extends React.Component<Props, State> {
   state = {
-    consultId: this.props.match.params.consultId,
     display: ConsultPart.Subjective
   };
 
@@ -32,8 +31,16 @@ class Consultation extends React.Component<Props, State> {
   }
 
   ensureDataFetched = () => {
-    const { getConsult } = this.props;
-    getConsult(this.state.consultId);
+    const { list, id, match, getConsult, selectConsult } = this.props;
+
+    if (!id) {
+      const { consultId } = match.params;
+      const consult = list.find((c) => c.id === consultId);
+
+      if (consult) return selectConsult(consult);
+
+      getConsult(consultId);
+    }
   };
 
   onChange = (e: RadioChangeEvent) => this.setState({ display: e.target.value });
@@ -53,10 +60,13 @@ class Consultation extends React.Component<Props, State> {
   };
 
   render() {
-    const { consultId, display } = this.state;
+    const { display } = this.state;
+    const { consultId } = this.props.match.params;
+
     return (
       <>
         <PatientInfo />
+        <CasefileInfo />
         <div className={style.container}>
           <NavPills value={display} onChange={this.onChange} />
           {this.renderConsultSection(display, consultId)}

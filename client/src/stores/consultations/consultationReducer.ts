@@ -6,10 +6,10 @@ const { C } = T;
 export const unloadedState: T.ConsultationState = {
   isFetching: false,
   list: [],
-  id: '0',
-  patientId: '0',
-  caseFileId: '0',
-  practitionerId: '0',
+  id: '',
+  patientId: '',
+  caseFileId: '',
+  practitionerId: '',
   date: '',
   number: 0,
   practitioner: null,
@@ -37,6 +37,10 @@ const reducer: Reducer<T.ConsultationState> = (
       return { ...state, isFetching: false, list: obj.payload };
     case C.GET_CONSULTATIONS_FAILURE:
       return { ...state, isFetching: false };
+
+    case C.SELECT_CONSULT:
+      obj = action as T.SelectConsultAction;
+      return { ...state, ...obj.payload };
 
     case C.GET_CONSULTATION_REQUEST:
       return { ...unloadedState, isFetching: true, list: state.list };

@@ -4,18 +4,21 @@ import Dashboard from './components/dashboard/Dashboard';
 import Patient from './components/patient/Patient';
 import CasefilesPage from './components/casefiles/CasefilesPage';
 import CasefilePage from './components/casefile/CasefilePage';
-import Consultation from './components/consultation/Consultation';
+import ConsultationPage from './components/consultation/ConsultationPage';
 
 export default class Routes extends React.Component {
   render() {
     return (
       <Switch>
         <Route exact path="/" component={Dashboard} />
+        <Route
+          path="/patients/:patientId/casefiles/:casefileId/consultations/:consultId"
+          component={ConsultationPage}
+        />
         <Route path="/patients/:patientId/casefiles/:casefileId" component={CasefilePage} />
         <Route path="/patients/:patientId/casefiles" component={CasefilesPage} />
         <Route path="/patients/:patientId" component={Patient} />
         <Route path="/patients" component={Dashboard} />
-        <Route path="/consultations/:consultId" component={Consultation as any} />
       </Switch>
     );
   }

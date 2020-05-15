@@ -18,7 +18,7 @@ function getFormattedDate(date: string) {
 const Consultations = ({ consults, patientId, casefileId }: Props) => (
   <div className={style.list}>
     <div className={style.header}>
-      <h3>Consultations</h3>
+      <h4>Consultations</h4>
     </div>
     {consults && (
       <List bordered>

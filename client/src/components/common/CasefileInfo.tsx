@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { CasefileState } from '../../stores/casefiles/casefileTypes';
 import { ApplicationState } from '../../stores';
-import style from './common.scss';
+import style from './casefileInfo.scss';
 
 type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ casefileId: string }>;
 

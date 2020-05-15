@@ -2,6 +2,7 @@ import { AppThunkAction } from '../index';
 import * as T from './consultationTypes';
 import consultationService from '../../services/consultationService';
 import {
+  Consultation,
   SubjectiveAssessment,
   ObjectiveAssessment,
   TreatmentsAndPlans
@@ -21,6 +22,11 @@ export const getConsultsSuccess = async (
 };
 
 export const getConsultsFailure = () => ({ type: C.GET_CONSULTATIONS_FAILURE });
+
+export const selectConsult = (consult: Consultation) => ({
+  type: C.SELECT_CONSULT,
+  payload: consult
+});
 
 export const getConsultRequest = () => ({ type: C.GET_CONSULTATION_REQUEST });
 
