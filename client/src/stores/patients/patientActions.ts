@@ -1,6 +1,6 @@
 import { AppThunkAction } from '../index';
 import * as T from './patientTypes';
-import patientsService from '../../api/patientsService';
+import patientsService from '../../services/patientsService';
 import { Patient } from '../../models/patientModels';
 
 const { C } = T;

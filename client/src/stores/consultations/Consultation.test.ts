@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { unloadedState } from './consultationReducer';
 import * as consultActions from './consultationActions';
-import consultationService from '../../api/consultationService';
+import consultationService from '../../services/consultationService';
 import { Consultation } from '../../models/consultationModels';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';

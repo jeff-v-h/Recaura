@@ -1,6 +1,6 @@
 import { AppThunkAction } from '../index';
 import * as T from './casefileTypes';
-import casefileService from '../../api/casefileService';
+import casefileService from '../../services/casefileService';
 import { Casefile } from '../../models/casefileModels';
 
 const { C } = T;

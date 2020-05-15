@@ -1,6 +1,6 @@
 import { AppThunkAction } from '../index';
 import * as T from './consultationTypes';
-import consultationService from '../../api/consultationService';
+import consultationService from '../../services/consultationService';
 import {
   SubjectiveAssessment,
   ObjectiveAssessment,
