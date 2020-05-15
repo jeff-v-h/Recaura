@@ -1,8 +1,8 @@
-import * as apiHelper from "../helpers/apiHelper";
-import { AxiosResponse } from "axios";
-import { Patient } from "src/models/patientModels";
-import { message } from "antd";
-import { keys } from "../helpers/keys";
+import * as apiHelper from '../helpers/apiHelper';
+import { AxiosResponse } from 'axios';
+import { Patient } from 'src/models/patientModels';
+import { message } from 'antd';
+import { keys } from '../helpers/keys';
 
 const { apiUrl } = keys;
 

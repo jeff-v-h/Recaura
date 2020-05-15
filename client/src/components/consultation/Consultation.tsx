@@ -1,22 +1,20 @@
-import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import style from "./consultation.scss";
-import Subjective from "./Subjective";
-import { getParsedUrlId, ConsultPart } from "../../helpers/utils";
-import { RadioChangeEvent } from "antd/lib/radio";
-import NavPills from "./NavPills";
-import Objective from "./Objective";
-import * as consultActions from "../../stores/consultations/consultationActions";
-import { ConsultationState } from "../../stores/consultations/consultationTypes";
-import { ApplicationState } from "../../stores";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import TreatmentsAndPlan from "./TreatmentsAndPlan";
-import PatientInfo from "../common/PatientInfo";
+import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import style from './consultation.scss';
+import Subjective from './Subjective';
+import { getParsedUrlId, ConsultPart } from '../../helpers/utils';
+import { RadioChangeEvent } from 'antd/lib/radio';
+import NavPills from './NavPills';
+import Objective from './Objective';
+import * as consultActions from '../../stores/consultations/consultationActions';
+import { ConsultationState } from '../../stores/consultations/consultationTypes';
+import { ApplicationState } from '../../stores';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import TreatmentsAndPlan from './TreatmentsAndPlan';
+import PatientInfo from '../common/PatientInfo';
 
-type Props = ConsultationState &
-  typeof consultActions &
-  RouteComponentProps<{ consultId: string }>;
+type Props = ConsultationState & typeof consultActions & RouteComponentProps<{ consultId: string }>;
 
 type State = {
   consultId: string;
@@ -26,7 +24,7 @@ type State = {
 class Consultation extends React.Component<Props, State> {
   state = {
     consultId: this.props.match.params.consultId,
-    display: ConsultPart.Subjective,
+    display: ConsultPart.Subjective
   };
 
   componentDidMount() {
@@ -38,8 +36,7 @@ class Consultation extends React.Component<Props, State> {
     getConsult(this.state.consultId);
   };
 
-  onChange = (e: RadioChangeEvent) =>
-    this.setState({ display: e.target.value });
+  onChange = (e: RadioChangeEvent) => this.setState({ display: e.target.value });
 
   renderConsultSection = (consultPart: ConsultPart, consultId: string) => {
     switch (consultPart) {
@@ -71,7 +68,4 @@ class Consultation extends React.Component<Props, State> {
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 
-export default compose<React.ComponentType>(
-  withRouter,
-  connect(mapStateToProps, consultActions)
-)(Consultation);
+export default compose<React.ComponentType>(withRouter, connect(mapStateToProps, consultActions))(Consultation);

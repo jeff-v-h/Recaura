@@ -1,21 +1,21 @@
-import { Honorific, Gender } from "./enums";
+import { Honorific, Gender } from './enums';
 
 export interface Patient {
-    id: string;
-    honorific: Honorific;
-    firstName: string;
-    lastName: string;
-    dob: string;
-    email: string;
-    countryCode: string;
-    homePhone: string;
-    mobilePhone: string;
-    gender: Gender;
-    occupation: string;
-    casefiles: PatientCasefile[];
+  id: string;
+  honorific: Honorific;
+  firstName: string;
+  lastName: string;
+  dob: string;
+  email: string;
+  countryCode: string;
+  homePhone: string;
+  mobilePhone: string;
+  gender: Gender;
+  occupation: string;
+  casefiles: PatientCasefile[];
 }
 
 export interface PatientCasefile {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }

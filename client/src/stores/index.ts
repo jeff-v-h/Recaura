@@ -1,9 +1,9 @@
-import patientReducer from './patients/patientReducer'
-import { PatientState } from './patients/patientTypes'
-import casefileReducer from './casefiles/casefileReducer'
-import { CasefileState } from './casefiles/casefileTypes'
-import consultationReducer from './consultations/consultationReducer'
-import { ConsultationState } from './consultations/consultationTypes'
+import patientReducer from './patients/patientReducer';
+import { PatientState } from './patients/patientTypes';
+import casefileReducer from './casefiles/casefileReducer';
+import { CasefileState } from './casefiles/casefileTypes';
+import consultationReducer from './consultations/consultationReducer';
+import { ConsultationState } from './consultations/consultationTypes';
 
 // The top-level state object
 export interface ApplicationState {
@@ -18,7 +18,7 @@ export interface ApplicationState {
 export const reducers = {
   patient: patientReducer,
   casefile: casefileReducer,
-  consultation: consultationReducer,
+  consultation: consultationReducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

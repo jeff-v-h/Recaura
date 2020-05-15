@@ -1,4 +1,4 @@
-import { Consultation } from "../models/consultationModels";
+import { Consultation } from '../models/consultationModels';
 
 export interface IConsultationService {
   getConsultation(id: string): Promise<Consultation>;

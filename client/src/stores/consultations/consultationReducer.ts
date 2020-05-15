@@ -1,21 +1,21 @@
-import { Reducer } from "redux";
-import * as T from "./consultationTypes";
+import { Reducer } from 'redux';
+import * as T from './consultationTypes';
 
 const { C } = T;
 
 export const unloadedState: T.ConsultationState = {
   isFetching: false,
-  id: "0",
-  patientId: "0",
-  caseFileId: "0",
-  practitionerId: "0",
-  date: "",
+  id: '0',
+  patientId: '0',
+  caseFileId: '0',
+  practitionerId: '0',
+  date: '',
   number: 0,
   practitioner: null,
   subjectiveAssessment: null,
   objectiveAssessment: null,
-  treatments: "",
-  plans: "",
+  treatments: '',
+  plans: ''
 };
 
 const reducer: Reducer<T.ConsultationState> = (
@@ -35,7 +35,7 @@ const reducer: Reducer<T.ConsultationState> = (
       obj = action as T.GetConsultSuccessAction;
       return {
         isFetching: false,
-        ...obj.payload,
+        ...obj.payload
       };
     case C.GET_CONSULTATION_FAILURE:
       obj = action as T.GetConsultFailureAction;

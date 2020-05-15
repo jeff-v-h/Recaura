@@ -1,20 +1,18 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import * as consultActions from '../../stores/consultations/consultationActions';
 import { ConsultationState } from '../../stores/consultations/consultationTypes';
-import { ApplicationState } from "../../stores";
-import { Form, Button } from "antd";
-import FormTextArea from "../common/FormTextArea";
-import style from "./formCommon.scss";
-import { formLayout, tailLayout } from "../../helpers/formHelper";
-import { FormInstance } from "antd/lib/form";
+import { ApplicationState } from '../../stores';
+import { Form, Button } from 'antd';
+import FormTextArea from '../common/FormTextArea';
+import style from './formCommon.scss';
+import { formLayout, tailLayout } from '../../helpers/formHelper';
+import { FormInstance } from 'antd/lib/form';
 
 type ParentProps = { consultId: string };
-type Props = ConsultationState &
-  typeof consultActions &
-  ParentProps;
+type Props = ConsultationState & typeof consultActions & ParentProps;
 
 class Objective extends React.Component<Props> {
   formRef: React.RefObject<FormInstance> = React.createRef();
@@ -50,17 +48,11 @@ class Objective extends React.Component<Props> {
 
     const initialValues = {
       remember: true,
-      ...objectiveAssessment,
+      ...objectiveAssessment
     };
 
     return (
-      <Form
-        {...formLayout}
-        ref={this.formRef}
-        name="objective"
-        initialValues={initialValues}
-        onFinish={this.onSubmit}
-      >
+      <Form {...formLayout} ref={this.formRef} name="objective" initialValues={initialValues} onFinish={this.onSubmit}>
         <FormTextArea label="Observation" name="observation" />
         <FormTextArea label="Active" name="active" />
         <FormTextArea label="Passive" name="passive" />

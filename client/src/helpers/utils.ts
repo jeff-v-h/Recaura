@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message } from 'antd';
 
 export function getParsedUrlId(id: string) {
   const parsedId = parseInt(id, 10);
@@ -14,7 +14,7 @@ export enum ConsultPart {
   Subjective,
   Objective,
   Treatments,
-  Plan,
+  Plan
 }
 
 export function capitalise(word: string) {
