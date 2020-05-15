@@ -5,6 +5,7 @@ const { C } = T;
 
 export const unloadedState: T.ConsultationState = {
   isFetching: false,
+  list: [],
   id: '0',
   patientId: '0',
   caseFileId: '0',
@@ -29,17 +30,21 @@ const reducer: Reducer<T.ConsultationState> = (
   const action = incomingAction as T.KnownAction;
   let obj;
   switch (action.type) {
+    case C.GET_CONSULTATIONS_REQUEST:
+      return { ...state, isFetching: true, list: [] };
+    case C.GET_CONSULTATIONS_SUCCESS:
+      obj = action as T.GetConsultsSuccessAction;
+      return { ...state, isFetching: false, list: obj.payload };
+    case C.GET_CONSULTATIONS_FAILURE:
+      return { ...state, isFetching: false };
+
     case C.GET_CONSULTATION_REQUEST:
-      return { ...unloadedState, isFetching: true };
+      return { ...unloadedState, isFetching: true, list: state.list };
     case C.GET_CONSULTATION_SUCCESS:
       obj = action as T.GetConsultSuccessAction;
-      return {
-        isFetching: false,
-        ...obj.payload
-      };
+      return { ...state, isFetching: false, ...obj.payload };
     case C.GET_CONSULTATION_FAILURE:
-      obj = action as T.GetConsultFailureAction;
-      return unloadedState;
+      return { ...state, isFetching: false };
 
     case C.UPDATE_CONSULTATION_REQUEST:
       obj = action as T.UpdateConsultRequestAction;

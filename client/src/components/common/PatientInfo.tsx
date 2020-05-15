@@ -17,8 +17,8 @@ class PatientInfo extends React.Component<Props> {
   }
 
   ensureDataFetched = () => {
-    const { match, getPatient } = this.props;
-    getPatient(match.params.patientId);
+    const { id, match, getPatient } = this.props;
+    if (!id) getPatient(match.params.patientId);
   };
 
   render() {

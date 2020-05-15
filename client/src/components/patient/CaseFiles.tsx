@@ -2,14 +2,14 @@ import * as React from 'react';
 import { List } from 'antd';
 import { PatientCasefile } from 'src/models/patientModels';
 import { Link } from 'react-router-dom';
-import style from './caseFiles.scss';
+import style from './casefiles.scss';
 
 interface Props {
   files: PatientCasefile[];
   patientId: string;
 }
 
-const CaseFiles = ({ files, patientId }: Props) => (
+const Casefiles = ({ files, patientId }: Props) => (
   <div className={style.list}>
     <div className={style.header}>
       <h3>Case Files</h3>
@@ -26,4 +26,4 @@ const CaseFiles = ({ files, patientId }: Props) => (
   </div>
 );
 
-export default CaseFiles;
+export default Casefiles;

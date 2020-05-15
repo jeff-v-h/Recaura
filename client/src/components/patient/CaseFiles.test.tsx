@@ -1,5 +1,5 @@
 import React from 'react';
-import CaseFiles from './CaseFiles';
+import Casefiles from './Casefiles';
 import { mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import { PatientCasefile } from 'src/models/patientModels';
 import { MemoryRouter } from 'react-router';
@@ -19,7 +19,7 @@ describe('<CaseFiles/>', () => {
   let mountedWrapper: ReactWrapper;
 
   beforeAll(() => {
-    const component = <CaseFiles files={files} />;
+    const component = <Casefiles files={files} patientId="1" />;
     wrapper = shallow(component);
     mountedWrapper = mount(<MemoryRouter>{component}</MemoryRouter>);
   });
@@ -36,7 +36,7 @@ describe('<CaseFiles/>', () => {
     it('should not have a list item when no files exist', () => {
       const noFilesWrapper = mount(
         <MemoryRouter>
-          <CaseFiles files={[]} />
+          <Casefiles files={[]} patientId="1" />
         </MemoryRouter>
       );
 

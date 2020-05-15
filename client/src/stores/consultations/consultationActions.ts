@@ -9,6 +9,19 @@ import {
 
 const { C } = T;
 //#region simple action creators
+export const getConsultsRequest = () => ({ type: C.GET_CONSULTATIONS_REQUEST });
+
+export const getConsultsSuccess = async (
+  casefileId: string
+): Promise<T.GetConsultsSuccessAction> => {
+  return {
+    type: C.GET_CONSULTATIONS_SUCCESS,
+    payload: await consultationService.getConsultations(casefileId)
+  };
+};
+
+export const getConsultsFailure = () => ({ type: C.GET_CONSULTATIONS_FAILURE });
+
 export const getConsultRequest = () => ({ type: C.GET_CONSULTATION_REQUEST });
 
 export const getConsultSuccess = async (id: string): Promise<T.GetConsultSuccessAction> => {
@@ -34,6 +47,18 @@ export const modifyTreatmentsAndPlans = (treatmentAndPlans: TreatmentsAndPlans) 
 //#endregion
 
 //#region Thunk actions creators
+export const getConsults = (casefileId: string): AppThunkAction<T.GetConsultKnownAction> => async (
+  dispatch
+) => {
+  dispatch(getConsultsRequest());
+
+  try {
+    dispatch(await getConsultsSuccess(casefileId));
+  } catch (e) {
+    dispatch(getConsultsFailure());
+  }
+};
+
 export const getConsult = (id: string): AppThunkAction<T.GetConsultKnownAction> => async (
   dispatch,
   getState

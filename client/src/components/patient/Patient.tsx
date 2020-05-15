@@ -6,7 +6,7 @@ import * as patientActions from '../../stores/patients/patientActions';
 import { PatientState } from '../../stores/patients/patientTypes';
 import { ApplicationState } from '../../stores';
 import PatientDescription from './PatientDescription';
-import CaseFiles from './CaseFiles';
+import Casefiles from './Casefiles';
 
 type Props = PatientState & typeof patientActions & RouteComponentProps<{ patientId: string }>;
 
@@ -25,7 +25,7 @@ class Patient extends React.Component<Props> {
     return (
       <>
         <PatientDescription patient={this.props} />
-        <CaseFiles files={casefiles} patientId={match.params.patientId} />
+        <Casefiles files={casefiles} patientId={match.params.patientId} />
       </>
     );
   }

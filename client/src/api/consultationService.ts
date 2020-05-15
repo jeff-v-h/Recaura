@@ -8,6 +8,17 @@ import { keys } from '../helpers/keys';
 const { apiUrl } = keys;
 
 class ConsultationService implements IConsultationService {
+  getConsultations = async (casefileId: string): Promise<Consultation[]> => {
+    try {
+      const url = `${apiUrl}/api/consultations?casefileId=${casefileId}`;
+      const resp = (await apiHelper.get(url)) as AxiosResponse<Consultation[]>;
+      return resp.data;
+    } catch (e) {
+      message.error(e);
+      return Promise.reject(e);
+    }
+  };
+
   getConsultation = async (id: string): Promise<Consultation> => {
     try {
       const url = `${apiUrl}/api/consultations/${id}`;

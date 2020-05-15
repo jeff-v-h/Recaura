@@ -7,7 +7,7 @@ import { CasefileState } from '../../stores/casefiles/casefileTypes';
 import { ApplicationState } from '../../stores';
 import moment from 'moment';
 import PatientInfo from '../common/PatientInfo';
-import CaseFiles from '../patient/CaseFiles';
+import Casefiles from '../patient/Casefiles';
 
 type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ patientId: string }>;
 
@@ -30,7 +30,7 @@ class CasefilesPage extends React.Component<Props> {
     return (
       <>
         <PatientInfo />
-        <CaseFiles files={list} patientId={match.params.patientId} />
+        <Casefiles files={list} patientId={match.params.patientId} />
       </>
     );
   }

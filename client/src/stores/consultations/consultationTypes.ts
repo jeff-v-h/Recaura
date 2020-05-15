@@ -6,6 +6,9 @@ import {
 } from 'src/models/consultationModels';
 
 export const C = {
+  GET_CONSULTATIONS_REQUEST: 'GET_CONSULTATIONS_REQUEST',
+  GET_CONSULTATIONS_SUCCESS: 'GET_CONSULTATIONS_SUCCESS',
+  GET_CONSULTATIONS_FAILURE: 'GET_CONSULTATIONS_FAILURE',
   GET_CONSULTATION_REQUEST: 'GET_CONSULTATION_REQUEST',
   GET_CONSULTATION_SUCCESS: 'GET_CONSULTATION_SUCCESS',
   GET_CONSULTATION_FAILURE: 'GET_CONSULTATION_FAILURE',
@@ -19,6 +22,20 @@ export const C = {
 
 export interface ConsultationState extends Consultation {
   isFetching: boolean;
+  list: Consultation[];
+}
+
+export interface GetConsultsRequestAction {
+  type: typeof C.GET_CONSULTATIONS_REQUEST;
+}
+
+export interface GetConsultsSuccessAction {
+  type: typeof C.GET_CONSULTATIONS_SUCCESS;
+  payload: Consultation[];
+}
+
+export interface GetConsultsFailureAction {
+  type: typeof C.GET_CONSULTATIONS_FAILURE;
 }
 
 export interface GetConsultRequestAction {
@@ -62,6 +79,10 @@ export interface ModifyTreatmentsAndPlans {
   payload: TreatmentsAndPlans;
 }
 
+export type GetConsultsKnownAction =
+  | GetConsultsRequestAction
+  | GetConsultsSuccessAction
+  | GetConsultsFailureAction;
 export type GetConsultKnownAction =
   | GetConsultRequestAction
   | GetConsultSuccessAction
@@ -71,6 +92,7 @@ export type UpdateConsultKnownAction =
   | UpdateConsultSuccessAction
   | UpdateConsultFailureAction;
 export type KnownAction =
+  | GetConsultsKnownAction
   | GetConsultKnownAction
   | UpdateConsultKnownAction
   | ModifySubjective
