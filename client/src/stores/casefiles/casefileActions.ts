@@ -1,6 +1,7 @@
 import { AppThunkAction } from '../index';
 import * as T from './casefileTypes';
 import casefileService from '../../api/casefileService';
+import { Casefile } from '../../models/casefileModels';
 
 const { C } = T;
 
@@ -18,6 +19,11 @@ export const getCasefiles = (
     dispatch({ type: C.GET_CASEFILES_FAILURE });
   }
 };
+
+export const selectCasefile = (casefile: Casefile): T.SelectCasefileAction => ({
+  type: C.SELECT_CASEFILE,
+  payload: casefile
+});
 
 export const getCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction> => async (
   dispatch,

@@ -4,6 +4,7 @@ export const C = {
   CREATE_CASEFILE_REQUEST: 'CREATE_CASEFILE_REQUEST',
   CREATE_CASEFILE_SUCCESS: 'CREATE_CASEFILE_SUCCESS',
   CREATE_CASEFILE_FAILURE: 'CREATE_CASEFILE_FAILURE',
+  SELECT_CASEFILE: 'SELECT_CASEFILE',
   GET_CASEFILES_REQUEST: 'GET_CASEFILES_REQUEST',
   GET_CASEFILES_SUCCESS: 'GET_CASEFILES_SUCCESS',
   GET_CASEFILES_FAILURE: 'GET_CASEFILES_FAILURE',
@@ -44,6 +45,11 @@ export interface GetCasefileSuccessAction {
 }
 export interface GetCasefilesFailureAction {
   type: string;
+}
+
+export interface SelectCasefileAction {
+  type: string;
+  payload: Casefile;
 }
 
 export interface GetCasefilesRequestAction {
@@ -93,5 +99,6 @@ export type GetCasefilesKnownAction =
 export type KnownAction =
   | CeateCasefileKnownAction
   | GetCasefilesKnownAction
+  | SelectCasefileAction
   | GetCasefileKnownAction;
 //#endregion actions

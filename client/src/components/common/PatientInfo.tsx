@@ -25,7 +25,7 @@ class PatientInfo extends React.Component<Props> {
 
       if (patient) return selectPatient(patient);
 
-      getPatient(match.params.patientId);
+      getPatient(patientId);
     }
   };
 

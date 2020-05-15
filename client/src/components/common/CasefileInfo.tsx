@@ -14,8 +14,16 @@ class CasefileInfo extends React.Component<Props> {
   }
 
   ensureDataFetched = () => {
-    const { list, id, match, getCasefile } = this.props;
-    if (!id) getCasefile(match.params.casefileId);
+    const { list, id, match, getCasefile, selectCasefile } = this.props;
+
+    if (!id) {
+      const { casefileId } = match.params;
+      const casefile = list.find((c) => c.id === casefileId);
+
+      if (casefile) return selectCasefile(casefile);
+
+      getCasefile(casefileId);
+    }
   };
 
   render() {
