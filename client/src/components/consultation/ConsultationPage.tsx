@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import style from './consultation.scss';
 import Subjective from './Subjective';
-import { getParsedUrlId, ConsultPart } from '../../helpers/utils';
+import { ConsultPart } from '../../helpers/utils';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import NavPills from './NavPills';
 import Objective from './Objective';

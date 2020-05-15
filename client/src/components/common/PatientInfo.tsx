@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'redux';
 import * as patientActions from '../../stores/patients/patientActions';
 import { PatientState } from '../../stores/patients/patientTypes';
@@ -30,13 +30,17 @@ class PatientInfo extends React.Component<Props> {
   };
 
   render() {
-    const { firstName, lastName, dob, gender, occupation } = this.props;
+    const { firstName, lastName, dob, gender, occupation, match } = this.props;
 
     return (
       <>
         <Descriptions bordered>
-          <Item label="First Name">{firstName}</Item>
-          <Item label="Last Name">{lastName}</Item>
+          <Item label="First Name">
+            <Link to={`/patients/${match.params.patientId}`}>{firstName}</Link>
+          </Item>
+          <Item label="Last Name">
+            <Link to={`/patients/${match.params.patientId}`}>{lastName}</Link>
+          </Item>
           <Item label="DOB">{dob}</Item>
           <Item label="Gender">{gender}</Item>
           <Item label="Occupation">{occupation}</Item>

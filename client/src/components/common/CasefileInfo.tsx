@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'redux';
 import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { CasefileState } from '../../stores/casefiles/casefileTypes';
 import { ApplicationState } from '../../stores';
 import style from './casefileInfo.scss';
 
-type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ casefileId: string }>;
+type Props = CasefileState &
+  typeof casefileActions &
+  RouteComponentProps<{ patientId: string; casefileId: string }>;
 
 class CasefileInfo extends React.Component<Props> {
   componentDidMount() {
@@ -28,10 +30,13 @@ class CasefileInfo extends React.Component<Props> {
   };
 
   render() {
+    const { patientId, casefileId } = this.props.match.params;
     return (
       <>
         <div className={style.subHeader}>
-          <h3 className="sub-header">{this.props.name}</h3>
+          <Link to={`/patients/${patientId}/casefiles/${casefileId}`}>
+            <h3 className="sub-header">{this.props.name}</h3>
+          </Link>
         </div>
       </>
     );
