@@ -1,6 +1,9 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-export const get = (url: string, showDefaultErrorMsg: boolean = true): Promise<AxiosResponse | AxiosError> => {
+export const get = (
+  url: string,
+  showDefaultErrorMsg: boolean = true
+): Promise<AxiosResponse | AxiosError> => {
   return axios.get(url, AxiosConfig).catch((e: AxiosError) => {
     if (showDefaultErrorMsg) {
       const msg = defaultErrorMessage(e);

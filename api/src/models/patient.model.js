@@ -5,7 +5,20 @@ const patientSchema = new mongoose.Schema(
   {
     honorific: {
       type: String,
-      enum: ['NoTitle', 'Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', 'Sir', 'Madam', 'Dr', 'Prof'],
+      enum: [
+        'NoTitle',
+        'Mr',
+        'Mrs',
+        'Miss',
+        'Ms',
+        'Master',
+        'Mx',
+        'M',
+        'Sir',
+        'Madam',
+        'Dr',
+        'Prof'
+      ],
       default: 'NoTitle'
     },
     firstName: { type: String, required: true, trim: true },

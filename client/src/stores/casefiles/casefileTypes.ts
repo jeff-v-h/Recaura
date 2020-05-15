@@ -82,7 +82,16 @@ export type CeateCasefileKnownAction =
   | CreateCasefileRequestAction
   | CreateCasefileSuccessAction
   | CreateCasefileFailureAction;
-export type GetCasefileKnownAction = GetCasefileRequestAction | GetCasefileSuccessAction | GetCasefileFailureAction;
-export type GetCasefilesKnownAction = GetCasefilesRequestAction | GetCasefilesSuccessAction | GetCasefilesFailureAction;
-export type KnownAction = CeateCasefileKnownAction | GetCasefilesKnownAction | GetCasefileKnownAction;
+export type GetCasefileKnownAction =
+  | GetCasefileRequestAction
+  | GetCasefileSuccessAction
+  | GetCasefileFailureAction;
+export type GetCasefilesKnownAction =
+  | GetCasefilesRequestAction
+  | GetCasefilesSuccessAction
+  | GetCasefilesFailureAction;
+export type KnownAction =
+  | CeateCasefileKnownAction
+  | GetCasefilesKnownAction
+  | GetCasefileKnownAction;
 //#endregion actions

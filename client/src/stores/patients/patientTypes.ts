@@ -56,8 +56,14 @@ export interface GetPatientFailureAction {
 //--------------------
 
 // ACTION TYPE
-export type GetPatientsKnownAction = GetPatientsRequestAction | GetPatientsSuccessAction | GetPatientsFailureAction;
-export type GetPatientKnownAction = GetPatientRequestAction | GetPatientSuccessAction | GetPatientFailureAction;
+export type GetPatientsKnownAction =
+  | GetPatientsRequestAction
+  | GetPatientsSuccessAction
+  | GetPatientsFailureAction;
+export type GetPatientKnownAction =
+  | GetPatientRequestAction
+  | GetPatientSuccessAction
+  | GetPatientFailureAction;
 export type KnownAction = GetPatientsKnownAction | SelectPatientAction | GetPatientKnownAction;
 
 export interface PatientState extends Patient {

@@ -4,7 +4,10 @@ import patientsService from '../../api/patientsService';
 
 const { C } = T;
 
-export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async (dispatch, getState) => {
+export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async (
+  dispatch,
+  getState
+) => {
   // Only load data if it's something we don't already have (and are not already loading)
   const appState = getState();
   if (appState.patient) {
@@ -21,7 +24,10 @@ export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async
   }
 };
 
-export const getPatient = (id: string): AppThunkAction<T.GetPatientKnownAction> => async (dispatch, getState) => {
+export const getPatient = (id: string): AppThunkAction<T.GetPatientKnownAction> => async (
+  dispatch,
+  getState
+) => {
   // Only load data if it's something we don't already have (and are not already loading)
   const appState = getState();
   if (id !== appState.patient?.id) {

@@ -62,7 +62,10 @@ export interface ModifyTreatmentsAndPlans {
   payload: TreatmentsAndPlans;
 }
 
-export type GetConsultKnownAction = GetConsultRequestAction | GetConsultSuccessAction | GetConsultFailureAction;
+export type GetConsultKnownAction =
+  | GetConsultRequestAction
+  | GetConsultSuccessAction
+  | GetConsultFailureAction;
 export type UpdateConsultKnownAction =
   | UpdateConsultRequestAction
   | UpdateConsultSuccessAction

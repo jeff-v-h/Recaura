@@ -37,4 +37,7 @@ class CasefilesPage extends React.Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => state.casefile;
 
-export default compose<React.ComponentType>(withRouter, connect(mapStateToProps, casefileActions))(CasefilesPage);
+export default compose<React.ComponentType>(
+  withRouter,
+  connect(mapStateToProps, casefileActions)
+)(CasefilesPage);

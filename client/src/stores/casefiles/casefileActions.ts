@@ -4,7 +4,9 @@ import casefileService from '../../api/casefileService';
 
 const { C } = T;
 
-export const getCasefiles = (patientId: string): AppThunkAction<T.GetCasefilesKnownAction> => async (dispatch) => {
+export const getCasefiles = (
+  patientId: string
+): AppThunkAction<T.GetCasefilesKnownAction> => async (dispatch) => {
   dispatch({ type: C.GET_CASEFILES_REQUEST });
 
   try {
@@ -17,7 +19,10 @@ export const getCasefiles = (patientId: string): AppThunkAction<T.GetCasefilesKn
   }
 };
 
-export const getCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction> => async (dispatch, getState) => {
+export const getCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction> => async (
+  dispatch,
+  getState
+) => {
   const appState = getState();
   if (appState?.casefile?.id !== id) {
     dispatch({ type: C.GET_CASEFILE_REQUEST });

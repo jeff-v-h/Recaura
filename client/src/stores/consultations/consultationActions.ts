@@ -1,7 +1,11 @@
 import { AppThunkAction } from '../index';
 import * as T from './consultationTypes';
 import consultationService from '../../api/consultationService';
-import { SubjectiveAssessment, ObjectiveAssessment, TreatmentsAndPlans } from '../../models/consultationModels';
+import {
+  SubjectiveAssessment,
+  ObjectiveAssessment,
+  TreatmentsAndPlans
+} from '../../models/consultationModels';
 
 const { C } = T;
 //#region simple action creators
@@ -30,7 +34,10 @@ export const modifyTreatmentsAndPlans = (treatmentAndPlans: TreatmentsAndPlans) 
 //#endregion
 
 //#region Thunk actions creators
-export const getConsult = (id: string): AppThunkAction<T.GetConsultKnownAction> => async (dispatch, getState) => {
+export const getConsult = (id: string): AppThunkAction<T.GetConsultKnownAction> => async (
+  dispatch,
+  getState
+) => {
   const appState = getState();
   if (appState?.consultation?.id !== id) {
     dispatch(getConsultRequest());
@@ -43,7 +50,10 @@ export const getConsult = (id: string): AppThunkAction<T.GetConsultKnownAction> 
   }
 };
 
-export const updateConsult = (): AppThunkAction<T.UpdateConsultKnownAction> => async (dispatch, getState) => {
+export const updateConsult = (): AppThunkAction<T.UpdateConsultKnownAction> => async (
+  dispatch,
+  getState
+) => {
   const appState = getState();
   const consult = appState?.consultation;
   if (consult?.id) {
