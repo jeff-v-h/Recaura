@@ -43,9 +43,7 @@ const reducer: Reducer<T.PatientState> = (
 
     case C.SELECT_PATIENT:
       obj = action as T.SelectPatientAction;
-      const id = obj.payload;
-      const patient = state.list.find((p) => p.id === id);
-      return { ...state, ...patient };
+      return { ...state, ...obj.payload };
 
     case C.GET_PATIENT_REQUEST:
       return { ...unloadedState, isFetching: true, list: state.list };

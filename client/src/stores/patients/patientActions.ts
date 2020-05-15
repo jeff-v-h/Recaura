@@ -1,6 +1,7 @@
 import { AppThunkAction } from '../index';
 import * as T from './patientTypes';
 import patientsService from '../../api/patientsService';
+import { Patient } from '../../models/patientModels';
 
 const { C } = T;
 
@@ -23,6 +24,11 @@ export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async
     }
   }
 };
+
+export const selectPatient = (patient: Patient): T.SelectPatientAction => ({
+  type: C.SELECT_PATIENT,
+  payload: patient
+});
 
 export const getPatient = (id: string): AppThunkAction<T.GetPatientKnownAction> => async (
   dispatch,

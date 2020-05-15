@@ -36,7 +36,7 @@ export interface GetPatientsFailureAction {
 
 export interface SelectPatientAction {
   type: typeof C.SELECT_PATIENT;
-  payload: string;
+  payload: Patient;
 }
 
 export interface GetPatientRequestAction {
