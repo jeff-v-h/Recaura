@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history';
 import configureStore from './stores/configureStore';
 import 'antd/dist/antd.less';
 import App from './App';
+import './app.scss';
 
 // Create browser history to use in the Redux store
 const history = createBrowserHistory();

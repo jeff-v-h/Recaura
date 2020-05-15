@@ -8,6 +8,7 @@ import { ApplicationState } from '../../stores';
 import style from './casefile.scss';
 import PatientInfo from '../common/PatientInfo';
 import Consultations from './Consultations';
+import CasefileInfo from '../common/CasefileInfo';
 
 type Props = ConsultationState &
   typeof consultationActions &
@@ -30,6 +31,7 @@ class CasefilePage extends React.Component<Props> {
     return (
       <>
         <PatientInfo />
+        <CasefileInfo />
         <Consultations consults={list} patientId={patientId} casefileId={casefileId} />
       </>
     );
