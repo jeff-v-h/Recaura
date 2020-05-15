@@ -1,18 +1,7 @@
-import { Consultation, IUpdateConsultationCommand, SubjectiveAssessment, ObjectiveAssessment } from "../models/commonModels";
+import { Consultation } from "../models/consultationModels";
 
 export interface IConsultationService {
   getConsultation(id: string): Promise<Consultation>;
 
-  updateConsultation(
-    id: string,
-    consult: IUpdateConsultationCommand
-  ): Promise<void>;
-
-  getSubjectiveAssessment(
-    consultId: string
-  ): Promise<SubjectiveAssessment>;
-
-  getObjectiveAssessment(
-    consultId: string
-  ): Promise<ObjectiveAssessment>;
+  updateConsultation(id: string, consult: Consultation): Promise<Consultation>;
 }

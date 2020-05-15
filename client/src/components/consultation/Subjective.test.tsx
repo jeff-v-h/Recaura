@@ -3,7 +3,9 @@ import Subjective from './Subjective';
 import { shallow, ShallowWrapper, mount, ReactWrapper } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import * as ConsultationStore from "../../stores/Consultation";
+import * as consultActions from '../../stores/consultations/consultationActions';
+import { ConsultationState } from '../../stores/consultations/consultationTypes';
+import { unloadedState } from '../../stores/consultations/consultationReducer';
 import { generateMockStore } from "../../../__tests__/setup/mockStore";
 import { MockStore } from "redux-mock-store";
 
@@ -14,10 +16,8 @@ describe('<Subjective />', () => {
   
   const mockState = {
     consultation: {
-      ...ConsultationStore.unloadedState,
+      ...unloadedState,
       subjectiveAssessment: {
-        id: 1,
-        consultationId: 1,
         moi: "",
         currentHistory: "",
         bodyChart: "",
@@ -39,7 +39,7 @@ describe('<Subjective />', () => {
       const props = {
         consultId: '1',
         ...mockState.consultation,
-        ...ConsultationStore.actionCreators
+        ...consultActions
       }
       wrapper = shallow(<Subjective {...props} />);
     })

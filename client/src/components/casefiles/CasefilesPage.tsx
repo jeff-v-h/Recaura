@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import * as casefileActions from "../../stores/casefiles/casefileActions";
-import { CasefileState } from '../../stores/casefiles/casefileTypes';
+import { CasefileState } from "../../stores/casefiles/casefileTypes";
 import { ApplicationState } from "../../stores";
-import style from "./casefiles.scss";
 import moment from "moment";
 import PatientInfo from "../common/PatientInfo";
 import CaseFiles from "../patient/CaseFiles";
@@ -30,15 +29,15 @@ class CasefilesPage extends React.Component<Props> {
 
   render() {
     return (
-      <div className={style.list}>
+      <>
         <PatientInfo />
         <CaseFiles files={this.props.list} />
-      </div>
+      </>
     );
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => state.casefile
+const mapStateToProps = (state: ApplicationState) => state.casefile;
 
 export default compose<React.ComponentType>(
   withRouter,

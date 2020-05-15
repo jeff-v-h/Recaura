@@ -2,7 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
-import * as ConsultationStore from "../../stores/Consultation";
+import * as consultActions from "../../stores/consultations/consultationActions";
+import { ConsultationState } from "../../stores/consultations/consultationTypes";
 import { ApplicationState } from "../../stores";
 import { Form, Button } from "antd";
 import FormTextArea from "../common/FormTextArea";
@@ -11,9 +12,7 @@ import style from "./formCommon.scss";
 import { formLayout, tailLayout } from "../../helpers/formHelper";
 
 type ParentProps = { consultId: string };
-type Props = ConsultationStore.ConsultationState &
-  typeof ConsultationStore.actionCreators &
-  ParentProps;
+type Props = ConsultationState & typeof consultActions & ParentProps;
 
 class TreatmentsAndPlan extends React.Component<Props> {
   formRef: React.RefObject<FormInstance> = React.createRef();
@@ -72,5 +71,5 @@ const mapStateToProps = (state: ApplicationState) => state.consultation;
 
 export default compose<React.ComponentType<ParentProps>>(
   withRouter,
-  connect(mapStateToProps, ConsultationStore.actionCreators)
+  connect(mapStateToProps, consultActions)
 )(TreatmentsAndPlan);

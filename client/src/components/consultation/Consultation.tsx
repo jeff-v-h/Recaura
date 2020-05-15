@@ -6,14 +6,16 @@ import { getParsedUrlId, ConsultPart } from "../../helpers/utils";
 import { RadioChangeEvent } from "antd/lib/radio";
 import NavPills from "./NavPills";
 import Objective from "./Objective";
-import * as ConsultationStore from "../../stores/Consultation";
+import * as consultActions from "../../stores/consultations/consultationActions";
+import { ConsultationState } from "../../stores/consultations/consultationTypes";
 import { ApplicationState } from "../../stores";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import TreatmentsAndPlan from "./TreatmentsAndPlan";
+import PatientInfo from "../common/PatientInfo";
 
-type Props = ConsultationStore.ConsultationState &
-  typeof ConsultationStore.actionCreators &
+type Props = ConsultationState &
+  typeof consultActions &
   RouteComponentProps<{ consultId: string }>;
 
 type State = {
@@ -31,9 +33,13 @@ class Consultation extends React.Component<Props, State> {
     this.ensureDataFetched();
   }
 
-  onChange = (e: RadioChangeEvent) => {
-    this.setState({ display: e.target.value });
+  ensureDataFetched = () => {
+    const { getConsult } = this.props;
+    getConsult(this.state.consultId);
   };
+
+  onChange = (e: RadioChangeEvent) =>
+    this.setState({ display: e.target.value });
 
   renderConsultSection = (consultPart: ConsultPart, consultId: string) => {
     switch (consultPart) {
@@ -52,22 +58,20 @@ class Consultation extends React.Component<Props, State> {
   render() {
     const { consultId, display } = this.state;
     return (
-      <div className={style.container}>
-        <NavPills value={display} onChange={this.onChange} />
-        {this.renderConsultSection(display, consultId)}
-      </div>
+      <>
+        <PatientInfo />
+        <div className={style.container}>
+          <NavPills value={display} onChange={this.onChange} />
+          {this.renderConsultSection(display, consultId)}
+        </div>
+      </>
     );
   }
-
-  private ensureDataFetched = () => {
-    const { getConsult } = this.props;
-    getConsult(this.state.consultId);
-  };
 }
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 
 export default compose<React.ComponentType>(
   withRouter,
-  connect(mapStateToProps, ConsultationStore.actionCreators)
+  connect(mapStateToProps, consultActions)
 )(Consultation);

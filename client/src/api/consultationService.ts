@@ -1,10 +1,6 @@
 import * as apiHelper from "../helpers/apiHelper";
 import { AxiosResponse } from "axios";
-import {
-  Consultation,
-  SubjectiveAssessment,
-  ObjectiveAssessment
-} from "../models/consultationModels";
+import { Consultation } from "../models/consultationModels";
 import { message } from "antd";
 import { IConsultationService } from "./apiService";
 import { keys } from "../helpers/keys";
@@ -26,33 +22,12 @@ class ConsultationService implements IConsultationService {
   updateConsultation = async (
     id: string,
     consult: Consultation
-  ): Promise<void> => {
+  ): Promise<Consultation> => {
     try {
       const url = `${apiUrl}/api/consultations/${id}`;
-      (await apiHelper.patch(url, consult)) as AxiosResponse<void>;
+      const resp = (await apiHelper.patch(url, consult)) as AxiosResponse<Consultation>;
       message.success("Consultation saved");
-    } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
-    }
-  };
-
-  getSubjectiveAssessment = async (consultId: string): Promise<SubjectiveAssessment> => {
-    try {
-      const url = `${apiUrl}/api/consultations/${consultId}/subjective`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<SubjectiveAssessment>;
-      return resp.data;
-    } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
-    }
-  };
-
-  getObjectiveAssessment = async (consultId: string): Promise<ObjectiveAssessment> => {
-    try {
-      const url = `${apiUrl}/api/consultations/${consultId}/objective`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<ObjectiveAssessment>;
-      return resp.data;
+      return resp.data
     } catch (e) {
       message.error(e);
       return Promise.reject(e);
