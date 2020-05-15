@@ -53,7 +53,13 @@ class Subjective extends React.Component<Props> {
     };
 
     return (
-      <Form {...formLayout} ref={this.formRef} name="subjective" initialValues={initialValues} onFinish={this.onSubmit}>
+      <Form
+        {...formLayout}
+        ref={this.formRef}
+        name="subjective"
+        initialValues={initialValues}
+        onFinish={this.onSubmit}
+      >
         <FormTextArea label="MOI" name="moi" />
         <FormTextArea label="Current History" name="currentHistory" />
         <FormTextArea label="Body Chart" name="bodyChart" />

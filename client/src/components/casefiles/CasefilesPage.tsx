@@ -9,7 +9,7 @@ import moment from 'moment';
 import PatientInfo from '../common/PatientInfo';
 import CaseFiles from '../patient/CaseFiles';
 
-type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ id: string }>;
+type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ patientId: string }>;
 
 class CasefilesPage extends React.Component<Props> {
   componentDidMount() {
@@ -18,7 +18,7 @@ class CasefilesPage extends React.Component<Props> {
 
   private ensureDataFetched = () => {
     const { match, getCasefiles } = this.props;
-    getCasefiles(match.params.id);
+    getCasefiles(match.params.patientId);
   };
 
   getFormattedDate(date: string) {
@@ -26,10 +26,11 @@ class CasefilesPage extends React.Component<Props> {
   }
 
   render() {
+    const { list, match } = this.props;
     return (
       <>
         <PatientInfo />
-        <CaseFiles files={this.props.list} />
+        <CaseFiles files={list} patientId={match.params.patientId} />
       </>
     );
   }

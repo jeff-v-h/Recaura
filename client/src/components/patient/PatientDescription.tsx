@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Descriptions } from "antd";
-import { Patient } from "src/models/patientModels";
+import * as React from 'react';
+import { Descriptions } from 'antd';
+import { Patient } from 'src/models/patientModels';
 
 const Item = Descriptions.Item;
 

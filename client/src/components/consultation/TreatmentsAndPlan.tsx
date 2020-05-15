@@ -1,15 +1,15 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
-import * as consultActions from "../../stores/consultations/consultationActions";
-import { ConsultationState } from "../../stores/consultations/consultationTypes";
-import { ApplicationState } from "../../stores";
-import { Form, Button } from "antd";
-import FormTextArea from "../common/FormTextArea";
-import { FormInstance } from "antd/lib/form";
-import style from "./formCommon.scss";
-import { formLayout, tailLayout } from "../../helpers/formHelper";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import * as consultActions from '../../stores/consultations/consultationActions';
+import { ConsultationState } from '../../stores/consultations/consultationTypes';
+import { ApplicationState } from '../../stores';
+import { Form, Button } from 'antd';
+import FormTextArea from '../common/FormTextArea';
+import { FormInstance } from 'antd/lib/form';
+import style from './formCommon.scss';
+import { formLayout, tailLayout } from '../../helpers/formHelper';
 
 type ParentProps = { consultId: string };
 type Props = ConsultationState & typeof consultActions & ParentProps;
@@ -26,8 +26,8 @@ class TreatmentsAndPlan extends React.Component<Props> {
     if (this.formRef.current) {
       const { getFieldValue } = this.formRef.current;
       modifyTreatmentsAndPlans({
-        treatments: getFieldValue("treatments"),
-        plans: getFieldValue("plans"),
+        treatments: getFieldValue('treatments'),
+        plans: getFieldValue('plans')
       });
     }
   };
@@ -44,7 +44,7 @@ class TreatmentsAndPlan extends React.Component<Props> {
     const initialValues = {
       remember: true,
       treatments,
-      plans,
+      plans
     };
 
     return (

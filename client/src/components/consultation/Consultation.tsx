@@ -67,5 +67,6 @@ class Consultation extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
+const connectProps = connect(mapStateToProps, consultActions);
 
-export default compose<React.ComponentType>(withRouter, connect(mapStateToProps, consultActions))(Consultation);
+export default compose<React.ComponentType>(withRouter, connectProps)(Consultation);

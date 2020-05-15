@@ -52,7 +52,13 @@ class Objective extends React.Component<Props> {
     };
 
     return (
-      <Form {...formLayout} ref={this.formRef} name="objective" initialValues={initialValues} onFinish={this.onSubmit}>
+      <Form
+        {...formLayout}
+        ref={this.formRef}
+        name="objective"
+        initialValues={initialValues}
+        onFinish={this.onSubmit}
+      >
         <FormTextArea label="Observation" name="observation" />
         <FormTextArea label="Active" name="active" />
         <FormTextArea label="Passive" name="passive" />

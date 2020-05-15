@@ -1,6 +1,6 @@
-import * as React from "react";
-import NavMenu from "./NavMenu";
-import style from "./layout.scss";
+import * as React from 'react';
+import NavMenu from './NavMenu';
+import style from './layout.scss';
 
 export default (props: { children?: React.ReactNode }) => (
   <div className={style.body}>

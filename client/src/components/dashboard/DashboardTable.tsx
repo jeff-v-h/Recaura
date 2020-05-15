@@ -1,29 +1,29 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import { compose } from "redux";
-import { Table } from "antd";
-import * as patientActions from "../../stores/patients/patientActions";
-import { PatientState } from "../../stores/patients/patientTypes";
-import { ApplicationState } from "../../stores";
-import { Patient } from "src/models/patientModels";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { Table } from 'antd';
+import * as patientActions from '../../stores/patients/patientActions';
+import { PatientState } from '../../stores/patients/patientTypes';
+import { ApplicationState } from '../../stores';
+import { Patient } from 'src/models/patientModels';
 
 const columns = [
   {
-    title: "First Name",
-    dataIndex: "firstName",
-    key: "firstName",
+    title: 'First Name',
+    dataIndex: 'firstName',
+    key: 'firstName'
   },
   {
-    title: "Last Name",
-    dataIndex: "lastName",
-    key: "lastName",
+    title: 'Last Name',
+    dataIndex: 'lastName',
+    key: 'lastName'
   },
   {
-    title: "Date of Birth",
-    dataIndex: "dob",
-    key: "dob",
-  },
+    title: 'Date of Birth',
+    dataIndex: 'dob',
+    key: 'dob'
+  }
 ];
 
 interface RowData {
@@ -33,9 +33,7 @@ interface RowData {
   dob: string;
 }
 
-type Props = PatientState &
-  typeof patientActions &
-  RouteComponentProps<{}>;
+type Props = PatientState & typeof patientActions & RouteComponentProps<{}>;
 
 class DashboardTable extends React.Component<Props> {
   componentDidMount() {
@@ -51,7 +49,7 @@ class DashboardTable extends React.Component<Props> {
       key: patient.id,
       firstName: patient.firstName,
       lastName: patient.lastName,
-      dob: patient.dob,
+      dob: patient.dob
     }));
   };
 
@@ -60,7 +58,7 @@ class DashboardTable extends React.Component<Props> {
       onClick: (event: React.MouseEvent) => {
         const { history } = this.props;
         history.push(`/patients/${patientRow.key}/casefiles`);
-      },
+      }
     };
   };
 
@@ -73,8 +71,5 @@ class DashboardTable extends React.Component<Props> {
 
 export default compose<React.ComponentType>(
   withRouter,
-  connect(
-    (state: ApplicationState) => state.patient,
-    patientActions
-  )
+  connect((state: ApplicationState) => state.patient, patientActions)
 )(DashboardTable);
