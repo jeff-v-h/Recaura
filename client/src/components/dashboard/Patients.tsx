@@ -35,7 +35,7 @@ interface RowData {
 
 type Props = PatientState & typeof patientActions & RouteComponentProps<{}>;
 
-class DashboardTable extends React.Component<Props> {
+class Patients extends React.Component<Props> {
   componentDidMount() {
     this.ensureDataFetched();
   }
@@ -72,4 +72,4 @@ class DashboardTable extends React.Component<Props> {
 export default compose<React.ComponentType>(
   withRouter,
   connect((state: ApplicationState) => state.patient, patientActions)
-)(DashboardTable);
+)(Patients);

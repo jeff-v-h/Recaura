@@ -6,7 +6,6 @@ import * as patientActions from '../../stores/patients/patientActions';
 import { PatientState } from '../../stores/patients/patientTypes';
 import { ApplicationState } from '../../stores';
 import PatientDescription from './PatientDescription';
-import Casefiles from './Casefiles';
 
 type Props = PatientState & typeof patientActions & RouteComponentProps<{ patientId: string }>;
 
@@ -16,16 +15,22 @@ class Patient extends React.Component<Props> {
   }
 
   ensureDataFetched = () => {
-    const { match, getPatient } = this.props;
-    getPatient(match.params.patientId);
+    const { match, getPatient, id, list, selectPatient } = this.props;
+    const { patientId } = match.params;
+
+    if (!id || id !== patientId) {
+      const patient = list.find((c) => c.id === patientId);
+
+      if (patient) return selectPatient(patient);
+
+      getPatient(patientId);
+    }
   };
 
   render() {
-    const { casefiles, match } = this.props;
     return (
       <>
         <PatientDescription patient={this.props} />
-        <Casefiles files={casefiles} patientId={match.params.patientId} />
       </>
     );
   }

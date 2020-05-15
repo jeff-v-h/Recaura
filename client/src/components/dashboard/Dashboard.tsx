@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import DashboardTable from './DashboardTable';
+import Patients from './Patients';
 
 class Dashboard extends React.Component<{}> {
   render() {
-    return <DashboardTable />;
+    return <Patients />;
   }
 }
 

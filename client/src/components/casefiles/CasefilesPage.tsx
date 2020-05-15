@@ -7,7 +7,7 @@ import { CasefileState } from '../../stores/casefiles/casefileTypes';
 import { ApplicationState } from '../../stores';
 import moment from 'moment';
 import PatientInfo from '../common/PatientInfo';
-import Casefiles from '../patient/Casefiles';
+import Casefiles from './Casefiles';
 
 type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ patientId: string }>;
 
