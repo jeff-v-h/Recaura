@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Recaura.Application.Features.CaseFiles.GetCaseFile
+namespace Recaura.Application.Features.CaseFiles.GetCasefile
 {
     public class GetCaseFileVm
     {

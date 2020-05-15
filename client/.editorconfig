@@ -1,0 +1,4 @@
+[*.{ts,json,js,tsx,css,scss,config}]
+charset = utf-8
+trim_trailing_whitespace = true
+indent_size = 2

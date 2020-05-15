@@ -1,10 +1,10 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosResponse, AxiosError } from 'axios';
 
 export const get = (
   url: string,
   showDefaultErrorMsg: boolean = true
 ): Promise<AxiosResponse | AxiosError> => {
-  return axios.get(url).catch((e: AxiosError) => {
+  return axios.get(url, AxiosConfig).catch((e: AxiosError) => {
     if (showDefaultErrorMsg) {
       const msg = defaultErrorMessage(e);
       return Promise.reject(msg);
@@ -28,13 +28,12 @@ export const post = (
   });
 };
 
-export const put = (
+export const patch = (
   url: string,
   payload: any,
   showDefaultErrorMsg: boolean = true
 ): Promise<AxiosResponse | AxiosError> => {
-  // const newPayload = AxisPayload(payload);
-  return axios.put(url, payload, AxiosConfig).catch((e: AxiosError) => {
+  return axios.patch(url, payload, AxiosConfig).catch((e: AxiosError) => {
     if (showDefaultErrorMsg) {
       const msg = defaultErrorMessage(e);
       return Promise.reject(msg);
@@ -46,24 +45,24 @@ export const put = (
 // when do the post directly, asp.net core controller is using the low camera case
 const AxiosConfig = {
   headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "Cache-Control": "no-cache, no-store",
-    Pragma: "no-cache",
-  },
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    'Cache-Control': 'no-cache, no-store',
+    Pragma: 'no-cache'
+  }
   // timeout: 30000
 };
 
 export const defaultErrorMessage = (error: AxiosError): string => {
-  let errorMsg = "Server error";
-  if (error.code === "ECONNABORTED") {
-    errorMsg = "Request timeout";
+  let errorMsg = 'Server error';
+  if (error.code === 'ECONNABORTED') {
+    errorMsg = 'Request timeout';
   } else if (error.response?.status === 400) {
-    errorMsg = "Invalid data";
+    errorMsg = 'Invalid data';
   } else if (error.response?.status === 401) {
-    errorMsg = "Unauthorised";
+    errorMsg = 'Unauthorised';
   } else if (error.response?.status === 404) {
-    errorMsg = "Not found";
+    errorMsg = 'Not found';
   }
   return errorMsg;
 };

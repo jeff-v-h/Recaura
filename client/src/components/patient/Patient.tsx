@@ -1,49 +1,44 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import { compose } from "redux";
-import * as PatientStore from "../../store/Patient";
-import { ApplicationState } from "../../store";
-import PatientDescription from "./PatientDescription";
-import CaseFiles from "./CaseFiles";
-import { message } from "antd";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import * as patientActions from '../../stores/patients/patientActions';
+import { PatientState } from '../../stores/patients/patientTypes';
+import { ApplicationState } from '../../stores';
+import PatientDescription from './PatientDescription';
 
-type Props = PatientStore.PatientState &
-  typeof PatientStore.actionCreators &
-  RouteComponentProps<{ id: string }>;
+type Props = PatientState & typeof patientActions & RouteComponentProps<{ patientId: string }>;
 
 class Patient extends React.Component<Props> {
   componentDidMount() {
     this.ensureDataFetched();
   }
 
-  render() {
-    const { details } = this.props;
-    if (!details) return null;
+  ensureDataFetched = () => {
+    const { match, getPatient, id, list, selectPatient } = this.props;
+    const { patientId } = match.params;
 
+    if (!id || id !== patientId) {
+      const patient = list.find((c) => c.id === patientId);
+
+      if (patient) return selectPatient(patient);
+
+      getPatient(patientId);
+    }
+  };
+
+  render() {
     return (
       <>
-        <PatientDescription patient={details} />
-        <CaseFiles files={details.caseFiles} />
+        <PatientDescription patient={this.props} />
       </>
     );
   }
-
-  private ensureDataFetched = () => {
-    const { match } = this.props;
-    const parsedId = parseInt(match.params.id, 10);
-    if (isNaN(parsedId)) {
-      message.error(`${match.params.id} is not a number`);
-      return;
-    }
-
-    this.props.getPatient(parsedId);
-  };
 }
 
 const mapStateToProps = (state: ApplicationState) => state.patient;
 
-export default compose(
+export default compose<React.ComponentType>(
   withRouter,
-  connect(mapStateToProps, PatientStore.actionCreators)
+  connect(mapStateToProps, patientActions)
 )(Patient);
