@@ -1,4 +1,5 @@
 import { Casefile } from 'src/models/casefileModels';
+import { ReduxAction } from '../common/types';
 
 export const C = {
   CREATE_CASEFILE_REQUEST: 'CREATE_CASEFILE_REQUEST',
@@ -25,77 +26,29 @@ export interface CasefileState extends Casefile {
 }
 
 //#region actions
-export interface CreateCasefileRequestAction {
-  type: string;
-}
-export interface CreateCasefileSuccessAction {
-  type: string;
-  payload: Casefile;
-}
-export interface CreateCasefileFailureAction {
-  type: string;
-}
-
-export interface GetCasefileRequestAction {
-  type: string;
-}
-export interface GetCasefileSuccessAction {
-  type: string;
-  payload: Casefile;
-}
-export interface GetCasefilesFailureAction {
-  type: string;
-}
-
-export interface SelectCasefileAction {
-  type: string;
+export interface CreateCasefileSuccessAction extends ReduxAction {
   payload: Casefile;
 }
 
-export interface GetCasefilesRequestAction {
-  type: string;
+export interface GetCasefileSuccessAction extends ReduxAction {
+  payload: Casefile;
 }
-export interface GetCasefilesSuccessAction {
-  type: string;
+
+export interface SelectCasefileAction extends ReduxAction {
+  payload: Casefile;
+}
+
+export interface GetCasefilesSuccessAction extends ReduxAction {
   payload: Casefile[];
 }
-export interface GetCasefileFailureAction {
-  type: string;
-}
 
-export interface UpdateCasefileRequestAction {
-  type: string;
-}
-export interface UpdateCasefileSuccessAction {
-  type: string;
+export interface UpdateCasefileSuccessAction extends ReduxAction {
   payload: Casefile;
 }
-export interface UpdateCasefileFailureAction {
-  type: string;
-}
 
-export interface DeleteCasefileRequestAction {
-  type: string;
-}
-export interface DeleteCasefileSuccessAction {
-  type: string;
-}
-export interface DeleteCasefileFailureAction {
-  type: string;
-}
-
-export type CeateCasefileKnownAction =
-  | CreateCasefileRequestAction
-  | CreateCasefileSuccessAction
-  | CreateCasefileFailureAction;
-export type GetCasefileKnownAction =
-  | GetCasefileRequestAction
-  | GetCasefileSuccessAction
-  | GetCasefileFailureAction;
-export type GetCasefilesKnownAction =
-  | GetCasefilesRequestAction
-  | GetCasefilesSuccessAction
-  | GetCasefilesFailureAction;
+export type CeateCasefileKnownAction = ReduxAction | CreateCasefileSuccessAction;
+export type GetCasefileKnownAction = ReduxAction | GetCasefileSuccessAction;
+export type GetCasefilesKnownAction = ReduxAction | GetCasefilesSuccessAction;
 export type KnownAction =
   | CeateCasefileKnownAction
   | GetCasefilesKnownAction

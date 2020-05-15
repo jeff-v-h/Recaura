@@ -29,7 +29,6 @@ const reducer: Reducer<T.CasefileState> = (
       obj = action as T.GetCasefilesSuccessAction;
       return { ...state, isFetching: false, list: obj.payload };
     case C.GET_CASEFILE_FAILURE:
-      obj = action as T.GetCasefilesFailureAction;
       return { ...state, isFetching: false, list: [] };
 
     case C.SELECT_CASEFILE:
@@ -42,7 +41,6 @@ const reducer: Reducer<T.CasefileState> = (
       obj = action as T.GetCasefileSuccessAction;
       return { ...state, isFetching: false, ...obj.payload };
     case C.GET_CASEFILE_FAILURE:
-      obj = action as T.GetCasefileFailureAction;
       return { ...state, isFetching: false };
 
     default:
