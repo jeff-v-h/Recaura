@@ -8,7 +8,7 @@
     "start": "npm run build:dev",
     "build": "npm run build:prod",
     "build:dev": "node --max-old-space-size=8192 node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.ENVIRONMENT=development --config webpack.dev.js --host 0.0.0.0 --port 3000 --progress",
-    "build:prod": "rimraf ./dist/bundle/* && webpack -p --env.ENVIRONMENT=production --config webpack.prod.js --progress",
+    "build:prod": "webpack -p --env.ENVIRONMENT=production --config webpack.prod.js --progress",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
