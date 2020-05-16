@@ -5,7 +5,6 @@ import { compose } from 'redux';
 import * as consultationActions from '../../stores/consultations/consultationActions';
 import { ConsultationState } from '../../stores/consultations/consultationTypes';
 import { ApplicationState } from '../../stores';
-import style from './casefile.scss';
 import PatientInfo from '../common/PatientInfo';
 import Consultations from './Consultations';
 import CasefileInfo from '../common/CasefileInfo';
