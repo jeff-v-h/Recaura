@@ -57,7 +57,7 @@ module.exports = function (env) {
         ignoreOrder: true
       }),
       new Dotenv({
-        path: env.docker ? './.env.docker' : './.env.development',
+        path: env.docker ? './.env.docker.dev' : './.env.development',
         allowEmptyValues: true,
         safe: true
       })

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run start",
     "start": "webpack-dev-server --env.ENVIRONMENT=development --config webpack.dev.js --progress",
-    "docker": "node --max-old-space-size=8192 node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.ENVIRONMENT=development --env.docker --config webpack.dev.js --host 0.0.0.0 --progress",
+    "start:docker": "node --max-old-space-size=8192 node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.ENVIRONMENT=development --env.docker --config webpack.dev.js --host 0.0.0.0 --progress",
     "build": "webpack -p --env.ENVIRONMENT=production --config webpack.prod.js --progress",
     "build:docker": "webpack -p --env.ENVIRONMENT=production --env.docker --config webpack.prod.js --progress",
     "test": "jest",

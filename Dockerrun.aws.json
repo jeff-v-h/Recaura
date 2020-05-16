@@ -6,26 +6,14 @@
       "image": "jeffvh/recaura-client",
       "hostname": "client",
       "essential": false,
-      "memory": 128,
-      "portMappings": [
-        {
-          "hostPort": 3000,
-          "containerPort": 3000
-        }
-      ]
+      "memory": 128
     },
     {
       "name": "api",
       "image": "jeffvh/recaura-api",
       "hostname": "api",
       "essential": false,
-      "memory": 128,
-      "portMappings": [
-        {
-          "hostPort": 5000,
-          "containerPort": 5000
-        }
-      ]
+      "memory": 128
     },
     {
       "name": "nginx",
