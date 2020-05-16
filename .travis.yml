@@ -6,7 +6,7 @@ services:
 #   - docker build -t jeffvh/recaura-client-test -f ./client/Dockerfile.dev ./client
 
 script:
-#   - docker run -e CI=true jeffvh/recaura-client-test npm test -- --coverage
+  #   - docker run -e CI=true jeffvh/recaura-client-test npm test -- --coverage
   - echo "skipping tests"
 
 after_success:
@@ -25,7 +25,7 @@ deploy:
   provider: elasticbeanstalk
   region: ap-southeast-2
   app: recaura
-  env: Recaura-env-1
+  env: Recaura-env
   bucket_name: elasticbeanstalk-ap-southeast-2-788408921554
   bucket_path: recaura
   on:
