@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
+    "dev": "env NODE_ENV=development nodemon src/index.js",
+    "start": "env NODE_ENV=production node src/index.js",
     "test": "jest --runInBand --detectOpenHandles --watch"
   },
   "jest": {
