@@ -3,8 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import Dashboard from './components/dashboard/Dashboard';
 import Patient from './components/patient/Patient';
 import CasefilesPage from './components/casefiles/CasefilesPage';
-import CasefilePage from './components/casefile/CasefilePage';
 import ConsultationPage from './components/consultation/ConsultationPage';
+import CasefilePage from './components/file/CasefilePage';
 
 export default class Routes extends React.Component {
   render() {
