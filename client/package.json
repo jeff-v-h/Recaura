@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run start",
-    "start": "npm run build:dev",
-    "build": "npm run build:prod",
-    "build:dev": "node --max-old-space-size=8192 node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.ENVIRONMENT=development --config webpack.dev.js --host 0.0.0.0 --port 3000 --progress",
-    "build:prod": "rimraf ./dist/bundle/* && webpack -p --env.ENVIRONMENT=production --config webpack.prod.js --progress",
+    "start": "webpack-dev-server --env.ENVIRONMENT=development --config webpack.dev.js --progress",
+    "docker": "node --max-old-space-size=8192 node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.ENVIRONMENT=development --env.docker --config webpack.dev.js --host 0.0.0.0 --progress",
+    "build": "webpack -p --env.ENVIRONMENT=production --config webpack.prod.js --progress",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
@@ -60,7 +59,7 @@
     "jest": "^25.4.0",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-mock-store": "^1.5.4",
