@@ -2,7 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const Consultation = require('../models/consultation.model');
 
-router.post('/api/consultations', async (req, res) => {
+router.post('/consultations', async (req, res) => {
   const consultation = new Consultation(req.body);
 
   try {
@@ -19,7 +19,7 @@ router.post('/api/consultations', async (req, res) => {
 // GET /consultations?number=1
 // GET /consultations?limit=10&skip=10
 // GET /consultations?sortBy=createdAt:desc
-router.get('/api/consultations', async (req, res) => {
+router.get('/consultations', async (req, res) => {
   const match = {};
   const sort = {};
 
@@ -48,7 +48,7 @@ router.get('/api/consultations', async (req, res) => {
   }
 });
 
-router.get('/api/consultations/:id', async (req, res) => {
+router.get('/consultations/:id', async (req, res) => {
   try {
     const consultation = await Consultation.findOne({ _id: req.params.id }).populate(
       'practitioner',
@@ -66,7 +66,7 @@ router.get('/api/consultations/:id', async (req, res) => {
   }
 });
 
-router.patch('/api/consultations/:id', async (req, res) => {
+router.patch('/consultations/:id', async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'patientId',
@@ -82,9 +82,7 @@ router.patch('/api/consultations/:id', async (req, res) => {
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
-    return res
-      .status(404)
-      .send({ error: 'At least one property in object is invalid for updating!' });
+    return res.status(404).send({ error: 'At least one property in object is invalid for updating!' });
   }
 
   try {
@@ -102,7 +100,7 @@ router.patch('/api/consultations/:id', async (req, res) => {
   }
 });
 
-router.delete('/api/consultations/:id', async (req, res) => {
+router.delete('/consultations/:id', async (req, res) => {
   try {
     const consultation = await Consultation.findOneAndDelete({ _id: req.params.id });
     if (!consultation) {

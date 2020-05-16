@@ -1,9 +1,8 @@
 const express = require('express');
 const router = new express.Router();
 const Casefile = require('../models/casefile.model');
-const mongoose = require('mongoose');
 
-router.post('/api/casefiles', async (req, res) => {
+router.post('/casefiles', async (req, res) => {
   const casefile = new Casefile(req.body);
 
   try {
@@ -17,7 +16,7 @@ router.post('/api/casefiles', async (req, res) => {
 // GET /casefiles?patientId=123124
 // GET /casefiles?limit=10&skip=10
 // GET /casefiles?sortBy=createdAt:desc
-router.get('/api/casefiles', async (req, res) => {
+router.get('/casefiles', async (req, res) => {
   const match = {};
   const sort = {};
 
@@ -44,7 +43,7 @@ router.get('/api/casefiles', async (req, res) => {
 
 // GET /casefiles/111?patientInfo=true
 // GET /casefiles/111?consultations=true
-router.get('/api/casefiles/:id', async (req, res) => {
+router.get('/casefiles/:id', async (req, res) => {
   try {
     const casefile = await Casefile.findOne({ _id: req.params.id });
 
@@ -66,15 +65,13 @@ router.get('/api/casefiles/:id', async (req, res) => {
   }
 });
 
-router.patch('/api/casefiles/:id', async (req, res) => {
+router.patch('/casefiles/:id', async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ['patientId', 'name'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
-    return res
-      .status(404)
-      .send({ error: 'At least one property in object is invalid for updating!' });
+    return res.status(404).send({ error: 'At least one property in object is invalid for updating!' });
   }
 
   try {
@@ -92,7 +89,7 @@ router.patch('/api/casefiles/:id', async (req, res) => {
   }
 });
 
-router.delete('/api/casefiles/:id', async (req, res) => {
+router.delete('/casefiles/:id', async (req, res) => {
   try {
     const casefile = await Casefile.findOne({ _id: req.params.id });
     if (!casefile) {

@@ -2,7 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const Practitioner = require('../models/practitioner.model');
 
-router.post('/api/practitioners', async (req, res) => {
+router.post('/practitioners', async (req, res) => {
   const practitioner = new Practitioner(req.body);
 
   try {
@@ -16,7 +16,7 @@ router.post('/api/practitioners', async (req, res) => {
 // GET /practitioners?gender=male
 // GET /practitioners?limit=10&skip=10
 // GET /practitioners?sortBy=createdAt:desc
-router.get('/api/practitioners', async (req, res) => {
+router.get('/practitioners', async (req, res) => {
   const match = {};
   const sort = {};
 
@@ -41,7 +41,7 @@ router.get('/api/practitioners', async (req, res) => {
   }
 });
 
-router.get('/api/practitioners/:id', async (req, res) => {
+router.get('/practitioners/:id', async (req, res) => {
   try {
     const practitioner = await Practitioner.findOne({ _id: req.params.id });
     // .populate('consultations')
@@ -56,7 +56,7 @@ router.get('/api/practitioners/:id', async (req, res) => {
   }
 });
 
-router.patch('/api/practitioners/:id', async (req, res) => {
+router.patch('/practitioners/:id', async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'honorific',
@@ -74,9 +74,7 @@ router.patch('/api/practitioners/:id', async (req, res) => {
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
-    return res
-      .status(404)
-      .send({ error: 'At least one property in object is invalid for updating!' });
+    return res.status(404).send({ error: 'At least one property in object is invalid for updating!' });
   }
 
   try {
@@ -94,7 +92,7 @@ router.patch('/api/practitioners/:id', async (req, res) => {
   }
 });
 
-router.delete('/api/practitioners/:id', async (req, res) => {
+router.delete('/practitioners/:id', async (req, res) => {
   try {
     const practitioner = await Practitioner.findOneAndDelete({ _id: req.params.id });
     if (!practitioner) {
