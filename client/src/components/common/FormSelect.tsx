@@ -1,6 +1,6 @@
-import * as React from "react";
-import style from "./formTextArea.scss";
-import { Select, Form } from "antd";
+import * as React from 'react';
+import style from './formTextArea.scss';
+import { Select, Form } from 'antd';
 
 const { Option } = Select;
 type Props = {
@@ -11,17 +11,10 @@ type Props = {
 };
 
 export default ({ label, name, options, required = false }: Props) => {
-  const rules = required
-    ? { required: true, message: `${label} required!` }
-    : { required: false };
+  const rules = required ? { required: true, message: `${label} required!` } : { required: false };
 
   return (
-    <Form.Item
-      label={label}
-      name={name}
-      rules={[rules]}
-      className={style.textSection}
-    >
+    <Form.Item label={label} name={name} rules={[rules]} className={style.textSection}>
       <Select
         showSearch
         style={{ width: 200 }}

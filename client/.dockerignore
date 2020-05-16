@@ -9,3 +9,4 @@ node_modules
 .dockerignore
 .vscode
 LICENSE
+.env.example

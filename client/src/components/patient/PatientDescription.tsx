@@ -1,11 +1,11 @@
-import * as React from "react";
-import { Descriptions } from "antd";
-import { IGetPatientVm } from "src/api/generated";
+import * as React from 'react';
+import { Descriptions } from 'antd';
+import { Patient } from 'src/models/patientModels';
 
 const Item = Descriptions.Item;
 
 interface Props {
-  patient: IGetPatientVm;
+  patient: Patient;
 }
 
 const PatientDescription = ({ patient }: Props) => (
