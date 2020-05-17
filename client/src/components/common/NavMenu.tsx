@@ -7,26 +7,33 @@ import style from './navMenu.scss';
 const Item = Menu.Item;
 
 export default class NavMenu extends React.PureComponent<{}, { current: string }> {
-  public state = {
-    current: 'home'
+  state = {
+    current: 'patients'
   };
 
-  public render() {
+  handleClick = (e: ClickParam) => this.setState({ current: e.key });
+
+  render() {
     return (
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Item key="home">
-          <Link to="/">Recaura</Link>
-        </Item>
-        <Item key="patients">
-          <Link to="/patients">Patients</Link>
-        </Item>
-      </Menu>
+      <div className={style.navbar}>
+        <div className={style.innerNavbar}>
+          <div className={style.appName}>
+            <Link to="/" className={style.appLink}>
+              Recaura
+            </Link>
+          </div>
+          <Menu
+            onClick={this.handleClick}
+            selectedKeys={[this.state.current]}
+            mode="horizontal"
+            style={{ maxWidth: 1280, margin: '0 auto', borderBottom: 'none', flexGrow: 1 }}
+          >
+            <Item key="patients">
+              <Link to="/patients">Patients</Link>
+            </Item>
+          </Menu>
+        </div>
+      </div>
     );
   }
-
-  private handleClick = (e: ClickParam) => {
-    this.setState({
-      current: e.key
-    });
-  };
 }
