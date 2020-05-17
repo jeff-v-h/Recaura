@@ -10,7 +10,7 @@ const { apiUrl } = keys;
 class ConsultationService implements IConsultationService {
   getConsultations = async (casefileId: string): Promise<Consultation[]> => {
     try {
-      const url = `${apiUrl}/api/consultations?casefileId=${casefileId}`;
+      const url = `${apiUrl}/consultations?casefileId=${casefileId}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<Consultation[]>;
       return resp.data;
     } catch (e) {
@@ -21,7 +21,7 @@ class ConsultationService implements IConsultationService {
 
   getConsultation = async (id: string): Promise<Consultation> => {
     try {
-      const url = `${apiUrl}/api/consultations/${id}`;
+      const url = `${apiUrl}/consultations/${id}`;
       const resp = (await apiHelper.get(url)) as AxiosResponse<Consultation>;
       return resp.data;
     } catch (e) {
@@ -32,7 +32,7 @@ class ConsultationService implements IConsultationService {
 
   updateConsultation = async (id: string, consult: Consultation): Promise<Consultation> => {
     try {
-      const url = `${apiUrl}/api/consultations/${id}`;
+      const url = `${apiUrl}/consultations/${id}`;
       const resp = (await apiHelper.patch(url, consult)) as AxiosResponse<Consultation>;
       message.success('Consultation saved');
       return resp.data;
