@@ -5,12 +5,13 @@ import Patient from './components/patient/Patient';
 import CasefilesPage from './components/casefiles/CasefilesPage';
 import ConsultationPage from './components/consultation/ConsultationPage';
 import CasefilePage from './components/file/CasefilePage';
+import PatientsPage from './components/patients/PatientsPage';
 
 export default class Routes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/" component={PatientsPage} />
         <Route
           path="/patients/:patientId/casefiles/:casefileId/consultations/:consultId"
           component={ConsultationPage}
@@ -18,7 +19,7 @@ export default class Routes extends React.Component {
         <Route path="/patients/:patientId/casefiles/:casefileId" component={CasefilePage} />
         <Route path="/patients/:patientId/casefiles" component={CasefilesPage} />
         <Route path="/patients/:patientId" component={Patient} />
-        <Route path="/patients" component={Dashboard} />
+        <Route path="/patients" component={PatientsPage} />
       </Switch>
     );
   }
