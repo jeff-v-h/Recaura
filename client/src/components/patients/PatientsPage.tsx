@@ -34,7 +34,7 @@ class PatientsPage extends React.Component<Props> {
       <>
         <div className={style.newButton}>
           <Button type="primary">
-            <Link to="/patient/new">New Patient</Link>
+            <Link to="/patients/new">New Patient</Link>
           </Button>
         </div>
         <PatientsTable onRowClick={this.onRow} patients={list} />

@@ -9,7 +9,7 @@ import PatientDescription from './PatientDescription';
 
 type Props = PatientState & typeof patientActions & RouteComponentProps<{ patientId: string }>;
 
-class Patient extends React.Component<Props> {
+class PatientPage extends React.Component<Props> {
   componentDidMount() {
     this.ensureDataFetched();
   }
@@ -41,4 +41,4 @@ const mapStateToProps = (state: ApplicationState) => state.patient;
 export default compose<React.ComponentType>(
   withRouter,
   connect(mapStateToProps, patientActions)
-)(Patient);
+)(PatientPage);
