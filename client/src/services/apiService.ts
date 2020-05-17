@@ -1,6 +1,4 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
-import { Api, OmitId, QueryStringValues } from './api';
-// import { makeQueryString, makeKeyValuePairs } from 'App/utils/queryStringHelper';
 
 export class ApiService {
   static AxiosConfig: AxiosRequestConfig = {
@@ -13,13 +11,7 @@ export class ApiService {
   };
 
   get(url: string, showDefaultErrorMsg: boolean = true): Promise<AxiosResponse | AxiosError> {
-    return axios.get(url, ApiService.AxiosConfig).catch((e: AxiosError) => {
-      if (showDefaultErrorMsg) {
-        const msg = defaultErrorMessage(e);
-        return Promise.reject(msg);
-      }
-      return Promise.reject(e);
-    });
+    return axios.get(url, ApiService.AxiosConfig).catch(handleError(showDefaultErrorMsg));
   }
 
   post(
@@ -27,13 +19,7 @@ export class ApiService {
     payload: any,
     showDefaultErrorMsg: boolean = true
   ): Promise<AxiosResponse | AxiosError> {
-    return axios.post(url, payload, ApiService.AxiosConfig).catch((e: AxiosError) => {
-      if (showDefaultErrorMsg) {
-        const msg = defaultErrorMessage(e);
-        return Promise.reject(msg);
-      }
-      return Promise.reject(e);
-    });
+    return axios.post(url, payload, ApiService.AxiosConfig).catch(handleError(showDefaultErrorMsg));
   }
 
   patch(
@@ -41,25 +27,23 @@ export class ApiService {
     payload: any,
     showDefaultErrorMsg: boolean = true
   ): Promise<AxiosResponse | AxiosError> {
-    return axios.patch(url, payload, ApiService.AxiosConfig).catch((e: AxiosError) => {
-      if (showDefaultErrorMsg) {
-        const msg = defaultErrorMessage(e);
-        return Promise.reject(msg);
-      }
-      return Promise.reject(e);
-    });
+    return axios
+      .patch(url, payload, ApiService.AxiosConfig)
+      .catch(handleError(showDefaultErrorMsg));
   }
 
   delete(url: string, showDefaultErrorMsg: boolean = true): Promise<AxiosResponse | AxiosError> {
-    return axios.delete(url, ApiService.AxiosConfig).catch((e: AxiosError) => {
-      if (showDefaultErrorMsg) {
-        const msg = defaultErrorMessage(e);
-        return Promise.reject(msg);
-      }
-      return Promise.reject(e);
-    });
+    return axios.delete(url, ApiService.AxiosConfig).catch(handleError(showDefaultErrorMsg));
   }
 }
+
+const handleError = (showDefaultErrorMsg: boolean) => (e: AxiosError) => {
+  if (showDefaultErrorMsg) {
+    const msg = defaultErrorMessage(e);
+    return Promise.reject(msg);
+  }
+  return Promise.reject(e);
+};
 
 export const defaultErrorMessage = (error: AxiosError): string => {
   let errorMsg = 'Server error';
