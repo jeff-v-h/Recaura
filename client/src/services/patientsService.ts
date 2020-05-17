@@ -1,4 +1,4 @@
-import * as apiHelper from '../helpers/apiHelper';
+import { ApiService } from './apiService';
 import { AxiosResponse } from 'axios';
 import { Patient } from 'src/models/patientModels';
 import { message } from 'antd';
@@ -6,11 +6,11 @@ import { keys } from '../helpers/keys';
 
 const { apiUrl } = keys;
 
-class PatientsService {
+class PatientsService extends ApiService {
   getPatients = async (): Promise<Patient[]> => {
     try {
       const url = `${apiUrl}/patients`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<Patient[]>;
+      const resp = (await this.get(url)) as AxiosResponse<Patient[]>;
       return resp.data;
     } catch (e) {
       message.error(e);
@@ -21,7 +21,7 @@ class PatientsService {
   getPatient = async (id: string): Promise<Patient> => {
     try {
       const url = `${apiUrl}/patients/${id}`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<Patient>;
+      const resp = (await this.get(url)) as AxiosResponse<Patient>;
       return resp.data;
     } catch (e) {
       message.error(e);
