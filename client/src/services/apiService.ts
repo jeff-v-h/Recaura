@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
+import { message } from 'antd';
 
 export class ApiService {
   static AxiosConfig: AxiosRequestConfig = {
@@ -35,6 +36,11 @@ export class ApiService {
   delete(url: string, showDefaultErrorMsg: boolean = true): Promise<AxiosResponse | AxiosError> {
     return axios.delete(url, ApiService.AxiosConfig).catch(handleError(showDefaultErrorMsg));
   }
+
+  handleRequestError = (e: string) => {
+    message.error(e);
+    return Promise.reject(e);
+  };
 }
 
 const handleError = (showDefaultErrorMsg: boolean) => (e: AxiosError) => {

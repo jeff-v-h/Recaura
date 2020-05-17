@@ -13,8 +13,7 @@ class CasefileService extends ApiService {
       const resp = (await this.get(url)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
+      return this.handleRequestError(e);
     }
   };
 
@@ -24,8 +23,7 @@ class CasefileService extends ApiService {
       const resp = (await this.get(url)) as AxiosResponse<Casefile[]>;
       return resp.data;
     } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
+      return this.handleRequestError(e);
     }
   };
 }

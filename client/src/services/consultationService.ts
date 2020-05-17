@@ -7,14 +7,23 @@ import { keys } from '../helpers/keys';
 const { apiUrl } = keys;
 
 class ConsultationService extends ApiService {
+  async createConsultation(consult: Omit<Consultation, 'id'>): Promise<Consultation> {
+    try {
+      const url = `${apiUrl}/consultations`;
+      const resp = (await this.post(url, consult)) as AxiosResponse<Consultation>;
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
+    }
+  }
+
   async getConsultations(casefileId: string): Promise<Consultation[]> {
     try {
       const url = `${apiUrl}/consultations?casefileId=${casefileId}`;
       const resp = (await this.get(url)) as AxiosResponse<Consultation[]>;
       return resp.data;
     } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
+      return this.handleRequestError(e);
     }
   }
 
@@ -24,8 +33,7 @@ class ConsultationService extends ApiService {
       const resp = (await this.get(url)) as AxiosResponse<Consultation>;
       return resp.data;
     } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
+      return this.handleRequestError(e);
     }
   }
 
@@ -33,11 +41,21 @@ class ConsultationService extends ApiService {
     try {
       const url = `${apiUrl}/consultations/${id}`;
       const resp = (await this.patch(url, consult)) as AxiosResponse<Consultation>;
-      message.success('Consultation saved');
+      message.success('Consultation updated');
       return resp.data;
     } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
+      return this.handleRequestError(e);
+    }
+  }
+
+  async deleteConsultation(id: string): Promise<Consultation> {
+    try {
+      const url = `${apiUrl}/consultations/${id}`;
+      const resp = (await this.delete(url)) as AxiosResponse<Consultation>;
+      message.success('Consultation deleted');
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
     }
   }
 }
