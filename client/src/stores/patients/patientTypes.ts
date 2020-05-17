@@ -22,6 +22,10 @@ export const C = {
 
 //--------------------
 //#region ACTIONS
+export interface CreatePatientSuccessAction extends ReduxAction {
+  payload: Patient;
+}
+
 export interface GetPatientsSuccessAction extends ReduxAction {
   payload: Patient[];
 }
@@ -37,9 +41,14 @@ export interface GetPatientSuccessAction extends ReduxAction {
 //--------------------
 
 // ACTION TYPE
+export type CreatePatientKnownAction = ReduxAction | CreatePatientSuccessAction;
 export type GetPatientsKnownAction = ReduxAction | GetPatientsSuccessAction;
 export type GetPatientKnownAction = ReduxAction | GetPatientSuccessAction;
-export type KnownAction = GetPatientsKnownAction | SelectPatientAction | GetPatientKnownAction;
+export type KnownAction =
+  | CreatePatientKnownAction
+  | GetPatientsKnownAction
+  | SelectPatientAction
+  | GetPatientKnownAction;
 
 export interface PatientState extends Patient {
   isFetching: boolean;

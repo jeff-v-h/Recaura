@@ -5,6 +5,21 @@ import { Patient } from '../../models/patientModels';
 
 const { C } = T;
 
+export const createPatient = (
+  patient: Omit<Patient, 'id'>
+): AppThunkAction<T.CreatePatientKnownAction> => async (dispatch) => {
+  dispatch({ type: C.CREATE_PATIENT_REQUEST });
+
+  try {
+    dispatch({
+      type: C.CREATE_PATIENT_SUCCESS,
+      payload: await patientsService.createPatient(patient)
+    });
+  } catch (e) {
+    dispatch({ type: C.GET_PATIENTS_FAILURE });
+  }
+};
+
 export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async (
   dispatch,
   getState

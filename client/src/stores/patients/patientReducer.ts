@@ -32,6 +32,14 @@ const reducer: Reducer<T.PatientState> = (
   const action = incomingAction;
   let obj;
   switch (action.type) {
+    case C.CREATE_PATIENT_REQUEST:
+      return { ...state, isFetching: true };
+    case C.CREATE_PATIENT_SUCCESS:
+      obj = action as T.CreatePatientSuccessAction;
+      return { ...state, isFetching: false, ...obj.payload };
+    case C.CREATE_PATIENT_FAILURE:
+      return { ...state, isFetching: false };
+
     case C.GET_PATIENTS_REQUEST:
       return { ...state, isFetching: true, list: [] };
     case C.GET_PATIENTS_SUCCESS:

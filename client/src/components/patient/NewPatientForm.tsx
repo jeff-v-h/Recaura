@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 
+interface Props {
+  // submitForm: (data) => void
+}
+
 type Inputs = {
   honorific: string;
   firstName: string;
@@ -9,9 +13,9 @@ type Inputs = {
 
 const requiredMsg = 'This field is required';
 
-const NewPatientForm = () => {
+const NewPatientForm = ({}: Props) => {
   const { register, handleSubmit, watch, errors } = useForm<Inputs>();
-  const onSubmit = (data: Inputs) => console.log(data);
+  const onSubmit = (data: Inputs) => console.log('form data', data);
 
   console.log(watch('firstName'));
 
