@@ -1,46 +1,45 @@
-import * as apiHelper from '../helpers/apiHelper';
 import { AxiosResponse } from 'axios';
 import { Consultation } from '../models/consultationModels';
 import { message } from 'antd';
-import { IConsultationService } from './apiService';
+import { ApiService } from './apiService';
 import { keys } from '../helpers/keys';
 
 const { apiUrl } = keys;
 
-class ConsultationService implements IConsultationService {
-  getConsultations = async (casefileId: string): Promise<Consultation[]> => {
+class ConsultationService extends ApiService {
+  async getConsultations(casefileId: string): Promise<Consultation[]> {
     try {
       const url = `${apiUrl}/consultations?casefileId=${casefileId}`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<Consultation[]>;
+      const resp = (await this.get(url)) as AxiosResponse<Consultation[]>;
       return resp.data;
     } catch (e) {
       message.error(e);
       return Promise.reject(e);
     }
-  };
+  }
 
-  getConsultation = async (id: string): Promise<Consultation> => {
+  async getConsultation(id: string): Promise<Consultation> {
     try {
       const url = `${apiUrl}/consultations/${id}`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<Consultation>;
+      const resp = (await this.get(url)) as AxiosResponse<Consultation>;
       return resp.data;
     } catch (e) {
       message.error(e);
       return Promise.reject(e);
     }
-  };
+  }
 
-  updateConsultation = async (id: string, consult: Consultation): Promise<Consultation> => {
+  async updateConsultation(id: string, consult: Consultation): Promise<Consultation> {
     try {
       const url = `${apiUrl}/consultations/${id}`;
-      const resp = (await apiHelper.patch(url, consult)) as AxiosResponse<Consultation>;
+      const resp = (await this.patch(url, consult)) as AxiosResponse<Consultation>;
       message.success('Consultation saved');
       return resp.data;
     } catch (e) {
       message.error(e);
       return Promise.reject(e);
     }
-  };
+  }
 }
 
 const consultationService = new ConsultationService();
