@@ -8,7 +8,7 @@ import 'antd/dist/antd.less';
 import App from './App';
 import './main.css';
 
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 const store = configureStore(history);
 
 ReactDOM.render(

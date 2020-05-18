@@ -1,5 +1,5 @@
 import { Patient } from '../../models/patientModels';
-import { ReduxAction, ErrorAction, RedirectAction, RequestState } from '../common/types';
+import { ReduxAction, ErrorAction, RequestState } from '../common/types';
 
 export const C = {
   GET_PATIENTS_REQUEST: 'GET_PATIENTS_REQUEST',
@@ -49,8 +49,7 @@ export type KnownAction =
   | CreatePatientKnownAction
   | GetPatientsKnownAction
   | SelectPatientAction
-  | GetPatientKnownAction
-  | RedirectAction;
+  | GetPatientKnownAction;
 
 export interface PatientState extends Patient, RequestState {
   list: Patient[];

@@ -2,7 +2,7 @@ import { AppThunkAction } from '../index';
 import * as T from './patientTypes';
 import patientsService from '../../services/patientsService';
 import { Patient, PatientBase } from '../../models/patientModels';
-import { redirect } from '../common/actions';
+import { history } from '../../index';
 
 const { C } = T;
 
@@ -15,9 +15,8 @@ export const createPatient = (
     dispatch({
       type: C.CREATE_PATIENT_SUCCESS,
       payload: await patientsService.createPatient(patient)
-      // payload: { ...patient, id: 'test' }
     });
-    dispatch(redirect('/'));
+    history.push('/');
   } catch (error) {
     dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });
   }

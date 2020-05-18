@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import * as T from './patientTypes';
 import { Honorific, Gender } from '../../models/enums';
-import { ErrorAction, REDIRECT, RedirectAction } from '../common/types';
+import { ErrorAction } from '../common/types';
 
 const { C } = T;
 
@@ -19,8 +19,7 @@ const unloadedState: T.PatientState = {
   mobilePhone: '',
   gender: Gender.preferNotToSay,
   occupation: '',
-  error: '',
-  redirectTo: ''
+  error: ''
 };
 
 const reducer: Reducer<T.PatientState> = (
@@ -64,9 +63,6 @@ const reducer: Reducer<T.PatientState> = (
     case C.SELECT_PATIENT:
       obj = action as T.SelectPatientAction;
       return { ...state, ...obj.payload };
-    case REDIRECT:
-      obj = action as RedirectAction;
-      return { ...state, redirectTo: obj.payload };
 
     default:
       return state;
