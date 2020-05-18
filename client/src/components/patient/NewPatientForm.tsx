@@ -4,6 +4,7 @@ import { PatientBase } from '../../models/patientModels';
 import { Button, Select } from 'antd';
 import { Gender, Honorific } from '../../models/enums';
 import HookFormInput from '../common/HookFormInput';
+import style from '../common/hookForm.scss';
 
 const { Option } = Select;
 const requiredMsg = 'This field is required';
@@ -26,7 +27,7 @@ function NewPatientForm({ onSubmit }: Props) {
   useEffect(() => register({ name: 'occupation' }), []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={style.hookForm}>
       <Controller
         as={
           <Select>
@@ -46,28 +47,28 @@ function NewPatientForm({ onSubmit }: Props) {
         name="firstName"
         setValue={setValue}
         error={errors.firstName}
-        errorMsg={requiredMsg}
+        errorMsg={'First name is required'}
       />
       <HookFormInput
         label="Last Name"
         name="lastName"
         setValue={setValue}
         error={errors.lastName}
-        errorMsg={requiredMsg}
+        errorMsg={'Last name is required'}
       />
       <HookFormInput
         label="DOB"
         name="dob"
         setValue={setValue}
         error={errors.dob}
-        errorMsg={requiredMsg}
+        errorMsg={'Date of birth required'}
       />
       <HookFormInput
         label="Email"
         name="email"
         setValue={setValue}
         error={errors.email}
-        errorMsg={requiredMsg}
+        errorMsg={'Email required'}
       />
       <Controller
         as={
@@ -84,14 +85,14 @@ function NewPatientForm({ onSubmit }: Props) {
         name="homePhone"
         setValue={setValue}
         error={errors.homePhone}
-        errorMsg={requiredMsg}
+        errorMsg={''}
       />
       <HookFormInput
         label="Mobile Phone"
         name="mobilePhone"
         setValue={setValue}
         error={errors.mobilePhone}
-        errorMsg={requiredMsg}
+        errorMsg={'Mobile phone required'}
       />
       <Controller
         as={

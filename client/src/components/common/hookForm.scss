@@ -1,0 +1,32 @@
+$label-width: 120rem;
+$label-side-pad: 10rem;
+
+.hookForm {
+  max-width: 800rem;
+  margin: 0 auto;
+}
+
+.hookInputContainer {
+  display: flex;
+}
+
+.hookLabel {
+  width: $label-width;
+  cursor: pointer;
+  text-align: end;
+  align-self: center;
+  padding: 0 $label-side-pad;
+}
+
+.hookInputMain {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  font-size: small;
+  min-height: 20rem;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input } from 'antd';
+import style from './hookForm.scss';
 
 interface Props {
   label: string;
@@ -11,12 +12,14 @@ interface Props {
 
 function HookFormInput({ label, name, setValue, error, errorMsg }: Props) {
   return (
-    <div>
-      <label>
+    <div className={style.hookInputContainer}>
+      <label className={style.hookLabel} htmlFor={name}>
         {label}:
-        <Input name={name} onChange={(e) => setValue(name, e.target.value)} />
       </label>
-      {error && <span>{errorMsg}</span>}
+      <div className={style.hookInputMain}>
+        <Input id={name} name={name} onChange={(e) => setValue(name, e.target.value)} />
+        <span className={style.error}>{error && errorMsg}</span>
+      </div>
     </div>
   );
 }
