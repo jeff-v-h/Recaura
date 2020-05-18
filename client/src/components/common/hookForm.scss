@@ -1,5 +1,6 @@
 $label-width: 120rem;
 $label-side-pad: 10rem;
+$error-height: 20rem;
 
 .hookForm {
   max-width: 800rem;
@@ -10,12 +11,22 @@ $label-side-pad: 10rem;
   display: flex;
 }
 
+.hookSelectContainer {
+  display: flex;
+  margin-bottom: $error-height;
+}
+
 .hookLabel {
   width: $label-width;
   cursor: pointer;
   text-align: end;
   align-self: center;
   padding: 0 $label-side-pad;
+}
+
+.hookInputLabel {
+  @extend .hookLabel;
+  margin-bottom: $error-height;
 }
 
 .hookInputMain {

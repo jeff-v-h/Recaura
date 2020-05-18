@@ -10,10 +10,10 @@ interface Props {
   errorMsg: string;
 }
 
-function HookFormInput({ label, name, setValue, error, errorMsg }: Props) {
+function HookFormInput({ label, name, setValue, error, errorMsg = '' }: Props) {
   return (
     <div className={style.hookInputContainer}>
-      <label className={style.hookLabel} htmlFor={name}>
+      <label className={style.hookInputLabel} htmlFor={name}>
         {label}:
       </label>
       <div className={style.hookInputMain}>

@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { PatientBase } from '../../models/patientModels';
 import { Button, Select } from 'antd';
-import { Gender, Honorific } from '../../models/enums';
 import HookFormInput from '../common/HookFormInput';
 import style from '../common/hookForm.scss';
-
-const { Option } = Select;
-const requiredMsg = 'This field is required';
+import HookHonorificSelect from '../common/HookHonorificSelect';
+import HookGenderSelect from '../common/HookGenderSelect';
+import HookCountryCodeSelect from '../common/HookCountryCodeSelect';
 
 interface Props {
   onSubmit: (data: PatientBase) => void;
@@ -28,20 +27,7 @@ function NewPatientForm({ onSubmit }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.hookForm}>
-      <Controller
-        as={
-          <Select>
-            {Object.values(Honorific).map((title) => (
-              <Option key={title} value={title}>
-                {title}
-              </Option>
-            ))}
-          </Select>
-        }
-        control={control}
-        name="honorific"
-        defaultValue="Mr"
-      />
+      <HookHonorificSelect control={control} />
       <HookFormInput
         label="First Name"
         name="firstName"
@@ -70,16 +56,7 @@ function NewPatientForm({ onSubmit }: Props) {
         error={errors.email}
         errorMsg={'Email required'}
       />
-      <Controller
-        as={
-          <Select>
-            <Option value="AU">Australia (+61)</Option>
-          </Select>
-        }
-        control={control}
-        name="countryCode"
-        defaultValue="AU"
-      />
+      <HookCountryCodeSelect control={control} />
       <HookFormInput
         label="Home Phone"
         name="homePhone"
@@ -94,26 +71,13 @@ function NewPatientForm({ onSubmit }: Props) {
         error={errors.mobilePhone}
         errorMsg={'Mobile phone required'}
       />
-      <Controller
-        as={
-          <Select>
-            {Object.values(Gender).map((gender) => (
-              <Option key={gender} value={gender}>
-                {gender}
-              </Option>
-            ))}
-          </Select>
-        }
-        control={control}
-        name="gender"
-        defaultValue="male"
-      />
+      <HookGenderSelect control={control} />
       <HookFormInput
         label="Occupation"
         name="occupation"
         setValue={setValue}
         error={errors.occupation}
-        errorMsg={requiredMsg}
+        errorMsg={''}
       />
       <div>
         <Button type="primary" htmlType="submit">
