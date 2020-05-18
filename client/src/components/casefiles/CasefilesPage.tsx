@@ -1,15 +1,17 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import * as casefileActions from '../../stores/casefiles/casefileActions';
-import { CasefileState } from '../../stores/casefiles/casefileTypes';
 import { ApplicationState } from '../../stores';
 import moment from 'moment';
 import PatientInfo from '../common/PatientInfo';
 import Casefiles from './Casefiles';
 
-type Props = CasefileState & typeof casefileActions & RouteComponentProps<{ patientId: string }>;
+const mapStateToProps = (state: ApplicationState) => state.casefile;
+const connector = connect(mapStateToProps, casefileActions);
+
+type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ patientId: string }>;
 
 class CasefilesPage extends React.Component<Props> {
   componentDidMount() {
@@ -36,9 +38,4 @@ class CasefilesPage extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => state.casefile;
-
-export default compose<React.ComponentType>(
-  withRouter,
-  connect(mapStateToProps, casefileActions)
-)(CasefilesPage);
+export default compose<React.ComponentType>(withRouter, connector)(CasefilesPage);

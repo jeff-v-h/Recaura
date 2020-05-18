@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Table } from 'antd';
 import { Patient } from 'src/models/patientModels';
 import { RowData } from './patientRowData';

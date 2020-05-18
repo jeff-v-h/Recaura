@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { PatientBase } from '../../models/patientModels';
 import { Button } from 'antd';

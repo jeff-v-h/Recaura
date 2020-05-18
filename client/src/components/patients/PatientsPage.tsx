@@ -1,16 +1,18 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { Button } from 'antd';
 import * as patientActions from '../../stores/patients/patientActions';
-import { PatientState } from '../../stores/patients/patientTypes';
 import { ApplicationState } from '../../stores';
 import PatientsTable from './PatientsTable';
 import { RowData } from './patientRowData';
 import style from './patients.scss';
 
-type Props = PatientState & typeof patientActions & RouteComponentProps<{}>;
+const mapStateToProps = (state: ApplicationState) => state.patient;
+const connector = connect(mapStateToProps, patientActions);
+
+type Props = ConnectedProps<typeof connector> & RouteComponentProps<{}>;
 
 class PatientsPage extends React.Component<Props> {
   componentDidMount() {
@@ -43,7 +45,4 @@ class PatientsPage extends React.Component<Props> {
   }
 }
 
-export default compose<React.ComponentType>(
-  withRouter,
-  connect((state: ApplicationState) => state.patient, patientActions)
-)(PatientsPage);
+export default compose<React.ComponentType>(withRouter, connector)(PatientsPage);
