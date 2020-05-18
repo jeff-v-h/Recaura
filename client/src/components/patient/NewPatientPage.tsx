@@ -20,7 +20,7 @@ class NewPatientPage extends React.Component<Props> {
     //     return message.error("Passwords do not match");
     // }
 
-    createPatient(values);
+    // createPatient(values);
   };
 
   render() {

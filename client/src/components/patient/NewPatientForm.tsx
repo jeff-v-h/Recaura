@@ -1,65 +1,119 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { PatientBase } from '../../models/patientModels';
-import { Button } from 'antd';
+import { Button, Select } from 'antd';
 import { Gender, Honorific } from '../../models/enums';
+import HookFormInput from '../common/HookFormInput';
+
+const { Option } = Select;
+const requiredMsg = 'This field is required';
 
 interface Props {
   onSubmit: (data: PatientBase) => void;
 }
 
-type Inputs = {
-  honorific: string;
-  firstName: string;
-  lastName: string;
-  dob: string;
-  email: string;
-  countryCode: string;
-  homePhone?: string;
-  mobilePhone: string;
-  gender: string;
-  occupation?: string;
-};
-
-const requiredMsg = 'This field is required';
-
 function NewPatientForm({ onSubmit }: Props) {
-  const { register, handleSubmit, watch, errors } = useForm<PatientBase>();
-  // const onSubmit = (data: PatientBase) => console.log('form data', data);
+  const { register, handleSubmit, watch, errors, setValue, control } = useForm<PatientBase>();
 
   console.log('firstName', watch('firstName'));
 
+  useEffect(() => register({ name: 'firstName' }, { required: true }), []);
+  useEffect(() => register({ name: 'lastName' }, { required: true }), []);
+  useEffect(() => register({ name: 'dob' }, { required: true }), []);
+  useEffect(() => register({ name: 'email' }, { required: true }), []);
+  useEffect(() => register({ name: 'homePhone' }), []);
+  useEffect(() => register({ name: 'mobilePhone' }, { required: true }), []);
+  useEffect(() => register({ name: 'occupation' }), []);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <select name="honorific" ref={register}>
-        {Object.values(Honorific).map((title) => (
-          <option key={title} value={title}>
-            {title}
-          </option>
-        ))}
-      </select>
-      <input name="firstName" ref={register({ required: true })} />
-      {errors.firstName && <span>{requiredMsg}</span>}
-      <input name="lastName" ref={register({ required: true })} />
-      {errors.lastName && <span>{requiredMsg}</span>}
-      <input name="dob" ref={register({ required: true })} />
-      {errors.dob && <span>{requiredMsg}</span>}
-      <input name="email" ref={register({ required: true })} />
-      {errors.email && <span>{requiredMsg}</span>}
-      <select name="countryCode" ref={register}>
-        <option value="AU">Australia (+61)</option>
-      </select>
-      <input name="homePhone" ref={register} />
-      <input name="mobilePhone" ref={register({ required: true })} />
-      {errors.mobilePhone && <span>{requiredMsg}</span>}
-      <select name="gender" ref={register}>
-        {Object.values(Gender).map((gender) => (
-          <option key={gender} value={gender}>
-            {gender}
-          </option>
-        ))}
-      </select>
-      <input name="occupation" ref={register} />
+      <Controller
+        as={
+          <Select>
+            {Object.values(Honorific).map((title) => (
+              <Option key={title} value={title}>
+                {title}
+              </Option>
+            ))}
+          </Select>
+        }
+        control={control}
+        name="honorific"
+        defaultValue="Mr"
+      />
+      <HookFormInput
+        label="First Name"
+        name="firstName"
+        setValue={setValue}
+        error={errors.firstName}
+        errorMsg={requiredMsg}
+      />
+      <HookFormInput
+        label="Last Name"
+        name="lastName"
+        setValue={setValue}
+        error={errors.lastName}
+        errorMsg={requiredMsg}
+      />
+      <HookFormInput
+        label="DOB"
+        name="dob"
+        setValue={setValue}
+        error={errors.dob}
+        errorMsg={requiredMsg}
+      />
+      <HookFormInput
+        label="Email"
+        name="email"
+        setValue={setValue}
+        error={errors.email}
+        errorMsg={requiredMsg}
+      />
+      <Controller
+        as={
+          <Select>
+            <Option value="AU">Australia (+61)</Option>
+          </Select>
+        }
+        control={control}
+        name="countryCode"
+        defaultValue="AU"
+      />
+      <HookFormInput
+        label="Home Phone"
+        name="homePhone"
+        setValue={setValue}
+        error={errors.homePhone}
+        errorMsg={requiredMsg}
+      />
+      <HookFormInput
+        label="Mobile Phone"
+        name="mobilePhone"
+        setValue={setValue}
+        error={errors.mobilePhone}
+        errorMsg={requiredMsg}
+      />
+      <Controller
+        as={
+          <Select>
+            {Object.values(Gender).map((gender) => (
+              <Option key={gender} value={gender}>
+                {gender}
+              </Option>
+            ))}
+          </Select>
+        }
+        control={control}
+        name="gender"
+        defaultValue="male"
+      />
+      <HookFormInput
+        label="Occupation"
+        name="occupation"
+        setValue={setValue}
+        error={errors.occupation}
+        errorMsg={requiredMsg}
+      />
       <div>
         <Button type="primary" htmlType="submit">
           Create
