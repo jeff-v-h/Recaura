@@ -17,7 +17,7 @@ const unloadedState: T.PatientState = {
   countryCode: '',
   homePhone: '',
   mobilePhone: '',
-  gender: Gender.preferNotToSay,
+  gender: Gender.other,
   occupation: '',
   error: ''
 };

@@ -18,7 +18,7 @@ function HookGenderSelect({ control }: Props) {
       </label>
       <Controller
         as={
-          <Select>
+          <Select className={style.genderSelect}>
             {Object.values(Gender).map((gender) => (
               <Option key={gender} value={gender}>
                 {gender}

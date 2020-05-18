@@ -18,7 +18,7 @@ function HookHonorificSelect({ control }: Props) {
       </label>
       <Controller
         as={
-          <Select id="honorific">
+          <Select id="honorific" className={style.honorificSelect}>
             {Object.values(Honorific).map((title) => (
               <Option key={title} value={title}>
                 {title}

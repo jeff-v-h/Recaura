@@ -1,10 +1,19 @@
-$label-width: 120rem;
-$label-side-pad: 10rem;
+$label-right-pad: 5rem;
 $error-height: 20rem;
 
 .hookForm {
-  max-width: 800rem;
-  margin: 0 auto;
+  max-width: 700rem;
+  margin: 50rem auto;
+}
+
+.inputSection {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.phoneSection {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .hookInputContainer {
@@ -17,11 +26,11 @@ $error-height: 20rem;
 }
 
 .hookLabel {
-  width: $label-width;
   cursor: pointer;
   text-align: end;
   align-self: center;
-  padding: 0 $label-side-pad;
+  padding-right: $label-right-pad;
+  padding-left: 4 * $label-right-pad;
 }
 
 .hookInputLabel {
@@ -33,6 +42,28 @@ $error-height: 20rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  max-width: 150rem;
+}
+
+.hookInputShort {
+  @extend .hookInputMain;
+  max-width: 110rem;
+}
+
+.hookInputLong {
+  @extend .hookInputMain;
+}
+
+.hookInputLong input {
+  width: 275rem;
+}
+
+.honorificSelect {
+  width: 85rem;
+}
+
+.genderSelect {
+  width: 80rem;
 }
 
 .error {
@@ -40,4 +71,16 @@ $error-height: 20rem;
   font-weight: bold;
   font-size: small;
   min-height: 20rem;
+}
+
+.submitButton {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 10rem;
+}
+
+.asterisk {
+  color: red;
+  font-weight: bold;
+  padding-right: 3rem;
 }

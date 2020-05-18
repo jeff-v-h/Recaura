@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { PatientBase } from '../../models/patientModels';
-import { Button, Select } from 'antd';
+import { Button } from 'antd';
 import HookFormInput from '../common/HookFormInput';
 import style from '../common/hookForm.scss';
 import HookHonorificSelect from '../common/HookHonorificSelect';
@@ -27,61 +27,72 @@ function NewPatientForm({ onSubmit }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.hookForm}>
-      <HookHonorificSelect control={control} />
-      <HookFormInput
-        label="First Name"
-        name="firstName"
-        setValue={setValue}
-        error={errors.firstName}
-        errorMsg={'First name is required'}
-      />
-      <HookFormInput
-        label="Last Name"
-        name="lastName"
-        setValue={setValue}
-        error={errors.lastName}
-        errorMsg={'Last name is required'}
-      />
-      <HookFormInput
-        label="DOB"
-        name="dob"
-        setValue={setValue}
-        error={errors.dob}
-        errorMsg={'Date of birth required'}
-      />
-      <HookFormInput
-        label="Email"
-        name="email"
-        setValue={setValue}
-        error={errors.email}
-        errorMsg={'Email required'}
-      />
-      <HookCountryCodeSelect control={control} />
-      <HookFormInput
-        label="Home Phone"
-        name="homePhone"
-        setValue={setValue}
-        error={errors.homePhone}
-        errorMsg={''}
-      />
-      <HookFormInput
-        label="Mobile Phone"
-        name="mobilePhone"
-        setValue={setValue}
-        error={errors.mobilePhone}
-        errorMsg={'Mobile phone required'}
-      />
-      <HookGenderSelect control={control} />
-      <HookFormInput
-        label="Occupation"
-        name="occupation"
-        setValue={setValue}
-        error={errors.occupation}
-        errorMsg={''}
-      />
-      <div>
+      <div className={style.inputSection}>
+        <HookHonorificSelect control={control} />
+        <HookFormInput
+          label="First Name"
+          name="firstName"
+          required
+          setValue={setValue}
+          error={errors.firstName}
+          errorMsg={'First name is required'}
+        />
+        <HookFormInput
+          label="Last Name"
+          name="lastName"
+          required
+          setValue={setValue}
+          error={errors.lastName}
+          errorMsg={'Last name is required'}
+        />
+        <HookGenderSelect control={control} />
+        <HookFormInput
+          label="DOB"
+          name="dob"
+          setValue={setValue}
+          error={errors.dob}
+          errorMsg={'Date of birth required'}
+        />
+        <HookFormInput
+          label="Occupation"
+          name="occupation"
+          setValue={setValue}
+          error={errors.occupation}
+          errorMsg={''}
+        />
+        <HookFormInput
+          label="Email"
+          name="email"
+          required
+          setValue={setValue}
+          error={errors.email}
+          errorMsg={'Email required'}
+          inputStyle={style.hookInputLong}
+        />
+        <div className={style.phoneSection}>
+          <HookCountryCodeSelect control={control} />
+          <HookFormInput
+            label="Home Ph"
+            name="homePhone"
+            setValue={setValue}
+            error={errors.homePhone}
+            errorMsg={''}
+            inputStyle={style.hookInputShort}
+          />
+          <HookFormInput
+            label="Mobile Ph"
+            name="mobilePhone"
+            required
+            setValue={setValue}
+            error={errors.mobilePhone}
+            errorMsg={'Mobile phone required'}
+            inputStyle={style.hookInputShort}
+          />
+        </div>
+      </div>
+      <div className={style.submitButton}>
         <Button type="primary" htmlType="submit">
-          Create
+          Add Patient
         </Button>
       </div>
     </form>
