@@ -1,5 +1,5 @@
-import { Patient } from 'src/models/patientModels';
-import { ReduxAction } from '../common/types';
+import { Patient } from '../../models/patientModels';
+import { ReduxAction, ErrorAction, RedirectAction, RequestState } from '../common/types';
 
 export const C = {
   GET_PATIENTS_REQUEST: 'GET_PATIENTS_REQUEST',
@@ -41,16 +41,17 @@ export interface GetPatientSuccessAction extends ReduxAction {
 //--------------------
 
 // ACTION TYPE
-export type CreatePatientKnownAction = ReduxAction | CreatePatientSuccessAction;
-export type GetPatientsKnownAction = ReduxAction | GetPatientsSuccessAction;
-export type GetPatientKnownAction = ReduxAction | GetPatientSuccessAction;
+type RequestAction = ReduxAction | ErrorAction;
+export type CreatePatientKnownAction = RequestAction | CreatePatientSuccessAction;
+export type GetPatientsKnownAction = RequestAction | GetPatientsSuccessAction;
+export type GetPatientKnownAction = RequestAction | GetPatientSuccessAction;
 export type KnownAction =
   | CreatePatientKnownAction
   | GetPatientsKnownAction
   | SelectPatientAction
-  | GetPatientKnownAction;
+  | GetPatientKnownAction
+  | RedirectAction;
 
-export interface PatientState extends Patient {
-  isFetching: boolean;
+export interface PatientState extends Patient, RequestState {
   list: Patient[];
 }

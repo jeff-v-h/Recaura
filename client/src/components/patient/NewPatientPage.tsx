@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { message } from 'antd';
 import * as patientActions from '../../stores/patients/patientActions';
@@ -8,30 +8,34 @@ import { PatientState } from '../../stores/patients/patientTypes';
 import { ApplicationState } from '../../stores';
 import style from './patient.scss';
 import NewPatientForm from './NewPatientForm';
+import { PatientBase } from 'src/models/patientModels';
 
-type Props = PatientState & typeof patientActions;
+type Props = PatientState & typeof patientActions & RouteComponentProps;
 
 class NewPatientPage extends React.Component<Props> {
-  onSubmit = async (values: any) => {
+  onSubmit = async (values: PatientBase) => {
     console.log(values);
-    // const { createPatient, history } = this.props;
+    const { createPatient, history } = this.props;
     // if (values.password !== values.confirmpassword) {
     //     return message.error("Passwords do not match");
     // }
 
-    // try {
+    createPatient(values);
+    console.log('props after create', this.props);
     //     delete values.confirmpassword
     //     await createPatient({ ...values })
     //     message.success('Patient created')
     //     history.push('/')
-    // } catch (e) {} // errors displayed via service
   };
 
   render() {
-    const { isFetching } = this.props;
+    const { isFetching, redirectTo } = this.props;
+
+    if (redirectTo) return <Redirect to={redirectTo} />;
+
     return (
       <div className={style.centerContainer}>
-        <NewPatientForm />
+        <NewPatientForm onSubmit={this.onSubmit} />
       </div>
     );
   }

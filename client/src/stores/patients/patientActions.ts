@@ -1,12 +1,13 @@
 import { AppThunkAction } from '../index';
 import * as T from './patientTypes';
 import patientsService from '../../services/patientsService';
-import { Patient } from '../../models/patientModels';
+import { Patient, PatientBase } from '../../models/patientModels';
+import { redirect } from '../common/actions';
 
 const { C } = T;
 
 export const createPatient = (
-  patient: Omit<Patient, 'id'>
+  patient: PatientBase
 ): AppThunkAction<T.CreatePatientKnownAction> => async (dispatch) => {
   dispatch({ type: C.CREATE_PATIENT_REQUEST });
 
@@ -14,9 +15,11 @@ export const createPatient = (
     dispatch({
       type: C.CREATE_PATIENT_SUCCESS,
       payload: await patientsService.createPatient(patient)
+      // payload: { ...patient, id: 'test' }
     });
-  } catch (e) {
-    dispatch({ type: C.GET_PATIENTS_FAILURE });
+    dispatch(redirect('/'));
+  } catch (error) {
+    dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });
   }
 };
 
@@ -34,8 +37,8 @@ export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async
         type: C.GET_PATIENTS_SUCCESS,
         payload: await patientsService.getPatients()
       });
-    } catch (e) {
-      dispatch({ type: C.GET_PATIENTS_FAILURE });
+    } catch (error) {
+      dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });
     }
   }
 };
@@ -59,8 +62,8 @@ export const getPatient = (id: string): AppThunkAction<T.GetPatientKnownAction> 
         type: C.GET_PATIENT_SUCCESS,
         payload: await patientsService.getPatient(id)
       });
-    } catch (e) {
-      dispatch({ type: C.GET_PATIENT_FAILURE });
+    } catch (error) {
+      dispatch({ type: C.GET_PATIENT_FAILURE, payload: error });
     }
   }
 };

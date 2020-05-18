@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import * as T from './patientTypes';
 import { Honorific, Gender } from '../../models/enums';
+import { ErrorAction, REDIRECT, RedirectAction } from '../common/types';
 
 const { C } = T;
 
@@ -18,7 +19,8 @@ const unloadedState: T.PatientState = {
   mobilePhone: '',
   gender: Gender.preferNotToSay,
   occupation: '',
-  casefiles: []
+  error: '',
+  redirectTo: ''
 };
 
 const reducer: Reducer<T.PatientState> = (
@@ -38,7 +40,8 @@ const reducer: Reducer<T.PatientState> = (
       obj = action as T.CreatePatientSuccessAction;
       return { ...state, isFetching: false, ...obj.payload };
     case C.CREATE_PATIENT_FAILURE:
-      return { ...state, isFetching: false };
+      obj = action as ErrorAction;
+      return { ...state, isFetching: false, error: obj.payload };
 
     case C.GET_PATIENTS_REQUEST:
       return { ...state, isFetching: true, list: [] };
@@ -46,11 +49,8 @@ const reducer: Reducer<T.PatientState> = (
       obj = action as T.GetPatientsSuccessAction;
       return { ...state, isFetching: false, list: obj.payload };
     case C.GET_PATIENTS_FAILURE:
-      return { ...state, isFetching: false, list: [] };
-
-    case C.SELECT_PATIENT:
-      obj = action as T.SelectPatientAction;
-      return { ...state, ...obj.payload };
+      obj = action as ErrorAction;
+      return { ...state, isFetching: false, error: obj.payload };
 
     case C.GET_PATIENT_REQUEST:
       return { ...unloadedState, isFetching: true, list: state.list };
@@ -58,7 +58,16 @@ const reducer: Reducer<T.PatientState> = (
       obj = action as T.GetPatientSuccessAction;
       return { ...state, isFetching: false, ...obj.payload };
     case C.GET_PATIENT_FAILURE:
-      return { ...state, isFetching: false };
+      obj = action as ErrorAction;
+      return { ...state, isFetching: false, error: obj.payload };
+
+    case C.SELECT_PATIENT:
+      obj = action as T.SelectPatientAction;
+      return { ...state, ...obj.payload };
+    case REDIRECT:
+      obj = action as RedirectAction;
+      return { ...state, redirectTo: obj.payload };
+
     default:
       return state;
   }
