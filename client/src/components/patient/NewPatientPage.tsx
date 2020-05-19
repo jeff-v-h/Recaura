@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { message } from 'antd';
 import * as patientActions from '../../stores/patients/patientActions';
 import { ApplicationState } from '../../stores';
 import style from './patient.scss';
@@ -22,7 +21,7 @@ class NewPatientPage extends React.Component<Props> {
 
     return (
       <div className={style.centerContainer}>
-        <NewPatientForm onSubmit={this.onSubmit} />
+        <NewPatientForm onSubmit={this.onSubmit} isSaving={isFetching} />
       </div>
     );
   }

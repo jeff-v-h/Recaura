@@ -78,7 +78,7 @@ $error-height: 20rem;
   min-width: 10rem;
 }
 
-.submitButton {
+.submitRow {
   display: flex;
   justify-content: flex-end;
   padding: 0 10rem;
@@ -88,4 +88,10 @@ $error-height: 20rem;
   color: red;
   font-weight: bold;
   padding-right: 3rem;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  padding-right: 10rem;
 }
