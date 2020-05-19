@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import * as patientActions from '../../stores/patients/patientActions';
 import { ApplicationState } from '../../stores';
 import { Descriptions } from 'antd';
+import style from './patientInfo.scss';
 
 const Item = Descriptions.Item;
 
@@ -20,13 +21,12 @@ class PatientInfo extends React.Component<Props> {
 
   ensureDataFetched = () => {
     const { id, match, getPatient, list, selectPatient } = this.props;
+    const { patientId } = match.params;
 
-    if (!id) {
-      const { patientId } = match.params;
+    if (!id || id !== patientId) {
       const patient = list.find((p) => p.id === patientId);
 
       if (patient) return selectPatient(patient);
-
       getPatient(patientId);
     }
   };
@@ -36,7 +36,7 @@ class PatientInfo extends React.Component<Props> {
 
     return (
       <>
-        <Descriptions bordered>
+        <Descriptions bordered className={style.description}>
           <Item label="First Name">
             <Link to={`/patients/${match.params.patientId}`}>{firstName}</Link>
           </Item>
