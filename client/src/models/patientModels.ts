@@ -1,7 +1,6 @@
 import { Honorific, Gender } from './enums';
 
-export interface Patient {
-  id: string;
+export interface PatientBase {
   honorific: Honorific;
   firstName: string;
   lastName: string;
@@ -12,6 +11,13 @@ export interface Patient {
   mobilePhone: string;
   gender: Gender;
   occupation: string;
+}
+
+export interface Patient extends PatientBase {
+  id: string;
+}
+
+export interface PatientWithFiles extends Patient {
   casefiles: PatientCasefile[];
 }
 

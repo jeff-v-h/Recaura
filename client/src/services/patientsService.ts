@@ -1,31 +1,61 @@
-import * as apiHelper from '../helpers/apiHelper';
 import { AxiosResponse } from 'axios';
-import { Patient } from 'src/models/patientModels';
 import { message } from 'antd';
+import { Patient } from 'src/models/patientModels';
+import { ApiService } from './apiService';
 import { keys } from '../helpers/keys';
 
 const { apiUrl } = keys;
 
-class PatientsService {
+class PatientsService extends ApiService {
+  createPatient = async (patient: Omit<Patient, 'id'>): Promise<Patient> => {
+    try {
+      const url = `${apiUrl}/patients`;
+      const resp = (await this.post(url, patient)) as AxiosResponse<Patient>;
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
+    }
+  };
+
   getPatients = async (): Promise<Patient[]> => {
     try {
       const url = `${apiUrl}/patients`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<Patient[]>;
+      const resp = (await this.get(url)) as AxiosResponse<Patient[]>;
       return resp.data;
     } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
+      return this.handleRequestError(e);
     }
   };
 
   getPatient = async (id: string): Promise<Patient> => {
     try {
       const url = `${apiUrl}/patients/${id}`;
-      const resp = (await apiHelper.get(url)) as AxiosResponse<Patient>;
+      const resp = (await this.get(url)) as AxiosResponse<Patient>;
       return resp.data;
     } catch (e) {
-      message.error(e);
-      return Promise.reject(e);
+      return this.handleRequestError(e);
+    }
+  };
+
+  updatePatient = async (id: string, patient: Patient): Promise<Patient> => {
+    try {
+      const url = `${apiUrl}/patients/${id}`;
+      const resp = (await this.patch(url, patient)) as AxiosResponse<Patient>;
+      message.success('Patient updated');
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
+    }
+  };
+
+  deletePatient = async (id: string): Promise<Patient> => {
+    try {
+      const url = `${apiUrl}/patients/${id}`;
+      const resp = (await this.delete(url)) as AxiosResponse<Patient>;
+      message.success('Patient deleted');
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
     }
   };
 }

@@ -1,5 +1,5 @@
-import { Patient } from 'src/models/patientModels';
-import { ReduxAction } from '../common/types';
+import { Patient } from '../../models/patientModels';
+import { ReduxAction, ErrorAction, RequestState } from '../common/types';
 
 export const C = {
   GET_PATIENTS_REQUEST: 'GET_PATIENTS_REQUEST',
@@ -22,6 +22,10 @@ export const C = {
 
 //--------------------
 //#region ACTIONS
+export interface CreatePatientSuccessAction extends ReduxAction {
+  payload: Patient;
+}
+
 export interface GetPatientsSuccessAction extends ReduxAction {
   payload: Patient[];
 }
@@ -37,11 +41,16 @@ export interface GetPatientSuccessAction extends ReduxAction {
 //--------------------
 
 // ACTION TYPE
-export type GetPatientsKnownAction = ReduxAction | GetPatientsSuccessAction;
-export type GetPatientKnownAction = ReduxAction | GetPatientSuccessAction;
-export type KnownAction = GetPatientsKnownAction | SelectPatientAction | GetPatientKnownAction;
+type RequestAction = ReduxAction | ErrorAction;
+export type CreatePatientKnownAction = RequestAction | CreatePatientSuccessAction;
+export type GetPatientsKnownAction = RequestAction | GetPatientsSuccessAction;
+export type GetPatientKnownAction = RequestAction | GetPatientSuccessAction;
+export type KnownAction =
+  | CreatePatientKnownAction
+  | GetPatientsKnownAction
+  | SelectPatientAction
+  | GetPatientKnownAction;
 
-export interface PatientState extends Patient {
-  isFetching: boolean;
+export interface PatientState extends Patient, RequestState {
   list: Patient[];
 }

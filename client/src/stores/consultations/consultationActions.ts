@@ -11,7 +11,6 @@ import {
 const { C } = T;
 //#region simple action creators
 export const getConsultsRequest = () => ({ type: C.GET_CONSULTATIONS_REQUEST });
-
 export const getConsultsSuccess = async (
   casefileId: string
 ): Promise<T.GetConsultsSuccessAction> => {
@@ -20,7 +19,6 @@ export const getConsultsSuccess = async (
     payload: await consultationService.getConsultations(casefileId)
   };
 };
-
 export const getConsultsFailure = () => ({ type: C.GET_CONSULTATIONS_FAILURE });
 
 export const selectConsult = (consult: Consultation) => ({
@@ -29,14 +27,12 @@ export const selectConsult = (consult: Consultation) => ({
 });
 
 export const getConsultRequest = () => ({ type: C.GET_CONSULTATION_REQUEST });
-
 export const getConsultSuccess = async (id: string): Promise<T.GetConsultSuccessAction> => {
   return {
     type: C.GET_CONSULTATION_SUCCESS,
     payload: await consultationService.getConsultation(id)
   };
 };
-
 export const getConsultFailure = () => ({ type: C.GET_CONSULTATION_FAILURE });
 
 export const modifySubjective = (subjective: SubjectiveAssessment) =>
