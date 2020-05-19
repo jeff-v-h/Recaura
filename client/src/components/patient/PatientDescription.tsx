@@ -1,6 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { Patient } from 'src/models/patientModels';
+import { parseDateString } from '../../helpers/utils';
 
 const Item = Descriptions.Item;
 
@@ -13,7 +14,7 @@ const PatientDescription = ({ patient }: Props) => (
     <Item label="Title">{patient.honorific}</Item>
     <Item label="First Name">{patient.firstName}</Item>
     <Item label="Last Name">{patient.lastName}</Item>
-    <Item label="DOB">{patient.dob}</Item>
+    <Item label="DOB">{parseDateString(patient.dob)}</Item>
     <Item label="Email">{patient.email}</Item>
     <Item label="Home Ph">{patient.homePhone}</Item>
     <Item label="Mobile Ph">{patient.mobilePhone}</Item>
