@@ -15,7 +15,7 @@ export function validateEmailAllowEmpty(email: string) {
 }
 
 export function validatePhoneLength(num: string) {
-  num = num.replace(' ', '');
+  num = num.replace(/\s/g, '');
   return num.length >= 4 && num.length <= 15;
 }
 
@@ -25,7 +25,8 @@ export function validatePhoneLengthAllowEmpty(num: string) {
 }
 
 export function validateDigitString(num: string) {
-  num = num.replace(' ', '');
+  num = num.replace(/\s/g, '');
+  console.log(num);
   return /^[0-9]+$/.test(num);
 }
 
