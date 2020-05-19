@@ -3,6 +3,7 @@ import style from './hookForm.scss';
 import { Controller, Control } from 'react-hook-form';
 import { Select } from 'antd';
 import { CountryCode } from '../../models/enums';
+import HookSelectContainer from './HookSelectContainer';
 
 const { Option } = Select;
 
@@ -14,7 +15,7 @@ function HookCountryCodeSelect({ control }: Props) {
   const values = Object.values(CountryCode);
 
   return (
-    <div className={style.hookSelectContainer}>
+    <HookSelectContainer>
       <label className={style.hookLabel} htmlFor="country-code">
         Country Code:
       </label>
@@ -32,7 +33,7 @@ function HookCountryCodeSelect({ control }: Props) {
         name="countryCode"
         defaultValue="+61"
       />
-    </div>
+    </HookSelectContainer>
   );
 }
 

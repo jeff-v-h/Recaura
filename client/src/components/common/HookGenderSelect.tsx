@@ -3,6 +3,7 @@ import style from './hookForm.scss';
 import { Controller, Control } from 'react-hook-form';
 import { Select } from 'antd';
 import { Gender } from '../../models/enums';
+import HookSelectContainer from './HookSelectContainer';
 
 const { Option } = Select;
 
@@ -12,8 +13,8 @@ interface Props {
 
 function HookGenderSelect({ control }: Props) {
   return (
-    <div className={style.hookSelectContainer}>
-      <label className={style.hookLabel} htmlFor="gender">
+    <HookSelectContainer>
+      <label className={style.hookInputLabel} htmlFor="gender">
         Gender:
       </label>
       <Controller
@@ -30,7 +31,7 @@ function HookGenderSelect({ control }: Props) {
         name="gender"
         defaultValue="male"
       />
-    </div>
+    </HookSelectContainer>
   );
 }
 

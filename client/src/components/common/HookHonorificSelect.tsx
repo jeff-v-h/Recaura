@@ -3,6 +3,7 @@ import style from './hookForm.scss';
 import { Controller, Control } from 'react-hook-form';
 import { Select } from 'antd';
 import { Honorific } from '../../models/enums';
+import HookSelectContainer from './HookSelectContainer';
 
 const { Option } = Select;
 
@@ -12,7 +13,7 @@ interface Props {
 
 function HookHonorificSelect({ control }: Props) {
   return (
-    <div className={style.hookSelectContainer}>
+    <HookSelectContainer>
       <label className={style.hookLabel} htmlFor="honorific">
         Title:
       </label>
@@ -30,7 +31,7 @@ function HookHonorificSelect({ control }: Props) {
         name="honorific"
         defaultValue="Mr"
       />
-    </div>
+    </HookSelectContainer>
   );
 }
 

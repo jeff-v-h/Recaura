@@ -127,7 +127,6 @@ function NewPatientForm({ onSubmit }: Props) {
             setValue={setValue}
             error={errors.mobilePhone}
             errorMsg={getPhoneErrorMsg(errors.mobilePhone?.type)}
-            inputStyle={style.hookInputShort}
           />
         </div>
       </div>

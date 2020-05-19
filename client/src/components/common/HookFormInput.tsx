@@ -22,10 +22,13 @@ HookFormInput.defaultProps = {
 function HookFormInput({ label, name, required, setValue, error, errorMsg, inputStyle }: Props) {
   return (
     <div className={style.hookInputContainer}>
-      <label className={style.hookInputLabel} htmlFor={name}>
-        {required && <span className={style.asterisk}>*</span>}
-        {label}:
-      </label>
+      <div>
+        <label className={style.hookInputLabel} htmlFor={name}>
+          {required && <span className={style.asterisk}>*</span>}
+          {label}:
+        </label>
+        <span className={style.hookInputSupport}></span>
+      </div>
       <div className={inputStyle}>
         <Input id={name} name={name} onChange={(e) => setValue(name, e.target.value)} />
         <span className={style.error}>{error && errorMsg}</span>

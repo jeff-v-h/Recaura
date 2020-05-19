@@ -1,41 +1,39 @@
 $label-right-pad: 5rem;
 $error-height: 20rem;
 
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+
 .hookForm {
   max-width: 700rem;
   margin: 50rem auto;
 }
 
-.inputSection {
-  display: flex;
-  flex-wrap: wrap;
-}
-
+.inputSection,
 .phoneSection {
   display: flex;
   flex-wrap: wrap;
 }
 
-.hookInputContainer {
-  display: flex;
-}
-
+.hookInputContainer,
 .hookSelectContainer {
   display: flex;
-  margin-bottom: $error-height;
 }
 
 .hookLabel {
   cursor: pointer;
   text-align: end;
   align-self: center;
-  padding-right: $label-right-pad;
-  padding-left: 4 * $label-right-pad;
+  padding: 4rem $label-right-pad;
+  margin-left: 3 * $label-right-pad;
 }
 
 .hookInputLabel {
   @extend .hookLabel;
-  margin-bottom: $error-height;
+  display: flex;
+  align-items: center;
 }
 
 .hookInputMain {
@@ -70,7 +68,17 @@ $error-height: 20rem;
   color: red;
   font-weight: bold;
   font-size: small;
-  min-height: 20rem;
+  min-height: $error-height;
+}
+
+.hookInputSupport {
+  min-height: $error-height;
+  flex-grow: 1;
+}
+
+.hookSelectSupport {
+  @extend .hookInputSupport;
+  min-width: 10rem;
 }
 
 .submitButton {
