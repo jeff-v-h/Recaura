@@ -7,22 +7,35 @@ import style from '../common/hookForm.scss';
 import HookHonorificSelect from '../common/HookHonorificSelect';
 import HookGenderSelect from '../common/HookGenderSelect';
 import HookCountryCodeSelect from '../common/HookCountryCodeSelect';
+import {
+  validateEmailAllowEmpty,
+  validatePhoneNum,
+  validatePhoneAllowEmpty
+} from '../../helpers/formHelper';
 
 interface Props {
   onSubmit: (data: PatientBase) => void;
 }
 
 function NewPatientForm({ onSubmit }: Props) {
-  const { register, handleSubmit, watch, errors, setValue, control } = useForm<PatientBase>();
+  const { register, handleSubmit, watch, errors, setValue, control } = useForm<PatientBase>({
+    // Set empty strings for non required inputs to ensure undefined not passed through
+    defaultValues: {
+      email: '',
+      homePhone: '',
+      mobilePhone: '',
+      occupation: ''
+    }
+  });
 
   console.log('firstName', watch('firstName'));
 
   useEffect(() => register({ name: 'firstName' }, { required: true }), []);
   useEffect(() => register({ name: 'lastName' }, { required: true }), []);
   useEffect(() => register({ name: 'dob' }, { required: true }), []);
-  useEffect(() => register({ name: 'email' }, { required: true }), []);
-  useEffect(() => register({ name: 'homePhone' }), []);
-  useEffect(() => register({ name: 'mobilePhone' }, { required: true }), []);
+  useEffect(() => register({ name: 'email' }, { validate: validateEmailAllowEmpty }), []);
+  useEffect(() => register({ name: 'homePhone' }, { validate: validatePhoneAllowEmpty }), []);
+  useEffect(() => register({ name: 'mobilePhone' }, { validate: validatePhoneNum }), []);
   useEffect(() => register({ name: 'occupation' }), []);
 
   return (
@@ -63,7 +76,6 @@ function NewPatientForm({ onSubmit }: Props) {
         <HookFormInput
           label="Email"
           name="email"
-          required
           setValue={setValue}
           error={errors.email}
           errorMsg={'Email required'}
@@ -85,7 +97,7 @@ function NewPatientForm({ onSubmit }: Props) {
             required
             setValue={setValue}
             error={errors.mobilePhone}
-            errorMsg={'Mobile phone required'}
+            errorMsg={'Mobile required'}
             inputStyle={style.hookInputShort}
           />
         </div>
