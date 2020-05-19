@@ -14,9 +14,7 @@ interface Props {
 function HookGenderSelect({ control }: Props) {
   return (
     <HookSelectContainer>
-      <label className={style.hookInputLabel} htmlFor="gender">
-        Gender:
-      </label>
+      <label className={style.hookInputLabel}>Gender:</label>
       <Controller
         as={
           <Select className={style.genderSelect}>

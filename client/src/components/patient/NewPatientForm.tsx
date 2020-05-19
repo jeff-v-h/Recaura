@@ -15,6 +15,7 @@ import {
   validateDigitString,
   getPhoneErrorMsg
 } from '../../helpers/formHelper';
+import HookDatePicker from '../common/HookDatePicker';
 
 interface Props {
   onSubmit: (data: PatientBase) => void;
@@ -31,7 +32,7 @@ function NewPatientForm({ onSubmit }: Props) {
     }
   });
 
-  console.log('firstName', watch('firstName'));
+  console.log('dob', watch('dob'));
 
   //#region register effects
   useEffect(() => register({ name: 'firstName' }, { required: true }), []);
@@ -88,13 +89,7 @@ function NewPatientForm({ onSubmit }: Props) {
           errorMsg={'Last name is required'}
         />
         <HookGenderSelect control={control} />
-        <HookFormInput
-          label="DOB"
-          name="dob"
-          setValue={setValue}
-          error={errors.dob}
-          errorMsg={'Date of birth required'}
-        />
+        <HookDatePicker name="dob" setValue={setValue} />
         <HookFormInput
           label="Occupation"
           name="occupation"

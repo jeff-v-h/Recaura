@@ -1,11 +1,25 @@
 import React from 'react';
-import { Input, DatePicker } from 'antd';
+import { DatePicker } from 'antd';
+import style from './hookForm.scss';
+import HookSelectContainer from './HookSelectContainer';
 
-function HookDatePicker() {
+interface Props {
+  name: string;
+  setValue: (name: string, value: any) => void;
+}
+
+function HookDatePicker({ name, setValue }: Props) {
+  const dateFormat = 'YYYY-MM-DD';
   return (
-    <Input.Group compact>
-      <Input style={{ width: '50%' }} defaultValue="input content" />
-      <DatePicker style={{ width: '50%' }} />
-    </Input.Group>
+    <HookSelectContainer>
+      <label className={style.hookInputLabel}>DOB:</label>
+      <DatePicker
+        format={dateFormat}
+        onChange={(date, dateString) => setValue(name, dateString)}
+        placeholder={dateFormat}
+      />
+    </HookSelectContainer>
   );
 }
+
+export default HookDatePicker;
