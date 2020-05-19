@@ -12,13 +12,33 @@ export function validateEmailAllowEmpty(email: string) {
   return /.+\@.+\..+/.test(email);
 }
 
-export function validatePhoneNum(num: string) {
+export function validatePhoneLength(num: string) {
   num = num.replace(' ', '');
-  if (num.length < 4 || num.length > 15) return false;
+  return num.length >= 4 && num.length <= 15;
+}
+
+export function validatePhoneLengthAllowEmpty(num: string) {
+  if (num.length === 0) return true;
+  return validatePhoneLength(num);
+}
+
+export function validateDigitString(num: string) {
+  num = num.replace(' ', '');
   return /^[0-9]+$/.test(num);
 }
 
-export function validatePhoneAllowEmpty(num: string) {
+export function validateDigitStringAllowEmpty(num: string) {
   if (num.length === 0) return true;
-  return validatePhoneNum(num);
+  return validateDigitString(num);
+}
+
+export function getPhoneErrorMsg(type: string | undefined) {
+  switch (type) {
+    case 'correctLength':
+      return 'Invalid number of digits';
+    case 'onlyDigits':
+      return 'Only digits allowed';
+    default:
+      return 'Number invalid';
+  }
 }

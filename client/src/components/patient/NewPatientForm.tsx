@@ -9,8 +9,11 @@ import HookGenderSelect from '../common/HookGenderSelect';
 import HookCountryCodeSelect from '../common/HookCountryCodeSelect';
 import {
   validateEmailAllowEmpty,
-  validatePhoneNum,
-  validatePhoneAllowEmpty
+  validatePhoneLengthAllowEmpty,
+  validatePhoneLength,
+  validateDigitStringAllowEmpty,
+  validateDigitString,
+  getPhoneErrorMsg
 } from '../../helpers/formHelper';
 
 interface Props {
@@ -30,13 +33,39 @@ function NewPatientForm({ onSubmit }: Props) {
 
   console.log('firstName', watch('firstName'));
 
+  //#region register effects
   useEffect(() => register({ name: 'firstName' }, { required: true }), []);
   useEffect(() => register({ name: 'lastName' }, { required: true }), []);
   useEffect(() => register({ name: 'dob' }, { required: true }), []);
   useEffect(() => register({ name: 'email' }, { validate: validateEmailAllowEmpty }), []);
-  useEffect(() => register({ name: 'homePhone' }, { validate: validatePhoneAllowEmpty }), []);
-  useEffect(() => register({ name: 'mobilePhone' }, { validate: validatePhoneNum }), []);
+  useEffect(
+    () =>
+      register(
+        { name: 'homePhone' },
+        {
+          validate: {
+            onlyDigits: validateDigitStringAllowEmpty,
+            correctLength: validatePhoneLengthAllowEmpty
+          }
+        }
+      ),
+    []
+  );
+  useEffect(
+    () =>
+      register(
+        { name: 'mobilePhone' },
+        {
+          validate: {
+            onlyDigits: validateDigitString,
+            correctLength: validatePhoneLength
+          }
+        }
+      ),
+    []
+  );
   useEffect(() => register({ name: 'occupation' }), []);
+  //#endregion
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.hookForm}>
@@ -88,7 +117,7 @@ function NewPatientForm({ onSubmit }: Props) {
             name="homePhone"
             setValue={setValue}
             error={errors.homePhone}
-            errorMsg={''}
+            errorMsg={getPhoneErrorMsg(errors.homePhone?.type)}
             inputStyle={style.hookInputShort}
           />
           <HookFormInput
@@ -97,7 +126,7 @@ function NewPatientForm({ onSubmit }: Props) {
             required
             setValue={setValue}
             error={errors.mobilePhone}
-            errorMsg={'Mobile required'}
+            errorMsg={getPhoneErrorMsg(errors.mobilePhone?.type)}
             inputStyle={style.hookInputShort}
           />
         </div>

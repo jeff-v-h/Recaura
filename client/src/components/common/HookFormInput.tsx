@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input } from 'antd';
 import style from './hookForm.scss';
+import { ErrorMessage } from 'react-hook-form';
 
 interface Props {
   label: string;
