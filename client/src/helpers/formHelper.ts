@@ -1,3 +1,5 @@
+import { Gender, Honorific } from '../models/enums';
+
 export const formLayout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 14 }
@@ -40,5 +42,22 @@ export function getPhoneErrorMsg(type: string | undefined) {
       return 'Only digits allowed';
     default:
       return 'Number invalid';
+  }
+}
+
+export function getGenderFromTitle(title: string) {
+  switch (title) {
+    case Honorific.Mr:
+    case Honorific.Master:
+    case Honorific.M:
+    case Honorific.Sir:
+      return Gender.male;
+    case Honorific.Mrs:
+    case Honorific.Miss:
+    case Honorific.Ms:
+    case Honorific.Madam:
+      return Gender.female;
+    default:
+      return Gender.other;
   }
 }

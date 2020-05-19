@@ -13,7 +13,8 @@ import {
   validatePhoneLength,
   validateDigitStringAllowEmpty,
   validateDigitString,
-  getPhoneErrorMsg
+  getPhoneErrorMsg,
+  getGenderFromTitle
 } from '../../helpers/formHelper';
 import HookDatePicker from '../common/HookDatePicker';
 
@@ -33,6 +34,8 @@ function NewPatientForm({ onSubmit }: Props) {
   });
 
   console.log('dob', watch('dob'));
+  console.log('gender', watch('gender'));
+  console.log('honorific', watch('honorific'));
 
   //#region register effects
   useEffect(() => register({ name: 'firstName' }, { required: true }), []);
@@ -68,10 +71,15 @@ function NewPatientForm({ onSubmit }: Props) {
   useEffect(() => register({ name: 'occupation' }), []);
   //#endregion
 
+  const onTitleChange = (args: any[]) => {
+    setValue('gender', getGenderFromTitle(args[0]));
+    return args[0];
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.hookForm}>
       <div className={style.inputSection}>
-        <HookHonorificSelect control={control} />
+        <HookHonorificSelect control={control} onChange={onTitleChange} />
         <HookFormInput
           label="First Name"
           name="firstName"
@@ -114,6 +122,7 @@ function NewPatientForm({ onSubmit }: Props) {
             error={errors.homePhone}
             errorMsg={getPhoneErrorMsg(errors.homePhone?.type)}
             inputStyle={style.hookInputShort}
+            placeholder="9876 5432"
           />
           <HookFormInput
             label="Mobile Ph"
@@ -122,6 +131,7 @@ function NewPatientForm({ onSubmit }: Props) {
             setValue={setValue}
             error={errors.mobilePhone}
             errorMsg={getPhoneErrorMsg(errors.mobilePhone?.type)}
+            placeholder="0400 111 222"
           />
         </div>
       </div>

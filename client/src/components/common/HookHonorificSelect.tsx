@@ -9,9 +9,10 @@ const { Option } = Select;
 
 interface Props {
   control: Control;
+  onChange?: (e: any[]) => void;
 }
 
-function HookHonorificSelect({ control }: Props) {
+function HookHonorificSelect({ control, onChange }: Props) {
   return (
     <HookSelectContainer>
       <label className={style.hookLabel} htmlFor="honorific">
@@ -27,9 +28,10 @@ function HookHonorificSelect({ control }: Props) {
             ))}
           </Select>
         }
+        onChange={onChange}
         control={control}
         name="honorific"
-        defaultValue="Mr"
+        defaultValue={Honorific.Mr}
       />
     </HookSelectContainer>
   );
