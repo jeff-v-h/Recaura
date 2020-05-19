@@ -14,13 +14,7 @@ type Props = ConnectedProps<typeof connector>;
 
 class NewPatientPage extends React.Component<Props> {
   onSubmit = async (values: PatientBase) => {
-    console.log(values);
-    const { createPatient } = this.props;
-    // if (values.password !== values.confirmpassword) {
-    //     return message.error("Passwords do not match");
-    // }
-
-    // createPatient(values);
+    this.props.createPatient(values);
   };
 
   render() {

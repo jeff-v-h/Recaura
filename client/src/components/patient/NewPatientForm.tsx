@@ -33,10 +33,6 @@ function NewPatientForm({ onSubmit }: Props) {
     }
   });
 
-  console.log('dob', watch('dob'));
-  console.log('gender', watch('gender'));
-  console.log('honorific', watch('honorific'));
-
   //#region register effects
   useEffect(() => register({ name: 'firstName' }, { required: true }), []);
   useEffect(() => register({ name: 'lastName' }, { required: true }), []);
@@ -97,7 +93,14 @@ function NewPatientForm({ onSubmit }: Props) {
           errorMsg={'Last name is required'}
         />
         <HookGenderSelect control={control} />
-        <HookDatePicker name="dob" setValue={setValue} />
+        <HookDatePicker
+          label="DOB"
+          name="dob"
+          setValue={setValue}
+          required
+          error={errors.dob}
+          errorMsg={'Date of birth required'}
+        />
         <HookFormInput
           label="Occupation"
           name="occupation"
