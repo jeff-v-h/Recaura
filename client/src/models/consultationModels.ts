@@ -48,3 +48,16 @@ export interface TreatmentsAndPlans {
   treatments: string;
   plans: string;
 }
+
+export interface PatchConsult {
+  patientId?: string;
+  caseFileId?: string;
+  practitionerId?: string;
+  date?: string;
+  number: number;
+  practitioner?: ConsultPractitioner;
+  subjectiveAssessment?: SubjectiveAssessment;
+  objectiveAssessment?: ObjectiveAssessment;
+  treatments?: string;
+  plans?: string;
+}

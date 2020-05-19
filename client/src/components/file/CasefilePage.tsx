@@ -1,16 +1,17 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import * as consultationActions from '../../stores/consultations/consultationActions';
-import { ConsultationState } from '../../stores/consultations/consultationTypes';
 import { ApplicationState } from '../../stores';
 import PatientInfo from '../common/PatientInfo';
 import Consultations from './Consultations';
 import CasefileInfo from '../common/CasefileInfo';
 
-type Props = ConsultationState &
-  typeof consultationActions &
+const mapStateToProps = (state: ApplicationState) => state.consultation;
+const connector = connect(mapStateToProps, consultationActions);
+
+type Props = ConnectedProps<typeof connector> &
   RouteComponentProps<{ patientId: string; casefileId: string }>;
 
 class CasefilePage extends React.Component<Props> {
@@ -37,9 +38,4 @@ class CasefilePage extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => state.consultation;
-
-export default compose<React.ComponentType>(
-  withRouter,
-  connect(mapStateToProps, consultationActions)
-)(CasefilePage);
+export default compose<React.ComponentType>(withRouter, connector)(CasefilePage);

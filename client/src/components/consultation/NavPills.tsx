@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import style from './navPills.scss';
 import { Radio } from 'antd';
 import { ConsultPart } from '../../helpers/utils';

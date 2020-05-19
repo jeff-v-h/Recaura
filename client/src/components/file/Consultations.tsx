@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { List } from 'antd';
 import { Link } from 'react-router-dom';
 import style from './casefile.scss';

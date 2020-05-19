@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import style from './consultation.scss';
 import Subjective from './Subjective';
@@ -7,15 +7,17 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 import NavPills from './NavPills';
 import Objective from './Objective';
 import * as consultActions from '../../stores/consultations/consultationActions';
-import { ConsultationState } from '../../stores/consultations/consultationTypes';
 import { ApplicationState } from '../../stores';
 import { compose } from 'redux';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import TreatmentsAndPlan from './TreatmentsAndPlan';
 import PatientInfo from '../common/PatientInfo';
 import CasefileInfo from '../common/CasefileInfo';
 
-type Props = ConsultationState & typeof consultActions & RouteComponentProps<{ consultId: string }>;
+const mapStateToProps = (state: ApplicationState) => state.consultation;
+const connector = connect(mapStateToProps, consultActions);
+
+type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ consultId: string }>;
 
 type State = {
   display: ConsultPart;
@@ -76,7 +78,4 @@ class Consultation extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => state.consultation;
-const connectProps = connect(mapStateToProps, consultActions);
-
-export default compose<React.ComponentType>(withRouter, connectProps)(Consultation);
+export default compose<React.ComponentType>(withRouter, connector)(Consultation);

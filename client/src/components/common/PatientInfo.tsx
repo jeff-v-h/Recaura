@@ -1,15 +1,19 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'redux';
 import * as patientActions from '../../stores/patients/patientActions';
-import { PatientState } from '../../stores/patients/patientTypes';
 import { ApplicationState } from '../../stores';
 import { Descriptions } from 'antd';
+import style from './patientInfo.scss';
+import { parseDateString } from '../../helpers/utils';
 
 const Item = Descriptions.Item;
 
-type Props = PatientState & typeof patientActions & RouteComponentProps<{ patientId: string }>;
+const mapStateToProps = (state: ApplicationState) => state.patient;
+const connector = connect(mapStateToProps, patientActions);
+
+type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ patientId: string }>;
 
 class PatientInfo extends React.Component<Props> {
   componentDidMount() {
@@ -18,13 +22,12 @@ class PatientInfo extends React.Component<Props> {
 
   ensureDataFetched = () => {
     const { id, match, getPatient, list, selectPatient } = this.props;
+    const { patientId } = match.params;
 
-    if (!id) {
-      const { patientId } = match.params;
+    if (!id || id !== patientId) {
       const patient = list.find((p) => p.id === patientId);
 
       if (patient) return selectPatient(patient);
-
       getPatient(patientId);
     }
   };
@@ -34,14 +37,14 @@ class PatientInfo extends React.Component<Props> {
 
     return (
       <>
-        <Descriptions bordered>
+        <Descriptions bordered className={style.description}>
           <Item label="First Name">
             <Link to={`/patients/${match.params.patientId}`}>{firstName}</Link>
           </Item>
           <Item label="Last Name">
             <Link to={`/patients/${match.params.patientId}`}>{lastName}</Link>
           </Item>
-          <Item label="DOB">{dob}</Item>
+          <Item label="DOB">{parseDateString(dob)}</Item>
           <Item label="Gender">{gender}</Item>
           <Item label="Occupation">{occupation}</Item>
         </Descriptions>
@@ -50,9 +53,4 @@ class PatientInfo extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => state.patient;
-
-export default compose<React.ComponentType>(
-  withRouter,
-  connect(mapStateToProps, patientActions)
-)(PatientInfo);
+export default compose<React.ComponentType>(withRouter, connector)(PatientInfo);
