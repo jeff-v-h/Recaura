@@ -26,7 +26,6 @@ export function validatePhoneLengthAllowEmpty(num: string) {
 
 export function validateDigitString(num: string) {
   num = num.replace(/\s/g, '');
-  console.log(num);
   return /^[0-9]+$/.test(num);
 }
 

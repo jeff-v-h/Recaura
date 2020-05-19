@@ -109,7 +109,7 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
           name="email"
           setValue={setValue}
           error={errors.email}
-          errorMsg={'Email required'}
+          errorMsg={'Email invalid'}
           inputStyle={style.hookInputLong}
         />
         <div className={style.phoneSection}>
