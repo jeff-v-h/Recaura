@@ -6,6 +6,7 @@ import * as patientActions from '../../stores/patients/patientActions';
 import { ApplicationState } from '../../stores';
 import { Descriptions } from 'antd';
 import style from './patientInfo.scss';
+import { parseDateString } from '../../helpers/utils';
 
 const Item = Descriptions.Item;
 
@@ -43,7 +44,7 @@ class PatientInfo extends React.Component<Props> {
           <Item label="Last Name">
             <Link to={`/patients/${match.params.patientId}`}>{lastName}</Link>
           </Item>
-          <Item label="DOB">{dob}</Item>
+          <Item label="DOB">{parseDateString(dob)}</Item>
           <Item label="Gender">{gender}</Item>
           <Item label="Occupation">{occupation}</Item>
         </Descriptions>

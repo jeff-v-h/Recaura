@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export enum ConsultPart {
   Subjective,
   Objective,
@@ -11,4 +13,10 @@ export function capitalise(word: string) {
 
 export async function sleep(ms: number) {
   await new Promise((res: any) => setTimeout(res, ms));
+}
+
+export function parseDateString(ds: string) {
+  if (!ds) return '';
+  const m = moment(ds);
+  return m.format('LL');
 }

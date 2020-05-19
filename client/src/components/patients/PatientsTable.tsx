@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import { Patient } from 'src/models/patientModels';
 import { RowData } from './patientRowData';
 import style from './patients.scss';
+import { parseDateString } from '../../helpers/utils';
 
 const columns = [
   {
@@ -35,7 +36,7 @@ const PatientsTable = ({ onRowClick, patients }: Props) => {
       key: patient.id,
       firstName: patient.firstName,
       lastName: patient.lastName,
-      dob: patient.dob
+      dob: parseDateString(patient.dob)
     }));
   };
 
