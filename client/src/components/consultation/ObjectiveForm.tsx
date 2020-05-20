@@ -4,7 +4,6 @@ import { ObjectiveAssessment } from '../../models/consultationModels';
 import { Button } from 'antd';
 import HookTextArea from '../common/HookTextArea';
 import style from '../common/hookForm.scss';
-import * as V from '../../helpers/formHelper';
 
 interface Props {
   onSubmit: (data: ObjectiveAssessment) => void;
@@ -13,7 +12,7 @@ interface Props {
 }
 
 function ObjectiveForm({ data, onSubmit, formRef }: Props) {
-  const { register, handleSubmit, setValue, control } = useForm<ObjectiveAssessment>({
+  const { register, handleSubmit, setValue } = useForm<ObjectiveAssessment>({
     // Set empty strings for non required inputs to ensure undefined not passed through
     defaultValues: {
       observation: '',

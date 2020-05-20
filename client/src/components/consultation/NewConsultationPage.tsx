@@ -10,6 +10,7 @@ import style from './consultation.scss';
 import { ConsultPart } from '../../helpers/utils';
 import Subjective from './Subjective';
 import Objective from './Objective';
+import TreatmentsAndPlan from './TreatmentsAndPlan';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -43,9 +44,9 @@ class NewConsultationPage extends React.Component<Props, State> {
         return <Subjective display={consultPart} changeSection={this.selectSection} />;
       case ConsultPart.Objective:
         return <Objective display={consultPart} changeSection={this.selectSection} />;
-      // case ConsultPart.Treatments:
-      // case ConsultPart.Plan:
-      //   return <TreatmentsAndPlan consultId={consultId} />;
+      case ConsultPart.Treatments:
+      case ConsultPart.Plan:
+        return <TreatmentsAndPlan display={consultPart} changeSection={this.selectSection} />;
       default:
         return null;
     }
