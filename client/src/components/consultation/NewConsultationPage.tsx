@@ -8,9 +8,10 @@ import { ConsultationBase } from 'src/models/consultationModels';
 import PatientInfo from '../common/PatientInfo';
 import style from './consultation.scss';
 import { ConsultPart } from '../../helpers/utils';
-import TreatmentsAndPlan from './TreatmentsAndPlan';
+import TreatmentsAndPlanForm from './TreatmentsAndPlanForm';
 import SubjectiveForm from './SubjectiveForm';
 import ObjectiveForm from './ObjectiveForm';
+import moment from 'moment';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -31,17 +32,28 @@ class NewConsultationPage extends React.Component<Props, State> {
     this.props.clearConsult();
   }
 
-  onSubmit = (values: ConsultationBase) => {
-    values.patientId = this.props.match.params.patientId;
-    this.props.createConsult(values);
+  onSubmit = () => {
+    const { subjectiveAssessment, objectiveAssessment, treatments, plans, match } = this.props;
+    const { patientId, casefileId } = match.params;
+
+    this.props.createConsult({
+      subjectiveAssessment,
+      objectiveAssessment,
+      treatments,
+      plans,
+      patientId,
+      casefileId,
+      practitionerId: '5eba9093e047213db0cbcd38',
+      date: moment().format(),
+      number: 1
+    });
   };
 
-  selectSection = (display: ConsultPart) => {
-    this.setState({ display });
-  };
+  selectSection = (display: ConsultPart) => this.setState({ display });
 
   renderConsultSection = (consultPart: ConsultPart) => {
-    const { modifySubjective, modifyObjective } = this.props;
+    const { modifySubjective, modifyObjective, modifyTreatmentsAndPlans } = this.props;
+
     switch (consultPart) {
       case ConsultPart.Subjective:
         return (
@@ -59,11 +71,15 @@ class NewConsultationPage extends React.Component<Props, State> {
             saveValues={modifyObjective}
           />
         );
-      case ConsultPart.Treatments:
-      case ConsultPart.Plan:
-        return <TreatmentsAndPlan display={consultPart} changeSection={this.selectSection} />;
       default:
-        return null;
+        return (
+          <TreatmentsAndPlanForm
+            display={consultPart}
+            changeSection={this.selectSection}
+            saveValues={modifyTreatmentsAndPlans}
+            createConsult={this.onSubmit}
+          />
+        );
     }
   };
 

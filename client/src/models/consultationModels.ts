@@ -1,6 +1,6 @@
 export interface ConsultationBase {
   patientId: string;
-  caseFileId: string;
+  casefileId: string;
   practitionerId: string;
   date: string;
   number: number;

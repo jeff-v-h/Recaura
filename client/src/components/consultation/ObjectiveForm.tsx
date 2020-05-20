@@ -68,7 +68,7 @@ function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
         </div>
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">
-            Objective >
+            Treatments/Plan >
           </Button>
         </div>
       </form>
