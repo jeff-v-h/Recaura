@@ -8,16 +8,15 @@ import {
   TreatmentsAndPlans,
   ConsultationBase
 } from '../../models/consultationModels';
+import { history } from '../../index';
 
 const { C } = T;
 //#region simple action creators
 export const createConsultRequest = () => ({ type: C.CREATE_CONSULTATION_REQUEST });
-export const createConsultSuccess = async (
-  consult: ConsultationBase
-): Promise<T.CreateConsultSuccessAction> => {
+export const createConsultSuccess = (consult: Consultation): T.CreateConsultSuccessAction => {
   return {
     type: C.CREATE_CONSULTATION_SUCCESS,
-    payload: await consultationService.createConsultation(consult)
+    payload: consult
   };
 };
 export const createConsultFailure = () => ({ type: C.CREATE_CONSULTATION_FAILURE });
@@ -68,7 +67,9 @@ export const createConsult = (
   dispatch(createConsultRequest());
 
   try {
-    dispatch(await createConsultSuccess(consult));
+    const newConsult = await consultationService.createConsultation(consult);
+    dispatch(createConsultSuccess(newConsult));
+    history.push(`/patients/${newConsult.patientId}/casefiles/${newConsult.casefileId}`);
   } catch (e) {
     dispatch(getConsultsFailure());
   }
