@@ -8,9 +8,9 @@ import { ConsultationBase } from 'src/models/consultationModels';
 import PatientInfo from '../common/PatientInfo';
 import style from './consultation.scss';
 import { ConsultPart } from '../../helpers/utils';
-import Subjective from './Subjective';
 import Objective from './Objective';
 import TreatmentsAndPlan from './TreatmentsAndPlan';
+import SubjectiveForm from './SubjectiveForm';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -36,12 +36,21 @@ class NewConsultationPage extends React.Component<Props, State> {
     this.props.createConsult(values);
   };
 
-  selectSection = (display: ConsultPart) => this.setState({ display });
+  selectSection = (display: ConsultPart) => {
+    this.setState({ display });
+  };
 
   renderConsultSection = (consultPart: ConsultPart) => {
+    const { modifySubjective } = this.props;
     switch (consultPart) {
       case ConsultPart.Subjective:
-        return <Subjective display={consultPart} changeSection={this.selectSection} />;
+        return (
+          <SubjectiveForm
+            display={consultPart}
+            changeSection={this.selectSection}
+            saveValues={modifySubjective}
+          />
+        );
       case ConsultPart.Objective:
         return <Objective display={consultPart} changeSection={this.selectSection} />;
       case ConsultPart.Treatments:
