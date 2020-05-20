@@ -1,12 +1,21 @@
 import { ApiService } from './apiService';
 import { AxiosResponse } from 'axios';
-import { Casefile } from 'src/models/casefileModels';
-import { message } from 'antd';
+import { Casefile, CasefileBase } from 'src/models/casefileModels';
 import { keys } from '../helpers/keys';
 
 const { apiUrl } = keys;
 
 class CasefileService extends ApiService {
+  createCasefile = async (casefile: CasefileBase): Promise<Casefile> => {
+    try {
+      const url = `${apiUrl}/casefiles`;
+      const resp = (await this.post(url, casefile)) as AxiosResponse<Casefile>;
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
+    }
+  };
+
   getCasefile = async (id: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/casefiles/${id}`;

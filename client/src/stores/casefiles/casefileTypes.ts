@@ -46,11 +46,11 @@ export interface UpdateCasefileSuccessAction extends ReduxAction {
   payload: Casefile;
 }
 
-export type CeateCasefileKnownAction = ReduxAction | CreateCasefileSuccessAction;
+export type CreateCasefileKnownAction = ReduxAction | CreateCasefileSuccessAction;
 export type GetCasefileKnownAction = ReduxAction | GetCasefileSuccessAction;
 export type GetCasefilesKnownAction = ReduxAction | GetCasefilesSuccessAction;
 export type KnownAction =
-  | CeateCasefileKnownAction
+  | CreateCasefileKnownAction
   | GetCasefilesKnownAction
   | SelectCasefileAction
   | GetCasefileKnownAction;

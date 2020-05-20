@@ -1,13 +1,13 @@
 import { AxiosResponse } from 'axios';
 import { message } from 'antd';
-import { Patient } from 'src/models/patientModels';
+import { Patient, PatientBase } from 'src/models/patientModels';
 import { ApiService } from './apiService';
 import { keys } from '../helpers/keys';
 
 const { apiUrl } = keys;
 
 class PatientsService extends ApiService {
-  createPatient = async (patient: Omit<Patient, 'id'>): Promise<Patient> => {
+  createPatient = async (patient: PatientBase): Promise<Patient> => {
     try {
       const url = `${apiUrl}/patients`;
       const resp = (await this.post(url, patient)) as AxiosResponse<Patient>;
