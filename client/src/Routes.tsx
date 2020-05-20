@@ -4,7 +4,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import PatientPage from './components/patient/PatientPage';
 import CasefilesPage from './components/casefiles/CasefilesPage';
 import ConsultationPage from './components/consultation/ConsultationPage';
-import CasefilePage from './components/file/CasefilePage';
+import CasefilePage from './components/casefile/CasefilePage';
 import PatientsPage from './components/patients/PatientsPage';
 import NewPatientPage from './components/patient/NewPatientPage';
 import NewCasefilePage from './components/casefile/NewCasefilePage';
