@@ -1,32 +1,32 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { compose } from 'redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { ApplicationState } from '../../stores';
-// import style from './patient.scss';
-// import NewPatientForm from './NewPatientForm';
+import NewCasefileForm from './NewCasefileForm';
 import { CasefileBase } from 'src/models/casefileModels';
 import PatientInfo from '../common/PatientInfo';
 
 const mapStateToProps = (state: ApplicationState) => state.casefile;
 const connector = connect(mapStateToProps, casefileActions);
 
-type Props = ConnectedProps<typeof connector>;
+type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ patientId: string }>;
 
 class NewCasefilePage extends React.Component<Props> {
   onSubmit = async (values: CasefileBase) => {
+    values.patientId = this.props.match.params.patientId;
     this.props.createCasefile(values);
   };
 
   render() {
-    const { isFetching } = this.props;
-
     return (
       <>
         <PatientInfo />
-        {/* <NewPatientForm onSubmit={this.onSubmit} isSaving={isFetching} /> */}
+        <NewCasefileForm onSubmit={this.onSubmit} isSaving={this.props.isFetching} />
       </>
     );
   }
 }
 
-export default connector(NewCasefilePage);
+export default compose<React.ComponentType>(withRouter, connector)(NewCasefilePage);
