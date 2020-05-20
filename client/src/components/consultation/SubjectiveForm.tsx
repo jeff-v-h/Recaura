@@ -4,7 +4,6 @@ import { SubjectiveAssessment } from '../../models/consultationModels';
 import { Button } from 'antd';
 import HookTextArea from '../common/HookTextArea';
 import style from '../common/hookForm.scss';
-import * as V from '../../helpers/formHelper';
 import HookVasSelect from '../common/HookVasSelect';
 
 interface Props {

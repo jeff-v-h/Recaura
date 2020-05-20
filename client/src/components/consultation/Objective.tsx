@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import * as consultActions from '../../stores/consultations/consultationActions';
 import { ApplicationState } from '../../stores';
-import SubjectiveForm from './SubjectiveForm';
+import ObjectiveForm from './ObjectiveForm';
 import { RadioChangeEvent } from 'antd/lib/radio';
-import { SubjectiveAssessment } from '../../models/consultationModels';
+import { ObjectiveAssessment } from '../../models/consultationModels';
 import NavPills from './NavPills';
 import { ConsultPart } from '../../helpers/utils';
 
@@ -16,12 +16,12 @@ const connector = connect(mapStateToProps, consultActions);
 type ParentProps = { display: ConsultPart; changeSection: (display: ConsultPart) => void };
 type Props = ConnectedProps<typeof connector> & ParentProps;
 
-class Subjective extends React.Component<Props> {
+class Objective extends React.Component<Props> {
   formRef: React.RefObject<HTMLFormElement> = React.createRef();
 
-  saveForm = (values: SubjectiveAssessment) => {
-    this.props.modifySubjective(values);
-    this.props.changeSection(ConsultPart.Objective);
+  saveForm = (values: ObjectiveAssessment) => {
+    this.props.modifyObjective(values);
+    this.props.changeSection(ConsultPart.Treatments);
   };
 
   onChangeSection = (e: RadioChangeEvent) => {
@@ -30,15 +30,15 @@ class Subjective extends React.Component<Props> {
   };
 
   render() {
-    const { subjectiveAssessment, display } = this.props;
+    const { objectiveAssessment, display } = this.props;
 
     return (
       <>
         <NavPills value={display} onChange={this.onChangeSection} />
-        <SubjectiveForm formRef={this.formRef} onSubmit={this.saveForm} />
+        <ObjectiveForm formRef={this.formRef} onSubmit={this.saveForm} />
       </>
     );
   }
 }
 
-export default compose<React.ComponentType<ParentProps>>(withRouter, connector)(Subjective);
+export default compose<React.ComponentType<ParentProps>>(withRouter, connector)(Objective);

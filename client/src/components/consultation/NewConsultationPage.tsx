@@ -9,6 +9,7 @@ import PatientInfo from '../common/PatientInfo';
 import style from './consultation.scss';
 import { ConsultPart } from '../../helpers/utils';
 import Subjective from './Subjective';
+import Objective from './Objective';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -40,8 +41,8 @@ class NewConsultationPage extends React.Component<Props, State> {
     switch (consultPart) {
       case ConsultPart.Subjective:
         return <Subjective display={consultPart} changeSection={this.selectSection} />;
-      // case ConsultPart.Objective:
-      //   return <Objective consultId={consultId} />;
+      case ConsultPart.Objective:
+        return <Objective display={consultPart} changeSection={this.selectSection} />;
       // case ConsultPart.Treatments:
       // case ConsultPart.Plan:
       //   return <TreatmentsAndPlan consultId={consultId} />;
