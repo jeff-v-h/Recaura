@@ -25,14 +25,19 @@ class CasefilePage extends React.Component<Props> {
   };
 
   render() {
-    const { list, match } = this.props;
+    const { list, match, isFetching } = this.props;
     const { patientId, casefileId } = match.params;
 
     return (
       <>
         <PatientInfo />
         <CasefileInfo />
-        <Consultations consults={list} patientId={patientId} casefileId={casefileId} />
+        <Consultations
+          consults={list}
+          patientId={patientId}
+          casefileId={casefileId}
+          isSaving={isFetching}
+        />
       </>
     );
   }

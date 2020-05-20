@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { ApplicationState } from '../../stores';
 import style from './casefileInfo.scss';
+import { capitalise } from '../../helpers/utils';
 
 const mapStateToProps = (state: ApplicationState) => state.casefile;
 const connector = connect(mapStateToProps, casefileActions);
@@ -36,7 +37,7 @@ class CasefileInfo extends React.Component<Props> {
       <>
         <div className={style.subHeader}>
           <Link to={`/patients/${patientId}/casefiles/${casefileId}`}>
-            <h3 className="sub-header">{this.props.name}</h3>
+            <h3 className="sub-header">{capitalise(this.props.name)}</h3>
           </Link>
         </div>
       </>

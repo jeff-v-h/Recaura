@@ -17,6 +17,5 @@ export async function sleep(ms: number) {
 
 export function parseDateString(ds: string) {
   if (!ds) return '';
-  const m = moment(ds);
-  return m.format('LL');
+  return moment(ds).format('Do MMM YYYY');
 }
