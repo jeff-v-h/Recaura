@@ -4,15 +4,15 @@ export interface ConsultationBase {
   practitionerId: string;
   date: string;
   number: number;
-  subjectiveAssessment: SubjectiveAssessment | null;
-  objectiveAssessment: ObjectiveAssessment | null;
+  subjectiveAssessment?: SubjectiveAssessment;
+  objectiveAssessment?: ObjectiveAssessment;
   treatments: string;
   plans: string;
 }
 
 export interface Consultation extends ConsultationBase {
   id: string;
-  practitioner: ConsultPractitioner | null;
+  practitioner?: ConsultPractitioner;
 }
 
 export interface ConsultPractitioner {

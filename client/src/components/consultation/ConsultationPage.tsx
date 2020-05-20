@@ -1,16 +1,16 @@
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import style from './consultation.scss';
-import Subjective from './Subjective';
+import SubjectiveSection from './SubjectiveSection';
 import { ConsultPart } from '../../helpers/utils';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import NavPills from './NavPills';
-import Objective from './Objective';
+import ObjectiveSection from './ObjectiveSection';
 import * as consultActions from '../../stores/consultations/consultationActions';
 import { ApplicationState } from '../../stores';
 import { compose } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import TreatmentsAndPlan from './TreatmentsAndPlan';
+import TreatmentsAndPlanSection from './TreatmentsAndPlanSection';
 import PatientInfo from '../common/PatientInfo';
 import CasefileInfo from '../common/CasefileInfo';
 
@@ -23,7 +23,7 @@ type State = {
   display: ConsultPart;
 };
 
-class Consultation extends React.Component<Props, State> {
+class ConsultationPage extends React.Component<Props, State> {
   state = {
     display: ConsultPart.Subjective
   };
@@ -50,12 +50,12 @@ class Consultation extends React.Component<Props, State> {
   renderConsultSection = (consultPart: ConsultPart, consultId: string) => {
     switch (consultPart) {
       case ConsultPart.Subjective:
-        return <Subjective consultId={consultId} />;
+        return <SubjectiveSection consultId={consultId} />;
       case ConsultPart.Objective:
-        return <Objective consultId={consultId} />;
+        return <ObjectiveSection consultId={consultId} />;
       case ConsultPart.Treatments:
       case ConsultPart.Plan:
-        return <TreatmentsAndPlan consultId={consultId} />;
+        return <TreatmentsAndPlanSection consultId={consultId} />;
       default:
         return null;
     }
@@ -78,4 +78,4 @@ class Consultation extends React.Component<Props, State> {
   }
 }
 
-export default compose<React.ComponentType>(withRouter, connector)(Consultation);
+export default compose<React.ComponentType>(withRouter, connector)(ConsultationPage);

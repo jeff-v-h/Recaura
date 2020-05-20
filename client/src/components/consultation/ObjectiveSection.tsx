@@ -14,7 +14,7 @@ import { FormInstance } from 'antd/lib/form';
 type ParentProps = { consultId: string };
 type Props = ConsultationState & typeof consultActions & ParentProps;
 
-class Objective extends React.Component<Props> {
+class ObjectiveSection extends React.Component<Props> {
   formRef: React.RefObject<FormInstance> = React.createRef();
 
   componentWillUnmount() {
@@ -83,4 +83,4 @@ const mapStateToProps = (state: ApplicationState) => state.consultation;
 export default compose<React.ComponentType<ParentProps>>(
   withRouter,
   connect(mapStateToProps, consultActions)
-)(Objective);
+)(ObjectiveSection);

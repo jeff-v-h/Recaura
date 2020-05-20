@@ -36,7 +36,7 @@ class CasefilePage extends React.Component<Props> {
           consults={list}
           patientId={patientId}
           casefileId={casefileId}
-          isSaving={isFetching}
+          isFetching={isFetching}
         />
       </>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import Subjective from './Subjective';
+import Subjective from './SubjectiveSection';
 import { shallow, ShallowWrapper, mount, ReactWrapper } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';

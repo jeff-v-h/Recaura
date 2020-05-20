@@ -12,9 +12,9 @@ export const unloadedState: T.ConsultationState = {
   practitionerId: '',
   date: '',
   number: 0,
-  practitioner: null,
-  subjectiveAssessment: null,
-  objectiveAssessment: null,
+  practitioner: undefined,
+  subjectiveAssessment: undefined,
+  objectiveAssessment: undefined,
   treatments: '',
   plans: ''
 };
@@ -63,6 +63,8 @@ const reducer: Reducer<T.ConsultationState> = (
     case C.UPDATE_CONSULTATION_FAILURE:
       return { ...state, isFetching: false };
 
+    case C.CLEAR_CONSULTATION:
+      return { ...unloadedState, list: state.list };
     case C.MODIFY_SUBJECTIVE:
       obj = action as T.ModifySubjective;
       return { ...state, subjectiveAssessment: obj.payload };
