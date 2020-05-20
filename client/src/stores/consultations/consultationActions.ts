@@ -5,11 +5,23 @@ import {
   Consultation,
   SubjectiveAssessment,
   ObjectiveAssessment,
-  TreatmentsAndPlans
+  TreatmentsAndPlans,
+  ConsultationBase
 } from '../../models/consultationModels';
 
 const { C } = T;
 //#region simple action creators
+export const createConsultRequest = () => ({ type: C.CREATE_CONSULTATION_REQUEST });
+export const createConsultSuccess = async (
+  consult: ConsultationBase
+): Promise<T.CreateConsultSuccessAction> => {
+  return {
+    type: C.CREATE_CONSULTATION_SUCCESS,
+    payload: await consultationService.createConsultation(consult)
+  };
+};
+export const createConsultFailure = () => ({ type: C.CREATE_CONSULTATION_FAILURE });
+
 export const getConsultsRequest = () => ({ type: C.GET_CONSULTATIONS_REQUEST });
 export const getConsultsSuccess = async (
   casefileId: string
@@ -49,6 +61,18 @@ export const modifyTreatmentsAndPlans = (treatmentAndPlans: TreatmentsAndPlans) 
 //#endregion
 
 //#region Thunk actions creators
+export const createConsult = (
+  consult: ConsultationBase
+): AppThunkAction<T.CreateConsultKnownAction> => async (dispatch) => {
+  dispatch(createConsultRequest());
+
+  try {
+    dispatch(await createConsultSuccess(consult));
+  } catch (e) {
+    dispatch(getConsultsFailure());
+  }
+};
+
 export const getConsults = (casefileId: string): AppThunkAction<T.GetConsultKnownAction> => async (
   dispatch
 ) => {

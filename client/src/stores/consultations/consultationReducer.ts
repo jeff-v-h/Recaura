@@ -23,13 +23,19 @@ const reducer: Reducer<T.ConsultationState> = (
   state: T.ConsultationState | undefined,
   incomingAction: T.KnownAction
 ): T.ConsultationState => {
-  if (state === undefined) {
-    return unloadedState;
-  }
+  if (state === undefined) return unloadedState;
 
   const action = incomingAction as T.KnownAction;
   let obj;
   switch (action.type) {
+    case C.CREATE_CONSULTATION_REQUEST:
+      return { ...state, isFetching: true };
+    case C.CREATE_CONSULTATION_SUCCESS:
+      obj = action as T.CreateConsultSuccessAction;
+      return { ...state, isFetching: false, ...obj.payload };
+    case C.CREATE_CONSULTATION_FAILURE:
+      return { ...state, isFetching: false };
+
     case C.GET_CONSULTATIONS_REQUEST:
       return { ...state, isFetching: true, list: [] };
     case C.GET_CONSULTATIONS_SUCCESS:
