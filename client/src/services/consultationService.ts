@@ -19,8 +19,8 @@ class ConsultationService extends ApiService {
 
   async getConsultations(casefileId?: string): Promise<Consultation[]> {
     try {
-      let url = `${apiUrl}/consultations`;
-      if (casefileId) url += `?casefileId=${casefileId}`;
+      let url = `${apiUrl}/consultations?sortBy=date:desc`;
+      if (casefileId) url += `&casefileId=${casefileId}`;
       const resp = (await this.get(url)) as AxiosResponse<Consultation[]>;
       return resp.data;
     } catch (e) {

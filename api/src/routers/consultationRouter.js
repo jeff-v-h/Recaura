@@ -16,7 +16,6 @@ router.post('/consultations', async (req, res) => {
 // GET /consultations?patientId=125689
 // GET /consultations?casefileId=125689
 // GET /consultations?practitionerId=125689
-// GET /consultations?number=1
 // GET /consultations?limit=10&skip=10
 // GET /consultations?sortBy=createdAt:desc
 router.get('/consultations', async (req, res) => {
@@ -28,8 +27,6 @@ router.get('/consultations', async (req, res) => {
   if (req.query.casefileId) match.casefileId = req.query.casefileId;
 
   if (req.query.practitionerId) match.practitionerId = req.query.practitionerId;
-
-  if (req.query.number) match.number = req.query.number;
 
   if (req.query.sortBy) {
     const parts = req.query.sortBy.split(':');

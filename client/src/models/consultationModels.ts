@@ -3,7 +3,6 @@ export interface ConsultationBase {
   casefileId: string;
   practitionerId: string;
   date: string;
-  number: number;
   subjectiveAssessment?: SubjectiveAssessment;
   objectiveAssessment?: ObjectiveAssessment;
   treatments: string;

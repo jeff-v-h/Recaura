@@ -31,7 +31,6 @@ const consultationSchema = new Schema(
     patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
     casefileId: { type: Schema.Types.ObjectId, ref: 'Casefile', required: true },
     date: { type: Date, default: new Date() },
-    number: { type: Number, default: 1, min: 1 },
     practitionerId: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
     subjectiveAssessment: subjectiveSchema,
     objectiveAssessment: objectiveSchema,
