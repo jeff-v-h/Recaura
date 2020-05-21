@@ -17,6 +17,7 @@ interface Props {
 }
 
 function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
+  console.log('rendered', data);
   const defaultValues = data ?? {
     moi: '',
     currentHistory: '',
@@ -35,7 +36,7 @@ function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
     defaultValues
   });
 
-  useEffect(() => register({ name: 'moi' }), []);
+  // useEffect(() => register({ name: 'moi' }), []);
   useEffect(() => register({ name: 'currentHistory' }), []);
   useEffect(() => register({ name: 'bodyChart' }), []);
   useEffect(() => register({ name: 'aggravatingFactors' }), []);
@@ -60,12 +61,13 @@ function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
       <NavPills value={display} onChange={onChangeSection} />
       <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
         <div className={style.inputSection}>
-          <HookTextArea
+          <textarea id={'moi'} name={'moi'} ref={register} />
+          {/* <HookTextArea
             label="MOI"
             name="moi"
             setValue={setValue}
             defaultValue={defaultValues.moi}
-          />
+          /> */}
           <HookTextArea
             label="Current History"
             name="currentHistory"
