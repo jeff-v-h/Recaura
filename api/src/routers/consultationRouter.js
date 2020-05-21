@@ -69,7 +69,6 @@ router.patch('/consultations/:id', async (req, res) => {
     'patientId',
     'casefileId',
     'date',
-    'number',
     'practitionerId',
     'subjectiveAssessment',
     'objectiveAssessment',

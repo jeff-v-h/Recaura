@@ -8,18 +8,12 @@ import CasefilePage from './components/casefile/CasefilePage';
 import PatientsPage from './components/patients/PatientsPage';
 import NewPatientPage from './components/patient/NewPatientPage';
 import NewCasefilePage from './components/casefile/NewCasefilePage';
-import NewConsultationPage from './components/consultation/NewConsultationPage';
 
 export default class Routes extends React.Component {
   render() {
     return (
       <Switch>
         <Route exact path="/" component={PatientsPage} />
-        <Route
-          exact
-          path="/patients/:patientId/casefiles/:casefileId/consultations/new"
-          component={NewConsultationPage}
-        />
         <Route
           path="/patients/:patientId/casefiles/:casefileId/consultations/:consultId"
           component={ConsultationPage}

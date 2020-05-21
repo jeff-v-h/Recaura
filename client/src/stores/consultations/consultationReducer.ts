@@ -56,14 +56,18 @@ const reducer: Reducer<T.ConsultationState> = (
       return { ...state, isFetching: false };
 
     case C.UPDATE_CONSULTATION_REQUEST:
-      obj = action as T.UpdateConsultRequestAction;
-      return { ...state, isFetching: true, ...obj.payload };
+      return { ...state, isFetching: true };
     case C.UPDATE_CONSULTATION_SUCCESS:
+      obj = action as T.UpdateConsultSuccessAction;
+      return { ...state, isFetching: true, ...obj.payload };
     case C.UPDATE_CONSULTATION_FAILURE:
       return { ...state, isFetching: false };
 
     case C.CLEAR_CONSULTATION:
       return { ...unloadedState, list: state.list };
+    case C.MODIFY_DATE:
+      obj = action as T.ModifyDate;
+      return { ...state, date: obj.payload };
     case C.MODIFY_SUBJECTIVE:
       obj = action as T.ModifySubjective;
       return { ...state, subjectiveAssessment: obj.payload };
