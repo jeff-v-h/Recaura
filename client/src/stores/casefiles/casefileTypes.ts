@@ -53,11 +53,13 @@ export interface DeleteCasefileSuccessAction extends ReduxAction {
 export type CreateCasefileKnownAction = ReduxAction | CreateCasefileSuccessAction;
 export type GetCasefilesKnownAction = ReduxAction | GetCasefilesSuccessAction;
 export type GetCasefileKnownAction = ReduxAction | GetCasefileSuccessAction;
+export type UpdateCasefileKnownAction = ReduxAction | UpdateCasefileSuccessAction;
 export type DeleteCasefileKnownAction = ReduxAction | DeleteCasefileSuccessAction;
 export type KnownAction =
   | CreateCasefileKnownAction
   | GetCasefilesKnownAction
   | SelectCasefileAction
   | GetCasefileKnownAction
+  | UpdateCasefileKnownAction
   | DeleteCasefileKnownAction;
 //#endregion actions

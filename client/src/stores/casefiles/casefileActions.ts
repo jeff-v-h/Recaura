@@ -63,6 +63,20 @@ export const getCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction
   }
 };
 
+export const updateCasefile = (
+  id: string,
+  file: CasefileBase
+): AppThunkAction<T.UpdateCasefileKnownAction> => async (dispatch) => {
+  dispatch({ type: C.UPDATE_CASEFILE_REQUEST });
+
+  try {
+    const casefile = await casefileService.updateCasefile(id, file);
+    dispatch({ type: C.UPDATE_CASEFILE_SUCCESS, payload: casefile });
+  } catch (e) {
+    dispatch({ type: C.UPDATE_CASEFILE_FAILURE });
+  }
+};
+
 export const deleteCasefile = (id: string): AppThunkAction<T.DeleteCasefileKnownAction> => async (
   dispatch
 ) => {

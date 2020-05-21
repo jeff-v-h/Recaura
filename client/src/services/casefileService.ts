@@ -37,6 +37,17 @@ class CasefileService extends ApiService {
     }
   };
 
+  updateCasefile = async (id: string, casefile: CasefileBase): Promise<Casefile> => {
+    try {
+      const url = `${apiUrl}/casefiles/${id}`;
+      const resp = (await this.patch(url, casefile)) as AxiosResponse<Casefile>;
+      message.success('Casefile updated');
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
+    }
+  };
+
   deleteCasefile = async (id: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/casefiles/${id}`;

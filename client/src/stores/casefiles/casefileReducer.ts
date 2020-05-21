@@ -51,6 +51,14 @@ const reducer: Reducer<T.CasefileState> = (
     case C.GET_CASEFILE_FAILURE:
       return { ...state, isFetching: false };
 
+    case C.UPDATE_CASEFILE_REQUEST:
+      return { ...state, isFetching: true };
+    case C.UPDATE_CASEFILE_SUCCESS:
+      obj = action as T.UpdateCasefileSuccessAction;
+      return { ...state, isFetching: false, ...obj.payload };
+    case C.UPDATE_CASEFILE_FAILURE:
+      return { ...state, isFetching: false };
+
     case C.DELETE_CASEFILE_REQUEST:
       return { ...state, isFetching: true };
     case C.DELETE_CASEFILE_SUCCESS:

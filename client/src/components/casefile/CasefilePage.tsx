@@ -25,9 +25,10 @@ class CasefilePage extends React.Component<Props, State> {
   };
 
   onSubmit = async (values: CasefileBase) => {
-    const { match, createCasefile } = this.props;
-    values.patientId = match.params.patientId;
-    createCasefile(values);
+    const { match, createCasefile, updateCasefile } = this.props;
+    const { patientId, casefileId } = match.params;
+    values.patientId = patientId;
+    this.state.isNew ? createCasefile(values) : updateCasefile(casefileId, values);
   };
 
   deleteCasefile = () => this.props.deleteCasefile(this.props.match.params.casefileId);
