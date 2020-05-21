@@ -14,28 +14,34 @@ const connector = connect(mapStateToProps, consultationActions);
 type Props = ConnectedProps<typeof connector> &
   RouteComponentProps<{ patientId: string; casefileId: string }>;
 
-class CasefilePage extends React.Component<Props> {
+class ConsultationsPage extends React.Component<Props> {
   componentDidMount() {
     this.ensureDataFetched();
   }
 
   private ensureDataFetched = () => {
-    const { list, match, getConsults } = this.props;
-    if (list.length === 0) getConsults(match.params.casefileId);
+    const { list, match, getConsults, id } = this.props;
+    const { casefileId } = match.params;
+    if (list.length === 0 || id !== casefileId) getConsults(casefileId);
   };
 
   render() {
-    const { list, match } = this.props;
+    const { list, match, isFetching } = this.props;
     const { patientId, casefileId } = match.params;
 
     return (
       <>
         <PatientInfo />
         <CasefileInfo />
-        <Consultations consults={list} patientId={patientId} casefileId={casefileId} />
+        <Consultations
+          consults={list}
+          patientId={patientId}
+          casefileId={casefileId}
+          isFetching={isFetching}
+        />
       </>
     );
   }
 }
 
-export default compose<React.ComponentType>(withRouter, connector)(CasefilePage);
+export default compose<React.ComponentType>(withRouter, connector)(ConsultationsPage);

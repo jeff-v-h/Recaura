@@ -4,7 +4,6 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { ApplicationState } from '../../stores';
-import moment from 'moment';
 import PatientInfo from '../common/PatientInfo';
 import Casefiles from './Casefiles';
 
@@ -23,16 +22,12 @@ class CasefilesPage extends React.Component<Props> {
     getCasefiles(match.params.patientId);
   };
 
-  getFormattedDate(date: string) {
-    return moment(date).format('Do MMM YYYY');
-  }
-
   render() {
-    const { list, match } = this.props;
+    const { list, match, isFetching } = this.props;
     return (
       <>
         <PatientInfo />
-        <Casefiles files={list} patientId={match.params.patientId} />
+        <Casefiles files={list} patientId={match.params.patientId} isFetching={isFetching} />
       </>
     );
   }

@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { PatientBase } from '../../models/patientModels';
-import { Button, Spin } from 'antd';
-import HookFormInput from '../common/HookFormInput';
-import style from '../common/hookForm.scss';
-import HookHonorificSelect from '../common/HookHonorificSelect';
-import HookGenderSelect from '../common/HookGenderSelect';
-import HookCountryCodeSelect from '../common/HookCountryCodeSelect';
+import { Button } from 'antd';
+import HookFormInput from '../common/forms/HookFormInput';
+import style from '../common/forms/hookForm.scss';
+import HookHonorificSelect from '../common/forms/HookHonorificSelect';
+import HookGenderSelect from '../common/forms/HookGenderSelect';
+import HookCountryCodeSelect from '../common/forms/HookCountryCodeSelect';
 import * as V from '../../helpers/formHelper';
-import HookDatePicker from '../common/HookDatePicker';
-import { LoadingOutlined } from '@ant-design/icons';
-
-const spinIcon = <LoadingOutlined style={{ fontSize: 18 }} spin />;
+import HookDatePicker from '../common/forms/HookDatePicker';
+import Spinner from '../common/Spinner';
 
 interface Props {
   onSubmit: (data: PatientBase) => void;
@@ -135,7 +133,7 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
         </div>
       </div>
       <div className={style.submitRow}>
-        <div className={style.spinner}>{isSaving && <Spin indicator={spinIcon} />}</div>
+        <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
         <Button type="primary" disabled={isSaving} htmlType="submit">
           Add Patient
         </Button>

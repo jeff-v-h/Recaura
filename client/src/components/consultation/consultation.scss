@@ -1,3 +1,16 @@
-.container {
-  padding: 1px;
+@import '../common/variables';
+
+.consultDateLabel {
+  padding-right: 5rem;
+}
+
+.dateRow {
+  max-width: $form-max-width;
+  margin: 0 auto 16rem;
+}
+
+.dateRowSpaced {
+  @extend .dateRow;
+  display: flex;
+  justify-content: space-between;
 }

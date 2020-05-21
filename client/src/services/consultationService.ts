@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Consultation } from '../models/consultationModels';
+import { Consultation, ConsultationBase } from '../models/consultationModels';
 import { message } from 'antd';
 import { ApiService } from './apiService';
 import { keys } from '../helpers/keys';
@@ -7,7 +7,7 @@ import { keys } from '../helpers/keys';
 const { apiUrl } = keys;
 
 class ConsultationService extends ApiService {
-  async createConsultation(consult: Omit<Consultation, 'id'>): Promise<Consultation> {
+  async createConsultation(consult: ConsultationBase): Promise<Consultation> {
     try {
       const url = `${apiUrl}/consultations`;
       const resp = (await this.post(url, consult)) as AxiosResponse<Consultation>;
@@ -17,9 +17,10 @@ class ConsultationService extends ApiService {
     }
   }
 
-  async getConsultations(casefileId: string): Promise<Consultation[]> {
+  async getConsultations(casefileId?: string): Promise<Consultation[]> {
     try {
-      const url = `${apiUrl}/consultations?casefileId=${casefileId}`;
+      let url = `${apiUrl}/consultations?sortBy=date:desc`;
+      if (casefileId) url += `&casefileId=${casefileId}`;
       const resp = (await this.get(url)) as AxiosResponse<Consultation[]>;
       return resp.data;
     } catch (e) {
@@ -37,7 +38,7 @@ class ConsultationService extends ApiService {
     }
   }
 
-  async updateConsultation(id: string, consult: Consultation): Promise<Consultation> {
+  async updateConsultation(id: string, consult: ConsultationBase): Promise<Consultation> {
     try {
       const url = `${apiUrl}/consultations/${id}`;
       const resp = (await this.patch(url, consult)) as AxiosResponse<Consultation>;

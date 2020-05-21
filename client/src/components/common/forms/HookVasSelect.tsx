@@ -2,35 +2,37 @@ import React from 'react';
 import style from './hookForm.scss';
 import { Controller, Control } from 'react-hook-form';
 import { Select } from 'antd';
-import { Gender } from '../../models/enums';
 import HookSelectContainer from './HookSelectContainer';
-
-const { Option } = Select;
 
 interface Props {
   control: Control;
+  defaultValue: number;
 }
 
-function HookGenderSelect({ control }: Props) {
+HookVasSelect.defaultProps = {
+  defaultValue: 0
+};
+
+function HookVasSelect({ control, defaultValue }: Props) {
   return (
     <HookSelectContainer>
-      <label className={style.hookInputLabel}>Gender:</label>
+      <label className={style.hookInputLabel}>VAS:</label>
       <Controller
         as={
           <Select className={style.genderSelect}>
-            {Object.values(Gender).map((gender) => (
-              <Option key={gender} value={gender}>
-                {gender}
-              </Option>
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+              <Select.Option key={i} value={i}>
+                {i}
+              </Select.Option>
             ))}
           </Select>
         }
         control={control}
-        name="gender"
-        defaultValue="male"
+        name="vas"
+        defaultValue={defaultValue}
       />
     </HookSelectContainer>
   );
 }
 
-export default HookGenderSelect;
+export default HookVasSelect;

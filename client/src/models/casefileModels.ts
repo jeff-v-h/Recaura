@@ -1,10 +1,13 @@
 import { Gender } from './enums';
 
-export interface Casefile {
-  id: string;
+export interface CasefileBase {
   name: string;
-  createdAt: string;
   patientId: string;
+}
+
+export interface Casefile extends CasefileBase {
+  id: string;
+  createdAt: string;
   consultations: CasefileConsult[] | undefined;
   patient: CasefilePatient | undefined;
 }

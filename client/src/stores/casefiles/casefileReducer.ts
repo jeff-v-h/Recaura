@@ -23,6 +23,14 @@ const reducer: Reducer<T.CasefileState> = (
   const action = incomingAction as T.KnownAction;
   let obj;
   switch (action.type) {
+    case C.CREATE_CASEFILE_REQUEST:
+      return { ...state, isFetching: true };
+    case C.CREATE_CASEFILE_SUCCESS:
+      obj = action as T.CreateCasefileSuccessAction;
+      return { ...state, isFetching: false, ...obj.payload };
+    case C.CREATE_CASEFILE_FAILURE:
+      return { ...state, isFetching: false };
+
     case C.GET_CASEFILES_REQUEST:
       return { ...state, isFetching: true, list: [] };
     case C.GET_CASEFILES_SUCCESS:
@@ -41,6 +49,23 @@ const reducer: Reducer<T.CasefileState> = (
       obj = action as T.GetCasefileSuccessAction;
       return { ...state, isFetching: false, ...obj.payload };
     case C.GET_CASEFILE_FAILURE:
+      return { ...state, isFetching: false };
+
+    case C.UPDATE_CASEFILE_REQUEST:
+      return { ...state, isFetching: true };
+    case C.UPDATE_CASEFILE_SUCCESS:
+      obj = action as T.UpdateCasefileSuccessAction;
+      return { ...state, isFetching: false, ...obj.payload };
+    case C.UPDATE_CASEFILE_FAILURE:
+      return { ...state, isFetching: false };
+
+    case C.DELETE_CASEFILE_REQUEST:
+      return { ...state, isFetching: true };
+    case C.DELETE_CASEFILE_SUCCESS:
+      obj = action as T.DeleteCasefileSuccessAction;
+      const id = obj.payload;
+      return { ...unloadedState, isFetching: false, list: state.list.filter((c) => c.id !== id) };
+    case C.DELETE_CASEFILE_FAILURE:
       return { ...state, isFetching: false };
 
     default:
