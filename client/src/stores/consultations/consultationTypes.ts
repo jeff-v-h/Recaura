@@ -20,6 +20,9 @@ export const C = {
   UPDATE_CONSULTATION_REQUEST: 'UPDATE_CONSULTATION_REQUEST',
   UPDATE_CONSULTATION_SUCCESS: 'UPDATE_CONSULTATION_SUCCESS',
   UPDATE_CONSULTATION_FAILURE: 'UPDATE_CONSULTATION_FAILURE',
+  DELETE_CONSULTATION_REQUEST: 'DELETE_CONSULTATION_REQUEST',
+  DELETE_CONSULTATION_SUCCESS: 'DELETE_CONSULTATION_SUCCESS',
+  DELETE_CONSULTATION_FAILURE: 'DELETE_CONSULTATION_FAILURE',
   MODIFY_DATE: 'MODIFY_DATE',
   MODIFY_SUBJECTIVE: 'MODIFY_SUBJECTIVE',
   MODIFY_OBJECTIVE: 'MODIFY_OBJECTIVE',
@@ -52,6 +55,10 @@ export interface UpdateConsultSuccessAction extends ReduxAction {
   payload: Consultation;
 }
 
+export interface DeleteConsultSuccessAction extends ReduxAction {
+  payload: string;
+}
+
 export interface ModifyDate extends ReduxAction {
   payload: string;
 }
@@ -72,12 +79,14 @@ export type CreateConsultKnownAction = ReduxAction | CreateConsultSuccessAction;
 export type GetConsultsKnownAction = ReduxAction | GetConsultsSuccessAction;
 export type GetConsultKnownAction = ReduxAction | GetConsultSuccessAction;
 export type UpdateConsultKnownAction = ReduxAction | UpdateConsultSuccessAction;
+export type DeleteConsultKnownAction = ReduxAction | DeleteConsultSuccessAction;
 
 export type KnownAction =
   | CreateConsultKnownAction
   | GetConsultsKnownAction
   | GetConsultKnownAction
   | UpdateConsultKnownAction
+  | DeleteConsultKnownAction
   | ModifySubjective
   | ModifyObjective
   | ModifyTreatmentsAndPlans

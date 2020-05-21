@@ -12,7 +12,8 @@ import TreatmentsAndPlanForm from './TreatmentsAndPlanForm';
 import SubjectiveForm from './SubjectiveForm';
 import ObjectiveForm from './ObjectiveForm';
 import moment from 'moment';
-import { DatePicker } from 'antd';
+import { DatePicker, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -120,19 +121,26 @@ class ConsultationPage extends React.Component<Props, State> {
   getDate = (date: string) =>
     !date && this.state.isNewConsult ? moment() : !date ? undefined : moment(date);
 
+  deleteConsult = () => this.props.deleteConsult(this.props.id);
+
   render() {
-    const { display } = this.state;
+    const { display, isNewConsult } = this.state;
     const { date } = this.props;
 
     return (
       <>
         <PatientInfo />
         <CasefileInfo />
-        <div className={style.consultDate}>
-          <label>Consult date:</label>
-          <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} value={this.getDate(date)} />
+        <div className={isNewConsult ? style.dateRow : style.dateRowSpaced}>
+          <div>
+            <label className={style.consultDateLabel}>Consult date:</label>
+            <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} value={this.getDate(date)} />
+          </div>
+          {!isNewConsult && (
+            <Button type="primary" icon={<DeleteOutlined />} onClick={this.deleteConsult} />
+          )}
         </div>
-        <div className={style.container}>{this.renderConsultSection(display)}</div>
+        {this.renderConsultSection(display)}
       </>
     );
   }
