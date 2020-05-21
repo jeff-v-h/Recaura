@@ -2,7 +2,7 @@ import React from 'react';
 import style from './hookForm.scss';
 import { Controller, Control } from 'react-hook-form';
 import { Select } from 'antd';
-import { Honorific } from '../../models/enums';
+import { Honorific } from '../../../models/enums';
 import HookSelectContainer from './HookSelectContainer';
 
 const { Option } = Select;

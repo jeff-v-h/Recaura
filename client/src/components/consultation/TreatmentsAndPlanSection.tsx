@@ -6,7 +6,7 @@ import * as consultActions from '../../stores/consultations/consultationActions'
 import { ConsultationState } from '../../stores/consultations/consultationTypes';
 import { ApplicationState } from '../../stores';
 import { Form, Button } from 'antd';
-import FormTextArea from '../common/FormTextArea';
+import FormTextArea from '../common/forms/FormTextArea';
 import { FormInstance } from 'antd/lib/form';
 import style from './formCommon.scss';
 import { formLayout, tailLayout } from '../../helpers/formHelper';
