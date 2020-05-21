@@ -1,9 +1,6 @@
-.header {
-  margin: 10px 10px 5px;
-  display: flex;
-  justify-content: flex-end;
-}
+@import '../common/variables';
 
-.list {
-  margin-bottom: 70px;
+.casefileSection {
+  max-width: $form-max-width;
+  margin: 20rem auto 0;
 }

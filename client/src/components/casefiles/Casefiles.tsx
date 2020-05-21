@@ -28,7 +28,7 @@ const Casefiles = ({ files, patientId, isFetching }: Props) => (
         </List.Item>
       ) : files.length > 0 ? (
         files.map((file) => (
-          <Link to={`/patients/${patientId}/casefiles/${file.id}`} key={file.id}>
+          <Link to={`/patients/${patientId}/casefiles/${file.id}/consultations`} key={file.id}>
             <List.Item>{file.name}</List.Item>
           </Link>
         ))

@@ -117,4 +117,17 @@ export const updateConsult = (
     dispatch({ type: C.UPDATE_CONSULTATION_FAILURE });
   }
 };
+
+export const deleteConsult = (id: string): AppThunkAction<T.DeleteConsultKnownAction> => async (
+  dispatch
+) => {
+  dispatch({ type: C.DELETE_CONSULTATION_REQUEST });
+
+  try {
+    await consultationService.deleteConsultation(id);
+    dispatch({ type: C.DELETE_CONSULTATION_SUCCESS, payload: id });
+  } catch (e) {
+    dispatch({ type: C.DELETE_CONSULTATION_FAILURE });
+  }
+};
 //#endregion

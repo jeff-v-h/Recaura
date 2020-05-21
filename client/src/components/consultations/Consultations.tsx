@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import style from './casefile.scss';
+import style from './consultations.scss';
 import { Consultation } from '../../models/consultationModels';
 import Spinner from '../common/Spinner';
 import { parseDateString } from '../../helpers/utils';
