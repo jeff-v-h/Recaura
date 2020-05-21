@@ -7,7 +7,6 @@ import { ConsultationState } from '../../stores/consultations/consultationTypes'
 import { ApplicationState } from '../../stores';
 import { Form, Button } from 'antd';
 import FormTextArea from '../common/FormTextArea';
-import FormSelect from '../common/FormSelect';
 import style from './formCommon.scss';
 import { formLayout, tailLayout } from '../../helpers/formHelper';
 import { FormInstance } from 'antd/lib/form';
@@ -15,7 +14,7 @@ import { FormInstance } from 'antd/lib/form';
 type ParentProps = { consultId: string };
 type Props = ConsultationState & typeof consultActions & ParentProps;
 
-class Subjective extends React.Component<Props> {
+class ObjectiveSection extends React.Component<Props> {
   formRef: React.RefObject<FormInstance> = React.createRef();
 
   componentWillUnmount() {
@@ -23,17 +22,17 @@ class Subjective extends React.Component<Props> {
   }
 
   updateStoreWithFormChanges = () => {
-    const { modifySubjective, subjectiveAssessment } = this.props;
-    if (this.formRef.current && subjectiveAssessment) {
+    const { modifyObjective, objectiveAssessment } = this.props;
+    if (this.formRef.current && objectiveAssessment) {
       const { getFieldValue } = this.formRef.current;
-      const newSubjective: any = {};
+      const newObjective: any = {};
 
-      Object.keys(subjectiveAssessment).forEach((key, i) => {
+      Object.keys(objectiveAssessment).forEach((key, i) => {
         const fieldValue = getFieldValue(key);
-        newSubjective[key] = fieldValue;
+        newObjective[key] = fieldValue;
       });
 
-      modifySubjective(newSubjective);
+      modifyObjective(newObjective);
     }
   };
 
@@ -44,32 +43,31 @@ class Subjective extends React.Component<Props> {
   };
 
   render() {
-    const { subjectiveAssessment } = this.props;
-    if (!subjectiveAssessment) return null;
+    const { objectiveAssessment } = this.props;
+    if (!objectiveAssessment) return null;
 
     const initialValues = {
       remember: true,
-      ...subjectiveAssessment
+      ...objectiveAssessment
     };
 
     return (
       <Form
         {...formLayout}
         ref={this.formRef}
-        name="subjective"
+        name="objective"
         initialValues={initialValues}
         onFinish={this.onSubmit}
       >
-        <FormTextArea label="MOI" name="moi" />
-        <FormTextArea label="Current History" name="currentHistory" />
-        <FormTextArea label="Body Chart" name="bodyChart" />
-        <FormTextArea label="Agg" name="aggravatingFactors" />
-        <FormTextArea label="Ease" name="easingFactors" />
-        <FormSelect label="VAS" name="vas" options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} />
-        <FormTextArea label="Past History" name="pastHistory" />
-        <FormTextArea label="Social History" name="socialHistory" />
-        <FormTextArea label="Imaging" name="imaging" />
-        <FormTextArea label="General Health" name="generalHealth" />
+        <FormTextArea label="Observation" name="observation" />
+        <FormTextArea label="Active" name="active" />
+        <FormTextArea label="Passive" name="passive" />
+        <FormTextArea label="Isometric" name="resistedIsometric" />
+        <FormTextArea label="Functional" name="functionalTests" />
+        <FormTextArea label="Neurological" name="neurologicalTests" />
+        <FormTextArea label="Special" name="specialTests" />
+        <FormTextArea label="Palpation" name="palpation" />
+        <FormTextArea label="Additional" name="additional" />
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className={style.submit}>
             Submit
@@ -85,4 +83,4 @@ const mapStateToProps = (state: ApplicationState) => state.consultation;
 export default compose<React.ComponentType<ParentProps>>(
   withRouter,
   connect(mapStateToProps, consultActions)
-)(Subjective);
+)(ObjectiveSection);

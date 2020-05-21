@@ -28,11 +28,11 @@ class CasefilesPage extends React.Component<Props> {
   }
 
   render() {
-    const { list, match } = this.props;
+    const { list, match, isFetching } = this.props;
     return (
       <>
         <PatientInfo />
-        <Casefiles files={list} patientId={match.params.patientId} />
+        <Casefiles files={list} patientId={match.params.patientId} isFetching={isFetching} />
       </>
     );
   }

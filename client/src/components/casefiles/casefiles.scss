@@ -1,7 +1,15 @@
 .header {
   margin: 10px 10px 5px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .list {
   margin-bottom: 70px;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }

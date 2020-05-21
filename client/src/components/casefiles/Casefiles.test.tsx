@@ -19,7 +19,7 @@ describe('<CaseFiles/>', () => {
   let mountedWrapper: ReactWrapper;
 
   beforeAll(() => {
-    const component = <Casefiles files={files} patientId="1" />;
+    const component = <Casefiles files={files} patientId="1" isFetching={false} />;
     wrapper = shallow(component);
     mountedWrapper = mount(<MemoryRouter>{component}</MemoryRouter>);
   });
@@ -36,7 +36,7 @@ describe('<CaseFiles/>', () => {
     it('should not have a list item when no files exist', () => {
       const noFilesWrapper = mount(
         <MemoryRouter>
-          <Casefiles files={[]} patientId="1" />
+          <Casefiles files={[]} patientId="1" isFetching={false} />
         </MemoryRouter>
       );
 

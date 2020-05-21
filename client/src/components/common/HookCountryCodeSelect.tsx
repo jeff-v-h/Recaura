@@ -16,7 +16,7 @@ function HookCountryCodeSelect({ control }: Props) {
 
   return (
     <HookSelectContainer>
-      <label className={style.hookLabel} htmlFor="country-code">
+      <label className={style.hookSelectLabel} htmlFor="country-code">
         Country Code:
       </label>
       <Controller

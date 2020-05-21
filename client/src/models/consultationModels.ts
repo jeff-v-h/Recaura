@@ -1,15 +1,18 @@
-export interface Consultation {
-  id: string;
+export interface ConsultationBase {
   patientId: string;
-  caseFileId: string;
+  casefileId: string;
   practitionerId: string;
   date: string;
   number: number;
-  practitioner: ConsultPractitioner | null;
-  subjectiveAssessment: SubjectiveAssessment | null;
-  objectiveAssessment: ObjectiveAssessment | null;
+  subjectiveAssessment?: SubjectiveAssessment;
+  objectiveAssessment?: ObjectiveAssessment;
   treatments: string;
   plans: string;
+}
+
+export interface Consultation extends ConsultationBase {
+  id: string;
+  practitioner?: ConsultPractitioner;
 }
 
 export interface ConsultPractitioner {

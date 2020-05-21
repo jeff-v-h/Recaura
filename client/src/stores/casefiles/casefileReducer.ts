@@ -23,6 +23,14 @@ const reducer: Reducer<T.CasefileState> = (
   const action = incomingAction as T.KnownAction;
   let obj;
   switch (action.type) {
+    case C.CREATE_CASEFILE_REQUEST:
+      return { ...state, isFetching: true };
+    case C.CREATE_CASEFILE_SUCCESS:
+      obj = action as T.CreateCasefileSuccessAction;
+      return { ...state, isFetching: false, ...obj.payload };
+    case C.CREATE_CASEFILE_FAILURE:
+      return { ...state, isFetching: false };
+
     case C.GET_CASEFILES_REQUEST:
       return { ...state, isFetching: true, list: [] };
     case C.GET_CASEFILES_SUCCESS:
