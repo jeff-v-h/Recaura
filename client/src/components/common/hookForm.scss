@@ -13,29 +13,48 @@ $error-height: 20rem;
   margin: 50rem auto;
 }
 
+.hookConsultForm {
+  @extend .hookForm;
+  margin-top: 0;
+}
+
 .inputSection,
 .phoneSection {
   display: flex;
   flex-wrap: wrap;
 }
 
+.hookRow {
+  display: flex;
+}
+
 .hookInputContainer,
 .hookSelectContainer {
   display: flex;
+  margin-right: 3 * $label-right-pad;
 }
 
-.hookLabel {
+.hookTextAreaContainer {
+  margin-right: 3 * $label-right-pad;
+  flex-grow: 1;
+}
+
+.hookSelectLabel,
+.hookInputLabel {
   cursor: pointer;
   text-align: end;
   align-self: center;
+  display: flex;
   padding: 4rem $label-right-pad;
-  margin-left: 3 * $label-right-pad;
 }
 
-.hookInputLabel {
-  @extend .hookLabel;
+.hookTextAreaLabel {
+  cursor: pointer;
+  padding: 4rem 0;
+}
+
+.hookTextAreaLabelCol {
   display: flex;
-  align-items: center;
 }
 
 .hookInputMain {
@@ -56,6 +75,12 @@ $error-height: 20rem;
 
 .hookInputLong input {
   width: 275rem;
+}
+
+.hookTextAreaMain {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .honorificSelect,

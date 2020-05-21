@@ -15,7 +15,7 @@ interface Props {
 function HookHonorificSelect({ control, onChange }: Props) {
   return (
     <HookSelectContainer>
-      <label className={style.hookLabel} htmlFor="honorific">
+      <label className={style.hookSelectLabel} htmlFor="honorific">
         Title:
       </label>
       <Controller

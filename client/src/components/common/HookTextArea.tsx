@@ -14,14 +14,14 @@ interface Props {
 HookTextArea.defaultProps = {
   required: false,
   errorMsg: '',
-  inputStyle: style.hookInputMain
+  inputStyle: style.hookTextAreaMain
 };
 
 function HookTextArea({ label, name, required, error, errorMsg, inputStyle, register }: Props) {
   return (
-    <div className={style.hookInputContainer}>
-      <div>
-        <label className={style.hookInputLabel} htmlFor={name}>
+    <div className={style.hookTextAreaContainer}>
+      <div className={style.hookTextAreaLabelCol}>
+        <label className={style.hookTextAreaLabel} htmlFor={name}>
           {required && <span className={style.asterisk}>*</span>}
           {label}:
         </label>

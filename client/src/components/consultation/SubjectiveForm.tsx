@@ -49,18 +49,24 @@ function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
   return (
     <>
       <NavPills value={display} onChange={onChangeSection} />
-      <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
-        <div className={style.inputSection}>
+      <form onSubmit={handleSubmit(saveAndNext)} className={style.hookConsultForm}>
+        <div>
+          <HookTextArea label="Body Chart" name="bodyChart" register={register} />
+          <HookVasSelect control={control} defaultValue={defaultValues.vas} />
           <HookTextArea label="MOI" name="moi" register={register} />
           <HookTextArea label="Current History" name="currentHistory" register={register} />
-          <HookTextArea label="Body Chart" name="bodyChart" register={register} />
-          <HookTextArea label="Agg" name="aggravatingFactors" register={register} />
-          <HookTextArea label="Ease" name="easingFactors" register={register} />
-          <HookVasSelect control={control} defaultValue={defaultValues.vas} />
-          <HookTextArea label="Past History" name="pastHistory" register={register} />
-          <HookTextArea label="Social History" name="socialHistory" register={register} />
-          <HookTextArea label="Imaging" name="imaging" register={register} />
-          <HookTextArea label="General Health" name="generalHealth" register={register} />
+          <div className={style.hookRow}>
+            <HookTextArea label="Agg" name="aggravatingFactors" register={register} />
+            <HookTextArea label="Ease" name="easingFactors" register={register} />
+          </div>
+          <div className={style.hookRow}>
+            <HookTextArea label="Past History" name="pastHistory" register={register} />
+            <HookTextArea label="Social History" name="socialHistory" register={register} />
+          </div>
+          <div className={style.hookRow}>
+            <HookTextArea label="Imaging" name="imaging" register={register} />
+            <HookTextArea label="General Health" name="generalHealth" register={register} />
+          </div>
         </div>
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">
