@@ -48,13 +48,28 @@ class ConsultationPage extends React.Component<Props, State> {
   };
 
   onSubmit = () => {
-    const updatedConsult = { ...this.props };
+    const {
+      id,
+      patientId,
+      casefileId,
+      date,
+      practitionerId,
+      subjectiveAssessment,
+      objectiveAssessment,
+      treatments,
+      plans
+    } = this.props;
 
-    delete updatedConsult.list;
-    delete updatedConsult.isFetching;
-    updatedConsult.date = this.state.date.format();
-
-    this.props.updateConsult(updatedConsult);
+    this.props.updateConsult(id, {
+      patientId,
+      casefileId,
+      date: this.state.date.format(),
+      practitionerId,
+      subjectiveAssessment,
+      objectiveAssessment,
+      treatments,
+      plans
+    });
   };
 
   selectSection = (display: ConsultPart) => this.setState({ display });
@@ -67,10 +82,8 @@ class ConsultationPage extends React.Component<Props, State> {
       subjectiveAssessment,
       objectiveAssessment,
       treatments,
-      plans,
-      id
+      plans
     } = this.props;
-    console.log('renderConsultSection called: id is', id);
 
     switch (consultPart) {
       case ConsultPart.Subjective:
@@ -107,16 +120,16 @@ class ConsultationPage extends React.Component<Props, State> {
   changeDate = (date: moment.Moment | null) => this.setState({ date });
 
   render() {
-    const { display, date } = this.state;
-    const { id } = this.props;
-    console.log('render page id', id);
+    const { display } = this.state;
+    const { date } = this.props;
+
     return (
       <>
         <PatientInfo />
         <CasefileInfo />
         <div className={style.consultDate}>
           <label>Consult date:</label>
-          <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} defaultValue={date} />
+          <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} defaultValue={moment(date)} />
         </div>
         <div className={style.container}>{this.renderConsultSection(display)}</div>
       </>

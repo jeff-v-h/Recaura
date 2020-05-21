@@ -38,7 +38,7 @@ class ConsultationService extends ApiService {
     }
   }
 
-  async updateConsultation(id: string, consult: Consultation): Promise<Consultation> {
+  async updateConsultation(id: string, consult: ConsultationBase): Promise<Consultation> {
     try {
       const url = `${apiUrl}/consultations/${id}`;
       const resp = (await this.patch(url, consult)) as AxiosResponse<Consultation>;

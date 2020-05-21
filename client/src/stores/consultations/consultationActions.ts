@@ -104,12 +104,13 @@ export const getConsult = (id: string): AppThunkAction<T.GetConsultKnownAction> 
 };
 
 export const updateConsult = (
-  consult: Consultation
+  id: string,
+  consult: ConsultationBase
 ): AppThunkAction<T.UpdateConsultKnownAction> => async (dispatch) => {
   dispatch({ type: C.UPDATE_CONSULTATION_REQUEST });
 
   try {
-    const newConsult = await consultationService.updateConsultation(consult.id, consult);
+    const newConsult = await consultationService.updateConsultation(id, consult);
     dispatch({ type: C.UPDATE_CONSULTATION_SUCCESS, payload: newConsult });
   } catch (e) {
     dispatch({ type: C.UPDATE_CONSULTATION_FAILURE });
