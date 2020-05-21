@@ -46,12 +46,18 @@ export interface UpdateCasefileSuccessAction extends ReduxAction {
   payload: Casefile;
 }
 
+export interface DeleteCasefileSuccessAction extends ReduxAction {
+  payload: string;
+}
+
 export type CreateCasefileKnownAction = ReduxAction | CreateCasefileSuccessAction;
-export type GetCasefileKnownAction = ReduxAction | GetCasefileSuccessAction;
 export type GetCasefilesKnownAction = ReduxAction | GetCasefilesSuccessAction;
+export type GetCasefileKnownAction = ReduxAction | GetCasefileSuccessAction;
+export type DeleteCasefileKnownAction = ReduxAction | DeleteCasefileSuccessAction;
 export type KnownAction =
   | CreateCasefileKnownAction
   | GetCasefilesKnownAction
   | SelectCasefileAction
-  | GetCasefileKnownAction;
+  | GetCasefileKnownAction
+  | DeleteCasefileKnownAction;
 //#endregion actions

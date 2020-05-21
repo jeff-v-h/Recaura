@@ -62,3 +62,19 @@ export const getCasefile = (id: string): AppThunkAction<T.GetCasefileKnownAction
     }
   }
 };
+
+export const deleteCasefile = (id: string): AppThunkAction<T.DeleteCasefileKnownAction> => async (
+  dispatch
+) => {
+  dispatch({ type: C.DELETE_CASEFILE_REQUEST });
+
+  try {
+    await casefileService.deleteCasefile(id);
+    dispatch({
+      type: C.DELETE_CASEFILE_SUCCESS,
+      payload: id
+    });
+  } catch (e) {
+    dispatch({ type: C.DELETE_CASEFILE_FAILURE });
+  }
+};

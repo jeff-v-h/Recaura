@@ -137,7 +137,7 @@ class ConsultationPage extends React.Component<Props, State> {
             <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} value={this.getDate(date)} />
           </div>
           {!isNewConsult && (
-            <Button type="primary" icon={<DeleteOutlined />} onClick={this.deleteConsult} />
+            <Button danger icon={<DeleteOutlined />} onClick={this.deleteConsult} />
           )}
         </div>
         {this.renderConsultSection(display)}

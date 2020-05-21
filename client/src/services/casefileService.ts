@@ -16,6 +16,16 @@ class CasefileService extends ApiService {
     }
   };
 
+  getCasefiles = async (patientId: string): Promise<Casefile[]> => {
+    try {
+      const url = `${apiUrl}/casefiles?patientId=${patientId}&sortBy=updatedAt:desc`;
+      const resp = (await this.get(url)) as AxiosResponse<Casefile[]>;
+      return resp.data;
+    } catch (e) {
+      return this.handleRequestError(e);
+    }
+  };
+
   getCasefile = async (id: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/casefiles/${id}`;
@@ -26,10 +36,10 @@ class CasefileService extends ApiService {
     }
   };
 
-  getCasefiles = async (patientId: string): Promise<Casefile[]> => {
+  deleteCasefile = async (id: string): Promise<Casefile> => {
     try {
-      const url = `${apiUrl}/casefiles?patientId=${patientId}&sortBy=updatedAt:desc`;
-      const resp = (await this.get(url)) as AxiosResponse<Casefile[]>;
+      const url = `${apiUrl}/casefiles/${id}`;
+      const resp = (await this.delete(url)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {
       return this.handleRequestError(e);
