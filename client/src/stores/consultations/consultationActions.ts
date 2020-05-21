@@ -103,21 +103,16 @@ export const getConsult = (id: string): AppThunkAction<T.GetConsultKnownAction> 
   }
 };
 
-export const updateConsult = (): AppThunkAction<T.UpdateConsultKnownAction> => async (
-  dispatch,
-  getState
-) => {
-  const appState = getState();
-  const consult = appState?.consultation;
-  if (consult?.id) {
-    dispatch({ type: C.UPDATE_CONSULTATION_REQUEST });
+export const updateConsult = (
+  consult: Consultation
+): AppThunkAction<T.UpdateConsultKnownAction> => async (dispatch) => {
+  dispatch({ type: C.UPDATE_CONSULTATION_REQUEST });
 
-    try {
-      await consultationService.updateConsultation(consult.id, consult);
-      dispatch({ type: C.UPDATE_CONSULTATION_SUCCESS });
-    } catch (e) {
-      dispatch({ type: C.UPDATE_CONSULTATION_FAILURE });
-    }
+  try {
+    const newConsult = await consultationService.updateConsultation(consult.id, consult);
+    dispatch({ type: C.UPDATE_CONSULTATION_SUCCESS, payload: newConsult });
+  } catch (e) {
+    dispatch({ type: C.UPDATE_CONSULTATION_FAILURE });
   }
 };
 //#endregion

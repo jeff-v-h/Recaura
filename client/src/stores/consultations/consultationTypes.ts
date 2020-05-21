@@ -47,10 +47,6 @@ export interface GetConsultSuccessAction extends ReduxAction {
   payload: Consultation;
 }
 
-export interface UpdateConsultRequestAction extends ReduxAction {
-  payload: Consultation;
-}
-
 export interface UpdateConsultSuccessAction extends ReduxAction {
   payload: Consultation;
 }
@@ -70,10 +66,7 @@ export interface ModifyTreatmentsAndPlans extends ReduxAction {
 export type CreateConsultKnownAction = ReduxAction | CreateConsultSuccessAction;
 export type GetConsultsKnownAction = ReduxAction | GetConsultsSuccessAction;
 export type GetConsultKnownAction = ReduxAction | GetConsultSuccessAction;
-export type UpdateConsultKnownAction =
-  | ReduxAction
-  | UpdateConsultRequestAction
-  | UpdateConsultSuccessAction;
+export type UpdateConsultKnownAction = ReduxAction | UpdateConsultSuccessAction;
 
 export type KnownAction =
   | CreateConsultKnownAction

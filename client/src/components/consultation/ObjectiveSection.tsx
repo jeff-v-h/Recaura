@@ -39,7 +39,7 @@ class ObjectiveSection extends React.Component<Props> {
   onSubmit = (values: any) => {
     const { updateConsult } = this.props;
     this.updateStoreWithFormChanges();
-    updateConsult();
+    // updateConsult();
   };
 
   render() {

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { SubjectiveAssessment } from '../../models/consultationModels';
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import HookTextArea from '../common/forms/HookTextArea';
 import style from '../common/forms/hookForm.scss';
 import HookVasSelect from '../common/forms/HookVasSelect';
@@ -30,7 +30,11 @@ function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
     vas: 0
   };
 
-  const { register, handleSubmit, control } = useForm<SubjectiveAssessment>({ defaultValues });
+  const form = useForm<SubjectiveAssessment>({ defaultValues });
+  const { register, handleSubmit, control } = form;
+
+  // Reset form to be display fetched data as defaultValues
+  useEffect(() => data && form.reset(data), [data]);
 
   const onChangeSection = (e: RadioChangeEvent) => {
     handleSubmit(saveValues)();
