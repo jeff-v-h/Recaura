@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { TreatmentsAndPlans } from '../../models/consultationModels';
 import { Button } from 'antd';
@@ -22,12 +22,9 @@ function TreatmentsAndPlanForm({ data, display, changeSection, saveValues, creat
     plans: ''
   };
 
-  const { register, handleSubmit, setValue } = useForm<TreatmentsAndPlans>({
+  const { register, handleSubmit } = useForm<TreatmentsAndPlans>({
     defaultValues
   });
-
-  useEffect(() => register({ name: 'treatments' }), []);
-  useEffect(() => register({ name: 'plans' }), []);
 
   const onChangeSection = (e: RadioChangeEvent) => {
     handleSubmit(saveValues)();
@@ -44,18 +41,8 @@ function TreatmentsAndPlanForm({ data, display, changeSection, saveValues, creat
       <NavPills value={display} onChange={onChangeSection} />
       <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
         <div className={style.inputSection}>
-          <HookTextArea
-            label="Treatments"
-            name="treatments"
-            setValue={setValue}
-            defaultValue={defaultValues.treatments}
-          />
-          <HookTextArea
-            label="Plans"
-            name="plans"
-            setValue={setValue}
-            defaultValue={defaultValues.plans}
-          />
+          <HookTextArea label="Treatments" name="treatments" register={register} />
+          <HookTextArea label="Plans" name="plans" register={register} />
         </div>
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">

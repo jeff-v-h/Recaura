@@ -1,35 +1,23 @@
 import React from 'react';
-import { Input } from 'antd';
 import style from './hookForm.scss';
 
 interface Props {
   label: string;
   name: string;
   required: boolean;
-  setValue: (name: string, value: any) => void;
   error?: any;
   errorMsg?: string;
   inputStyle?: string;
-  defaultValue: string;
+  register: (ref: Element | null) => void;
 }
 
 HookTextArea.defaultProps = {
   required: false,
   errorMsg: '',
-  inputStyle: style.hookInputMain,
-  defaultValue: ''
+  inputStyle: style.hookInputMain
 };
 
-function HookTextArea({
-  label,
-  name,
-  required,
-  setValue,
-  error,
-  errorMsg,
-  inputStyle,
-  defaultValue
-}: Props) {
+function HookTextArea({ label, name, required, error, errorMsg, inputStyle, register }: Props) {
   return (
     <div className={style.hookInputContainer}>
       <div>
@@ -40,13 +28,7 @@ function HookTextArea({
         <span className={style.hookInputSupport}></span>
       </div>
       <div className={inputStyle}>
-        <Input.TextArea
-          id={name}
-          name={name}
-          onChange={(e) => setValue(name, e.target.value)}
-          autoSize={{ minRows: 2 }}
-          defaultValue={defaultValue}
-        />
+        <textarea id={name} name={name} ref={register} />
         <span className={style.error}>{error && errorMsg}</span>
       </div>
     </div>

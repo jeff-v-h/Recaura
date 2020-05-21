@@ -59,14 +59,15 @@ class NewConsultationPage extends React.Component<Props, State> {
       subjectiveAssessment,
       objectiveAssessment,
       treatments,
-      plans
+      plans,
+      id
     } = this.props;
 
     switch (consultPart) {
       case ConsultPart.Subjective:
         return (
           <SubjectiveForm
-            data={subjectiveAssessment}
+            data={id.length > 0 ? undefined : subjectiveAssessment}
             display={consultPart}
             changeSection={this.selectSection}
             saveValues={modifySubjective}
@@ -96,45 +97,11 @@ class NewConsultationPage extends React.Component<Props, State> {
 
   render() {
     const { display } = this.state;
-    const {
-      modifySubjective,
-      modifyObjective,
-      modifyTreatmentsAndPlans,
-      subjectiveAssessment,
-      objectiveAssessment,
-      treatments,
-      plans,
-      id
-    } = this.props;
 
     return (
       <>
         <PatientInfo />
-        <div className={style.container}>
-          {display === ConsultPart.Subjective ? (
-            <SubjectiveForm
-              data={id.length > 0 ? undefined : subjectiveAssessment}
-              display={display}
-              changeSection={this.selectSection}
-              saveValues={modifySubjective}
-            />
-          ) : display === ConsultPart.Objective ? (
-            <ObjectiveForm
-              data={objectiveAssessment}
-              display={display}
-              changeSection={this.selectSection}
-              saveValues={modifyObjective}
-            />
-          ) : (
-            <TreatmentsAndPlanForm
-              data={{ treatments, plans }}
-              display={display}
-              changeSection={this.selectSection}
-              saveValues={modifyTreatmentsAndPlans}
-              createConsult={this.onSubmit}
-            />
-          )}
-        </div>
+        <div className={style.container}>{this.renderConsultSection(display)}</div>
       </>
     );
   }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ObjectiveAssessment } from '../../models/consultationModels';
 import { Button } from 'antd';
@@ -28,19 +28,9 @@ function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
     additional: ''
   };
 
-  const { register, handleSubmit, setValue } = useForm<ObjectiveAssessment>({
+  const { register, handleSubmit } = useForm<ObjectiveAssessment>({
     defaultValues
   });
-
-  useEffect(() => register({ name: 'observation' }), []);
-  useEffect(() => register({ name: 'active' }), []);
-  useEffect(() => register({ name: 'passive' }), []);
-  useEffect(() => register({ name: 'resistedIsometric' }), []);
-  useEffect(() => register({ name: 'functionalTests' }), []);
-  useEffect(() => register({ name: 'neurologicalTests' }), []);
-  useEffect(() => register({ name: 'specialTests' }), []);
-  useEffect(() => register({ name: 'palpation' }), []);
-  useEffect(() => register({ name: 'additional' }), []);
 
   const onChangeSection = (e: RadioChangeEvent) => {
     handleSubmit(saveValues)();
@@ -57,60 +47,15 @@ function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
       <NavPills value={display} onChange={onChangeSection} />
       <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
         <div className={style.inputSection}>
-          <HookTextArea
-            label="Observation"
-            name="observation"
-            setValue={setValue}
-            defaultValue={defaultValues.observation}
-          />
-          <HookTextArea
-            label="Active"
-            name="active"
-            setValue={setValue}
-            defaultValue={defaultValues.active}
-          />
-          <HookTextArea
-            label="Passive"
-            name="passive"
-            setValue={setValue}
-            defaultValue={defaultValues.passive}
-          />
-          <HookTextArea
-            label="Isometric"
-            name="resistedIsometric"
-            setValue={setValue}
-            defaultValue={defaultValues.resistedIsometric}
-          />
-          <HookTextArea
-            label="Functional"
-            name="functionalTests"
-            setValue={setValue}
-            defaultValue={defaultValues.functionalTests}
-          />
-          <HookTextArea
-            label="Neurological"
-            name="neurologicalTests"
-            setValue={setValue}
-            defaultValue={defaultValues.neurologicalTests}
-          />
-          <HookTextArea
-            label="Special"
-            name="specialTests"
-            setValue={setValue}
-            defaultValue={defaultValues.specialTests}
-          />
-          <HookTextArea
-            label="Palpation"
-            name="palpation"
-            setValue={setValue}
-            defaultValue={defaultValues.palpation}
-          />
-          <HookTextArea
-            label="Additional"
-            name="additional"
-            setValue={setValue}
-            defaultValue={defaultValues.additional}
-          />
+          <HookTextArea label="Observation" name="observation" register={register} />
+          <HookTextArea label="Active" name="active" register={register} />
+          <HookTextArea label="Passive" name="passive" register={register} />
+          <HookTextArea label="Isometric" name="resistedIsometric" register={register} />
+          <HookTextArea label="Functional" name="functionalTests" register={register} />
+          <HookTextArea label="Neurological" name="neurologicalTests" register={register} />
+          <HookTextArea label="Special" name="specialTests" register={register} />
+          <HookTextArea label="Palpation" name="palpation" register={register} />
+          <HookTextArea label="Additional" name="additional" register={register} />
         </div>
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">
