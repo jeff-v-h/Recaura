@@ -8,7 +8,7 @@ export const unloadedState: T.ConsultationState = {
   list: [],
   id: '',
   patientId: '',
-  caseFileId: '',
+  casefileId: '',
   practitionerId: '',
   date: '',
   number: 0,

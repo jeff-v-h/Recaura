@@ -52,12 +52,21 @@ class NewConsultationPage extends React.Component<Props, State> {
   selectSection = (display: ConsultPart) => this.setState({ display });
 
   renderConsultSection = (consultPart: ConsultPart) => {
-    const { modifySubjective, modifyObjective, modifyTreatmentsAndPlans } = this.props;
+    const {
+      modifySubjective,
+      modifyObjective,
+      modifyTreatmentsAndPlans,
+      subjectiveAssessment,
+      objectiveAssessment,
+      treatments,
+      plans
+    } = this.props;
 
     switch (consultPart) {
       case ConsultPart.Subjective:
         return (
           <SubjectiveForm
+            data={subjectiveAssessment}
             display={consultPart}
             changeSection={this.selectSection}
             saveValues={modifySubjective}
@@ -66,6 +75,7 @@ class NewConsultationPage extends React.Component<Props, State> {
       case ConsultPart.Objective:
         return (
           <ObjectiveForm
+            data={objectiveAssessment}
             display={consultPart}
             changeSection={this.selectSection}
             saveValues={modifyObjective}
@@ -74,6 +84,7 @@ class NewConsultationPage extends React.Component<Props, State> {
       default:
         return (
           <TreatmentsAndPlanForm
+            data={{ treatments, plans }}
             display={consultPart}
             changeSection={this.selectSection}
             saveValues={modifyTreatmentsAndPlans}

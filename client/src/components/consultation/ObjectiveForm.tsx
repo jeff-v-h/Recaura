@@ -16,19 +16,20 @@ interface Props {
 }
 
 function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
+  const defaultValues = data ?? {
+    observation: '',
+    active: '',
+    passive: '',
+    resistedIsometric: '',
+    functionalTests: '',
+    neurologicalTests: '',
+    specialTests: '',
+    palpation: '',
+    additional: ''
+  };
+
   const { register, handleSubmit, setValue } = useForm<ObjectiveAssessment>({
-    // Set empty strings for non required inputs to ensure undefined not passed through
-    defaultValues: {
-      observation: '',
-      active: '',
-      passive: '',
-      resistedIsometric: '',
-      functionalTests: '',
-      neurologicalTests: '',
-      specialTests: '',
-      palpation: '',
-      additional: ''
-    }
+    defaultValues
   });
 
   useEffect(() => register({ name: 'observation' }), []);
@@ -56,15 +57,60 @@ function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
       <NavPills value={display} onChange={onChangeSection} />
       <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
         <div className={style.inputSection}>
-          <HookTextArea label="Observation" name="observation" setValue={setValue} />
-          <HookTextArea label="Active" name="active" setValue={setValue} />
-          <HookTextArea label="Passive" name="passive" setValue={setValue} />
-          <HookTextArea label="Isometric" name="resistedIsometric" setValue={setValue} />
-          <HookTextArea label="Functional" name="functionalTests" setValue={setValue} />
-          <HookTextArea label="Neurological" name="neurologicalTests" setValue={setValue} />
-          <HookTextArea label="Special" name="specialTests" setValue={setValue} />
-          <HookTextArea label="Palpation" name="palpation" setValue={setValue} />
-          <HookTextArea label="Additional" name="additional" setValue={setValue} />
+          <HookTextArea
+            label="Observation"
+            name="observation"
+            setValue={setValue}
+            defaultValue={defaultValues.observation}
+          />
+          <HookTextArea
+            label="Active"
+            name="active"
+            setValue={setValue}
+            defaultValue={defaultValues.active}
+          />
+          <HookTextArea
+            label="Passive"
+            name="passive"
+            setValue={setValue}
+            defaultValue={defaultValues.passive}
+          />
+          <HookTextArea
+            label="Isometric"
+            name="resistedIsometric"
+            setValue={setValue}
+            defaultValue={defaultValues.resistedIsometric}
+          />
+          <HookTextArea
+            label="Functional"
+            name="functionalTests"
+            setValue={setValue}
+            defaultValue={defaultValues.functionalTests}
+          />
+          <HookTextArea
+            label="Neurological"
+            name="neurologicalTests"
+            setValue={setValue}
+            defaultValue={defaultValues.neurologicalTests}
+          />
+          <HookTextArea
+            label="Special"
+            name="specialTests"
+            setValue={setValue}
+            defaultValue={defaultValues.specialTests}
+          />
+          <HookTextArea
+            label="Palpation"
+            name="palpation"
+            setValue={setValue}
+            defaultValue={defaultValues.palpation}
+          />
+          <HookTextArea
+            label="Additional"
+            name="additional"
+            setValue={setValue}
+            defaultValue={defaultValues.additional}
+          />
         </div>
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">

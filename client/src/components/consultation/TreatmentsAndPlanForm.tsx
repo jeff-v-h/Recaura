@@ -17,12 +17,13 @@ interface Props {
 }
 
 function TreatmentsAndPlanForm({ data, display, changeSection, saveValues, createConsult }: Props) {
+  const defaultValues = data ?? {
+    treatments: '',
+    plans: ''
+  };
+
   const { register, handleSubmit, setValue } = useForm<TreatmentsAndPlans>({
-    // Set empty strings for non required inputs to ensure undefined not passed through
-    defaultValues: {
-      treatments: '',
-      plans: ''
-    }
+    defaultValues
   });
 
   useEffect(() => register({ name: 'treatments' }), []);
@@ -43,8 +44,18 @@ function TreatmentsAndPlanForm({ data, display, changeSection, saveValues, creat
       <NavPills value={display} onChange={onChangeSection} />
       <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
         <div className={style.inputSection}>
-          <HookTextArea label="Treatments" name="treatments" setValue={setValue} />
-          <HookTextArea label="Plans" name="plans" setValue={setValue} />
+          <HookTextArea
+            label="Treatments"
+            name="treatments"
+            setValue={setValue}
+            defaultValue={defaultValues.treatments}
+          />
+          <HookTextArea
+            label="Plans"
+            name="plans"
+            setValue={setValue}
+            defaultValue={defaultValues.plans}
+          />
         </div>
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">

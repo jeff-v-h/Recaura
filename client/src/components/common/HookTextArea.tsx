@@ -10,15 +10,26 @@ interface Props {
   error?: any;
   errorMsg?: string;
   inputStyle?: string;
+  defaultValue: string;
 }
 
 HookTextArea.defaultProps = {
   required: false,
   errorMsg: '',
-  inputStyle: style.hookInputMain
+  inputStyle: style.hookInputMain,
+  defaultValue: ''
 };
 
-function HookTextArea({ label, name, required, setValue, error, errorMsg, inputStyle }: Props) {
+function HookTextArea({
+  label,
+  name,
+  required,
+  setValue,
+  error,
+  errorMsg,
+  inputStyle,
+  defaultValue
+}: Props) {
   return (
     <div className={style.hookInputContainer}>
       <div>
@@ -34,6 +45,7 @@ function HookTextArea({ label, name, required, setValue, error, errorMsg, inputS
           name={name}
           onChange={(e) => setValue(name, e.target.value)}
           autoSize={{ minRows: 2 }}
+          defaultValue={defaultValue}
         />
         <span className={style.error}>{error && errorMsg}</span>
       </div>

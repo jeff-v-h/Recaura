@@ -17,19 +17,22 @@ interface Props {
 }
 
 function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
+  const defaultValues = data ?? {
+    moi: '',
+    currentHistory: '',
+    bodyChart: '',
+    aggravatingFactors: '',
+    easingFactors: '',
+    pastHistory: '',
+    socialHistory: '',
+    imaging: '',
+    generalHealth: '',
+    vas: 0
+  };
+
   const { register, handleSubmit, setValue, control } = useForm<SubjectiveAssessment>({
     // Set empty strings for non required inputs to ensure undefined not passed through
-    defaultValues: {
-      moi: '',
-      currentHistory: '',
-      bodyChart: '',
-      aggravatingFactors: '',
-      easingFactors: '',
-      pastHistory: '',
-      socialHistory: '',
-      imaging: '',
-      generalHealth: ''
-    }
+    defaultValues
   });
 
   useEffect(() => register({ name: 'moi' }), []);
@@ -57,16 +60,61 @@ function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
       <NavPills value={display} onChange={onChangeSection} />
       <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
         <div className={style.inputSection}>
-          <HookTextArea label="MOI" name="moi" setValue={setValue} />
-          <HookTextArea label="Current History" name="currentHistory" setValue={setValue} />
-          <HookTextArea label="Body Chart" name="bodyChart" setValue={setValue} />
-          <HookTextArea label="Agg" name="aggravatingFactors" setValue={setValue} />
-          <HookTextArea label="Ease" name="easingFactors" setValue={setValue} />
-          <HookVasSelect control={control} />
-          <HookTextArea label="Past History" name="pastHistory" setValue={setValue} />
-          <HookTextArea label="Social History" name="socialHistory" setValue={setValue} />
-          <HookTextArea label="Imaging" name="imaging" setValue={setValue} />
-          <HookTextArea label="General Health" name="generalHealth" setValue={setValue} />
+          <HookTextArea
+            label="MOI"
+            name="moi"
+            setValue={setValue}
+            defaultValue={defaultValues.moi}
+          />
+          <HookTextArea
+            label="Current History"
+            name="currentHistory"
+            setValue={setValue}
+            defaultValue={defaultValues.currentHistory}
+          />
+          <HookTextArea
+            label="Body Chart"
+            name="bodyChart"
+            setValue={setValue}
+            defaultValue={defaultValues.bodyChart}
+          />
+          <HookTextArea
+            label="Agg"
+            name="aggravatingFactors"
+            setValue={setValue}
+            defaultValue={defaultValues.aggravatingFactors}
+          />
+          <HookTextArea
+            label="Ease"
+            name="easingFactors"
+            setValue={setValue}
+            defaultValue={defaultValues.easingFactors}
+          />
+          <HookVasSelect control={control} defaultValue={defaultValues.vas} />
+          <HookTextArea
+            label="Past History"
+            name="pastHistory"
+            setValue={setValue}
+            defaultValue={defaultValues.pastHistory}
+          />
+          <HookTextArea
+            label="Social History"
+            name="socialHistory"
+            setValue={setValue}
+            defaultValue={defaultValues.socialHistory}
+          />
+          <HookTextArea
+            label="Imaging"
+            name="imaging"
+            setValue={setValue}
+            defaultValue={defaultValues.imaging}
+          />
+          <HookTextArea
+            label="General Health"
+            name="generalHealth"
+            setValue={setValue}
+            defaultValue={defaultValues.generalHealth}
+          />
         </div>
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">

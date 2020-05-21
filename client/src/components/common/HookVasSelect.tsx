@@ -6,9 +6,14 @@ import HookSelectContainer from './HookSelectContainer';
 
 interface Props {
   control: Control;
+  defaultValue: number;
 }
 
-function HookVasSelect({ control }: Props) {
+HookVasSelect.defaultProps = {
+  defaultValue: 0
+};
+
+function HookVasSelect({ control, defaultValue }: Props) {
   return (
     <HookSelectContainer>
       <label className={style.hookInputLabel}>VAS:</label>
@@ -24,7 +29,7 @@ function HookVasSelect({ control }: Props) {
         }
         control={control}
         name="vas"
-        defaultValue={0}
+        defaultValue={defaultValue}
       />
     </HookSelectContainer>
   );
