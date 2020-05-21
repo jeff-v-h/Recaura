@@ -1,5 +1,5 @@
 import React from 'react';
-import Subjective from './SubjectiveSection';
+import Subjective from './Subjective';
 import { shallow, ShallowWrapper, mount, ReactWrapper } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
@@ -9,7 +9,7 @@ import { unloadedState } from '../../stores/consultations/consultationReducer';
 import { generateMockStore } from '../../../__tests__/setup/mockStore';
 import { MockStore } from 'redux-mock-store';
 
-describe('<Subjective />', () => {
+describe('<SubjectiveForm />', () => {
   let component: JSX.Element;
   let wrapper: ShallowWrapper;
   let mountWrapper: ReactWrapper;
