@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { CasefileBase } from '../../models/casefileModels';
 import { Button } from 'antd';
-import HookFormInput from '../common/HookFormInput';
-import style from '../common/hookForm.scss';
+import HookFormInput from '../common/forms/HookFormInput';
+import style from '../common/forms/hookForm.scss';
 import Spinner from '../common/Spinner';
 
 interface Props {

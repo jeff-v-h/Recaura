@@ -11,7 +11,6 @@ export const unloadedState: T.ConsultationState = {
   casefileId: '',
   practitionerId: '',
   date: '',
-  number: 0,
   practitioner: undefined,
   subjectiveAssessment: undefined,
   objectiveAssessment: undefined,

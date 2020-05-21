@@ -20,8 +20,9 @@ class CasefilePage extends React.Component<Props> {
   }
 
   private ensureDataFetched = () => {
-    const { list, match, getConsults } = this.props;
-    if (list.length === 0) getConsults(match.params.casefileId);
+    const { list, match, getConsults, id } = this.props;
+    const { casefileId } = match.params;
+    if (list.length === 0 || id !== casefileId) getConsults(casefileId);
   };
 
   render() {

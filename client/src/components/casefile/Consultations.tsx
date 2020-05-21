@@ -35,9 +35,7 @@ const Consultations = ({ consults, patientId, casefileId, isFetching }: Props) =
             to={`/patients/${patientId}/casefiles/${casefileId}/consultations/${consult.id}`}
             key={consult.id}
           >
-            <List.Item>
-              Consult {consult.number}: {parseDateString(consult.date)}
-            </List.Item>
+            <List.Item>Consult: {parseDateString(consult.date)}</List.Item>
           </Link>
         ))
       ) : (

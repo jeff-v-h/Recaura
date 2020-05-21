@@ -44,8 +44,7 @@ class NewConsultationPage extends React.Component<Props, State> {
       patientId,
       casefileId,
       practitionerId: '5eba9093e047213db0cbcd38',
-      date: moment().format(),
-      number: 1
+      date: moment().format()
     });
   };
 

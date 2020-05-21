@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { PatientBase } from '../../models/patientModels';
 import { Button } from 'antd';
-import HookFormInput from '../common/HookFormInput';
-import style from '../common/hookForm.scss';
-import HookHonorificSelect from '../common/HookHonorificSelect';
-import HookGenderSelect from '../common/HookGenderSelect';
-import HookCountryCodeSelect from '../common/HookCountryCodeSelect';
+import HookFormInput from '../common/forms/HookFormInput';
+import style from '../common/forms/hookForm.scss';
+import HookHonorificSelect from '../common/forms/HookHonorificSelect';
+import HookGenderSelect from '../common/forms/HookGenderSelect';
+import HookCountryCodeSelect from '../common/forms/HookCountryCodeSelect';
 import * as V from '../../helpers/formHelper';
-import HookDatePicker from '../common/HookDatePicker';
+import HookDatePicker from '../common/forms/HookDatePicker';
 import Spinner from '../common/Spinner';
 
 interface Props {
