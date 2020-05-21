@@ -33,7 +33,7 @@ function CasefileForm({ onSubmit, isSaving, isNew }: Props) {
       <div className={style.submitRow}>
         <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
         <Button type="primary" disabled={isSaving} htmlType="submit">
-          Add Casefile
+          {isNew ? 'Add' : 'Update'} Casefile
         </Button>
       </div>
     </form>

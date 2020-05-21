@@ -2,6 +2,7 @@ import { ApiService } from './apiService';
 import { AxiosResponse } from 'axios';
 import { Casefile, CasefileBase } from 'src/models/casefileModels';
 import { keys } from '../helpers/keys';
+import { message } from 'antd';
 
 const { apiUrl } = keys;
 
@@ -40,6 +41,7 @@ class CasefileService extends ApiService {
     try {
       const url = `${apiUrl}/casefiles/${id}`;
       const resp = (await this.delete(url)) as AxiosResponse<Casefile>;
+      message.success('Casefile deleted');
       return resp.data;
     } catch (e) {
       return this.handleRequestError(e);

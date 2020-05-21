@@ -18,7 +18,7 @@ export const createCasefile = (
       type: C.CREATE_CASEFILE_SUCCESS,
       payload: newCasefile
     });
-    history.push(`/patients/${newCasefile.patientId}/casefiles/${newCasefile.id}`);
+    history.push(`/patients/${newCasefile.patientId}/casefiles/${newCasefile.id}/consultations`);
   } catch (e) {
     dispatch({ type: C.CREATE_CASEFILE_FAILURE });
   }
@@ -69,11 +69,9 @@ export const deleteCasefile = (id: string): AppThunkAction<T.DeleteCasefileKnown
   dispatch({ type: C.DELETE_CASEFILE_REQUEST });
 
   try {
-    await casefileService.deleteCasefile(id);
-    dispatch({
-      type: C.DELETE_CASEFILE_SUCCESS,
-      payload: id
-    });
+    const casefile = await casefileService.deleteCasefile(id);
+    dispatch({ type: C.DELETE_CASEFILE_SUCCESS, payload: id });
+    history.push(`/patients/${casefile.patientId}/casefiles`);
   } catch (e) {
     dispatch({ type: C.DELETE_CASEFILE_FAILURE });
   }
