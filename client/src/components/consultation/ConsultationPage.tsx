@@ -17,19 +17,22 @@ import { DatePicker } from 'antd';
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
 
-type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ consultId: string }>;
+type Props = ConnectedProps<typeof connector> &
+  RouteComponentProps<{ patientId: string; casefileId: string; consultId: string }>;
 
 type State = {
   display: ConsultPart;
+  isNewConsult: boolean;
 };
 
 class ConsultationPage extends React.Component<Props, State> {
   state = {
-    display: ConsultPart.Subjective
+    display: ConsultPart.Subjective,
+    isNewConsult: this.props.match.params.consultId === 'new'
   };
 
   componentDidMount() {
-    this.ensureDataFetched();
+    this.state.isNewConsult ? this.props.clearConsult() : this.ensureDataFetched();
   }
 
   ensureDataFetched = () => {
@@ -46,32 +49,45 @@ class ConsultationPage extends React.Component<Props, State> {
   };
 
   onSubmit = () => {
-    const { id, patientId, casefileId, date, practitionerId } = this.props;
+    const { id, date, practitionerId, match } = this.props;
     const { subjectiveAssessment, objectiveAssessment, treatments, plans } = this.props;
+    const { patientId, casefileId } = match.params;
 
-    this.props.updateConsult(id, {
-      patientId,
-      casefileId,
-      date,
-      practitionerId,
-      subjectiveAssessment,
-      objectiveAssessment,
-      treatments,
-      plans
-    });
+    this.state.isNewConsult
+      ? this.props.createConsult({
+          subjectiveAssessment,
+          objectiveAssessment,
+          treatments,
+          plans,
+          patientId,
+          casefileId,
+          practitionerId: '5eba9093e047213db0cbcd38',
+          date: date ? date : moment().format()
+        })
+      : this.props.updateConsult(id, {
+          patientId,
+          casefileId,
+          date,
+          practitionerId,
+          subjectiveAssessment,
+          objectiveAssessment,
+          treatments,
+          plans
+        });
   };
 
   selectSection = (display: ConsultPart) => this.setState({ display });
 
   renderConsultSection = (consultPart: ConsultPart) => {
     const { modifySubjective, modifyObjective, modifyTreatmentsAndPlans } = this.props;
-    const { subjectiveAssessment, objectiveAssessment, treatments, plans } = this.props;
+    const { subjectiveAssessment, objectiveAssessment, treatments, plans, id } = this.props;
 
     switch (consultPart) {
       case ConsultPart.Subjective:
+        const data = this.state.isNewConsult && id.length > 0 ? undefined : subjectiveAssessment;
         return (
           <SubjectiveForm
-            data={subjectiveAssessment}
+            data={data}
             display={consultPart}
             changeSection={this.selectSection}
             saveValues={modifySubjective}
@@ -101,7 +117,8 @@ class ConsultationPage extends React.Component<Props, State> {
 
   changeDate = (date: moment.Moment | null) => date && this.props.modifyDate(date.format());
 
-  getDate = (date: string) => (!date ? undefined : moment(date));
+  getDate = (date: string) =>
+    !date && this.state.isNewConsult ? moment() : !date ? undefined : moment(date);
 
   render() {
     const { display } = this.state;

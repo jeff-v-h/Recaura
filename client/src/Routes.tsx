@@ -16,11 +16,6 @@ export default class Routes extends React.Component {
       <Switch>
         <Route exact path="/" component={PatientsPage} />
         <Route
-          exact
-          path="/patients/:patientId/casefiles/:casefileId/consultations/new"
-          component={NewConsultationPage}
-        />
-        <Route
           path="/patients/:patientId/casefiles/:casefileId/consultations/:consultId"
           component={ConsultationPage}
         />
