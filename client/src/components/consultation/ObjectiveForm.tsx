@@ -28,9 +28,7 @@ function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
     additional: ''
   };
 
-  const { register, handleSubmit } = useForm<ObjectiveAssessment>({
-    defaultValues
-  });
+  const { register, handleSubmit } = useForm<ObjectiveAssessment>({ defaultValues });
 
   const onChangeSection = (e: RadioChangeEvent) => {
     handleSubmit(saveValues)();
@@ -45,16 +43,24 @@ function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
   return (
     <>
       <NavPills value={display} onChange={onChangeSection} />
-      <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
-        <div className={style.inputSection}>
-          <HookTextArea label="Observation" name="observation" register={register} />
-          <HookTextArea label="Active" name="active" register={register} />
-          <HookTextArea label="Passive" name="passive" register={register} />
-          <HookTextArea label="Isometric" name="resistedIsometric" register={register} />
-          <HookTextArea label="Functional" name="functionalTests" register={register} />
-          <HookTextArea label="Neurological" name="neurologicalTests" register={register} />
-          <HookTextArea label="Special" name="specialTests" register={register} />
-          <HookTextArea label="Palpation" name="palpation" register={register} />
+      <form onSubmit={handleSubmit(saveAndNext)} className={style.hookConsultForm}>
+        <div>
+          <div className={style.hookRow}>
+            <HookTextArea label="Observation" name="observation" register={register} />
+            <HookTextArea label="Palpation" name="palpation" register={register} />
+          </div>
+          <div className={style.hookRow}>
+            <HookTextArea label="Active" name="active" register={register} />
+            <HookTextArea label="Passive" name="passive" register={register} />
+          </div>
+          <div className={style.hookRow}>
+            <HookTextArea label="Isometric" name="resistedIsometric" register={register} />
+            <HookTextArea label="Functional" name="functionalTests" register={register} />
+          </div>
+          <div className={style.hookRow}>
+            <HookTextArea label="Neurological" name="neurologicalTests" register={register} />
+            <HookTextArea label="Special" name="specialTests" register={register} />
+          </div>
           <HookTextArea label="Additional" name="additional" register={register} />
         </div>
         <div className={style.submitRow}>

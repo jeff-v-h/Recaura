@@ -17,7 +17,6 @@ interface Props {
 }
 
 function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
-  console.log('rendered', data);
   const defaultValues = data ?? {
     moi: '',
     currentHistory: '',
@@ -31,10 +30,7 @@ function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
     vas: 0
   };
 
-  const { register, handleSubmit, control } = useForm<SubjectiveAssessment>({
-    // Set empty strings for non required inputs to ensure undefined not passed through
-    defaultValues
-  });
+  const { register, handleSubmit, control } = useForm<SubjectiveAssessment>({ defaultValues });
 
   const onChangeSection = (e: RadioChangeEvent) => {
     handleSubmit(saveValues)();

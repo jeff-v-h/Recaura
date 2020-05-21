@@ -22,9 +22,7 @@ function TreatmentsAndPlanForm({ data, display, changeSection, saveValues, creat
     plans: ''
   };
 
-  const { register, handleSubmit } = useForm<TreatmentsAndPlans>({
-    defaultValues
-  });
+  const { register, handleSubmit } = useForm<TreatmentsAndPlans>({ defaultValues });
 
   const onChangeSection = (e: RadioChangeEvent) => {
     handleSubmit(saveValues)();
@@ -39,11 +37,9 @@ function TreatmentsAndPlanForm({ data, display, changeSection, saveValues, creat
   return (
     <>
       <NavPills value={display} onChange={onChangeSection} />
-      <form onSubmit={handleSubmit(saveAndNext)} className={style.hookForm}>
-        <div className={style.inputSection}>
-          <HookTextArea label="Treatments" name="treatments" register={register} />
-          <HookTextArea label="Plans" name="plans" register={register} />
-        </div>
+      <form onSubmit={handleSubmit(saveAndNext)} className={style.hookConsultForm}>
+        <HookTextArea label="Treatments" name="treatments" register={register} />
+        <HookTextArea label="Plans" name="plans" register={register} />
         <div className={style.submitRow}>
           <Button type="primary" htmlType="submit">
             Save Consult
