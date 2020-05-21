@@ -4,7 +4,6 @@ import { compose } from 'redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import * as consultActions from '../../stores/consultations/consultationActions';
 import { ApplicationState } from '../../stores';
-import { ConsultationBase } from 'src/models/consultationModels';
 import PatientInfo from '../common/PatientInfo';
 import style from './consultation.scss';
 import { ConsultPart } from '../../helpers/utils';
@@ -12,8 +11,8 @@ import TreatmentsAndPlanForm from './TreatmentsAndPlanForm';
 import SubjectiveForm from './SubjectiveForm';
 import ObjectiveForm from './ObjectiveForm';
 import moment from 'moment';
-import HookDatePicker from '../common/forms/HookDatePicker';
 import { DatePicker } from 'antd';
+import CasefileInfo from '../common/CasefileInfo';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -102,10 +101,11 @@ class NewConsultationPage extends React.Component<Props, State> {
 
   render() {
     const { display, date } = this.state;
-    console.log(this.state.date);
+
     return (
       <>
         <PatientInfo />
+        <CasefileInfo />
         <div className={style.consultDate}>
           <label>Consult date:</label>
           <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} defaultValue={date} />
