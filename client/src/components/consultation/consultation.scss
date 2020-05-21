@@ -1,3 +1,14 @@
+@import '../common/variables';
+
 .container {
   padding: 1px;
+}
+
+.consultDate {
+  margin: 0 auto;
+  max-width: $form-max-width;
+}
+
+.consultDate label {
+  padding-right: 5rem;
 }

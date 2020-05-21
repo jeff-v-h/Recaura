@@ -12,6 +12,8 @@ import TreatmentsAndPlanForm from './TreatmentsAndPlanForm';
 import SubjectiveForm from './SubjectiveForm';
 import ObjectiveForm from './ObjectiveForm';
 import moment from 'moment';
+import HookDatePicker from '../common/forms/HookDatePicker';
+import { DatePicker } from 'antd';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -21,11 +23,13 @@ type Props = ConnectedProps<typeof connector> &
 
 type State = {
   display: ConsultPart;
+  date: moment.Moment | null;
 };
 
 class NewConsultationPage extends React.Component<Props, State> {
   state = {
-    display: ConsultPart.Subjective
+    display: ConsultPart.Subjective,
+    date: moment()
   };
 
   componentDidMount() {
@@ -44,7 +48,7 @@ class NewConsultationPage extends React.Component<Props, State> {
       patientId,
       casefileId,
       practitionerId: '5eba9093e047213db0cbcd38',
-      date: moment().format()
+      date: this.state.date.format()
     });
   };
 
@@ -94,12 +98,18 @@ class NewConsultationPage extends React.Component<Props, State> {
     }
   };
 
-  render() {
-    const { display } = this.state;
+  changeDate = (date: moment.Moment | null) => this.setState({ date });
 
+  render() {
+    const { display, date } = this.state;
+    console.log(this.state.date);
     return (
       <>
         <PatientInfo />
+        <div className={style.consultDate}>
+          <label>Consult date:</label>
+          <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} defaultValue={date} />
+        </div>
         <div className={style.container}>{this.renderConsultSection(display)}</div>
       </>
     );

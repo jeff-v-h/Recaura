@@ -1,4 +1,6 @@
+@import './variables';
+
 .description {
   margin: 20rem auto;
-  max-width: 700rem;
+  max-width: $form-max-width;
 }
