@@ -21,13 +21,11 @@ type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ consultId:
 
 type State = {
   display: ConsultPart;
-  date: moment.Moment | null;
 };
 
 class ConsultationPage extends React.Component<Props, State> {
   state = {
-    display: ConsultPart.Subjective,
-    date: moment()
+    display: ConsultPart.Subjective
   };
 
   componentDidMount() {
@@ -48,22 +46,13 @@ class ConsultationPage extends React.Component<Props, State> {
   };
 
   onSubmit = () => {
-    const {
-      id,
-      patientId,
-      casefileId,
-      date,
-      practitionerId,
-      subjectiveAssessment,
-      objectiveAssessment,
-      treatments,
-      plans
-    } = this.props;
+    const { id, patientId, casefileId, date, practitionerId } = this.props;
+    const { subjectiveAssessment, objectiveAssessment, treatments, plans } = this.props;
 
     this.props.updateConsult(id, {
       patientId,
       casefileId,
-      date: this.state.date.format(),
+      date,
       practitionerId,
       subjectiveAssessment,
       objectiveAssessment,
@@ -75,15 +64,8 @@ class ConsultationPage extends React.Component<Props, State> {
   selectSection = (display: ConsultPart) => this.setState({ display });
 
   renderConsultSection = (consultPart: ConsultPart) => {
-    const {
-      modifySubjective,
-      modifyObjective,
-      modifyTreatmentsAndPlans,
-      subjectiveAssessment,
-      objectiveAssessment,
-      treatments,
-      plans
-    } = this.props;
+    const { modifySubjective, modifyObjective, modifyTreatmentsAndPlans } = this.props;
+    const { subjectiveAssessment, objectiveAssessment, treatments, plans } = this.props;
 
     switch (consultPart) {
       case ConsultPart.Subjective:
@@ -117,7 +99,9 @@ class ConsultationPage extends React.Component<Props, State> {
     }
   };
 
-  changeDate = (date: moment.Moment | null) => this.setState({ date });
+  changeDate = (date: moment.Moment | null) => date && this.props.modifyDate(date.format());
+
+  getDate = (date: string) => (!date ? undefined : moment(date));
 
   render() {
     const { display } = this.state;
@@ -129,7 +113,7 @@ class ConsultationPage extends React.Component<Props, State> {
         <CasefileInfo />
         <div className={style.consultDate}>
           <label>Consult date:</label>
-          <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} defaultValue={moment(date)} />
+          <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} value={this.getDate(date)} />
         </div>
         <div className={style.container}>{this.renderConsultSection(display)}</div>
       </>

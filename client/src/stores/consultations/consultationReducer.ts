@@ -65,6 +65,9 @@ const reducer: Reducer<T.ConsultationState> = (
 
     case C.CLEAR_CONSULTATION:
       return { ...unloadedState, list: state.list };
+    case C.MODIFY_DATE:
+      obj = action as T.ModifyDate;
+      return { ...state, date: obj.payload };
     case C.MODIFY_SUBJECTIVE:
       obj = action as T.ModifySubjective;
       return { ...state, subjectiveAssessment: obj.payload };

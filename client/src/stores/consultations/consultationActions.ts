@@ -47,6 +47,7 @@ export const getConsultSuccess = async (id: string): Promise<T.GetConsultSuccess
 export const getConsultFailure = () => ({ type: C.GET_CONSULTATION_FAILURE });
 
 export const clearConsult = () => ({ type: C.CLEAR_CONSULTATION });
+export const modifyDate = (date: string) => ({ type: C.MODIFY_DATE, payload: date });
 export const modifySubjective = (subjective: SubjectiveAssessment) =>
   ({ type: C.MODIFY_SUBJECTIVE, payload: subjective } as T.ModifySubjective);
 
