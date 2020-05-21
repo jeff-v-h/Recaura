@@ -45,10 +45,10 @@ export class ApiService {
 
 const handleError = (showDefaultErrorMsg: boolean) => (e: AxiosError) => {
   if (showDefaultErrorMsg) {
-    const msg = defaultErrorMessage(e);
-    return Promise.reject(msg);
+    return Promise.reject(defaultErrorMessage(e));
   }
-  return Promise.reject(e);
+  const msg = e.response?.data?.error ?? defaultErrorMessage(e);
+  return Promise.reject(msg);
 };
 
 export const defaultErrorMessage = (error: AxiosError): string => {
