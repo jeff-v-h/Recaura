@@ -28,7 +28,7 @@ function HookTextArea({ label, name, required, error, errorMsg, inputStyle, regi
         <span className={style.hookInputSupport}></span>
       </div>
       <div className={inputStyle}>
-        <textarea id={name} name={name} ref={register} />
+        <textarea id={name} name={name} ref={register} className={style.textArea} />
         <span className={style.error}>{error && errorMsg}</span>
       </div>
     </div>

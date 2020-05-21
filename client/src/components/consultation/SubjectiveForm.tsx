@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { SubjectiveAssessment } from '../../models/consultationModels';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 import HookTextArea from '../common/HookTextArea';
 import style from '../common/hookForm.scss';
 import HookVasSelect from '../common/HookVasSelect';

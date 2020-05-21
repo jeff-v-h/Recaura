@@ -1,3 +1,5 @@
+@import './variables';
+
 $label-right-pad: 5rem;
 $error-height: 20rem;
 
@@ -94,4 +96,40 @@ $error-height: 20rem;
   display: flex;
   align-items: center;
   padding-right: 10rem;
+}
+
+.input {
+  box-sizing: border-box;
+  margin: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14rem;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.input:hover {
+  border-color: $primary-color;
+}
+
+.input:focus {
+  outline: 0;
+  border-color: $primary-color;
+  box-shadow: 0 0 0 2px rgba(245, 149, 15, 0.2);
+}
+
+.textArea {
+  @extend .input;
+  max-width: 100%;
+  height: auto;
+  min-height: 32px;
+  vertical-align: bottom;
+  transition: all 0.3s, height 0s;
 }
