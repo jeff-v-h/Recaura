@@ -11,7 +11,7 @@ interface Props {
   isSaving: boolean;
 }
 
-function NewCasefileForm({ onSubmit, isSaving }: Props) {
+function CasefileForm({ onSubmit, isSaving }: Props) {
   const { register, handleSubmit, errors, setValue } = useForm<CasefileBase>();
 
   useEffect(() => register({ name: 'name' }, { required: true }), []);
@@ -39,4 +39,4 @@ function NewCasefileForm({ onSubmit, isSaving }: Props) {
   );
 }
 
-export default NewCasefileForm;
+export default CasefileForm;

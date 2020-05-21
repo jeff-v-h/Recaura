@@ -4,10 +4,10 @@ import Dashboard from './components/dashboard/Dashboard';
 import PatientPage from './components/patient/PatientPage';
 import CasefilesPage from './components/casefiles/CasefilesPage';
 import ConsultationPage from './components/consultation/ConsultationPage';
-import CasefilePage from './components/casefile/CasefilePage';
+import ConsultationsPage from './components/consultations/ConsultationsPage';
 import PatientsPage from './components/patients/PatientsPage';
 import NewPatientPage from './components/patient/NewPatientPage';
-import NewCasefilePage from './components/casefile/NewCasefilePage';
+import CasefilePage from './components/casefile/CasefilePage';
 
 export default class Routes extends React.Component {
   render() {
@@ -18,8 +18,8 @@ export default class Routes extends React.Component {
           path="/patients/:patientId/casefiles/:casefileId/consultations/:consultId"
           component={ConsultationPage}
         />
-        <Route exact path="/patients/:patientId/casefiles/new" component={NewCasefilePage} />
-        <Route path="/patients/:patientId/casefiles/:casefileId" component={CasefilePage} />
+        <Route exact path="/patients/:patientId/casefiles/new" component={CasefilePage} />
+        <Route path="/patients/:patientId/casefiles/:casefileId" component={ConsultationsPage} />
         <Route path="/patients/:patientId/casefiles" component={CasefilesPage} />
         <Route exact path="/patients/new" component={NewPatientPage} />
         <Route path="/patients/:patientId" component={PatientPage} />

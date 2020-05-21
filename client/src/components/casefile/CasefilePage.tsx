@@ -1,44 +1,29 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import * as consultationActions from '../../stores/consultations/consultationActions';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { ApplicationState } from '../../stores';
+import CasefileForm from './CasefileForm';
+import { CasefileBase } from 'src/models/casefileModels';
 import PatientInfo from '../common/PatientInfo';
-import Consultations from './Consultations';
-import CasefileInfo from '../common/CasefileInfo';
 
-const mapStateToProps = (state: ApplicationState) => state.consultation;
-const connector = connect(mapStateToProps, consultationActions);
+const mapStateToProps = (state: ApplicationState) => state.casefile;
+const connector = connect(mapStateToProps, casefileActions);
 
-type Props = ConnectedProps<typeof connector> &
-  RouteComponentProps<{ patientId: string; casefileId: string }>;
+type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ patientId: string }>;
 
 class CasefilePage extends React.Component<Props> {
-  componentDidMount() {
-    this.ensureDataFetched();
-  }
-
-  private ensureDataFetched = () => {
-    const { list, match, getConsults, id } = this.props;
-    const { casefileId } = match.params;
-    if (list.length === 0 || id !== casefileId) getConsults(casefileId);
+  onSubmit = async (values: CasefileBase) => {
+    values.patientId = this.props.match.params.patientId;
+    this.props.createCasefile(values);
   };
 
   render() {
-    const { list, match, isFetching } = this.props;
-    const { patientId, casefileId } = match.params;
-
     return (
       <>
         <PatientInfo />
-        <CasefileInfo />
-        <Consultations
-          consults={list}
-          patientId={patientId}
-          casefileId={casefileId}
-          isFetching={isFetching}
-        />
+        <CasefileForm onSubmit={this.onSubmit} isSaving={this.props.isFetching} />
       </>
     );
   }
