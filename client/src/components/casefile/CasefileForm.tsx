@@ -9,18 +9,19 @@ import Spinner from '../common/Spinner';
 interface Props {
   onSubmit: (data: CasefileBase) => void;
   isSaving: boolean;
+  isNew: boolean;
 }
 
-function CasefileForm({ onSubmit, isSaving }: Props) {
+function CasefileForm({ onSubmit, isSaving, isNew }: Props) {
   const { register, handleSubmit, errors, setValue } = useForm<CasefileBase>();
 
   useEffect(() => register({ name: 'name' }, { required: true }), []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={style.hookForm}>
+    <form onSubmit={handleSubmit(onSubmit)} className={style.hookCasefileForm}>
       <div className={style.inputSection}>
         <HookFormInput
-          label="Casefile Name"
+          label={isNew ? 'Casefile Name' : 'Update Name'}
           name="name"
           required
           setValue={setValue}

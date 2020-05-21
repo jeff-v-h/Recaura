@@ -7,23 +7,48 @@ import { ApplicationState } from '../../stores';
 import CasefileForm from './CasefileForm';
 import { CasefileBase } from 'src/models/casefileModels';
 import PatientInfo from '../common/PatientInfo';
+import { Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import CasefileInfo from '../common/CasefileInfo';
+import style from './casefile.scss';
 
 const mapStateToProps = (state: ApplicationState) => state.casefile;
 const connector = connect(mapStateToProps, casefileActions);
 
-type Props = ConnectedProps<typeof connector> & RouteComponentProps<{ patientId: string }>;
+type Props = ConnectedProps<typeof connector> &
+  RouteComponentProps<{ patientId: string; casefileId: string }>;
+type State = { isNew: boolean };
 
-class CasefilePage extends React.Component<Props> {
-  onSubmit = async (values: CasefileBase) => {
-    values.patientId = this.props.match.params.patientId;
-    this.props.createCasefile(values);
+class CasefilePage extends React.Component<Props, State> {
+  state = {
+    isNew: this.props.match.params.casefileId === 'new'
   };
 
+  onSubmit = async (values: CasefileBase) => {
+    const { match, createCasefile } = this.props;
+    values.patientId = match.params.patientId;
+    createCasefile(values);
+  };
+
+  deleteCasefile = () => this.props.deleteCasefile(this.props.match.params.casefileId);
+
   render() {
+    const { isNew } = this.state;
     return (
       <>
         <PatientInfo />
-        <CasefileForm onSubmit={this.onSubmit} isSaving={this.props.isFetching} />
+        {!isNew && <CasefileInfo />}
+        <div className={style.casefileSection}>
+          {!isNew && (
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              onClick={this.deleteCasefile}
+              style={{ float: 'right' }}
+            />
+          )}
+          <CasefileForm onSubmit={this.onSubmit} isSaving={this.props.isFetching} isNew={isNew} />
+        </div>
       </>
     );
   }

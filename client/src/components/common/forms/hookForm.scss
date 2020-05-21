@@ -13,7 +13,8 @@ $error-height: 20rem;
   margin: 50rem auto;
 }
 
-.hookConsultForm {
+.hookConsultForm,
+.hookCasefileForm {
   @extend .hookForm;
   margin-top: 0;
 }

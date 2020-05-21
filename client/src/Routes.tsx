@@ -18,8 +18,11 @@ export default class Routes extends React.Component {
           path="/patients/:patientId/casefiles/:casefileId/consultations/:consultId"
           component={ConsultationPage}
         />
-        <Route exact path="/patients/:patientId/casefiles/new" component={CasefilePage} />
-        <Route path="/patients/:patientId/casefiles/:casefileId" component={ConsultationsPage} />
+        <Route
+          path="/patients/:patientId/casefiles/:casefileId/consultations"
+          component={ConsultationsPage}
+        />
+        <Route path="/patients/:patientId/casefiles/:casefileId" component={CasefilePage} />
         <Route path="/patients/:patientId/casefiles" component={CasefilesPage} />
         <Route exact path="/patients/new" component={NewPatientPage} />
         <Route path="/patients/:patientId" component={PatientPage} />
