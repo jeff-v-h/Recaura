@@ -37,12 +37,16 @@ class PatientInfo extends React.Component<Props> {
 
     return (
       <>
-        <Descriptions bordered className={style.description}>
+        <Descriptions bordered className={style.description} size="middle">
           <Item label="First Name">
-            <Link to={`/patients/${match.params.patientId}`}>{firstName}</Link>
+            <Link to={`/patients/${match.params.patientId}`}>
+              <div>{firstName}</div>
+            </Link>
           </Item>
           <Item label="Last Name">
-            <Link to={`/patients/${match.params.patientId}`}>{lastName}</Link>
+            <Link to={`/patients/${match.params.patientId}`}>
+              <div>{lastName}</div>
+            </Link>
           </Item>
           <Item label="DOB">{parseDateString(dob)}</Item>
           <Item label="Gender">{gender}</Item>
