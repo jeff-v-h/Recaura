@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import * as patientActions from '../../stores/patients/patientActions';
 import { ApplicationState } from '../../stores';
 import PatientDescription from './PatientDescription';
-import NewPatientForm from './NewPatientForm';
+import PatientForm from './PatientForm';
 import style from './patient.scss';
 
 const mapStateToProps = (state: ApplicationState) => state.patient;
@@ -69,7 +69,7 @@ class PatientPage extends React.Component<Props, State> {
     return (
       <div className={style.centerContainer}>
         <PatientDescription patient={this.props} />
-        <NewPatientForm data={patient} onSubmit={this.onSubmit} isSaving={isFetching} />
+        <PatientForm data={patient} onSubmit={this.onSubmit} isSaving={isFetching} />
       </div>
     );
   }

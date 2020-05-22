@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import * as patientActions from '../../stores/patients/patientActions';
 import { ApplicationState } from '../../stores';
 import style from './patient.scss';
-import NewPatientForm from './NewPatientForm';
+import PatientForm from './PatientForm';
 import { PatientBase } from 'src/models/patientModels';
 
 const mapStateToProps = (state: ApplicationState) => state.patient;
@@ -21,7 +21,7 @@ class NewPatientPage extends React.Component<Props> {
 
     return (
       <div className={style.centerContainer}>
-        <NewPatientForm onSubmit={this.onSubmit} isSaving={isFetching} />
+        <PatientForm onSubmit={this.onSubmit} isSaving={isFetching} />
       </div>
     );
   }

@@ -30,37 +30,6 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
 
   //#region register effects
   useEffect(() => data && form.reset(data), [data]);
-  useEffect(() => register({ name: 'firstName' }, { required: true }), []);
-  useEffect(() => register({ name: 'lastName' }, { required: true }), []);
-  useEffect(() => register({ name: 'dob' }, { required: true }), []);
-  useEffect(() => register({ name: 'email' }, { validate: V.validateEmailAllowEmpty }), []);
-  useEffect(
-    () =>
-      register(
-        { name: 'homePhone' },
-        {
-          validate: {
-            onlyDigits: V.validateDigitStringAllowEmpty,
-            correctLength: V.validatePhoneLengthAllowEmpty
-          }
-        }
-      ),
-    []
-  );
-  useEffect(
-    () =>
-      register(
-        { name: 'mobilePhone' },
-        {
-          validate: {
-            onlyDigits: V.validateDigitString,
-            correctLength: V.validatePhoneLength
-          }
-        }
-      ),
-    []
-  );
-  useEffect(() => register({ name: 'occupation' }), []);
   //#endregion
 
   const onTitleChange = (args: any[]) => {
@@ -76,7 +45,7 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
           label="First Name"
           name="firstName"
           required
-          setValue={setValue}
+          register={register({ required: true })}
           error={errors.firstName}
           errorMsg={'First name is required'}
         />
@@ -84,7 +53,7 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
           label="Last Name"
           name="lastName"
           required
-          setValue={setValue}
+          register={register({ required: true })}
           error={errors.lastName}
           errorMsg={'Last name is required'}
         />
@@ -100,14 +69,14 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
         <HookFormInput
           label="Occupation"
           name="occupation"
-          setValue={setValue}
+          register={register}
           error={errors.occupation}
           errorMsg={''}
         />
         <HookFormInput
           label="Email"
           name="email"
-          setValue={setValue}
+          register={register({ validate: V.validateEmailAllowEmpty })}
           error={errors.email}
           errorMsg={'Email invalid'}
           inputStyle={style.hookInputLong}
@@ -117,7 +86,12 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
           <HookFormInput
             label="Home Ph"
             name="homePhone"
-            setValue={setValue}
+            register={register({
+              validate: {
+                onlyDigits: V.validateDigitStringAllowEmpty,
+                correctLength: V.validatePhoneLengthAllowEmpty
+              }
+            })}
             error={errors.homePhone}
             errorMsg={V.getPhoneErrorMsg(errors.homePhone?.type)}
             inputStyle={style.hookInputShort}
@@ -127,7 +101,12 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
             label="Mobile Ph"
             name="mobilePhone"
             required
-            setValue={setValue}
+            register={register({
+              validate: {
+                onlyDigits: V.validateDigitString,
+                correctLength: V.validatePhoneLength
+              }
+            })}
             error={errors.mobilePhone}
             errorMsg={V.getPhoneErrorMsg(errors.mobilePhone?.type)}
             placeholder="0400 111 222"
