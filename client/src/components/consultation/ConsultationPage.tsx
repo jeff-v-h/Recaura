@@ -12,8 +12,8 @@ import TreatmentsAndPlanForm from './TreatmentsAndPlanForm';
 import SubjectiveForm from './SubjectiveForm';
 import ObjectiveForm from './ObjectiveForm';
 import moment from 'moment';
-import { DatePicker, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DatePicker, Button, Modal } from 'antd';
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 const mapStateToProps = (state: ApplicationState) => state.consultation;
 const connector = connect(mapStateToProps, consultActions);
@@ -121,7 +121,18 @@ class ConsultationPage extends React.Component<Props, State> {
   getDate = (date: string) =>
     !date && this.state.isNewConsult ? moment() : !date ? undefined : moment(date);
 
-  deleteConsult = () => this.props.deleteConsult(this.props.id);
+  showDelete = () => {
+    const { deleteConsult, id } = this.props;
+
+    Modal.confirm({
+      title: 'Are you sure?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Deleted consultations cannot be recovered!',
+      okText: 'Delete',
+      okType: 'danger',
+      onOk: () => deleteConsult(id)
+    });
+  };
 
   render() {
     const { display, isNewConsult } = this.state;
@@ -136,9 +147,7 @@ class ConsultationPage extends React.Component<Props, State> {
             <label className={style.consultDateLabel}>Consult date:</label>
             <DatePicker format="DD-MM-YYYY" onChange={this.changeDate} value={this.getDate(date)} />
           </div>
-          {!isNewConsult && (
-            <Button danger icon={<DeleteOutlined />} onClick={this.deleteConsult} />
-          )}
+          {!isNewConsult && <Button danger icon={<DeleteOutlined />} onClick={this.showDelete} />}
         </div>
         {this.renderConsultSection(display)}
       </>

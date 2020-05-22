@@ -11,8 +11,6 @@ import style from './patient.scss';
 import { Button, Modal } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
-const { confirm } = Modal;
-
 const mapStateToProps = (state: ApplicationState) => state.patient;
 const connector = connect(mapStateToProps, patientActions);
 
@@ -69,7 +67,7 @@ class PatientPage extends React.Component<Props, State> {
 
   showDelete = () => {
     const { deletePatient, id } = this.props;
-    confirm({
+    Modal.confirm({
       title: 'Are you sure?',
       icon: <ExclamationCircleOutlined />,
       content: 'Deleting patient will remove all related casefiles and consultations!',
