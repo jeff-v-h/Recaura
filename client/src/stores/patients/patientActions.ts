@@ -13,11 +13,7 @@ export const createPatient = (
 
   try {
     const newPatient = await patientsService.createPatient(patient);
-
-    dispatch({
-      type: C.CREATE_PATIENT_SUCCESS,
-      payload: newPatient
-    });
+    dispatch({ type: C.CREATE_PATIENT_SUCCESS, payload: newPatient });
     history.push(`/patients/${newPatient.id}/casefiles`);
   } catch (error) {
     dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });

@@ -87,7 +87,7 @@ class PatientPage extends React.Component<Props, State> {
     return (
       <>
         <div className={style.header}>
-          <h3>{isNew ? 'New' : 'Update'} Patient</h3>
+          <h3>{isNew ? 'New Patient' : 'Patient Details'}</h3>
         </div>
         {!isNew && (
           <div className={style.deleteRow}>
