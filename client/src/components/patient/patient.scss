@@ -1,1 +1,8 @@
+@import '../common/variables';
 
+.deleteRow {
+  display: flex;
+  justify-content: flex-end;
+  max-width: $form-max-width;
+  margin: 20rem auto 0;
+}

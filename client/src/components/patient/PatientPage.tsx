@@ -7,6 +7,11 @@ import { ApplicationState } from '../../stores';
 import PatientForm from './PatientForm';
 import moment from 'moment';
 import { PatientBaseForm } from '../../helpers/formHelper';
+import style from './patient.scss';
+import { Button, Modal } from 'antd';
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 const mapStateToProps = (state: ApplicationState) => state.patient;
 const connector = connect(mapStateToProps, patientActions);
@@ -62,19 +67,38 @@ class PatientPage extends React.Component<Props, State> {
     };
   };
 
+  showDelete = () => {
+    const { deletePatient, id } = this.props;
+    confirm({
+      title: 'Are you sure?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Deleting patient will remove all related casefiles and consultations!',
+      okText: 'Delete',
+      okType: 'danger',
+      onOk: () => deletePatient(id)
+    });
+  };
+
   render() {
     const { isFetching, error } = this.props;
     const { isNew } = this.state;
     const data = isNew ? undefined : this.getPatientData();
 
     return (
-      <PatientForm
-        data={data}
-        onSubmit={this.save}
-        isSaving={isFetching}
-        isNew={isNew}
-        error={error}
-      />
+      <>
+        {!isNew && (
+          <div className={style.deleteRow}>
+            <Button danger icon={<DeleteOutlined />} onClick={this.showDelete} />
+          </div>
+        )}
+        <PatientForm
+          data={data}
+          onSubmit={this.save}
+          isSaving={isFetching}
+          isNew={isNew}
+          error={error}
+        />
+      </>
     );
   }
 }
