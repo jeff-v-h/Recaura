@@ -5,7 +5,7 @@ import { ErrorAction } from '../common/types';
 
 const { C } = T;
 
-const unloadedState: T.PatientState = {
+export const unloadedState: T.PatientState = {
   isFetching: false,
   list: [],
   id: '',
