@@ -86,6 +86,9 @@ class PatientPage extends React.Component<Props, State> {
 
     return (
       <>
+        <div className={style.header}>
+          <h3>{isNew ? 'New' : 'Update'} Patient</h3>
+        </div>
         {!isNew && (
           <div className={style.deleteRow}>
             <Button danger icon={<DeleteOutlined />} onClick={this.showDelete} />
