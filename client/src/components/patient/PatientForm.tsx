@@ -15,9 +15,10 @@ interface Props {
   isSaving: boolean;
   data?: V.PatientBaseForm;
   isNew: boolean;
+  error: string;
 }
 
-function PatientForm({ data, onSubmit, isSaving, isNew }: Props) {
+function PatientForm({ data, onSubmit, isSaving, isNew, error }: Props) {
   // Set empty strings for non-required inputs to ensure undefined not passed through
   const defaultValues = data ?? {
     email: '',
@@ -28,7 +29,9 @@ function PatientForm({ data, onSubmit, isSaving, isNew }: Props) {
   const form = useForm<V.PatientBaseForm>({ defaultValues });
   const { register, handleSubmit, errors, setValue, control } = form;
 
-  useEffect(() => data && form.reset(data), [data]);
+  useEffect(() => {
+    if (data && !isSaving && !error) form.reset(data);
+  }, [data]);
 
   const onTitleChange = (args: any[]) => {
     setValue('gender', V.getGenderFromTitle(args[0]));

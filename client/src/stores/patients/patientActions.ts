@@ -24,23 +24,16 @@ export const createPatient = (
   }
 };
 
-export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async (
-  dispatch,
-  getState
-) => {
-  // Only load data if it's something we don't already have (and are not already loading)
-  const appState = getState();
-  if (appState.patient) {
-    dispatch({ type: C.GET_PATIENTS_REQUEST });
+export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async (dispatch) => {
+  dispatch({ type: C.GET_PATIENTS_REQUEST });
 
-    try {
-      dispatch({
-        type: C.GET_PATIENTS_SUCCESS,
-        payload: await patientsService.getPatients()
-      });
-    } catch (error) {
-      dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });
-    }
+  try {
+    dispatch({
+      type: C.GET_PATIENTS_SUCCESS,
+      payload: await patientsService.getPatients()
+    });
+  } catch (error) {
+    dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });
   }
 };
 
@@ -78,8 +71,8 @@ export const updatePatient = (
   try {
     const updatedPatient = await patientsService.updatePatient(id, patient);
     dispatch({ type: C.UPDATE_PATIENT_SUCCESS, payload: updatedPatient });
-  } catch (error) {
-    dispatch({ type: C.UPDATE_PATIENT_FAILURE });
+  } catch (e) {
+    dispatch({ type: C.UPDATE_PATIENT_FAILURE, payload: e });
   }
 };
 
@@ -93,6 +86,6 @@ export const deletePatient = (id: string): AppThunkAction<T.DeletePatientKnownAc
     dispatch({ type: C.DELETE_PATIENT_SUCCESS, payload: id });
     history.push(`/patients`);
   } catch (e) {
-    dispatch({ type: C.DELETE_PATIENT_FAILURE });
+    dispatch({ type: C.DELETE_PATIENT_FAILURE, payload: e });
   }
 };

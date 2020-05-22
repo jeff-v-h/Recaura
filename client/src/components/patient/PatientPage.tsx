@@ -4,9 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import * as patientActions from '../../stores/patients/patientActions';
 import { ApplicationState } from '../../stores';
-import PatientDescription from './PatientDescription';
 import PatientForm from './PatientForm';
-import style from './patient.scss';
 import moment from 'moment';
 import { PatientBaseForm } from '../../helpers/formHelper';
 
@@ -38,7 +36,7 @@ class PatientPage extends React.Component<Props, State> {
     }
   };
 
-  onSubmit = (values: PatientBaseForm) => {
+  save = (values: PatientBaseForm) => {
     const { id, createPatient, updatePatient } = this.props;
     const patient = { ...values, dob: values.dob?.format() ?? '' };
 
@@ -65,15 +63,18 @@ class PatientPage extends React.Component<Props, State> {
   };
 
   render() {
-    const { isFetching } = this.props;
+    const { isFetching, error } = this.props;
     const { isNew } = this.state;
-    const patient = isNew ? undefined : this.getPatientData();
+    const data = isNew ? undefined : this.getPatientData();
 
     return (
-      <div className={style.centerContainer}>
-        <PatientDescription patient={this.props} />
-        <PatientForm data={patient} onSubmit={this.onSubmit} isSaving={isFetching} isNew={isNew} />
-      </div>
+      <PatientForm
+        data={data}
+        onSubmit={this.save}
+        isSaving={isFetching}
+        isNew={isNew}
+        error={error}
+      />
     );
   }
 }
