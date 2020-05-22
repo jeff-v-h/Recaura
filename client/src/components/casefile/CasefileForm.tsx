@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { CasefileBase } from '../../models/casefileModels';
 import { Button } from 'antd';
@@ -13,9 +13,7 @@ interface Props {
 }
 
 function CasefileForm({ onSubmit, isSaving, isNew }: Props) {
-  const { register, handleSubmit, errors, setValue } = useForm<CasefileBase>();
-
-  useEffect(() => register({ name: 'name' }, { required: true }), []);
+  const { register, handleSubmit, errors } = useForm<CasefileBase>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.hookCasefileForm}>
@@ -24,7 +22,7 @@ function CasefileForm({ onSubmit, isSaving, isNew }: Props) {
           label={isNew ? 'Casefile Name' : 'Update Name'}
           name="name"
           required
-          setValue={setValue}
+          register={register({ required: true })}
           error={errors.name}
           errorMsg={'A name is required'}
           inputStyle={style.hookInputLong}
