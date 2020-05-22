@@ -37,7 +37,7 @@ class PatientsService extends ApiService {
     }
   };
 
-  updatePatient = async (id: string, patient: Patient): Promise<Patient> => {
+  updatePatient = async (id: string, patient: PatientBase): Promise<Patient> => {
     try {
       const url = `${apiUrl}/patients/${id}`;
       const resp = (await this.patch(url, patient)) as AxiosResponse<Patient>;

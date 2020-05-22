@@ -1,12 +1,11 @@
 import React from 'react';
-import { Input } from 'antd';
 import style from './hookForm.scss';
 
 interface Props {
   label: string;
   name: string;
   required: boolean;
-  setValue: (name: string, value: any) => void;
+  register: (ref: HTMLInputElement | null) => void;
   error?: any;
   errorMsg?: string;
   inputStyle?: string;
@@ -23,7 +22,7 @@ function HookFormInput({
   label,
   name,
   required,
-  setValue,
+  register,
   error,
   errorMsg,
   inputStyle,
@@ -39,11 +38,12 @@ function HookFormInput({
         <span className={style.hookInputSupport}></span>
       </div>
       <div className={inputStyle}>
-        <Input
+        <input
           id={name}
           name={name}
+          ref={register}
+          className={style.input}
           placeholder={placeholder}
-          onChange={(e) => setValue(name, e.target.value)}
         />
         <span className={style.error}>{error && errorMsg}</span>
       </div>

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { PatientBase } from '../../models/patientModels';
 import { Button } from 'antd';
 import HookFormInput from '../common/forms/HookFormInput';
 import style from '../common/forms/hookForm.scss';
@@ -12,54 +11,27 @@ import HookDatePicker from '../common/forms/HookDatePicker';
 import Spinner from '../common/Spinner';
 
 interface Props {
-  onSubmit: (data: PatientBase) => void;
+  onSubmit: (data: V.PatientBaseForm) => void;
   isSaving: boolean;
+  data?: V.PatientBaseForm;
+  isNew: boolean;
+  error: string;
 }
 
-function NewPatientForm({ onSubmit, isSaving }: Props) {
-  const { register, handleSubmit, errors, setValue, control } = useForm<PatientBase>({
-    // Set empty strings for non required inputs to ensure undefined not passed through
-    defaultValues: {
-      email: '',
-      homePhone: '',
-      mobilePhone: '',
-      occupation: ''
-    }
-  });
+function PatientForm({ data, onSubmit, isSaving, isNew, error }: Props) {
+  // Set empty strings for non-required inputs to ensure undefined not passed through
+  const defaultValues = data ?? {
+    email: '',
+    homePhone: '',
+    mobilePhone: '',
+    occupation: ''
+  };
+  const form = useForm<V.PatientBaseForm>({ defaultValues });
+  const { register, handleSubmit, errors, setValue, control } = form;
 
-  //#region register effects
-  useEffect(() => register({ name: 'firstName' }, { required: true }), []);
-  useEffect(() => register({ name: 'lastName' }, { required: true }), []);
-  useEffect(() => register({ name: 'dob' }, { required: true }), []);
-  useEffect(() => register({ name: 'email' }, { validate: V.validateEmailAllowEmpty }), []);
-  useEffect(
-    () =>
-      register(
-        { name: 'homePhone' },
-        {
-          validate: {
-            onlyDigits: V.validateDigitStringAllowEmpty,
-            correctLength: V.validatePhoneLengthAllowEmpty
-          }
-        }
-      ),
-    []
-  );
-  useEffect(
-    () =>
-      register(
-        { name: 'mobilePhone' },
-        {
-          validate: {
-            onlyDigits: V.validateDigitString,
-            correctLength: V.validatePhoneLength
-          }
-        }
-      ),
-    []
-  );
-  useEffect(() => register({ name: 'occupation' }), []);
-  //#endregion
+  useEffect(() => {
+    if (data && !isSaving && !error) form.reset(data);
+  }, [data]);
 
   const onTitleChange = (args: any[]) => {
     setValue('gender', V.getGenderFromTitle(args[0]));
@@ -74,7 +46,7 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
           label="First Name"
           name="firstName"
           required
-          setValue={setValue}
+          register={register({ required: true })}
           error={errors.firstName}
           errorMsg={'First name is required'}
         />
@@ -82,7 +54,7 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
           label="Last Name"
           name="lastName"
           required
-          setValue={setValue}
+          register={register({ required: true })}
           error={errors.lastName}
           errorMsg={'Last name is required'}
         />
@@ -90,22 +62,22 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
         <HookDatePicker
           label="DOB"
           name="dob"
-          setValue={setValue}
           required
           error={errors.dob}
           errorMsg={'Date of birth required'}
+          control={control}
         />
         <HookFormInput
           label="Occupation"
           name="occupation"
-          setValue={setValue}
+          register={register}
           error={errors.occupation}
           errorMsg={''}
         />
         <HookFormInput
           label="Email"
           name="email"
-          setValue={setValue}
+          register={register({ validate: V.validateEmailAllowEmpty })}
           error={errors.email}
           errorMsg={'Email invalid'}
           inputStyle={style.hookInputLong}
@@ -115,7 +87,12 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
           <HookFormInput
             label="Home Ph"
             name="homePhone"
-            setValue={setValue}
+            register={register({
+              validate: {
+                onlyDigits: V.validateDigitStringAllowEmpty,
+                correctLength: V.validatePhoneLengthAllowEmpty
+              }
+            })}
             error={errors.homePhone}
             errorMsg={V.getPhoneErrorMsg(errors.homePhone?.type)}
             inputStyle={style.hookInputShort}
@@ -125,7 +102,12 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
             label="Mobile Ph"
             name="mobilePhone"
             required
-            setValue={setValue}
+            register={register({
+              validate: {
+                onlyDigits: V.validateDigitString,
+                correctLength: V.validatePhoneLength
+              }
+            })}
             error={errors.mobilePhone}
             errorMsg={V.getPhoneErrorMsg(errors.mobilePhone?.type)}
             placeholder="0400 111 222"
@@ -135,11 +117,11 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
       <div className={style.submitRow}>
         <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
         <Button type="primary" disabled={isSaving} htmlType="submit">
-          Add Patient
+          {isNew ? 'Add' : 'Update'} Patient
         </Button>
       </div>
     </form>
   );
 }
 
-export default NewPatientForm;
+export default PatientForm;

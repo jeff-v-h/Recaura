@@ -1,4 +1,6 @@
+import { PatientBase } from 'src/models/patientModels';
 import { Gender, Honorific } from '../models/enums';
+import { Moment } from 'moment';
 
 export const formLayout = {
   labelCol: { span: 5 },
@@ -60,4 +62,8 @@ export function getGenderFromTitle(title: string) {
     default:
       return Gender.other;
   }
+}
+
+export interface PatientBaseForm extends Omit<PatientBase, 'dob'> {
+  dob?: Moment;
 }

@@ -10,7 +10,7 @@ $error-height: 20rem;
 
 .hookForm {
   max-width: $form-max-width;
-  margin: 50rem auto;
+  margin: 20rem auto;
 }
 
 .hookConsultForm,
@@ -149,6 +149,10 @@ $error-height: 20rem;
   outline: 0;
   border-color: $primary-color;
   box-shadow: 0 0 0 2px rgba(245, 149, 15, 0.2);
+}
+
+.input::placeholder {
+  color: #c5c5c5;
 }
 
 .textArea {

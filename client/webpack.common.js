@@ -90,12 +90,7 @@ module.exports = function (env) {
       new ManifestPlugin()
     ],
     resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.scss', '.less'],
-      alias: {
-        Src: pathHelper('src'),
-        Components: pathHelper('src', 'components'),
-        Api: pathHelper('src', 'api')
-      }
+      extensions: ['.tsx', '.ts', '.js', '.scss', '.less']
     }
   };
 };
