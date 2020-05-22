@@ -63,14 +63,14 @@ export const modifyTreatmentsAndPlans = (treatmentAndPlans: TreatmentsAndPlans) 
 
 //#region Thunk actions creators
 export const createConsult = (
-  consult: ConsultationBase
+  newConsult: ConsultationBase
 ): AppThunkAction<T.CreateConsultKnownAction> => async (dispatch) => {
   dispatch(createConsultRequest());
 
   try {
-    const newConsult = await consultationService.createConsultation(consult);
-    dispatch(createConsultSuccess(newConsult));
-    history.push(`/patients/${newConsult.patientId}/casefiles/${newConsult.casefileId}`);
+    const consult = await consultationService.createConsultation(newConsult);
+    dispatch(createConsultSuccess(consult));
+    history.push(`/patients/${consult.patientId}/casefiles/${consult.casefileId}/consultations`);
   } catch (e) {
     dispatch(getConsultsFailure());
   }
@@ -124,8 +124,9 @@ export const deleteConsult = (id: string): AppThunkAction<T.DeleteConsultKnownAc
   dispatch({ type: C.DELETE_CONSULTATION_REQUEST });
 
   try {
-    await consultationService.deleteConsultation(id);
+    const consult = await consultationService.deleteConsultation(id);
     dispatch({ type: C.DELETE_CONSULTATION_SUCCESS, payload: id });
+    history.push(`/patients/${consult.patientId}/casefiles/${consult.casefileId}/consultations`);
   } catch (e) {
     dispatch({ type: C.DELETE_CONSULTATION_FAILURE });
   }
