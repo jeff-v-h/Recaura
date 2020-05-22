@@ -9,15 +9,15 @@ import HookCountryCodeSelect from '../common/forms/HookCountryCodeSelect';
 import * as V from '../../helpers/formHelper';
 import HookDatePicker from '../common/forms/HookDatePicker';
 import Spinner from '../common/Spinner';
-import { Honorific, Gender, CountryCode } from '../../models/enums';
 
 interface Props {
   onSubmit: (data: V.PatientBaseForm) => void;
   isSaving: boolean;
   data?: V.PatientBaseForm;
+  isNew: boolean;
 }
 
-function PatientForm({ data, onSubmit, isSaving }: Props) {
+function PatientForm({ data, onSubmit, isSaving, isNew }: Props) {
   // Set empty strings for non-required inputs to ensure undefined not passed through
   const defaultValues = data ?? {
     email: '',
@@ -114,7 +114,7 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
       <div className={style.submitRow}>
         <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
         <Button type="primary" disabled={isSaving} htmlType="submit">
-          Add Patient
+          {isNew ? 'Add' : 'Update'} Patient
         </Button>
       </div>
     </form>

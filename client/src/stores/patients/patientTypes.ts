@@ -37,6 +37,14 @@ export interface SelectPatientAction extends ReduxAction {
 export interface GetPatientSuccessAction extends ReduxAction {
   payload: Patient;
 }
+
+export interface UpdatePatientSuccessAction extends ReduxAction {
+  payload: Patient;
+}
+
+export interface DeletePatientSuccessAction extends ReduxAction {
+  payload: string;
+}
 //#endregion ACTIONS
 //--------------------
 
@@ -45,11 +53,15 @@ type RequestAction = ReduxAction | ErrorAction;
 export type CreatePatientKnownAction = RequestAction | CreatePatientSuccessAction;
 export type GetPatientsKnownAction = RequestAction | GetPatientsSuccessAction;
 export type GetPatientKnownAction = RequestAction | GetPatientSuccessAction;
+export type UpdatePatientKnownAction = RequestAction | UpdatePatientSuccessAction;
+export type DeletePatientKnownAction = RequestAction | DeletePatientSuccessAction;
 export type KnownAction =
   | CreatePatientKnownAction
   | GetPatientsKnownAction
   | SelectPatientAction
-  | GetPatientKnownAction;
+  | GetPatientKnownAction
+  | UpdatePatientKnownAction
+  | DeletePatientKnownAction;
 
 export interface PatientState extends Patient, RequestState {
   list: Patient[];

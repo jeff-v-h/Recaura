@@ -39,11 +39,11 @@ class PatientPage extends React.Component<Props, State> {
   };
 
   onSubmit = (values: PatientBaseForm) => {
-    const { id, createPatient } = this.props;
+    const { id, createPatient, updatePatient } = this.props;
     const patient = { ...values, dob: values.dob?.format() ?? '' };
 
     if (this.state.isNew) return createPatient(patient);
-    // updatePatient({ ...patient, id })
+    updatePatient(id, patient);
   };
 
   getPatientData = () => {
@@ -66,12 +66,13 @@ class PatientPage extends React.Component<Props, State> {
 
   render() {
     const { isFetching } = this.props;
-    const patient = this.state.isNew ? undefined : this.getPatientData();
+    const { isNew } = this.state;
+    const patient = isNew ? undefined : this.getPatientData();
 
     return (
       <div className={style.centerContainer}>
         <PatientDescription patient={this.props} />
-        <PatientForm data={patient} onSubmit={this.onSubmit} isSaving={isFetching} />
+        <PatientForm data={patient} onSubmit={this.onSubmit} isSaving={isFetching} isNew={isNew} />
       </div>
     );
   }

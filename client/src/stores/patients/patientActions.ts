@@ -68,3 +68,31 @@ export const getPatient = (id: string): AppThunkAction<T.GetPatientKnownAction> 
     }
   }
 };
+
+export const updatePatient = (
+  id: string,
+  patient: PatientBase
+): AppThunkAction<T.UpdatePatientKnownAction> => async (dispatch) => {
+  dispatch({ type: C.UPDATE_PATIENT_REQUEST });
+
+  try {
+    const updatedPatient = await patientsService.updatePatient(id, patient);
+    dispatch({ type: C.UPDATE_PATIENT_SUCCESS, payload: updatedPatient });
+  } catch (error) {
+    dispatch({ type: C.UPDATE_PATIENT_FAILURE });
+  }
+};
+
+export const deletePatient = (id: string): AppThunkAction<T.DeletePatientKnownAction> => async (
+  dispatch
+) => {
+  dispatch({ type: C.DELETE_PATIENT_REQUEST });
+
+  try {
+    await patientsService.deletePatient(id);
+    dispatch({ type: C.DELETE_PATIENT_SUCCESS, payload: id });
+    history.push(`/patients`);
+  } catch (e) {
+    dispatch({ type: C.DELETE_PATIENT_FAILURE });
+  }
+};

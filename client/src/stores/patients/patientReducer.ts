@@ -60,6 +60,23 @@ const reducer: Reducer<T.PatientState> = (
       obj = action as ErrorAction;
       return { ...state, isFetching: false, error: obj.payload };
 
+    case C.UPDATE_PATIENT_REQUEST:
+      return { ...state, isFetching: true };
+    case C.UPDATE_PATIENT_SUCCESS:
+      obj = action as T.UpdatePatientSuccessAction;
+      return { ...state, isFetching: false, ...obj.payload };
+    case C.UPDATE_PATIENT_FAILURE:
+      return { ...state, isFetching: false };
+
+    case C.DELETE_PATIENT_REQUEST:
+      return { ...state, isFetching: true };
+    case C.DELETE_PATIENT_SUCCESS:
+      obj = action as T.DeletePatientSuccessAction;
+      const id = obj.payload;
+      return { ...unloadedState, isFetching: false, list: state.list.filter((c) => c.id !== id) };
+    case C.DELETE_PATIENT_FAILURE:
+      return { ...state, isFetching: false };
+
     case C.SELECT_PATIENT:
       obj = action as T.SelectPatientAction;
       return { ...state, ...obj.payload };
