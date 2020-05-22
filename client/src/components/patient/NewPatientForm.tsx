@@ -14,20 +14,22 @@ import Spinner from '../common/Spinner';
 interface Props {
   onSubmit: (data: PatientBase) => void;
   isSaving: boolean;
+  data?: PatientBase;
 }
 
-function NewPatientForm({ onSubmit, isSaving }: Props) {
-  const { register, handleSubmit, errors, setValue, control } = useForm<PatientBase>({
-    // Set empty strings for non required inputs to ensure undefined not passed through
-    defaultValues: {
-      email: '',
-      homePhone: '',
-      mobilePhone: '',
-      occupation: ''
-    }
-  });
+function PatientForm({ data, onSubmit, isSaving }: Props) {
+  // Set empty strings for non-required inputs to ensure undefined not passed through
+  const defaultValues = data ?? {
+    email: '',
+    homePhone: '',
+    mobilePhone: '',
+    occupation: ''
+  };
+  const form = useForm<PatientBase>({ defaultValues });
+  const { register, handleSubmit, errors, setValue, control } = form;
 
   //#region register effects
+  useEffect(() => data && form.reset(data), [data]);
   useEffect(() => register({ name: 'firstName' }, { required: true }), []);
   useEffect(() => register({ name: 'lastName' }, { required: true }), []);
   useEffect(() => register({ name: 'dob' }, { required: true }), []);
@@ -142,4 +144,4 @@ function NewPatientForm({ onSubmit, isSaving }: Props) {
   );
 }
 
-export default NewPatientForm;
+export default PatientForm;
