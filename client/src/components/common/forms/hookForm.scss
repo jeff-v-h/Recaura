@@ -151,6 +151,10 @@ $error-height: 20rem;
   box-shadow: 0 0 0 2px rgba(245, 149, 15, 0.2);
 }
 
+.input::placeholder {
+  color: #c5c5c5;
+}
+
 .textArea {
   @extend .input;
   max-width: 100%;

@@ -36,6 +36,7 @@ function HookDatePicker({ label, name, required, error, errorMsg, inputStyle, co
           onChange={([selected]) => (selected ? moment(selected) : undefined)}
           name={name}
           control={control}
+          rules={{ required }}
         />
         <span className={style.error}>{error && errorMsg}</span>
       </div>

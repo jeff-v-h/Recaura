@@ -22,7 +22,7 @@ class PatientPage extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    this.ensureDataFetched();
+    !this.state.isNew && this.ensureDataFetched();
   }
 
   ensureDataFetched = () => {
@@ -40,7 +40,6 @@ class PatientPage extends React.Component<Props, State> {
 
   onSubmit = (values: PatientBaseForm) => {
     const { id, createPatient } = this.props;
-    // const patient = this.getPatientData();
     const patient = { ...values, dob: values.dob?.format() ?? '' };
 
     if (this.state.isNew) return createPatient(patient);
@@ -67,7 +66,7 @@ class PatientPage extends React.Component<Props, State> {
 
   render() {
     const { isFetching } = this.props;
-    const patient = this.getPatientData();
+    const patient = this.state.isNew ? undefined : this.getPatientData();
 
     return (
       <div className={style.centerContainer}>

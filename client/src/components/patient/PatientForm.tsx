@@ -9,6 +9,7 @@ import HookCountryCodeSelect from '../common/forms/HookCountryCodeSelect';
 import * as V from '../../helpers/formHelper';
 import HookDatePicker from '../common/forms/HookDatePicker';
 import Spinner from '../common/Spinner';
+import { Honorific, Gender, CountryCode } from '../../models/enums';
 
 interface Props {
   onSubmit: (data: V.PatientBaseForm) => void;
@@ -22,8 +23,7 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
     email: '',
     homePhone: '',
     mobilePhone: '',
-    occupation: '',
-    dob: undefined
+    occupation: ''
   };
   const form = useForm<V.PatientBaseForm>({ defaultValues });
   const { register, handleSubmit, errors, setValue, control } = form;
