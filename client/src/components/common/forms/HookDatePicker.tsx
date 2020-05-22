@@ -1,15 +1,17 @@
 import React from 'react';
 import { DatePicker } from 'antd';
 import style from './hookForm.scss';
+import { Controller, Control } from 'react-hook-form';
+import moment from 'moment';
 
 interface Props {
   label: string;
   name: string;
   required: boolean;
-  setValue: (name: string, value: any) => void;
   error?: any;
   errorMsg?: string;
   inputStyle?: string;
+  control: Control;
 }
 
 HookDatePicker.defaultProps = {
@@ -17,8 +19,8 @@ HookDatePicker.defaultProps = {
   inputStyle: style.hookInputMain
 };
 
-function HookDatePicker({ label, name, required, setValue, error, errorMsg, inputStyle }: Props) {
-  const dateFormat = 'YYYY-MM-DD';
+function HookDatePicker({ label, name, required, error, errorMsg, inputStyle, control }: Props) {
+  const dateFormat = 'DD-MM-YYYY';
   return (
     <div className={style.hookInputContainer}>
       <div>
@@ -29,10 +31,11 @@ function HookDatePicker({ label, name, required, setValue, error, errorMsg, inpu
         <span className={style.hookInputSupport}></span>
       </div>
       <div className={inputStyle}>
-        <DatePicker
-          format={dateFormat}
-          onChange={(date, dateString) => setValue(name, dateString)}
-          placeholder={dateFormat}
+        <Controller
+          as={<DatePicker format={dateFormat} placeholder={dateFormat} name={name} />}
+          onChange={([selected]) => (selected ? moment(selected) : undefined)}
+          name={name}
+          control={control}
         />
         <span className={style.error}>{error && errorMsg}</span>
       </div>

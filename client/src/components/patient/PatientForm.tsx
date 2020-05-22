@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { PatientBase } from '../../models/patientModels';
 import { Button } from 'antd';
 import HookFormInput from '../common/forms/HookFormInput';
 import style from '../common/forms/hookForm.scss';
@@ -12,9 +11,9 @@ import HookDatePicker from '../common/forms/HookDatePicker';
 import Spinner from '../common/Spinner';
 
 interface Props {
-  onSubmit: (data: PatientBase) => void;
+  onSubmit: (data: V.PatientBaseForm) => void;
   isSaving: boolean;
-  data?: PatientBase;
+  data?: V.PatientBaseForm;
 }
 
 function PatientForm({ data, onSubmit, isSaving }: Props) {
@@ -23,14 +22,13 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
     email: '',
     homePhone: '',
     mobilePhone: '',
-    occupation: ''
+    occupation: '',
+    dob: undefined
   };
-  const form = useForm<PatientBase>({ defaultValues });
+  const form = useForm<V.PatientBaseForm>({ defaultValues });
   const { register, handleSubmit, errors, setValue, control } = form;
 
-  //#region register effects
   useEffect(() => data && form.reset(data), [data]);
-  //#endregion
 
   const onTitleChange = (args: any[]) => {
     setValue('gender', V.getGenderFromTitle(args[0]));
@@ -61,10 +59,10 @@ function PatientForm({ data, onSubmit, isSaving }: Props) {
         <HookDatePicker
           label="DOB"
           name="dob"
-          setValue={setValue}
           required
           error={errors.dob}
           errorMsg={'Date of birth required'}
+          control={control}
         />
         <HookFormInput
           label="Occupation"

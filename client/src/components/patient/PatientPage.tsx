@@ -7,6 +7,8 @@ import { ApplicationState } from '../../stores';
 import PatientDescription from './PatientDescription';
 import PatientForm from './PatientForm';
 import style from './patient.scss';
+import moment from 'moment';
+import { PatientBaseForm } from '../../helpers/formHelper';
 
 const mapStateToProps = (state: ApplicationState) => state.patient;
 const connector = connect(mapStateToProps, patientActions);
@@ -36,9 +38,10 @@ class PatientPage extends React.Component<Props, State> {
     }
   };
 
-  onSubmit = () => {
+  onSubmit = (values: PatientBaseForm) => {
     const { id, createPatient } = this.props;
-    const patient = this.getPatientData();
+    // const patient = this.getPatientData();
+    const patient = { ...values, dob: values.dob?.format() ?? '' };
 
     if (this.state.isNew) return createPatient(patient);
     // updatePatient({ ...patient, id })
@@ -52,7 +55,7 @@ class PatientPage extends React.Component<Props, State> {
       honorific,
       firstName,
       lastName,
-      dob,
+      dob: dob ? moment(dob) : undefined,
       email,
       countryCode,
       homePhone,
