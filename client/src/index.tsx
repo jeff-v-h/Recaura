@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
+import history from './helpers/history';
 import configureStore from './stores/configureStore';
 import 'antd/dist/antd.less';
 import App from './App';
 import './main.css';
 
-export const history = createBrowserHistory();
 const store = configureStore(history);
 
 ReactDOM.render(

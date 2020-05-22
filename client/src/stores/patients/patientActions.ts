@@ -2,7 +2,7 @@ import { AppThunkAction } from '../index';
 import * as T from './patientTypes';
 import patientsService from '../../services/patientsService';
 import { Patient, PatientBase } from '../../models/patientModels';
-import { history } from '../../index';
+import history from '../../helpers/history';
 
 const { C } = T;
 

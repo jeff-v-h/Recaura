@@ -8,7 +8,7 @@ import {
   TreatmentsAndPlans,
   ConsultationBase
 } from '../../models/consultationModels';
-import { history } from '../../index';
+import history from '../../helpers/history';
 
 const { C } = T;
 //#region simple action creators

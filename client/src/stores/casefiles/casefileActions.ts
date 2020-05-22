@@ -2,7 +2,7 @@ import { AppThunkAction } from '../index';
 import * as T from './casefileTypes';
 import casefileService from '../../services/casefileService';
 import { Casefile, CasefileBase } from '../../models/casefileModels';
-import { history } from '../../index';
+import history from '../../helpers/history';
 
 const { C } = T;
 
