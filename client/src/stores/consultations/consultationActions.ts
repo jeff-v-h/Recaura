@@ -12,15 +12,6 @@ import history from '../../helpers/history';
 
 const { C } = T;
 //#region simple action creators
-export const createConsultRequest = () => ({ type: C.CREATE_CONSULTATION_REQUEST });
-export const createConsultSuccess = (consult: Consultation): T.CreateConsultSuccessAction => {
-  return {
-    type: C.CREATE_CONSULTATION_SUCCESS,
-    payload: consult
-  };
-};
-export const createConsultFailure = () => ({ type: C.CREATE_CONSULTATION_FAILURE });
-
 export const getConsultsRequest = () => ({ type: C.GET_CONSULTATIONS_REQUEST });
 export const getConsultsSuccess = async (
   casefileId: string
@@ -65,14 +56,14 @@ export const modifyTreatmentsAndPlans = (treatmentAndPlans: TreatmentsAndPlans) 
 export const createConsult = (
   newConsult: ConsultationBase
 ): AppThunkAction<T.CreateConsultKnownAction> => async (dispatch) => {
-  dispatch(createConsultRequest());
+  dispatch({ type: C.CREATE_CONSULTATION_REQUEST });
 
   try {
     const consult = await consultationService.createConsultation(newConsult);
-    dispatch(createConsultSuccess(consult));
+    dispatch({ type: C.CREATE_CONSULTATION_SUCCESS, payload: consult });
     history.push(`/patients/${consult.patientId}/casefiles/${consult.casefileId}/consultations`);
   } catch (e) {
-    dispatch(createConsultFailure());
+    dispatch({ type: C.CREATE_CONSULTATION_FAILURE });
   }
 };
 

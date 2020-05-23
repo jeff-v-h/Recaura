@@ -67,32 +67,22 @@ describe('Consultation Redux Store', () => {
   });
 
   describe('getConsult', () => {
-    beforeEach(() => {
-      mockAxios.onGet('/api/consultations/123').reply(200, mockConsultation);
-    });
-
-    it('should dispatch a get consult request', async () => {
-      // Use jest to create spies for the dispatch and getState parameter functions
-      const dispatch = jest.fn();
-      const getState = jest.fn();
-      await consultActions.getConsult('1')(dispatch, getState);
-
-      expect(dispatch).toHaveBeenCalledWith(consultActions.getConsultRequest());
-    });
-
     it('should dispatch a get consult success', async () => {
+      mockAxios.onGet('/api/consultations/123').reply(200, mockConsultation);
       const spy = jest.spyOn(consultationService, 'getConsultation');
       spy.mockReturnValue(Promise.resolve(mockConsultation));
 
       const dispatch = jest.fn();
       await consultActions.getConsult('123')(dispatch, jest.fn());
 
+      expect(dispatch).toHaveBeenCalledWith(consultActions.getConsultRequest());
       expect(dispatch).toHaveBeenLastCalledWith(await consultActions.getConsultSuccess('123'));
 
       spy.mockRestore();
     });
 
     it('should dispatch a get consult failure when error occurs', async () => {
+      mockAxios.onGet('/api/consultations/123').reply(500);
       const spy = jest.spyOn(consultationService, 'getConsultation');
       spy.mockReturnValue(Promise.reject());
 
@@ -100,6 +90,76 @@ describe('Consultation Redux Store', () => {
       await consultActions.getConsult('123')(dispatch, jest.fn());
 
       expect(dispatch).toHaveBeenLastCalledWith(consultActions.getConsultFailure());
+
+      spy.mockRestore();
+    });
+  });
+
+  describe('updateConsult', () => {
+    const updatedConsult = { ...mockConsultation, treatments: 'exercise', plans: 'new plans' };
+
+    it(`creates ${C.UPDATE_CONSULTATION_SUCCESS} when update completed`, async () => {
+      mockAxios.onPatch('/api/consultations/123').reply(200, updatedConsult);
+      const spy = jest.spyOn(consultationService, 'updateConsultation');
+      spy.mockReturnValue(Promise.resolve(updatedConsult));
+      const dispatch = jest.fn();
+      const expectedActions = [
+        { type: C.UPDATE_CONSULTATION_REQUEST },
+        { type: C.UPDATE_CONSULTATION_SUCCESS, payload: updatedConsult }
+      ];
+
+      await consultActions.updateConsult(updatedConsult.id, updatedConsult)(dispatch, jest.fn());
+
+      expect(dispatch).toHaveBeenCalledWith(expectedActions[0]);
+      expect(dispatch).toHaveBeenCalledWith(expectedActions[1]);
+
+      spy.mockRestore();
+    });
+
+    it(`creates ${C.UPDATE_CONSULTATION_FAILURE} when it fails`, async () => {
+      mockAxios.onPatch('/api/consultations/123').reply(500);
+      const spy = jest.spyOn(consultationService, 'updateConsultation');
+      spy.mockReturnValue(Promise.reject());
+      const dispatch = jest.fn();
+      const expectedAction = { type: C.UPDATE_CONSULTATION_FAILURE };
+
+      await consultActions.updateConsult('1', updatedConsult)(dispatch, jest.fn());
+
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+
+      spy.mockRestore();
+    });
+  });
+
+  describe('deleteConsult', () => {
+    it(`creates ${C.DELETE_CONSULTATION_SUCCESS} when delete completed`, async () => {
+      mockAxios.onDelete('/api/consultations/123').reply(200, mockConsultation);
+      const spy = jest.spyOn(consultationService, 'deleteConsultation');
+      spy.mockReturnValue(Promise.resolve(mockConsultation));
+      const dispatch = jest.fn();
+      const expectedActions = [
+        { type: C.DELETE_CONSULTATION_REQUEST },
+        { type: C.DELETE_CONSULTATION_SUCCESS, payload: mockConsultation.id }
+      ];
+
+      await consultActions.deleteConsult(mockConsultation.id)(dispatch, jest.fn());
+
+      expect(dispatch).toHaveBeenCalledWith(expectedActions[0]);
+      expect(dispatch).toHaveBeenCalledWith(expectedActions[1]);
+
+      spy.mockRestore();
+    });
+
+    it(`creates ${C.DELETE_CONSULTATION_FAILURE} when it fails`, async () => {
+      mockAxios.onDelete('/api/consultations/123').reply(500);
+      const spy = jest.spyOn(consultationService, 'deleteConsultation');
+      spy.mockReturnValue(Promise.reject());
+      const dispatch = jest.fn();
+      const expectedAction = { type: C.DELETE_CONSULTATION_FAILURE };
+
+      await consultActions.deleteConsult(mockConsultation.id)(dispatch, jest.fn());
+
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
 
       spy.mockRestore();
     });
