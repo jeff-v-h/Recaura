@@ -6,10 +6,8 @@
   "scripts": {
     "dev": "env NODE_ENV=development nodemon src/index.js",
     "start": "env NODE_ENV=production node src/index.js",
-    "test": "jest --runInBand --detectOpenHandles --watch"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "test": "env NODE_ENV=test jest --runInBand --detectOpenHandles --testTimeout=10000",
+    "test:watch": "env NODE_ENV=test jest --runInBand --detectOpenHandles --testTimeout=10000 --watch"
   },
   "author": "Jeffrey Huang",
   "license": "ISC",
@@ -29,7 +27,14 @@
   },
   "devDependencies": {
     "jest": "^25.5.4",
+    "mongodb-memory-server": "^6.6.1",
     "nodemon": "^2.0.3",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
