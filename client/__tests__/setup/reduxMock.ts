@@ -1,3 +1,6 @@
+import { Casefile } from 'src/models/casefileModels';
+import { Honorific, Gender } from '../../src/models/enums';
+import { Patient } from '../../src/models/patientModels';
 import { Consultation } from '../../src/models/consultationModels';
 import thunk from 'redux-thunk';
 import { ApplicationState } from '../../src/stores/index';
@@ -11,6 +14,27 @@ export const generateMockStore = (
 
   store.clearActions();
   return store;
+};
+
+export const mockPatient: Patient = {
+  id: '999',
+  honorific: Honorific.Mr,
+  firstName: 'Jack',
+  lastName: 'Bauer',
+  dob: '1970-05-05',
+  email: 'fake@email.com',
+  countryCode: '+61',
+  homePhone: '90001111',
+  mobilePhone: '0411222333',
+  gender: Gender.male,
+  occupation: 'developer'
+};
+
+export const mockCasefile: Casefile = {
+  id: '555',
+  name: 'injury',
+  patientId: '',
+  createdAt: ''
 };
 
 export const mockConsult: Consultation = {
