@@ -4,7 +4,7 @@ import {
   ObjectiveAssessment,
   TreatmentsAndPlans
 } from 'src/models/consultationModels';
-import { ReduxAction } from '../common/types';
+import { Action } from 'redux';
 
 export const C = {
   CREATE_CONSULTATION_REQUEST: 'CREATE_CONSULTATION_REQUEST',
@@ -35,51 +35,51 @@ export interface ConsultationState extends Consultation {
   list: Consultation[];
 }
 
-export interface CreateConsultSuccessAction extends ReduxAction {
+export interface CreateConsultSuccessAction extends Action {
   payload: Consultation;
 }
 
-export interface GetConsultsSuccessAction extends ReduxAction {
+export interface GetConsultsSuccessAction extends Action {
   payload: Consultation[];
 }
 
-export interface SelectConsultAction extends ReduxAction {
+export interface SelectConsultAction extends Action {
   payload: Consultation;
 }
 
-export interface GetConsultSuccessAction extends ReduxAction {
+export interface GetConsultSuccessAction extends Action {
   payload: Consultation;
 }
 
-export interface UpdateConsultSuccessAction extends ReduxAction {
+export interface UpdateConsultSuccessAction extends Action {
   payload: Consultation;
 }
 
-export interface DeleteConsultSuccessAction extends ReduxAction {
+export interface DeleteConsultSuccessAction extends Action {
   payload: string;
 }
 
-export interface ModifyDate extends ReduxAction {
+export interface ModifyDate extends Action {
   payload: string;
 }
 
-export interface ModifySubjective extends ReduxAction {
+export interface ModifySubjective extends Action {
   payload: SubjectiveAssessment;
 }
 
-export interface ModifyObjective extends ReduxAction {
+export interface ModifyObjective extends Action {
   payload: ObjectiveAssessment;
 }
 
-export interface ModifyTreatmentsAndPlans extends ReduxAction {
+export interface ModifyTreatmentsAndPlans extends Action {
   payload: TreatmentsAndPlans;
 }
 
-export type CreateConsultKnownAction = ReduxAction | CreateConsultSuccessAction;
-export type GetConsultsKnownAction = ReduxAction | GetConsultsSuccessAction;
-export type GetConsultKnownAction = ReduxAction | GetConsultSuccessAction;
-export type UpdateConsultKnownAction = ReduxAction | UpdateConsultSuccessAction;
-export type DeleteConsultKnownAction = ReduxAction | DeleteConsultSuccessAction;
+export type CreateConsultKnownAction = Action | CreateConsultSuccessAction;
+export type GetConsultsKnownAction = Action | GetConsultsSuccessAction;
+export type GetConsultKnownAction = Action | GetConsultSuccessAction;
+export type UpdateConsultKnownAction = Action | UpdateConsultSuccessAction;
+export type DeleteConsultKnownAction = Action | DeleteConsultSuccessAction;
 
 export type KnownAction =
   | CreateConsultKnownAction

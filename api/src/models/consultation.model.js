@@ -7,7 +7,7 @@ const subjectiveSchema = new Schema({
   bodyChart: { type: String },
   aggravatingFactors: { type: String },
   easingFactors: { type: String },
-  vas: { type: String, min: 0, max: 10 },
+  vas: { type: Number, min: 0, max: 10 },
   pastHistory: { type: String },
   socialHistory: { type: String },
   imaging: { type: String },

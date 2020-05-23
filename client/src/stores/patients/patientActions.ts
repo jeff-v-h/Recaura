@@ -2,7 +2,7 @@ import { AppThunkAction } from '../index';
 import * as T from './patientTypes';
 import patientsService from '../../services/patientsService';
 import { Patient, PatientBase } from '../../models/patientModels';
-import { history } from '../../index';
+import history from '../../helpers/history';
 
 const { C } = T;
 
@@ -16,7 +16,7 @@ export const createPatient = (
     dispatch({ type: C.CREATE_PATIENT_SUCCESS, payload: newPatient });
     history.push(`/patients/${newPatient.id}/casefiles`);
   } catch (error) {
-    dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });
+    dispatch({ type: C.CREATE_PATIENT_FAILURE, payload: error });
   }
 };
 
@@ -44,7 +44,7 @@ export const getPatient = (id: string): AppThunkAction<T.GetPatientKnownAction> 
 ) => {
   // Only load data if it's something we don't already have (and are not already loading)
   const appState = getState();
-  if (id !== appState.patient?.id) {
+  if (id !== appState?.patient?.id) {
     dispatch({ type: C.GET_PATIENT_REQUEST });
 
     try {

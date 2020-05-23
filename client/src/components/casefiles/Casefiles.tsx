@@ -1,12 +1,12 @@
 import React from 'react';
 import { List, Button } from 'antd';
-import { PatientCasefile } from 'src/models/patientModels';
+import { Casefile } from '../../models/casefileModels';
 import { Link } from 'react-router-dom';
 import style from './casefiles.scss';
 import Spinner from '../common/Spinner';
 
 interface Props {
-  files: PatientCasefile[];
+  files: Casefile[];
   patientId: string;
   isFetching: boolean;
 }

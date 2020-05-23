@@ -1,18 +1,24 @@
 import React from 'react';
 import Casefiles from './Casefiles';
 import { mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
-import { PatientCasefile } from 'src/models/patientModels';
+import { Casefile } from '../../models/casefileModels';
 import { MemoryRouter } from 'react-router';
+import moment from 'moment';
 
 describe('<CaseFiles/>', () => {
-  const files: PatientCasefile[] = [
+  const date = moment().format();
+  const files: Casefile[] = [
     {
       id: '1',
-      name: 'An injury'
+      name: 'An injury',
+      createdAt: date,
+      patientId: '111'
     },
     {
       id: '2',
-      name: 'another injury'
+      name: 'another injury',
+      createdAt: date,
+      patientId: '222'
     }
   ];
   let wrapper: ShallowWrapper;
@@ -33,19 +39,15 @@ describe('<CaseFiles/>', () => {
   });
 
   describe('when mounted', () => {
-    it('should not have a list item when no files exist', () => {
+    it('should only display one list item to explain this to user', () => {
       const noFilesWrapper = mount(
         <MemoryRouter>
           <Casefiles files={[]} patientId="1" isFetching={false} />
         </MemoryRouter>
       );
 
-      expect(noFilesWrapper.find('Item').exists()).toBe(false);
+      expect(noFilesWrapper.find('Item').length).toBe(1);
       noFilesWrapper.unmount();
-    });
-
-    it('should have a list when files exist', () => {
-      expect(mountedWrapper.find('List').exists()).toBe(true);
     });
 
     it('should have the same number of items for each file from props', () => {

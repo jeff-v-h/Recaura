@@ -1,5 +1,6 @@
 import { Patient } from '../../models/patientModels';
-import { ReduxAction, ErrorAction, RequestState } from '../common/types';
+import { ErrorAction, RequestState } from '../common/types';
+import { Action } from 'redux';
 
 export const C = {
   GET_PATIENTS_REQUEST: 'GET_PATIENTS_REQUEST',
@@ -22,34 +23,34 @@ export const C = {
 
 //--------------------
 //#region ACTIONS
-export interface CreatePatientSuccessAction extends ReduxAction {
+export interface CreatePatientSuccessAction extends Action {
   payload: Patient;
 }
 
-export interface GetPatientsSuccessAction extends ReduxAction {
+export interface GetPatientsSuccessAction extends Action {
   payload: Patient[];
 }
 
-export interface SelectPatientAction extends ReduxAction {
+export interface SelectPatientAction extends Action {
   payload: Patient;
 }
 
-export interface GetPatientSuccessAction extends ReduxAction {
+export interface GetPatientSuccessAction extends Action {
   payload: Patient;
 }
 
-export interface UpdatePatientSuccessAction extends ReduxAction {
+export interface UpdatePatientSuccessAction extends Action {
   payload: Patient;
 }
 
-export interface DeletePatientSuccessAction extends ReduxAction {
+export interface DeletePatientSuccessAction extends Action {
   payload: string;
 }
 //#endregion ACTIONS
 //--------------------
 
 // ACTION TYPE
-type RequestAction = ReduxAction | ErrorAction;
+type RequestAction = Action | ErrorAction;
 export type CreatePatientKnownAction = RequestAction | CreatePatientSuccessAction;
 export type GetPatientsKnownAction = RequestAction | GetPatientsSuccessAction;
 export type GetPatientKnownAction = RequestAction | GetPatientSuccessAction;

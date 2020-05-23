@@ -3,7 +3,7 @@ import * as T from './casefileTypes';
 
 const { C } = T;
 
-const unloadedState: T.CasefileState = {
+export const unloadedState: T.CasefileState = {
   isFetching: false,
   list: [],
   id: '',
