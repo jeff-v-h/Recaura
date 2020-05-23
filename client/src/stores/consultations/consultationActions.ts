@@ -72,7 +72,7 @@ export const createConsult = (
     dispatch(createConsultSuccess(consult));
     history.push(`/patients/${consult.patientId}/casefiles/${consult.casefileId}/consultations`);
   } catch (e) {
-    dispatch(getConsultsFailure());
+    dispatch(createConsultFailure());
   }
 };
 

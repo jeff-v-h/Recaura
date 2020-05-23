@@ -1,4 +1,5 @@
-import configureStore from 'redux-mock-store';
+import { AppThunkAction } from './../index';
+import configureStore, { MockStoreEnhanced, MockStore } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { unloadedState } from './consultationReducer';
 import * as consultActions from './consultationActions';
@@ -6,6 +7,8 @@ import consultationService from '../../services/consultationService';
 import { Consultation } from '../../models/consultationModels';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { C } from './consultationTypes';
+import { AnyAction } from 'redux';
 
 describe('Consultation Redux Store', () => {
   const middlewares = [thunk];
@@ -15,20 +18,59 @@ describe('Consultation Redux Store', () => {
       ...unloadedState
     }
   };
-  const mockConsultation = getReturnedConsultation();
-  let store;
+  const mockConsultation = getMockConsultation();
+  let store: any;
   const mockAxios = new MockAdapter(axios);
 
   beforeEach(() => {
     store = mockStore(initialState);
-    mockAxios.onGet('/api/consultations/123').reply(200, mockConsultation);
   });
 
   afterEach(() => {
     mockAxios.restore();
   });
 
+  describe('createConsult', () => {
+    beforeEach(() => {
+      mockAxios.onPost('/api/consultations/123').reply(201, mockConsultation);
+    });
+
+    it(`creates ${C.CREATE_CONSULTATION_SUCCESS} when successsfully completed`, async () => {
+      const spy = jest.spyOn(consultationService, 'createConsultation');
+      spy.mockReturnValue(Promise.resolve(mockConsultation));
+      const dispatch = jest.fn();
+      const expectedActions = [
+        { type: C.CREATE_CONSULTATION_REQUEST },
+        { type: C.CREATE_CONSULTATION_SUCCESS, payload: mockConsultation }
+      ];
+
+      await consultActions.createConsult(mockConsultation)(dispatch, jest.fn());
+
+      expect(dispatch).toHaveBeenCalledWith(expectedActions[0]);
+      expect(dispatch).toHaveBeenCalledWith(expectedActions[1]);
+
+      spy.mockRestore();
+    });
+
+    it(`creates ${C.CREATE_CONSULTATION_FAILURE} when it fails`, async () => {
+      const spy = jest.spyOn(consultationService, 'createConsultation');
+      spy.mockReturnValue(Promise.reject());
+      const dispatch = jest.fn();
+      const expectedAction = { type: C.CREATE_CONSULTATION_FAILURE };
+
+      await consultActions.createConsult(mockConsultation)(dispatch, jest.fn());
+
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+
+      spy.mockRestore();
+    });
+  });
+
   describe('getConsult', () => {
+    beforeEach(() => {
+      mockAxios.onGet('/api/consultations/123').reply(200, mockConsultation);
+    });
+
     it('should dispatch a get consult request', async () => {
       // Use jest to create spies for the dispatch and getState parameter functions
       const dispatch = jest.fn();
@@ -64,7 +106,7 @@ describe('Consultation Redux Store', () => {
   });
 });
 
-function getReturnedConsultation(): Consultation {
+function getMockConsultation(): Consultation {
   return {
     ...unloadedState,
     id: '123',
