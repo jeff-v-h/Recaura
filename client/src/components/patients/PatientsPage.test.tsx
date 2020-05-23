@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import * as consultActions from '../../stores/patients/patientActions';
 import { PatientState } from '../../stores/patients/patientTypes';
 import { unloadedState } from '../../stores/patients/patientReducer';
-import { generateMockStore } from '../../../__tests__/setup/mockStore';
+import { generateMockStore } from '../../../__tests__/setup/reduxMock';
 import { MockStore } from 'redux-mock-store';
 
 describe('<PatientsPage />', () => {
