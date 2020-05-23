@@ -63,7 +63,9 @@ describe('Patient Router', () => {
 
   describe('get endpoint', () => {
     it('should return 200', async () => {
-      const res = await request(app).get('/patients').send(patient);
+      const savedPatient = new Patient(patient);
+      await savedPatient.save();
+      const res = await request(app).get(`/patients/${savedPatient.id}`);
 
       expect(res.statusCode).toBe(200);
     });
