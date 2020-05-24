@@ -49,6 +49,7 @@ const practitionerSchema = new mongoose.Schema(
     },
     profession: { type: String, trim: true },
     jobLevel: { type: String, trim: true },
+    organisationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organisation', required: true },
     tokens: [
       {
         token: {
