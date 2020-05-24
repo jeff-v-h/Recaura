@@ -14,6 +14,7 @@ router.post('/patients', async (req, res) => {
 });
 
 // GET /patients?gender=male
+// GET /patients?clinicId=5eca1def69745b073411ba96
 // GET /patients?limit=10&skip=10
 // GET /patients?sortBy=createdAt:desc
 router.get('/patients', async (req, res) => {
@@ -22,6 +23,10 @@ router.get('/patients', async (req, res) => {
 
   if (req.query.gender) {
     match.gender = req.query.gender;
+  }
+
+  if (req.query.clinicId) {
+    match.clinicId = req.query.clinicId;
   }
 
   if (req.query.sortBy) {
