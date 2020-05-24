@@ -21,7 +21,8 @@ const patientSchema = new mongoose.Schema(
       enum: genders,
       default: genders[0] //'preferNotToSay'
     },
-    occupation: { type: String, trim: true }
+    occupation: { type: String, trim: true },
+    organisationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organisation', required: true }
   },
   {
     timestamps: true,
@@ -29,6 +30,13 @@ const patientSchema = new mongoose.Schema(
     toObject: { virtuals: true }
   }
 );
+
+patientSchema.virtual('organisation', {
+  ref: 'Organisation',
+  localField: 'organisationId',
+  foreignField: '_id',
+  justOne: true
+});
 
 patientSchema.virtual('casefiles', {
   ref: 'Casefile',

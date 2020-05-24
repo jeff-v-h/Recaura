@@ -67,6 +67,13 @@ const practitionerSchema = new mongoose.Schema(
 );
 
 //#region middleware
+practitionerSchema.virtual('organisation', {
+  ref: 'Organisation',
+  localField: 'orgnisationId',
+  foreignField: '_id',
+  justOne: true
+});
+
 practitionerSchema.virtual('consultations', {
   ref: 'Consultation',
   localField: '_id',
