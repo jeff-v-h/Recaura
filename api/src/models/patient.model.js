@@ -1,25 +1,13 @@
 const mongoose = require('mongoose');
 const Casefile = require('./casefile.model');
+const { honorifics, genders } = require('../helpers/utils');
 
 const patientSchema = new mongoose.Schema(
   {
     honorific: {
       type: String,
-      enum: [
-        'NoTitle',
-        'Mr',
-        'Mrs',
-        'Miss',
-        'Ms',
-        'Master',
-        'Mx',
-        'M',
-        'Sir',
-        'Madam',
-        'Dr',
-        'Prof'
-      ],
-      default: 'NoTitle'
+      enum: honorifics,
+      default: honorifics[0] // NoTitle
     },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
@@ -30,8 +18,8 @@ const patientSchema = new mongoose.Schema(
     mobilePhone: { type: String, trim: true },
     gender: {
       type: String,
-      enum: ['preferNotToSay', 'male', 'female', 'other'],
-      default: 'preferNotToSay'
+      enum: genders,
+      default: genders[0] //'preferNotToSay'
     },
     occupation: { type: String, trim: true }
   },
