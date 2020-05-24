@@ -34,7 +34,7 @@ const practitionerSchema = new mongoose.Schema(
         if (value.toLowerCase().includes('password')) {
           throw new Error('Password cannot contain "password".');
         }
-        if (!/^(?=.*[A-Za-z])(?=.*\d)$/.test(value)) {
+        if (!/^(?=.*[A-Za-z])(.*[0-9].*)$/.test(value)) {
           throw new Error('Password must contain at least one digit and one letter.');
         }
       }
@@ -48,7 +48,15 @@ const practitionerSchema = new mongoose.Schema(
       default: genders[0] // 'preferNotToSay'
     },
     profession: { type: String, trim: true },
-    jobLevel: { type: String, trim: true }
+    jobLevel: { type: String, trim: true },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true
+        }
+      }
+    ]
   },
   {
     timestamps: true,
@@ -57,6 +65,7 @@ const practitionerSchema = new mongoose.Schema(
   }
 );
 
+//#region middleware
 practitionerSchema.virtual('consultations', {
   ref: 'Consultation',
   localField: '_id',
@@ -67,6 +76,8 @@ practitionerSchema.methods.toJSON = function () {
   const practitioner = this;
   const practitionerObject = practitioner.toObject();
 
+  delete practitionerObject.password;
+  delete practitionerObject.tokens;
   delete practitionerObject.createdAt;
   delete practitionerObject.updatedAt;
   delete practitionerObject.__v;
@@ -74,6 +85,48 @@ practitionerSchema.methods.toJSON = function () {
 
   return practitionerObject;
 };
+
+practitionerSchema.methods.generateAuthToken = async function () {
+  const practitioner = this;
+  const token = jwt.sign({ _id: practitioner._id.toString() }, keys.JWT_SECRET);
+
+  // add token to practitioner
+  practitioner.tokens = practitioner.tokens.concat({ token });
+  await practitioner.save();
+
+  return token;
+};
+
+// Methods on model
+practitionerSchema.statics.findByCredentials = async (email, password) => {
+  const loginErrorMsg = 'Unable to login';
+  const practitioner = await Practitioner.findOne({ email });
+
+  if (!practitioner) {
+    throw new Error(loginErrorMsg);
+  }
+
+  const isMatch = await bcrypt.compare(password, practitioner.password);
+
+  if (!isMatch) {
+    throw new Error(loginErrorMsg);
+  }
+
+  return practitioner;
+};
+
+// Hash the plain text password before saving
+practitionerSchema.pre('save', async function (next) {
+  const practitioner = this;
+
+  if (practitioner.isModified('password')) {
+    // second argument is number of rounds to hash
+    practitioner.password = await bcrypt.hash(practitioner.password, 8);
+  }
+
+  next();
+});
+//#endregion
 
 const Practitioner = mongoose.model('Practitioner', practitionerSchema);
 
