@@ -50,6 +50,7 @@ const practitionerSchema = new mongoose.Schema(
     profession: { type: String, trim: true },
     jobLevel: { type: String, trim: true },
     clinicId: { type: mongoose.Schema.Types.ObjectId, ref: 'Clinic', required: true },
+    isAdmin: { type: Boolean, default: false },
     tokens: [
       {
         token: {
