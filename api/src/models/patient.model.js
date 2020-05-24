@@ -22,7 +22,7 @@ const patientSchema = new mongoose.Schema(
       default: genders[0] //'preferNotToSay'
     },
     occupation: { type: String, trim: true },
-    organisationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organisation', required: true }
+    clinicId: { type: mongoose.Schema.Types.ObjectId, ref: 'Clinic', required: true }
   },
   {
     timestamps: true,
@@ -31,9 +31,9 @@ const patientSchema = new mongoose.Schema(
   }
 );
 
-patientSchema.virtual('organisation', {
-  ref: 'Organisation',
-  localField: 'organisationId',
+patientSchema.virtual('clinic', {
+  ref: 'Clinic',
+  localField: 'clinicId',
   foreignField: '_id',
   justOne: true
 });

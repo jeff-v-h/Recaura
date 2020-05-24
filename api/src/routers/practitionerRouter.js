@@ -14,6 +14,7 @@ router.post('/practitioners', async (req, res) => {
 });
 
 // GET /practitioners?gender=male
+// GET /practitioners?clinicId=5eca1def69745b073411ba96
 // GET /practitioners?limit=10&skip=10
 // GET /practitioners?sortBy=createdAt:desc
 router.get('/practitioners', async (req, res) => {
@@ -22,6 +23,10 @@ router.get('/practitioners', async (req, res) => {
 
   if (req.query.gender) {
     match.gender = req.query.gender;
+  }
+
+  if (req.query.clinicId) {
+    match.clinicId = req.query.clinicId;
   }
 
   if (req.query.sortBy) {

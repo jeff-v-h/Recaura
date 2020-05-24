@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const locationSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
-  address1: { type: String, required: true, trim: true },
+  address: { type: String, required: true, trim: true },
   address2: { type: String, trim: true },
   city: { type: String, required: true, trim: true },
   country: { type: String, required: true, trim: true },
@@ -10,7 +10,7 @@ const locationSchema = new mongoose.Schema({
   phone: { type: String, trim: true }
 });
 
-const organisationSchema = new mongoose.Schema(
+const clinicSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     locations: [locationSchema],
@@ -23,33 +23,33 @@ const organisationSchema = new mongoose.Schema(
   }
 );
 
-organisationSchema.virtual('practitioners', {
+clinicSchema.virtual('practitioners', {
   ref: 'Practitioner',
   localField: '_id',
-  foreignField: 'organisationId'
+  foreignField: 'clinicId'
 });
 
-organisationSchema.virtual('patients', {
+clinicSchema.virtual('patients', {
   ref: 'Patient',
   localField: '_id',
-  foreignField: 'organisationId'
+  foreignField: 'clinicId'
 });
 
-organisationSchema.methods.toJSON = function () {
-  const organisation = this;
-  const organisationObject = organisation.toObject();
+clinicSchema.methods.toJSON = function () {
+  const clinic = this;
+  const clinicObject = clinic.toObject();
 
-  delete organisationObject.__v;
-  delete organisationObject._id;
-  delete organisationObject.updatedAt;
-  delete organisationObject.createdAt;
-  organisationObject.locations.forEach((l) => {
+  delete clinicObject.__v;
+  delete clinicObject._id;
+  delete clinicObject.updatedAt;
+  delete clinicObject.createdAt;
+  clinicObject.locations.forEach((l) => {
     delete l._id;
   });
 
-  return organisationObject;
+  return clinicObject;
 };
 
-const Organisation = mongoose.model('Organisation', organisationSchema);
+const Clinic = mongoose.model('clinic', clinicSchema);
 
-module.exports = Organisation;
+module.exports = Clinic;

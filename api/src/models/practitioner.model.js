@@ -49,7 +49,7 @@ const practitionerSchema = new mongoose.Schema(
     },
     profession: { type: String, trim: true },
     jobLevel: { type: String, trim: true },
-    organisationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organisation', required: true },
+    clinicId: { type: mongoose.Schema.Types.ObjectId, ref: 'Clinic', required: true },
     tokens: [
       {
         token: {
@@ -67,9 +67,9 @@ const practitionerSchema = new mongoose.Schema(
 );
 
 //#region middleware
-practitionerSchema.virtual('organisation', {
-  ref: 'Organisation',
-  localField: 'orgnisationId',
+practitionerSchema.virtual('clinic', {
+  ref: 'Clinic',
+  localField: 'clinicId',
   foreignField: '_id',
   justOne: true
 });
