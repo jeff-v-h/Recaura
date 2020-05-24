@@ -43,7 +43,6 @@ router.get('/clinics', async (req, res) => {
 
 // GET /clinics/111?practitioners=true
 // GET /clinics/111?patients=true
-// GET /clinics/111?locationInfo=true
 router.get('/clinics/:id', async (req, res) => {
   try {
     const clinic = await Clinic.findOne({ _id: req.params.id });
@@ -54,10 +53,6 @@ router.get('/clinics/:id', async (req, res) => {
 
     if (req.query.patients === 'true') {
       await clinic.populate('patients', 'gender firstName lastName dob occupation').execPopulate();
-    }
-
-    if (req.query.locationInfo === 'true') {
-      await clinic.populate('locations').execPopulate();
     }
 
     if (!clinic) {
