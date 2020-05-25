@@ -107,7 +107,10 @@ router.patch('/practitioners/:id', auth, async (req, res) => {
     'mobilePhone',
     'gender',
     'profession',
-    'jobLevel'
+    'jobLevel',
+    'isAdmin',
+    'clinicId',
+    'password'
   ];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
@@ -122,7 +125,7 @@ router.patch('/practitioners/:id', auth, async (req, res) => {
       return res.status(404).send({ error: 'Practitioner not found' });
     }
 
-    if (!req.practitioner.isAdmin && practitioner.id !== req.practitioner.id) {
+    if (!(req.practitioner.isAdmin || practitioner.id === req.practitioner.id)) {
       return res.status(403).send({ error: 'Forbidden to update details for this practitioner' });
     }
 
