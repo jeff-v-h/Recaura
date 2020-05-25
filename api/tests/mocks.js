@@ -20,6 +20,15 @@ function getMockPractitioner(accessLevel) {
   });
 }
 
+async function setupAuth(server) {
+  const practitioner = getMockPractitioner(2);
+  const { email, password } = practitioner;
+  await practitioner.save();
+  const response = await server.post('/practitioners/login').send({ email, password });
+  return response.body.token;
+}
+
 module.exports = {
-  getMockPractitioner
+  getMockPractitioner,
+  setupAuth
 };

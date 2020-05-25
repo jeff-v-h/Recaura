@@ -8,9 +8,9 @@ const { getMockPractitioner } = require('./mocks');
 // May require additional time for downloading MongoDB binaries
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
 
+const server = request(app);
 let mongoServer;
 let tokenString;
-const server = request(app);
 
 beforeAll(async () => {
   mongoServer = new MongoMemoryServer();
