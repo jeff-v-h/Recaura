@@ -1,6 +1,8 @@
 const express = require('express');
 const router = new express.Router();
 const Clinic = require('../models/clinic.model');
+const auth = require('../middleware/auth');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/clinics', async (req, res) => {
   const clinic = new Clinic(req.body);
@@ -16,8 +18,8 @@ router.post('/clinics', async (req, res) => {
 // GET /clinics?isActive=true
 // GET /clinics?limit=10&skip=10
 // GET /clinics?sortBy=createdAt:desc
-router.get('/clinics', async (req, res) => {
-  const match = {};
+router.get('/clinics', auth, async (req, res) => {
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.isActive) {
@@ -43,7 +45,7 @@ router.get('/clinics', async (req, res) => {
 
 // GET /clinics/111?practitioners=true
 // GET /clinics/111?patients=true
-router.get('/clinics/:id', async (req, res) => {
+router.get('/clinics/:id', auth, async (req, res) => {
   try {
     const clinic = await Clinic.findOne({ _id: req.params.id });
 
@@ -65,7 +67,11 @@ router.get('/clinics/:id', async (req, res) => {
   }
 });
 
-router.patch('/clinics/:id', async (req, res) => {
+router.patch('/clinics/:id', auth, async (req, res) => {
+  if (req.practitioner.accessLevel < 2) {
+    return res.status(403).send({ error: 'Forbidden to update clinic' });
+  }
+
   const updates = Object.keys(req.body);
   const allowedUpdates = ['name', 'locations', 'isActive'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
@@ -75,7 +81,7 @@ router.patch('/clinics/:id', async (req, res) => {
   }
 
   try {
-    const clinic = await Clinic.findOne({ _id: req.params.id });
+    const clinic = await Clinic.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!clinic) {
       return res.status(404).send({ error: 'clinic not found' });
