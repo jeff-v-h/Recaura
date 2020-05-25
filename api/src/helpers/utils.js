@@ -7,7 +7,7 @@ const accessLevel = [0, 1, 2, 3, 4, 5];
 
 function getInitialMatch(user) {
   const match = {};
-  if (user.accessLevel < 4) match.cliniciId = user.clinicId;
+  if (user.accessLevel < 4) match.clinicId = user.clinicId;
   return match;
 }
 

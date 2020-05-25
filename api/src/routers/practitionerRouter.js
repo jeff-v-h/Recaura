@@ -2,7 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const Practitioner = require('../models/practitioner.model');
 const auth = require('../middleware/auth');
-const { getFindByIdMatch } = require('../helpers/utils');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/practitioners', async (req, res) => {
   const { accessLevel } = req.body;
