@@ -3,7 +3,7 @@ const app = require('../src/app');
 const Patient = require('../src/models/patient.model');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const { getMockPractitioner } = require('./mocks');
+const { setupAuth } = require('./mocks');
 
 // May require additional time for downloading MongoDB binaries
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
@@ -19,12 +19,7 @@ beforeAll(async () => {
     if (err) console.error(err);
   });
 
-  // Create user, login and set the auth token string
-  const practitioner = getMockPractitioner(2);
-  const { email, password } = practitioner;
-  await practitioner.save();
-  const response = await server.post('/practitioners/login').send({ email, password });
-  tokenString = 'Bearer ' + response.body.token;
+  tokenString = 'Bearer ' + (await setupAuth(server));
 });
 
 afterAll(async () => {
