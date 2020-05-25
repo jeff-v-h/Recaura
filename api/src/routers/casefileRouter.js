@@ -1,8 +1,9 @@
 const express = require('express');
 const router = new express.Router();
 const Casefile = require('../models/casefile.model');
+const auth = require('../middleware/auth');
 
-router.post('/casefiles', async (req, res) => {
+router.post('/casefiles', auth, async (req, res) => {
   const casefile = new Casefile(req.body);
 
   try {
@@ -16,7 +17,7 @@ router.post('/casefiles', async (req, res) => {
 // GET /casefiles?patientId=123124
 // GET /casefiles?limit=10&skip=10
 // GET /casefiles?sortBy=createdAt:desc
-router.get('/casefiles', async (req, res) => {
+router.get('/casefiles', auth, async (req, res) => {
   const match = {};
   const sort = {};
 
@@ -43,7 +44,7 @@ router.get('/casefiles', async (req, res) => {
 
 // GET /casefiles/111?patientInfo=true
 // GET /casefiles/111?consultations=true
-router.get('/casefiles/:id', async (req, res) => {
+router.get('/casefiles/:id', auth, async (req, res) => {
   try {
     const casefile = await Casefile.findOne({ _id: req.params.id });
 
@@ -65,7 +66,7 @@ router.get('/casefiles/:id', async (req, res) => {
   }
 });
 
-router.patch('/casefiles/:id', async (req, res) => {
+router.patch('/casefiles/:id', auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ['patientId', 'name'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
@@ -89,7 +90,11 @@ router.patch('/casefiles/:id', async (req, res) => {
   }
 });
 
-router.delete('/casefiles/:id', async (req, res) => {
+router.delete('/casefiles/:id', auth, async (req, res) => {
+  if (req.practitioner.accessLevel < 2) {
+    return res.status(403).send({ error: 'Forbidden to delete casefile' });
+  }
+
   try {
     const casefile = await Casefile.findOne({ _id: req.params.id });
     if (!casefile) {
