@@ -4,6 +4,11 @@ const Practitioner = require('../models/practitioner.model');
 const auth = require('../middleware/auth');
 
 router.post('/practitioners', async (req, res) => {
+  const { accessLevel } = req.body;
+  if (accessLevel && accessLevel > 1) {
+    return res.status(403).send({ error: 'Forbidden to create with access level greater than 1' });
+  }
+
   const practitioner = new Practitioner(req.body);
 
   try {
@@ -95,6 +100,17 @@ router.get('/practitioners/:id', auth, async (req, res) => {
 });
 
 router.patch('/practitioners/:id', auth, async (req, res) => {
+  // Restrict who can change access levels
+  if (req.body.accessLevel) {
+    if (req.practitioner.accessLevel < 2) {
+      return res.status(403).send({ error: 'Forbidden to change access level' });
+    }
+
+    if (req.body.accessLevel > req.practitioner.accessLevel) {
+      return res.status(403).send({ error: 'Forbidden to increase access above own level' });
+    }
+  }
+
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'honorific',
@@ -108,7 +124,7 @@ router.patch('/practitioners/:id', auth, async (req, res) => {
     'gender',
     'profession',
     'jobLevel',
-    'isAdmin',
+    'accessLevel',
     'clinicId',
     'password'
   ];
@@ -125,7 +141,7 @@ router.patch('/practitioners/:id', auth, async (req, res) => {
       return res.status(404).send({ error: 'Practitioner not found' });
     }
 
-    if (!(req.practitioner.isAdmin || practitioner.id === req.practitioner.id)) {
+    if (!(req.practitioner.accessLevel > 1 || practitioner.id === req.practitioner.id)) {
       return res.status(403).send({ error: 'Forbidden to update details for this practitioner' });
     }
 
@@ -138,7 +154,7 @@ router.patch('/practitioners/:id', auth, async (req, res) => {
 });
 
 router.delete('/practitioners/:id', auth, async (req, res) => {
-  if (!req.practitioner.isAdmin) {
+  if (req.practitioner.accessLevel < 3) {
     return res.status(403).send({ error: 'Forbidden to delete' });
   }
 

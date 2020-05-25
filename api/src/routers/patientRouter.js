@@ -60,7 +60,7 @@ router.get('/patients/:id', auth, async (req, res) => {
 });
 
 router.patch('/patients/:id', auth, async (req, res) => {
-  if (!req.practitioner.isAdmin) {
+  if (req.practitioner.accessLevel < 2) {
     return res.status(403).send({ error: 'Forbidden to update details for patient' });
   }
 
@@ -100,7 +100,7 @@ router.patch('/patients/:id', auth, async (req, res) => {
 });
 
 router.delete('/patients/:id', auth, async (req, res) => {
-  if (!req.practitioner.isAdmin) {
+  if (req.practitioner.accessLevel < 2) {
     return res.status(403).send({ error: 'Forbidden to delete patient' });
   }
 

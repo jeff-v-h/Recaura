@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { honorifics, genders } = require('../helpers/utils');
+const { honorifics, genders, accessLevel } = require('../helpers/utils');
 const keys = require('../helpers/keys');
 
 const practitionerSchema = new mongoose.Schema(
@@ -51,7 +51,7 @@ const practitionerSchema = new mongoose.Schema(
     profession: { type: String, trim: true },
     jobLevel: { type: String, trim: true },
     clinicId: { type: mongoose.Schema.Types.ObjectId, ref: 'Clinic', required: true },
-    isAdmin: { type: Boolean, default: false },
+    accessLevel: { type: Number, min: accessLevel[0], max: accessLevel[accessLevel.length - 1], default: 1 },
     tokens: [
       {
         token: {
