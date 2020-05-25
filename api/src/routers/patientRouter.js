@@ -1,8 +1,9 @@
 const express = require('express');
 const router = new express.Router();
 const Patient = require('../models/patient.model');
+const auth = require('../middleware/auth');
 
-router.post('/patients', async (req, res) => {
+router.post('/patients', auth, async (req, res) => {
   const patient = new Patient(req.body);
 
   try {
@@ -14,19 +15,16 @@ router.post('/patients', async (req, res) => {
 });
 
 // GET /patients?gender=male
-// GET /patients?clinicId=5eca1def69745b073411ba96
 // GET /patients?limit=10&skip=10
 // GET /patients?sortBy=createdAt:desc
-router.get('/patients', async (req, res) => {
-  const match = {};
+router.get('/patients', auth, async (req, res) => {
+  const match = {
+    clinicId: req.practitioner.clinicId
+  };
   const sort = {};
 
   if (req.query.gender) {
     match.gender = req.query.gender;
-  }
-
-  if (req.query.clinicId) {
-    match.clinicId = req.query.clinicId;
   }
 
   if (req.query.sortBy) {
@@ -46,9 +44,9 @@ router.get('/patients', async (req, res) => {
   }
 });
 
-router.get('/patients/:id', async (req, res) => {
+router.get('/patients/:id', auth, async (req, res) => {
   try {
-    const patient = await Patient.findOne({ _id: req.params.id });
+    const patient = await Patient.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
     // .populate('casefiles')
 
     if (!patient) {
@@ -61,7 +59,11 @@ router.get('/patients/:id', async (req, res) => {
   }
 });
 
-router.patch('/patients/:id', async (req, res) => {
+router.patch('/patients/:id', auth, async (req, res) => {
+  if (!req.practitioner.isAdmin) {
+    return res.status(403).send({ error: 'Forbidden to update details for patient' });
+  }
+
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'honorific',
@@ -74,7 +76,7 @@ router.patch('/patients/:id', async (req, res) => {
     'mobilePhone',
     'gender',
     'occupation',
-    'casefiles'
+    'clinicId'
   ];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
@@ -83,7 +85,7 @@ router.patch('/patients/:id', async (req, res) => {
   }
 
   try {
-    const patient = await Patient.findOne({ _id: req.params.id });
+    const patient = await Patient.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
 
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });
@@ -97,12 +99,18 @@ router.patch('/patients/:id', async (req, res) => {
   }
 });
 
-router.delete('/patients/:id', async (req, res) => {
+router.delete('/patients/:id', auth, async (req, res) => {
+  if (!req.practitioner.isAdmin) {
+    return res.status(403).send({ error: 'Forbidden to delete patient' });
+  }
+
   try {
-    const patient = await Patient.findOne({ _id: req.params.id });
+    const patient = await Patient.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
+
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });
     }
+
     await patient.remove();
     res.send(patient);
   } catch (e) {
