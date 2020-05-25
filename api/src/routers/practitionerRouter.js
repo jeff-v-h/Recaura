@@ -138,6 +138,10 @@ router.patch('/practitioners/:id', auth, async (req, res) => {
 });
 
 router.delete('/practitioners/:id', auth, async (req, res) => {
+  if (!req.practitioner.isAdmin) {
+    return res.status(403).send({ error: 'Forbidden to delete' });
+  }
+
   try {
     const practitioner = await Practitioner.findOneAndDelete({
       _id: req.params.id,
@@ -146,10 +150,6 @@ router.delete('/practitioners/:id', auth, async (req, res) => {
 
     if (!practitioner) {
       return res.status(404).send({ error: 'Practitioner not found' });
-    }
-
-    if (!req.practitioner.isAdmin) {
-      return res.status(403).send({ error: 'Forbidden to delete' });
     }
 
     res.send(practitioner);
