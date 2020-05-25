@@ -2,7 +2,7 @@ const honorifics = ['NoTitle', 'Mr', 'Mrs', 'Miss', 'Ms', 'Master', 'Mx', 'M', '
 
 const genders = ['preferNotToSay', 'male', 'female', 'other'];
 
-// inactive, normal, admin, master, apiAdmin, apiMasterAdmin
+// inactive, normal, admin, master, appAdmin, appMaster
 const accessLevel = [0, 1, 2, 3, 4, 5];
 
 function getInitialMatch(user) {
