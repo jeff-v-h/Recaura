@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const Patient = require('../models/patient.model');
 const auth = require('../middleware/auth');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/patients', auth, async (req, res) => {
   const patient = new Patient(req.body);
@@ -18,9 +19,7 @@ router.post('/patients', auth, async (req, res) => {
 // GET /patients?limit=10&skip=10
 // GET /patients?sortBy=createdAt:desc
 router.get('/patients', auth, async (req, res) => {
-  const match = {
-    clinicId: req.practitioner.clinicId
-  };
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.gender) {
@@ -46,7 +45,7 @@ router.get('/patients', auth, async (req, res) => {
 
 router.get('/patients/:id', auth, async (req, res) => {
   try {
-    const patient = await Patient.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
+    const patient = await Patient.findOne(getFindByIdMatch(req.params.id, req.practitioner));
     // .populate('casefiles')
 
     if (!patient) {
@@ -85,7 +84,7 @@ router.patch('/patients/:id', auth, async (req, res) => {
   }
 
   try {
-    const patient = await Patient.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
+    const patient = await Patient.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });
@@ -105,7 +104,7 @@ router.delete('/patients/:id', auth, async (req, res) => {
   }
 
   try {
-    const patient = await Patient.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
+    const patient = await Patient.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });

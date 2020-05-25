@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const Consultation = require('../models/consultation.model');
 const auth = require('../middleware/auth');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/consultations', auth, async (req, res) => {
   const consultation = new Consultation(req.body);
@@ -20,7 +21,7 @@ router.post('/consultations', auth, async (req, res) => {
 // GET /consultations?limit=10&skip=10
 // GET /consultations?sortBy=createdAt:desc
 router.get('/consultations', auth, async (req, res) => {
-  const match = {};
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.patientId) match.patientId = req.query.patientId;
@@ -48,7 +49,7 @@ router.get('/consultations', auth, async (req, res) => {
 
 router.get('/consultations/:id', auth, async (req, res) => {
   try {
-    const consultation = await Consultation.findOne({ _id: req.params.id }).populate(
+    const consultation = await Consultation.findOne(getFindByIdMatch(req.params.id, req.practitioner)).populate(
       'practitioner',
       'firstName lastName'
     );
@@ -83,7 +84,7 @@ router.patch('/consultations/:id', auth, async (req, res) => {
   }
 
   try {
-    const consultation = await Consultation.findOne({ _id: req.params.id });
+    const consultation = await Consultation.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!consultation) {
       return res.status(404).send({ error: 'Consultation not found' });
@@ -103,7 +104,7 @@ router.delete('/consultations/:id', auth, async (req, res) => {
   }
 
   try {
-    const consultation = await Consultation.findOneAndDelete({ _id: req.params.id });
+    const consultation = await Consultation.findOneAndDelete(getFindByIdMatch(req.params.id, req.practitioner));
     if (!consultation) {
       return res.status(404).send({ error: 'Consultation not found' });
     }

@@ -4,7 +4,8 @@ const Consultation = require('./consultation.model');
 const casefileSchema = new mongoose.Schema(
   {
     patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
-    name: { type: String, required: true, trim: true }
+    name: { type: String, required: true, trim: true },
+    clinicId: { type: mongoose.Schema.Types.ObjectId, ref: 'Clinic', required: true }
   },
   {
     timestamps: true,
@@ -16,6 +17,13 @@ const casefileSchema = new mongoose.Schema(
 casefileSchema.virtual('patient', {
   ref: 'Patient',
   localField: 'patientId',
+  foreignField: '_id',
+  justOne: true
+});
+
+casefileSchema.virtual('clinic', {
+  ref: 'Clinic',
+  localField: 'clinicId',
   foreignField: '_id',
   justOne: true
 });

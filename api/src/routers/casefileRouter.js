@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const Casefile = require('../models/casefile.model');
 const auth = require('../middleware/auth');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/casefiles', auth, async (req, res) => {
   const casefile = new Casefile(req.body);
@@ -18,7 +19,7 @@ router.post('/casefiles', auth, async (req, res) => {
 // GET /casefiles?limit=10&skip=10
 // GET /casefiles?sortBy=createdAt:desc
 router.get('/casefiles', auth, async (req, res) => {
-  const match = {};
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.patientId) {
@@ -46,7 +47,7 @@ router.get('/casefiles', auth, async (req, res) => {
 // GET /casefiles/111?consultations=true
 router.get('/casefiles/:id', auth, async (req, res) => {
   try {
-    const casefile = await Casefile.findOne({ _id: req.params.id });
+    const casefile = await Casefile.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (req.query.consultations === 'true') {
       await casefile.populate('consultations', 'number date practitionerId').execPopulate();
@@ -76,7 +77,7 @@ router.patch('/casefiles/:id', auth, async (req, res) => {
   }
 
   try {
-    const casefile = await Casefile.findOne({ _id: req.params.id });
+    const casefile = await Casefile.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!casefile) {
       return res.status(404).send({ error: 'Casefile not found' });
@@ -96,7 +97,7 @@ router.delete('/casefiles/:id', auth, async (req, res) => {
   }
 
   try {
-    const casefile = await Casefile.findOne({ _id: req.params.id });
+    const casefile = await Casefile.findOne(getFindByIdMatch(req.params.id, req.practitioner));
     if (!casefile) {
       return res.status(404).send({ error: 'Casefile not found' });
     }

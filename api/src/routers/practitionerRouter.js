@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const Practitioner = require('../models/practitioner.model');
 const auth = require('../middleware/auth');
+const { getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/practitioners', async (req, res) => {
   const { accessLevel } = req.body;
@@ -54,9 +55,7 @@ router.post('/practitioners/logoutAll', auth, async (req, res) => {
 // GET /practitioners?limit=10&skip=10
 // GET /practitioners?sortBy=createdAt:desc
 router.get('/practitioners', auth, async (req, res) => {
-  const match = {
-    clinicId: req.practitioner.clinicId
-  };
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.gender) {
@@ -86,7 +85,7 @@ router.get('/practitioners/me', auth, async (req, res) => {
 
 router.get('/practitioners/:id', auth, async (req, res) => {
   try {
-    const practitioner = await Practitioner.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
+    const practitioner = await Practitioner.findOne(getFindByIdMatch(req.params.id, req.practitioner));
     // .populate('consultations')
 
     if (!practitioner) {
@@ -135,7 +134,7 @@ router.patch('/practitioners/:id', auth, async (req, res) => {
   }
 
   try {
-    const practitioner = await Practitioner.findOne({ _id: req.params.id, clinicId: req.practitioner.clinicId });
+    const practitioner = await Practitioner.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!practitioner) {
       return res.status(404).send({ error: 'Practitioner not found' });
@@ -159,10 +158,7 @@ router.delete('/practitioners/:id', auth, async (req, res) => {
   }
 
   try {
-    const practitioner = await Practitioner.findOneAndDelete({
-      _id: req.params.id,
-      clinicId: req.practitioner.clinicId
-    });
+    const practitioner = await Practitioner.findOneAndDelete(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!practitioner) {
       return res.status(404).send({ error: 'Practitioner not found' });

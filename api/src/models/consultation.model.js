@@ -30,6 +30,7 @@ const consultationSchema = new Schema(
   {
     patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
     casefileId: { type: Schema.Types.ObjectId, ref: 'Casefile', required: true },
+    clinicId: { type: mongoose.Schema.Types.ObjectId, ref: 'Clinic', required: true },
     date: { type: Date, default: new Date() },
     practitionerId: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
     subjectiveAssessment: subjectiveSchema,
@@ -54,6 +55,13 @@ consultationSchema.virtual('patient', {
 consultationSchema.virtual('casefile', {
   ref: 'Casefile',
   localField: 'casefileId',
+  foreignField: '_id',
+  justOne: true
+});
+
+consultationSchema.virtual('clinic', {
+  ref: 'Clinic',
+  localField: 'clinicId',
   foreignField: '_id',
   justOne: true
 });
