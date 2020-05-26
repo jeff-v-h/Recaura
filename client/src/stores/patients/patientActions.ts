@@ -3,6 +3,9 @@ import * as T from './patientTypes';
 import patientsService from '../../services/patientsService';
 import { Patient, PatientBase } from '../../models/patientModels';
 import history from '../../helpers/history';
+import cookieService from '../../services/cookieService';
+import { NOT_LOGGED_IN } from '../../helpers/constants';
+import { handleNotLoggedInError } from '../../helpers/utils';
 
 const { C } = T;
 
@@ -12,11 +15,15 @@ export const createPatient = (
   dispatch({ type: C.CREATE_PATIENT_REQUEST });
 
   try {
-    const newPatient = await patientsService.createPatient(patient);
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
+    const newPatient = await patientsService.createPatient(patient, token);
     dispatch({ type: C.CREATE_PATIENT_SUCCESS, payload: newPatient });
     history.push(`/patients/${newPatient.id}/casefiles`);
-  } catch (error) {
-    dispatch({ type: C.CREATE_PATIENT_FAILURE, payload: error });
+  } catch (e) {
+    dispatch({ type: C.CREATE_PATIENT_FAILURE, payload: e });
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };
 
@@ -24,12 +31,16 @@ export const getPatients = (): AppThunkAction<T.GetPatientsKnownAction> => async
   dispatch({ type: C.GET_PATIENTS_REQUEST });
 
   try {
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
     dispatch({
       type: C.GET_PATIENTS_SUCCESS,
-      payload: await patientsService.getPatients()
+      payload: await patientsService.getPatients(token)
     });
-  } catch (error) {
-    dispatch({ type: C.GET_PATIENTS_FAILURE, payload: error });
+  } catch (e) {
+    dispatch({ type: C.GET_PATIENTS_FAILURE, payload: e });
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };
 
@@ -48,12 +59,16 @@ export const getPatient = (id: string): AppThunkAction<T.GetPatientKnownAction> 
     dispatch({ type: C.GET_PATIENT_REQUEST });
 
     try {
+      const token = cookieService.getUserToken();
+      if (!token) throw NOT_LOGGED_IN;
+
       dispatch({
         type: C.GET_PATIENT_SUCCESS,
-        payload: await patientsService.getPatient(id)
+        payload: await patientsService.getPatient(id, token)
       });
-    } catch (error) {
-      dispatch({ type: C.GET_PATIENT_FAILURE, payload: error });
+    } catch (e) {
+      dispatch({ type: C.GET_PATIENT_FAILURE, payload: e });
+      if (e === NOT_LOGGED_IN) handleNotLoggedInError();
     }
   }
 };
@@ -65,10 +80,14 @@ export const updatePatient = (
   dispatch({ type: C.UPDATE_PATIENT_REQUEST });
 
   try {
-    const updatedPatient = await patientsService.updatePatient(id, patient);
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
+    const updatedPatient = await patientsService.updatePatient(id, patient, token);
     dispatch({ type: C.UPDATE_PATIENT_SUCCESS, payload: updatedPatient });
   } catch (e) {
     dispatch({ type: C.UPDATE_PATIENT_FAILURE, payload: e });
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };
 
@@ -78,10 +97,14 @@ export const deletePatient = (id: string): AppThunkAction<T.DeletePatientKnownAc
   dispatch({ type: C.DELETE_PATIENT_REQUEST });
 
   try {
-    await patientsService.deletePatient(id);
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
+    await patientsService.deletePatient(id, token);
     dispatch({ type: C.DELETE_PATIENT_SUCCESS, payload: id });
     history.push(`/patients`);
   } catch (e) {
     dispatch({ type: C.DELETE_PATIENT_FAILURE, payload: e });
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };

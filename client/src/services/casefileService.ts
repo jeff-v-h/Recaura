@@ -7,40 +7,40 @@ import { message } from 'antd';
 const { apiUrl } = keys;
 
 class CasefileService extends ApiService {
-  createCasefile = async (casefile: CasefileBase): Promise<Casefile> => {
+  createCasefile = async (casefile: CasefileBase, token: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/casefiles?sortBy=createdAt:desc`;
-      const resp = (await this.post(url, casefile)) as AxiosResponse<Casefile>;
+      const resp = (await this.post(url, casefile, token)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {
       return this.handleRequestError(e);
     }
   };
 
-  getCasefiles = async (patientId: string): Promise<Casefile[]> => {
+  getCasefiles = async (patientId: string, token: string): Promise<Casefile[]> => {
     try {
       const url = `${apiUrl}/casefiles?patientId=${patientId}&sortBy=updatedAt:desc`;
-      const resp = (await this.get(url)) as AxiosResponse<Casefile[]>;
+      const resp = (await this.get(url, token)) as AxiosResponse<Casefile[]>;
       return resp.data;
     } catch (e) {
       return this.handleRequestError(e);
     }
   };
 
-  getCasefile = async (id: string): Promise<Casefile> => {
+  getCasefile = async (id: string, token: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/casefiles/${id}`;
-      const resp = (await this.get(url)) as AxiosResponse<Casefile>;
+      const resp = (await this.get(url, token)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {
       return this.handleRequestError(e);
     }
   };
 
-  updateCasefile = async (id: string, casefile: CasefileBase): Promise<Casefile> => {
+  updateCasefile = async (id: string, casefile: CasefileBase, token: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/casefiles/${id}`;
-      const resp = (await this.patch(url, casefile)) as AxiosResponse<Casefile>;
+      const resp = (await this.patch(url, casefile, token)) as AxiosResponse<Casefile>;
       message.success('Casefile updated');
       return resp.data;
     } catch (e) {
@@ -48,10 +48,10 @@ class CasefileService extends ApiService {
     }
   };
 
-  deleteCasefile = async (id: string): Promise<Casefile> => {
+  deleteCasefile = async (id: string, token: string): Promise<Casefile> => {
     try {
       const url = `${apiUrl}/casefiles/${id}`;
-      const resp = (await this.delete(url)) as AxiosResponse<Casefile>;
+      const resp = (await this.delete(url, token)) as AxiosResponse<Casefile>;
       message.success('Casefile deleted');
       return resp.data;
     } catch (e) {
