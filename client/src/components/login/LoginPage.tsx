@@ -7,6 +7,7 @@ import { ApplicationState } from '../../stores';
 import style from './login.scss';
 import { Login } from '../../models/practitionerModels';
 import LoginForm from './LoginForm';
+import cookieService from '../../services/cookieService';
 
 const mapStateToProps = (state: ApplicationState) => state.practitioner;
 const connector = connect(mapStateToProps, practitionerActions);
@@ -19,7 +20,7 @@ class LoginPage extends React.Component<Props> {
   render() {
     const { isFetching, id } = this.props;
 
-    if (id) return <Redirect to="/" />;
+    if (id && cookieService.getUserToken()) return <Redirect to="/" />;
 
     return (
       <div className={style.loginPage}>

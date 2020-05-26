@@ -13,21 +13,18 @@ const { C } = T;
 export const loginPractitioner = (
   email: string,
   password: string
-): AppThunkAction<T.LoginPractitionerKnownAction> => async (dispatch, getState) => {
-  const appState = getState();
-  if (appState.practitioner?.email !== email) {
-    dispatch({ type: C.LOGIN_PRACTITIONER_REQUEST });
+): AppThunkAction<T.LoginPractitionerKnownAction> => async (dispatch) => {
+  dispatch({ type: C.LOGIN_PRACTITIONER_REQUEST });
 
-    try {
-      const response = await practitionerService.login(email, password);
+  try {
+    const response = await practitionerService.login(email, password);
 
-      cookieService.setUserToken(response.token);
-      delete response.token;
+    cookieService.setUserToken(response.token);
+    delete response.token;
 
-      dispatch({ type: C.LOGIN_PRACTITIONER_SUCCESS, payload: response.practitioner });
-    } catch (e) {
-      dispatch({ type: C.LOGIN_PRACTITIONER_FAILURE });
-    }
+    dispatch({ type: C.LOGIN_PRACTITIONER_SUCCESS, payload: response.practitioner });
+  } catch (e) {
+    dispatch({ type: C.LOGIN_PRACTITIONER_FAILURE });
   }
 };
 
