@@ -1,19 +1,34 @@
 import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { compose } from 'redux';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
+import { ApplicationState } from '../../stores';
+import * as practitionerActions from '../../stores/practitioners/practitionerActions';
 import { Menu } from 'antd';
-import { Link } from 'react-router-dom';
 import { ClickParam } from 'antd/lib/menu';
 import style from './navMenu.scss';
+import cookieService from '../../services/cookieService';
 
 const Item = Menu.Item;
 
-export default class NavMenu extends React.PureComponent<{}, { current: string }> {
+const mapStateToProps = (state: ApplicationState) => state.casefile;
+const connector = connect(mapStateToProps, practitionerActions);
+
+type Props = ConnectedProps<typeof connector> & RouteComponentProps<{}>;
+
+class NavMenu extends React.Component<Props, { current: string }> {
   state = {
     current: 'patients'
   };
 
   handleClick = (e: ClickParam) => this.setState({ current: e.key });
 
+  logout = () => this.props.logoutPractitioner();
+
   render() {
+    const { id } = this.props;
+    const isAuthenticated = id || cookieService.getUserToken();
+
     return (
       <div className={style.navbar}>
         <div className={style.innerNavbar}>
@@ -28,12 +43,25 @@ export default class NavMenu extends React.PureComponent<{}, { current: string }
             mode="horizontal"
             style={{ maxWidth: 1280, margin: '0 auto', borderBottom: 'none', flexGrow: 1 }}
           >
-            <Item key="patients">
-              <Link to="/patients">Patients</Link>
-            </Item>
+            {isAuthenticated && (
+              <Item key="patients">
+                <Link to="/patients">Patients</Link>
+              </Item>
+            )}
+            {isAuthenticated ? (
+              <Item key="logout" className={style.right} onClick={this.logout}>
+                Logout
+              </Item>
+            ) : (
+              <Item key="login" className={style.right}>
+                <Link to="/login">Login</Link>
+              </Item>
+            )}
           </Menu>
         </div>
       </div>
     );
   }
 }
+
+export default compose(withRouter, connector)(NavMenu);

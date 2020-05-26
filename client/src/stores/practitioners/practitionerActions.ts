@@ -40,6 +40,7 @@ export const logoutPractitioner = (): AppThunkAction<T.KnownAction> => async (di
     cookieService.removeUserToken();
 
     dispatch({ type: C.LOGOUT_PRACTITIONER_SUCCESS });
+    history.push('/login');
   } catch (e) {
     dispatch({ type: C.LOGOUT_PRACTITIONER_FAILURE });
   }
