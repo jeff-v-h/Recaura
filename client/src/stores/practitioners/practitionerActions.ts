@@ -6,6 +6,7 @@ import history from '../../helpers/history';
 import cookieService from '../../services/cookieService';
 import { NOT_LOGGED_IN } from '../../helpers/constants';
 import { handleNotLoggedInError } from '../../helpers/utils';
+import { CLEAR_DATA } from '../common/types';
 
 const { C } = T;
 
@@ -32,14 +33,14 @@ export const loginPractitioner = (
 
 export const logoutPractitioner = (): AppThunkAction<T.KnownAction> => async (dispatch) => {
   dispatch({ type: C.LOGOUT_PRACTITIONER_REQUEST });
-  // TODO: clear redux state
 
   try {
     const token = cookieService.getUserToken();
     if (token) await practitionerService.logout(token);
     cookieService.removeUserToken();
 
-    dispatch({ type: C.LOGOUT_PRACTITIONER_SUCCESS });
+    // dispatch({ type: C.LOGOUT_PRACTITIONER_SUCCESS });
+    dispatch({ type: CLEAR_DATA });
     history.push('/login');
   } catch (e) {
     dispatch({ type: C.LOGOUT_PRACTITIONER_FAILURE });
