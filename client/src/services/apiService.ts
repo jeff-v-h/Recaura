@@ -77,6 +77,8 @@ export const defaultErrorMessage = (error: AxiosError): string => {
     errorMsg = 'Invalid data';
   } else if (error.response?.status === 401) {
     errorMsg = 'Unauthorised';
+  } else if (error.response?.status === 403) {
+    errorMsg = 'Forbidden';
   } else if (error.response?.status === 404) {
     errorMsg = 'Not found';
   }
