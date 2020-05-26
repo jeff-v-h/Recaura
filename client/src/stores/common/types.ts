@@ -8,3 +8,5 @@ export interface RequestState {
   isFetching: boolean;
   error: string;
 }
+
+export const CLEAR_DATA = 'CLEAR_DATA';

@@ -24,3 +24,12 @@ export enum CountryCode {
   UK = '+44',
   US = '+1'
 }
+
+export enum AccessLevel {
+  inActive,
+  normal,
+  admin,
+  master,
+  appAdmin,
+  appMaster
+}

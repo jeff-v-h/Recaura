@@ -19,6 +19,11 @@ $error-height: 20rem;
   margin-top: 0;
 }
 
+.hookLoginForm {
+  @extend .hookForm;
+  width: 400rem;
+}
+
 .inputSection,
 .phoneSection {
   display: flex;
@@ -38,6 +43,12 @@ $error-height: 20rem;
 .hookTextAreaContainer {
   margin-right: 3 * $label-right-pad;
   flex-grow: 1;
+}
+
+.hookLabelDiv {
+  display: flex;
+  min-width: 90rem;
+  justify-content: flex-end;
 }
 
 .hookSelectLabel,

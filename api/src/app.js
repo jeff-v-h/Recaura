@@ -5,6 +5,7 @@ const patientRouter = require('./routers/patientRouter');
 const casefileRouter = require('./routers/casefileRouter');
 const practitionerRouter = require('./routers/practitionerRouter');
 const consultationRouter = require('./routers/consultationRouter');
+const clinicRouter = require('./routers/clinicRouter');
 // const swaggerUi = require('swagger-ui-express');
 // const YAML = require('yamljs');
 // Path for the following YAML.load is relative to root
@@ -20,5 +21,6 @@ app.use(patientRouter);
 app.use(casefileRouter);
 app.use(practitionerRouter);
 app.use(consultationRouter);
+app.use(clinicRouter);
 
 module.exports = app;

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = new express.Router();
 const Patient = require('../models/patient.model');
+const auth = require('../middleware/auth');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
-router.post('/patients', async (req, res) => {
+router.post('/patients', auth, async (req, res) => {
   const patient = new Patient(req.body);
 
   try {
@@ -16,8 +18,8 @@ router.post('/patients', async (req, res) => {
 // GET /patients?gender=male
 // GET /patients?limit=10&skip=10
 // GET /patients?sortBy=createdAt:desc
-router.get('/patients', async (req, res) => {
-  const match = {};
+router.get('/patients', auth, async (req, res) => {
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.gender) {
@@ -41,9 +43,9 @@ router.get('/patients', async (req, res) => {
   }
 });
 
-router.get('/patients/:id', async (req, res) => {
+router.get('/patients/:id', auth, async (req, res) => {
   try {
-    const patient = await Patient.findOne({ _id: req.params.id });
+    const patient = await Patient.findOne(getFindByIdMatch(req.params.id, req.practitioner));
     // .populate('casefiles')
 
     if (!patient) {
@@ -56,7 +58,11 @@ router.get('/patients/:id', async (req, res) => {
   }
 });
 
-router.patch('/patients/:id', async (req, res) => {
+router.patch('/patients/:id', auth, async (req, res) => {
+  if (req.practitioner.accessLevel < 2) {
+    return res.status(403).send({ error: 'Forbidden to update details for patient' });
+  }
+
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'honorific',
@@ -69,7 +75,7 @@ router.patch('/patients/:id', async (req, res) => {
     'mobilePhone',
     'gender',
     'occupation',
-    'casefiles'
+    'clinicId'
   ];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
@@ -78,7 +84,7 @@ router.patch('/patients/:id', async (req, res) => {
   }
 
   try {
-    const patient = await Patient.findOne({ _id: req.params.id });
+    const patient = await Patient.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });
@@ -92,12 +98,18 @@ router.patch('/patients/:id', async (req, res) => {
   }
 });
 
-router.delete('/patients/:id', async (req, res) => {
+router.delete('/patients/:id', auth, async (req, res) => {
+  if (req.practitioner.accessLevel < 2) {
+    return res.status(403).send({ error: 'Forbidden to delete patient' });
+  }
+
   try {
-    const patient = await Patient.findOne({ _id: req.params.id });
+    const patient = await Patient.findOne(getFindByIdMatch(req.params.id, req.practitioner));
+
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });
     }
+
     await patient.remove();
     res.send(patient);
   } catch (e) {

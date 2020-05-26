@@ -3,11 +3,14 @@ const app = require('../src/app');
 const Patient = require('../src/models/patient.model');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const { setupAuth } = require('./mocks');
 
 // May require additional time for downloading MongoDB binaries
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
 
+const server = request(app);
 let mongoServer;
+let tokenString;
 
 beforeAll(async () => {
   mongoServer = new MongoMemoryServer();
@@ -15,6 +18,8 @@ beforeAll(async () => {
   await mongoose.connect(mongoUri, {}, (err) => {
     if (err) console.error(err);
   });
+
+  tokenString = 'Bearer ' + (await setupAuth(server));
 });
 
 afterAll(async () => {
@@ -33,7 +38,8 @@ describe('Patient Router', () => {
     homePhone: '98765432',
     mobilePhone: '0424333555',
     gender: 'female',
-    occupation: 'designer'
+    occupation: 'designer',
+    clinicId: '5ecb1231f595f456542b4af6'
   };
 
   afterEach(() => {
@@ -42,20 +48,20 @@ describe('Patient Router', () => {
 
   describe('post endpoint', () => {
     it('should return 201', async () => {
-      const res = await request(app).post('/patients').send(patient);
+      const res = await server.post('/patients').set('Authorization', tokenString).send(patient);
 
       expect(res.statusCode).toBe(201);
     });
 
     it('should return the correct data', async () => {
       // jest.spyOn(Patient.prototype, 'save').mockImplementationOnce(() => Promise.resolve(patient));
-      const res = await request(app).post('/patients').send(patient);
+      const res = await server.post('/patients').set('Authorization', tokenString).send(patient);
 
       expect(res.body).toEqual({ ...patient, id: res.body.id, updatedAt: res.body.updatedAt });
     });
 
     it('should return 400 when not valid', async () => {
-      const res = await request(app).post('/patients').send({});
+      const res = await server.post('/patients').set('Authorization', tokenString).send({});
 
       expect(res.statusCode).toBe(400);
     });
@@ -65,7 +71,7 @@ describe('Patient Router', () => {
     it('should return 200', async () => {
       const savedPatient = new Patient(patient);
       await savedPatient.save();
-      const res = await request(app).get(`/patients/${savedPatient.id}`);
+      const res = await server.get(`/patients/${savedPatient.id}`).set('Authorization', tokenString);
 
       expect(res.statusCode).toBe(200);
     });
@@ -74,14 +80,14 @@ describe('Patient Router', () => {
       const newPatient = new Patient(patient);
       await newPatient.save();
 
-      const res = await request(app).get(`/patients/${newPatient.id}`);
+      const res = await server.get(`/patients/${newPatient.id}`).set('Authorization', tokenString);
       const { id, updatedAt } = res.body;
 
       expect(res.body).toEqual({ ...patient, id, updatedAt });
     });
 
     it('should return 404 if not found', async () => {
-      const res = await request(app).get(`/patients/5eba8469b88f212f1012c357`);
+      const res = await server.get(`/patients/5eba8469b88f212f1012c357`).set('Authorization', tokenString);
 
       expect(res.statusCode).toBe(404);
     });
@@ -92,7 +98,10 @@ describe('Patient Router', () => {
       const savedPatient = new Patient(patient);
       await savedPatient.save();
       const patchedData = { firstName: 'new name' };
-      const res = await request(app).patch(`/patients/${savedPatient.id}`).send(patchedData);
+      const res = await server
+        .patch(`/patients/${savedPatient.id}`)
+        .set('Authorization', tokenString)
+        .send(patchedData);
 
       expect(res.statusCode).toBe(200);
     });
@@ -102,14 +111,17 @@ describe('Patient Router', () => {
       await savedPatient.save();
       const patchedData = { firstName: 'new name' };
 
-      const res = await request(app).patch(`/patients/${savedPatient.id}`).send(patchedData);
+      const res = await server
+        .patch(`/patients/${savedPatient.id}`)
+        .set('Authorization', tokenString)
+        .send(patchedData);
       const { id, updatedAt } = res.body;
 
       expect(res.body).toEqual({ ...patient, id, updatedAt, firstName: patchedData.firstName });
     });
 
     it('should return 400 if invalid property', async () => {
-      const res = await request(app).patch(`/patients/1`).send({ fakeProp: 'test' });
+      const res = await server.patch(`/patients/1`).set('Authorization', tokenString).send({ fakeProp: 'test' });
 
       expect(res.statusCode).toBe(400);
     });
@@ -119,13 +131,13 @@ describe('Patient Router', () => {
     it('should return 200', async () => {
       const savedPatient = new Patient(patient);
       await savedPatient.save();
-      const res = await request(app).delete(`/patients/${savedPatient.id}`);
+      const res = await server.delete(`/patients/${savedPatient.id}`).set('Authorization', tokenString);
 
       expect(res.statusCode).toBe(200);
     });
 
     it('should return 404 if no existing patient', async () => {
-      const res = await request(app).patch(`/patients/5eba8469b88f212f1012c357`);
+      const res = await server.delete(`/patients/5eba8469b88f212f1012c357`).set('Authorization', tokenString);
 
       expect(res.statusCode).toBe(404);
     });
