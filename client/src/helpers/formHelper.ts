@@ -90,3 +90,11 @@ export function getGenderFromTitle(title: string) {
 export interface PatientBaseForm extends Omit<PatientBase, 'dob'> {
   dob?: Moment;
 }
+
+export interface SignUpValues {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  asSolePractitioner: boolean;
+  clinicName: string;
+}

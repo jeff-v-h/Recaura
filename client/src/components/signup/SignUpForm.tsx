@@ -8,12 +8,12 @@ import Spinner from '../common/Spinner';
 import * as V from '../../helpers/formHelper';
 
 interface Props {
-  onSubmit: (data: Login) => void;
+  onSubmit: (values: V.SignUpValues) => void;
   isSaving: boolean;
 }
 
-function LoginForm({ onSubmit, isSaving }: Props) {
-  const { register, handleSubmit, errors } = useForm<Login>();
+function SignUpForm({ onSubmit, isSaving }: Props) {
+  const { register, handleSubmit, errors } = useForm<V.SignUpValues>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.hookLoginForm}>
@@ -41,6 +41,23 @@ function LoginForm({ onSubmit, isSaving }: Props) {
           errorMsg={V.getPasswordErrorMsg(errors.password?.type)}
           isPrivate
         />
+        <HookInputStandard
+          label="Confirm Password"
+          name="confirmPassword"
+          required
+          register={register({ required: true })}
+          error={errors.confirmPassword}
+          errorMsg={V.getPasswordErrorMsg(errors.confirmPassword?.type)}
+          isPrivate
+        />
+        <HookInputStandard
+          label="Clinic Name"
+          name="clinicName"
+          required
+          register={register({ required: true })}
+          error={errors.clinicName}
+          errorMsg={V.getPasswordErrorMsg(errors.password?.type)}
+        />
       </div>
       <div className={style.submitRow}>
         <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
@@ -52,4 +69,4 @@ function LoginForm({ onSubmit, isSaving }: Props) {
   );
 }
 
-export default LoginForm;
+export default SignUpForm;
