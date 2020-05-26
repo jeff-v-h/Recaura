@@ -11,7 +11,7 @@ import cookieService from '../../services/cookieService';
 
 const Item = Menu.Item;
 
-const mapStateToProps = (state: ApplicationState) => state.casefile;
+const mapStateToProps = (state: ApplicationState) => state.practitioner;
 const connector = connect(mapStateToProps, practitionerActions);
 
 type Props = ConnectedProps<typeof connector> & RouteComponentProps<{}>;
@@ -21,13 +21,16 @@ class NavMenu extends React.Component<Props, { current: string }> {
     current: 'patients'
   };
 
+  componentDidMount() {
+    if (cookieService.getUserToken() && !this.props.id) this.props.getPractitioner('me');
+  }
+
   handleClick = (e: ClickParam) => this.setState({ current: e.key });
 
   logout = () => this.props.logoutPractitioner();
 
   render() {
-    const { id } = this.props;
-    const isAuthenticated = id || cookieService.getUserToken();
+    const isAuthenticated = cookieService.getUserToken();
 
     return (
       <div className={style.navbar}>
@@ -64,4 +67,4 @@ class NavMenu extends React.Component<Props, { current: string }> {
   }
 }
 
-export default compose(withRouter, connector)(NavMenu);
+export default compose<React.ComponentType>(withRouter, connector)(NavMenu);
