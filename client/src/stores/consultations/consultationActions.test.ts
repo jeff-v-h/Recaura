@@ -73,7 +73,7 @@ describe('Consultation Redux Actions', () => {
       await consultActions.getConsult('123')(dispatch, jest.fn());
 
       expect(dispatch).toHaveBeenCalledWith(consultActions.getConsultRequest());
-      expect(dispatch).toHaveBeenLastCalledWith(await consultActions.getConsultSuccess('123'));
+      expect(dispatch).toHaveBeenLastCalledWith(consultActions.getConsultSuccess(mockConsult));
 
       spy.mockRestore();
     });
