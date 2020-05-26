@@ -16,6 +16,10 @@ export function validateEmailAllowEmpty(email: string) {
   return /.+\@.+\..+/.test(email);
 }
 
+export function validateEmail(email: string) {
+  return /.+\@.+\..+/.test(email);
+}
+
 export function validatePhoneLength(num: string) {
   num = num.replace(/\s/g, '');
   return num.length >= 4 && num.length <= 15;
@@ -36,6 +40,14 @@ export function validateDigitStringAllowEmpty(num: string) {
   return validateDigitString(num);
 }
 
+export function validatePasswordLength(pw: string) {
+  return pw.length >= 8;
+}
+
+export function validatePasswordChars(s: string) {
+  return /^(?=.*[A-Za-z])(.*[0-9].*)$/.test(s);
+}
+
 export function getPhoneErrorMsg(type: string | undefined) {
   switch (type) {
     case 'correctLength':
@@ -44,6 +56,17 @@ export function getPhoneErrorMsg(type: string | undefined) {
       return 'Only digits allowed';
     default:
       return 'Number invalid';
+  }
+}
+
+export function getPasswordErrorMsg(type: string | undefined) {
+  switch (type) {
+    case 'correctLength':
+      return 'Must be at least 8 characters';
+    case 'containsChars':
+      return 'Must contain at least 1 letter and 1 digit';
+    default:
+      return 'Password invalid';
   }
 }
 
