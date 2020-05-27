@@ -1,3 +1,4 @@
+import { AccessLevel } from './../../models/enums';
 import { AppThunkAction } from '../index';
 import * as T from './practitionerTypes';
 import practitionerService from '../../services/practitionerService';
@@ -10,8 +11,6 @@ import { SignUpValues } from '../../helpers/formHelper';
 import { handleNotLoggedInError } from '../../helpers/utils';
 import { CLEAR_DATA } from '../common/types';
 import { C as CT, CreateClinicKnownAction } from '../clinics/clinicTypes';
-import { message } from 'antd';
-import { Clinic } from '../../models/clinicModels';
 import { emptyPractitioner } from '../common/objects';
 
 const { C } = T;
@@ -54,7 +53,7 @@ type SignUpKnownAction = CreateClinicKnownAction & T.CreatePractitionerKnownActi
 
 export const signUpPractitioner = (
   values: SignUpValues
-): AppThunkAction<SignUpKnownAction> => async (dispatch) => {
+): AppThunkAction<SignUpKnownAction> => async (dispatch, getState) => {
   dispatch({ type: CT.CREATE_CLINIC_REQUEST });
 
   try {
@@ -63,10 +62,15 @@ export const signUpPractitioner = (
 
     dispatch({ type: CT.CREATE_CLINIC_SUCCESS, payload: clinic });
 
-    const { email, password } = values;
-    const practitioner = { ...emptyPractitioner, clinicId: clinic.id, email, password };
+    const practitioner = {
+      ...emptyPractitioner,
+      clinicId: clinic.id,
+      email: values.email,
+      password: values.password,
+      accessLevel: AccessLevel.master
+    };
     delete practitioner.id;
-    createPractitioner(practitioner);
+    createPractitioner(practitioner)(dispatch, getState);
   } catch (e) {
     dispatch({ type: CT.CREATE_CLINIC_FAILURE });
   }
