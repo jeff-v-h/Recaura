@@ -4,9 +4,15 @@ import practitionerService from '../../services/practitionerService';
 import { PractitionerBase } from '../../models/practitionerModels';
 import history from '../../helpers/history';
 import cookieService from '../../services/cookieService';
+import clinicService from '../../services/clinicService';
 import { NOT_LOGGED_IN } from '../../helpers/constants';
+import { SignUpValues } from '../../helpers/formHelper';
 import { handleNotLoggedInError } from '../../helpers/utils';
 import { CLEAR_DATA } from '../common/types';
+import { C as CT, CreateClinicKnownAction } from '../clinics/clinicTypes';
+import { message } from 'antd';
+import { Clinic } from '../../models/clinicModels';
+import { emptyPractitioner } from '../common/objects';
 
 const { C } = T;
 
@@ -41,6 +47,28 @@ export const logoutPractitioner = (): AppThunkAction<T.KnownAction> => async (di
     history.push('/login');
   } catch (e) {
     dispatch({ type: C.LOGOUT_PRACTITIONER_FAILURE });
+  }
+};
+
+type SignUpKnownAction = CreateClinicKnownAction & T.CreatePractitionerKnownAction;
+
+export const signUpPractitioner = (
+  values: SignUpValues
+): AppThunkAction<SignUpKnownAction> => async (dispatch) => {
+  dispatch({ type: CT.CREATE_CLINIC_REQUEST });
+
+  try {
+    const clinicData = { name: values.clinicName, isActive: true, locations: [] };
+    const clinic = await clinicService.createClinic(clinicData);
+
+    dispatch({ type: CT.CREATE_CLINIC_SUCCESS, payload: clinic });
+
+    const { email, password } = values;
+    const practitioner = { ...emptyPractitioner, clinicId: clinic.id, email, password };
+    delete practitioner.id;
+    createPractitioner(practitioner);
+  } catch (e) {
+    dispatch({ type: CT.CREATE_CLINIC_FAILURE });
   }
 };
 

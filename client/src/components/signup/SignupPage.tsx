@@ -5,10 +5,13 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import * as practitionerActions from '../../stores/practitioners/practitionerActions';
 import { ApplicationState } from '../../stores';
 import style from './signup.scss';
-import { SignUpValues } from '../../helpers/formHelper';
+import { SignUpValues, RegisterType } from '../../helpers/formHelper';
 import SignUpForm from './SignUpForm';
 
-const mapStateToProps = (state: ApplicationState) => state.practitioner;
+const mapStateToProps = (state: ApplicationState) => ({
+  practitioner: state.practitioner,
+  clinic: state.clinic
+});
 const connector = connect(mapStateToProps, practitionerActions);
 
 type Props = ConnectedProps<typeof connector> & RouteComponentProps<{}>;
@@ -19,22 +22,20 @@ class SignUpPage extends React.Component<Props, State> {
     showClinic: false
   };
 
-  onSubmit = async (values: SignUpValues) => {
-    const { createPractitioner, history } = this.props;
+  onSubmit = (values: SignUpValues) => {
+    const { signUpPractitioner } = this.props;
 
-    try {
-      delete values.confirmPassword;
-      console.log(values);
-      // await createPractitioner({ ...values, honorific: Honorific })
-      // message.success('Account created successfully!')
-      // history.push('/')
-    } catch (e) {} // errors displayed via service
+    if (values.registerType === RegisterType.solePractitioner)
+      values.clinicName = `Sole Practitioner: ${values.email}`;
+
+    signUpPractitioner(values);
   };
 
   toggleClinicDisplay = () => this.setState((prevState) => ({ showClinic: !prevState.showClinic }));
 
   render() {
-    const { isFetching } = this.props;
+    const { practitioner, clinic } = this.props;
+    const isFetching = (practitioner?.isFetching || clinic?.isFetching) ?? false;
 
     return (
       <div className={style.signup}>

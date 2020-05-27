@@ -9,7 +9,7 @@ const { apiUrl } = keys;
 class CasefileService extends ApiService {
   createCasefile = async (casefile: CasefileBase, token: string): Promise<Casefile> => {
     try {
-      const url = `${apiUrl}/casefiles?sortBy=createdAt:desc`;
+      const url = `${apiUrl}/casefiles`;
       const resp = (await this.post(url, casefile, token)) as AxiosResponse<Casefile>;
       return resp.data;
     } catch (e) {

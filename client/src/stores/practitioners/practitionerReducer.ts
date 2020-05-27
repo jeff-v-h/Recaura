@@ -1,27 +1,14 @@
 import { Reducer } from 'redux';
 import * as T from './practitionerTypes';
-import { Honorific, Gender, AccessLevel } from '../../models/enums';
 import { ErrorAction } from '../common/types';
+import { emptyPractitioner } from '../common/objects';
 
 const { C } = T;
 
 export const unloadedState: T.PractitionerState = {
   isFetching: false,
   list: [],
-  id: '',
-  honorific: Honorific.NoTitle,
-  firstName: '',
-  lastName: '',
-  dob: '',
-  email: '',
-  countryCode: '',
-  homePhone: '',
-  mobilePhone: '',
-  gender: Gender.other,
-  profession: '',
-  jobLevel: '',
-  accessLevel: AccessLevel.normal,
-  clinicId: '',
+  ...emptyPractitioner,
   error: ''
 };
 
