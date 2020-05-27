@@ -24,6 +24,11 @@ $error-height: 20rem;
   width: 400rem;
 }
 
+.hookSignupForm {
+  @extend .hookForm;
+  width: 450rem;
+}
+
 .inputSection,
 .phoneSection {
   display: flex;
@@ -49,6 +54,11 @@ $error-height: 20rem;
   display: flex;
   min-width: 90rem;
   justify-content: flex-end;
+}
+
+.hookLabelDivLong {
+  @extend .hookLabelDiv;
+  min-width: 140rem;
 }
 
 .hookSelectLabel,

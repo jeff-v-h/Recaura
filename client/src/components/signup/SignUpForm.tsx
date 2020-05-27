@@ -6,6 +6,7 @@ import HookInputStandard from '../common/forms/HookInputStandard';
 import style from '../common/forms/hookForm.scss';
 import Spinner from '../common/Spinner';
 import * as V from '../../helpers/formHelper';
+import { WatchIgnorePlugin } from 'webpack';
 
 interface Props {
   onSubmit: (values: V.SignUpValues) => void;
@@ -13,10 +14,10 @@ interface Props {
 }
 
 function SignUpForm({ onSubmit, isSaving }: Props) {
-  const { register, handleSubmit, errors } = useForm<V.SignUpValues>();
+  const { register, handleSubmit, errors, watch } = useForm<V.SignUpValues>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={style.hookLoginForm}>
+    <form onSubmit={handleSubmit(onSubmit)} className={style.hookSignupForm}>
       <div>
         <HookInputStandard
           label="Username"
@@ -26,6 +27,7 @@ function SignUpForm({ onSubmit, isSaving }: Props) {
           error={errors.email}
           errorMsg="Email invalid"
           placeholder="user@example.com"
+          labelStyle={style.hookLabelDivLong}
         />
         <HookInputStandard
           label="Password"
@@ -40,15 +42,17 @@ function SignUpForm({ onSubmit, isSaving }: Props) {
           error={errors.password}
           errorMsg={V.getPasswordErrorMsg(errors.password?.type)}
           isPrivate
+          labelStyle={style.hookLabelDivLong}
         />
         <HookInputStandard
           label="Confirm Password"
           name="confirmPassword"
           required
-          register={register({ required: true })}
+          register={register({ validate: (value) => value === watch('password') })}
           error={errors.confirmPassword}
-          errorMsg={V.getPasswordErrorMsg(errors.confirmPassword?.type)}
+          errorMsg={'Must match password'}
           isPrivate
+          labelStyle={style.hookLabelDivLong}
         />
         <HookInputStandard
           label="Clinic Name"
@@ -57,12 +61,13 @@ function SignUpForm({ onSubmit, isSaving }: Props) {
           register={register({ required: true })}
           error={errors.clinicName}
           errorMsg={V.getPasswordErrorMsg(errors.password?.type)}
+          labelStyle={style.hookLabelDivLong}
         />
       </div>
       <div className={style.submitRow}>
         <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
         <Button type="primary" disabled={isSaving} htmlType="submit">
-          Login
+          Create Account
         </Button>
       </div>
     </form>

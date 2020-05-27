@@ -6,7 +6,6 @@ import * as practitionerActions from '../../stores/practitioners/practitionerAct
 import { ApplicationState } from '../../stores';
 import style from './signup.scss';
 import { SignUpValues } from '../../helpers/formHelper';
-import { message } from 'antd';
 import SignUpForm from './SignUpForm';
 
 const mapStateToProps = (state: ApplicationState) => state.practitioner;
@@ -17,12 +16,10 @@ type Props = ConnectedProps<typeof connector> & RouteComponentProps<{}>;
 class SignUpPage extends React.Component<Props, {}> {
   onSubmit = async (values: SignUpValues) => {
     const { createPractitioner, history } = this.props;
-    if (values.password !== values.confirmPassword) {
-      return message.error('Passwords do not match');
-    }
 
     try {
       delete values.confirmPassword;
+      console.log(values);
       // await createPractitioner({ ...values, honorific: Honorific })
       // message.success('Account created successfully!')
       // history.push('/')
@@ -33,7 +30,7 @@ class SignUpPage extends React.Component<Props, {}> {
     const { isFetching } = this.props;
 
     return (
-      <div className={style.centerContainer}>
+      <div className={style.signup}>
         <SignUpForm onSubmit={this.onSubmit} isSaving={isFetching} />
       </div>
     );
