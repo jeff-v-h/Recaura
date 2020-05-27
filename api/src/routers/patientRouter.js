@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/patients', auth, async (req, res) => {
-  const patient = new Patient(req.body);
+  const patient = new Patient({ ...req.body, clinicId: req.practitioner.clinicId });
 
   try {
     await patient.save();
