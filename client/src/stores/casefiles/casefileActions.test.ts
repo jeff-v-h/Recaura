@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { unloadedState } from './casefileReducer';
 import * as casefileActions from './casefileActions';
 import casefileService from '../../services/casefileService';
+import cookieService from '../../services/cookieService';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { C } from './casefileTypes';
@@ -18,6 +19,11 @@ describe('Casefile Redux Actions', () => {
   };
   let store: any;
   const mockAxios = new MockAdapter(axios);
+
+  beforeAll(() => {
+    const cookieSpy = jest.spyOn(cookieService, 'getUserToken');
+    cookieSpy.mockReturnValue('faketoken');
+  });
 
   beforeEach(() => {
     store = mockStore(initialState);
@@ -35,6 +41,7 @@ describe('Casefile Redux Actions', () => {
     it(`creates ${C.CREATE_CASEFILE_SUCCESS} when successsfully completed`, async () => {
       const spy = jest.spyOn(casefileService, 'createCasefile');
       spy.mockReturnValue(Promise.resolve(mockCasefile));
+
       const dispatch = jest.fn();
       const expectedActions = [
         { type: C.CREATE_CASEFILE_REQUEST },
@@ -52,6 +59,7 @@ describe('Casefile Redux Actions', () => {
     it(`creates ${C.CREATE_CASEFILE_FAILURE} when it fails`, async () => {
       const spy = jest.spyOn(casefileService, 'createCasefile');
       spy.mockReturnValue(Promise.reject());
+
       const dispatch = jest.fn();
       const expectedAction = { type: C.CREATE_CASEFILE_FAILURE };
 
