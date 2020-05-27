@@ -19,6 +19,16 @@ $error-height: 20rem;
   margin-top: 0;
 }
 
+.hookLoginForm {
+  @extend .hookForm;
+  width: 400rem;
+}
+
+.hookSignupForm {
+  @extend .hookForm;
+  width: 460rem;
+}
+
 .inputSection,
 .phoneSection {
   display: flex;
@@ -40,6 +50,17 @@ $error-height: 20rem;
   flex-grow: 1;
 }
 
+.hookLabelDiv {
+  display: flex;
+  min-width: 90rem;
+  justify-content: flex-end;
+}
+
+.hookLabelDivLong {
+  @extend .hookLabelDiv;
+  min-width: 140rem;
+}
+
 .hookSelectLabel,
 .hookInputLabel {
   cursor: pointer;
@@ -52,6 +73,11 @@ $error-height: 20rem;
 .hookTextAreaLabel {
   cursor: pointer;
   padding: 4rem 0;
+}
+
+.hookSignupLabel {
+  @extend .hookLabelDivLong;
+  @extend .hookSelectLabel;
 }
 
 .hookTextAreaLabelCol {
@@ -89,6 +115,10 @@ $error-height: 20rem;
   width: 85rem;
 }
 
+.registerTypeSelect {
+  width: 150rem;
+}
+
 .error {
   color: red;
   font-weight: bold;
@@ -110,6 +140,17 @@ $error-height: 20rem;
   display: flex;
   justify-content: flex-end;
   padding: 0 10rem;
+}
+
+.loginRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10rem;
+}
+
+.submitButtonContainer {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .asterisk {
@@ -162,4 +203,11 @@ $error-height: 20rem;
   min-height: 32px;
   vertical-align: bottom;
   transition: all 0.3s, height 0s;
+}
+
+.hint {
+  margin: 0 0 0 10rem;
+  font-size: small;
+  display: flex;
+  align-items: center;
 }

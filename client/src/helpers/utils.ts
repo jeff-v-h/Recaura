@@ -1,4 +1,7 @@
 import moment from 'moment';
+import { NOT_LOGGED_IN } from './constants';
+import { message } from 'antd';
+import history from './history';
 
 export enum ConsultPart {
   Subjective,
@@ -18,4 +21,9 @@ export async function sleep(ms: number) {
 export function parseDateString(ds: string) {
   if (!ds) return '';
   return moment(ds).format('Do MMM YYYY');
+}
+
+export function handleNotLoggedInError(msg?: string) {
+  message.error(msg ?? NOT_LOGGED_IN);
+  history.push('/login');
 }

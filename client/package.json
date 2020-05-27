@@ -30,7 +30,8 @@
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "uninstall": "0.0.0"
+    "uninstall": "0.0.0",
+    "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -95,7 +96,7 @@
       "jsx"
     ],
     "moduleNameMapper": {
-      "\\.(css|sass|scss)$": "<rootDir>__tests__/setup/styleMock.ts",
+      "\\.(css|sass|scss|less)$": "<rootDir>__tests__/setup/styleMock.ts",
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>__tests__/setup/fileMock.ts"
     },
     "testPathIgnorePatterns": [

@@ -1,9 +1,11 @@
 const express = require('express');
 const router = new express.Router();
 const Consultation = require('../models/consultation.model');
+const auth = require('../middleware/auth');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
-router.post('/consultations', async (req, res) => {
-  const consultation = new Consultation(req.body);
+router.post('/consultations', auth, async (req, res) => {
+  const consultation = new Consultation({ ...req.body, clinicId: req.practitioner.clinicId });
 
   try {
     await consultation.save();
@@ -18,8 +20,8 @@ router.post('/consultations', async (req, res) => {
 // GET /consultations?practitionerId=125689
 // GET /consultations?limit=10&skip=10
 // GET /consultations?sortBy=createdAt:desc
-router.get('/consultations', async (req, res) => {
-  const match = {};
+router.get('/consultations', auth, async (req, res) => {
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.patientId) match.patientId = req.query.patientId;
@@ -45,9 +47,9 @@ router.get('/consultations', async (req, res) => {
   }
 });
 
-router.get('/consultations/:id', async (req, res) => {
+router.get('/consultations/:id', auth, async (req, res) => {
   try {
-    const consultation = await Consultation.findOne({ _id: req.params.id }).populate(
+    const consultation = await Consultation.findOne(getFindByIdMatch(req.params.id, req.practitioner)).populate(
       'practitioner',
       'firstName lastName'
     );
@@ -63,7 +65,12 @@ router.get('/consultations/:id', async (req, res) => {
   }
 });
 
-router.patch('/consultations/:id', async (req, res) => {
+router.patch('/consultations/:id', auth, async (req, res) => {
+  const { clinicId } = req.body;
+  if (clinicId && clinicId != req.practitioner.clinicId && req.practitioner.accessLevel < 4) {
+    return res.status(403).send({ error: 'Forbidden to change clinicId' });
+  }
+
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'patientId',
@@ -73,16 +80,17 @@ router.patch('/consultations/:id', async (req, res) => {
     'subjectiveAssessment',
     'objectiveAssessment',
     'treatments',
-    'plans'
+    'plans',
+    'clinicId'
   ];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
-    return res.status(404).send({ error: 'At least one property in object is invalid for updating!' });
+    return res.status(400).send({ error: 'At least one property in object is invalid for updating!' });
   }
 
   try {
-    const consultation = await Consultation.findOne({ _id: req.params.id });
+    const consultation = await Consultation.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!consultation) {
       return res.status(404).send({ error: 'Consultation not found' });
@@ -96,9 +104,13 @@ router.patch('/consultations/:id', async (req, res) => {
   }
 });
 
-router.delete('/consultations/:id', async (req, res) => {
+router.delete('/consultations/:id', auth, async (req, res) => {
+  if (req.practitioner.accessLevel < 2) {
+    return res.status(403).send({ error: 'Forbidden to delete consultation' });
+  }
+
   try {
-    const consultation = await Consultation.findOneAndDelete({ _id: req.params.id });
+    const consultation = await Consultation.findOneAndDelete(getFindByIdMatch(req.params.id, req.practitioner));
     if (!consultation) {
       return res.status(404).send({ error: 'Consultation not found' });
     }

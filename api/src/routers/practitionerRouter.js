@@ -1,23 +1,61 @@
 const express = require('express');
 const router = new express.Router();
 const Practitioner = require('../models/practitioner.model');
+const auth = require('../middleware/auth');
+const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/practitioners', async (req, res) => {
+  const { accessLevel } = req.body;
+  if (accessLevel && accessLevel > 3) {
+    return res.status(403).send({ error: 'Forbidden to create with access level greater than 3' });
+  }
+
   const practitioner = new Practitioner(req.body);
 
   try {
     await practitioner.save();
-    res.status(201).send(practitioner);
+    const token = await practitioner.generateAuthToken();
+    res.status(201).send({ practitioner, token });
   } catch (e) {
     res.status(400).send({ error: e.message });
+  }
+});
+
+router.post('/practitioners/login', async (req, res) => {
+  try {
+    const practitioner = await Practitioner.findByCredentials(req.body.email, req.body.password);
+    const token = await practitioner.generateAuthToken();
+    res.send({ practitioner, token });
+  } catch (e) {
+    res.status(400).send({ error: e.message });
+  }
+});
+
+router.post('/practitioners/logout', auth, async (req, res) => {
+  try {
+    req.practitioner.tokens = req.practitioner.tokens.filter((token) => token.token !== req.token);
+    await req.practitioner.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
+router.post('/practitioners/logoutAll', auth, async (req, res) => {
+  try {
+    req.practitioner.tokens = [];
+    await req.practitioner.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send();
   }
 });
 
 // GET /practitioners?gender=male
 // GET /practitioners?limit=10&skip=10
 // GET /practitioners?sortBy=createdAt:desc
-router.get('/practitioners', async (req, res) => {
-  const match = {};
+router.get('/practitioners', auth, async (req, res) => {
+  const match = getInitialMatch(req.practitioner);
   const sort = {};
 
   if (req.query.gender) {
@@ -41,9 +79,13 @@ router.get('/practitioners', async (req, res) => {
   }
 });
 
-router.get('/practitioners/:id', async (req, res) => {
+router.get('/practitioners/me', auth, async (req, res) => {
+  res.send(req.practitioner);
+});
+
+router.get('/practitioners/:id', auth, async (req, res) => {
   try {
-    const practitioner = await Practitioner.findOne({ _id: req.params.id });
+    const practitioner = await Practitioner.findOne(getFindByIdMatch(req.params.id, req.practitioner));
     // .populate('consultations')
 
     if (!practitioner) {
@@ -56,7 +98,18 @@ router.get('/practitioners/:id', async (req, res) => {
   }
 });
 
-router.patch('/practitioners/:id', async (req, res) => {
+router.patch('/practitioners/:id', auth, async (req, res) => {
+  // Restrict who can change access levels
+  if (req.body.accessLevel) {
+    if (req.practitioner.accessLevel < 2) {
+      return res.status(403).send({ error: 'Forbidden to change access level' });
+    }
+
+    if (req.body.accessLevel > req.practitioner.accessLevel) {
+      return res.status(403).send({ error: 'Forbidden to increase access above own level' });
+    }
+  }
+
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'honorific',
@@ -69,7 +122,10 @@ router.patch('/practitioners/:id', async (req, res) => {
     'mobilePhone',
     'gender',
     'profession',
-    'jobLevel'
+    'jobLevel',
+    'accessLevel',
+    'clinicId',
+    'password'
   ];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
@@ -78,10 +134,14 @@ router.patch('/practitioners/:id', async (req, res) => {
   }
 
   try {
-    const practitioner = await Practitioner.findOne({ _id: req.params.id });
+    const practitioner = await Practitioner.findOne(getFindByIdMatch(req.params.id, req.practitioner));
 
     if (!practitioner) {
       return res.status(404).send({ error: 'Practitioner not found' });
+    }
+
+    if (!(req.practitioner.accessLevel > 1 || practitioner.id === req.practitioner.id)) {
+      return res.status(403).send({ error: 'Forbidden to update details for this practitioner' });
     }
 
     updates.forEach((update) => (practitioner[update] = req.body[update]));
@@ -92,12 +152,18 @@ router.patch('/practitioners/:id', async (req, res) => {
   }
 });
 
-router.delete('/practitioners/:id', async (req, res) => {
+router.delete('/practitioners/:id', auth, async (req, res) => {
+  if (req.practitioner.accessLevel < 3) {
+    return res.status(403).send({ error: 'Forbidden to delete' });
+  }
+
   try {
-    const practitioner = await Practitioner.findOneAndDelete({ _id: req.params.id });
+    const practitioner = await Practitioner.findOneAndDelete(getFindByIdMatch(req.params.id, req.practitioner));
+
     if (!practitioner) {
       return res.status(404).send({ error: 'Practitioner not found' });
     }
+
     res.send(practitioner);
   } catch (e) {
     res.status(500).send({ error: e.message });

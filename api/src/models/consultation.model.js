@@ -7,7 +7,7 @@ const subjectiveSchema = new Schema({
   bodyChart: { type: String },
   aggravatingFactors: { type: String },
   easingFactors: { type: String },
-  vas: { type: String, min: 0, max: 10 },
+  vas: { type: Number, min: 0, max: 10 },
   pastHistory: { type: String },
   socialHistory: { type: String },
   imaging: { type: String },
@@ -30,6 +30,7 @@ const consultationSchema = new Schema(
   {
     patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
     casefileId: { type: Schema.Types.ObjectId, ref: 'Casefile', required: true },
+    clinicId: { type: mongoose.Schema.Types.ObjectId, ref: 'Clinic', required: true },
     date: { type: Date, default: new Date() },
     practitionerId: { type: Schema.Types.ObjectId, ref: 'Practitioner', required: true },
     subjectiveAssessment: subjectiveSchema,
@@ -54,6 +55,13 @@ consultationSchema.virtual('patient', {
 consultationSchema.virtual('casefile', {
   ref: 'Casefile',
   localField: 'casefileId',
+  foreignField: '_id',
+  justOne: true
+});
+
+consultationSchema.virtual('clinic', {
+  ref: 'Clinic',
+  localField: 'clinicId',
   foreignField: '_id',
   justOne: true
 });

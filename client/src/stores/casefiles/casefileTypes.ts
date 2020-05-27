@@ -1,5 +1,5 @@
 import { Casefile } from 'src/models/casefileModels';
-import { ReduxAction } from '../common/types';
+import { Action } from 'redux';
 
 export const C = {
   CREATE_CASEFILE_REQUEST: 'CREATE_CASEFILE_REQUEST',
@@ -26,35 +26,35 @@ export interface CasefileState extends Casefile {
 }
 
 //#region actions
-export interface CreateCasefileSuccessAction extends ReduxAction {
+export interface CreateCasefileSuccessAction extends Action {
   payload: Casefile;
 }
 
-export interface GetCasefileSuccessAction extends ReduxAction {
+export interface GetCasefileSuccessAction extends Action {
   payload: Casefile;
 }
 
-export interface SelectCasefileAction extends ReduxAction {
+export interface SelectCasefileAction extends Action {
   payload: Casefile;
 }
 
-export interface GetCasefilesSuccessAction extends ReduxAction {
+export interface GetCasefilesSuccessAction extends Action {
   payload: Casefile[];
 }
 
-export interface UpdateCasefileSuccessAction extends ReduxAction {
+export interface UpdateCasefileSuccessAction extends Action {
   payload: Casefile;
 }
 
-export interface DeleteCasefileSuccessAction extends ReduxAction {
+export interface DeleteCasefileSuccessAction extends Action {
   payload: string;
 }
 
-export type CreateCasefileKnownAction = ReduxAction | CreateCasefileSuccessAction;
-export type GetCasefilesKnownAction = ReduxAction | GetCasefilesSuccessAction;
-export type GetCasefileKnownAction = ReduxAction | GetCasefileSuccessAction;
-export type UpdateCasefileKnownAction = ReduxAction | UpdateCasefileSuccessAction;
-export type DeleteCasefileKnownAction = ReduxAction | DeleteCasefileSuccessAction;
+export type CreateCasefileKnownAction = Action | CreateCasefileSuccessAction;
+export type GetCasefilesKnownAction = Action | GetCasefilesSuccessAction;
+export type GetCasefileKnownAction = Action | GetCasefileSuccessAction;
+export type UpdateCasefileKnownAction = Action | UpdateCasefileSuccessAction;
+export type DeleteCasefileKnownAction = Action | DeleteCasefileSuccessAction;
 export type KnownAction =
   | CreateCasefileKnownAction
   | GetCasefilesKnownAction

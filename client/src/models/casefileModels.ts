@@ -8,8 +8,8 @@ export interface CasefileBase {
 export interface Casefile extends CasefileBase {
   id: string;
   createdAt: string;
-  consultations: CasefileConsult[] | undefined;
-  patient: CasefilePatient | undefined;
+  consultations?: CasefileConsult[];
+  patient?: CasefilePatient;
 }
 
 export interface CasefileConsult {

@@ -8,27 +8,16 @@ import {
   TreatmentsAndPlans,
   ConsultationBase
 } from '../../models/consultationModels';
-import { history } from '../../index';
+import history from '../../helpers/history';
+import cookieService from '../../services/cookieService';
+import { NOT_LOGGED_IN } from '../../helpers/constants';
+import { handleNotLoggedInError } from '../../helpers/utils';
 
 const { C } = T;
 //#region simple action creators
-export const createConsultRequest = () => ({ type: C.CREATE_CONSULTATION_REQUEST });
-export const createConsultSuccess = (consult: Consultation): T.CreateConsultSuccessAction => {
-  return {
-    type: C.CREATE_CONSULTATION_SUCCESS,
-    payload: consult
-  };
-};
-export const createConsultFailure = () => ({ type: C.CREATE_CONSULTATION_FAILURE });
-
 export const getConsultsRequest = () => ({ type: C.GET_CONSULTATIONS_REQUEST });
-export const getConsultsSuccess = async (
-  casefileId: string
-): Promise<T.GetConsultsSuccessAction> => {
-  return {
-    type: C.GET_CONSULTATIONS_SUCCESS,
-    payload: await consultationService.getConsultations(casefileId)
-  };
+export const getConsultsSuccess = (consults: Consultation[]): T.GetConsultsSuccessAction => {
+  return { type: C.GET_CONSULTATIONS_SUCCESS, payload: consults };
 };
 export const getConsultsFailure = () => ({ type: C.GET_CONSULTATIONS_FAILURE });
 
@@ -38,11 +27,8 @@ export const selectConsult = (consult: Consultation) => ({
 });
 
 export const getConsultRequest = () => ({ type: C.GET_CONSULTATION_REQUEST });
-export const getConsultSuccess = async (id: string): Promise<T.GetConsultSuccessAction> => {
-  return {
-    type: C.GET_CONSULTATION_SUCCESS,
-    payload: await consultationService.getConsultation(id)
-  };
+export const getConsultSuccess = (consult: Consultation): T.GetConsultSuccessAction => {
+  return { type: C.GET_CONSULTATION_SUCCESS, payload: consult };
 };
 export const getConsultFailure = () => ({ type: C.GET_CONSULTATION_FAILURE });
 
@@ -65,14 +51,18 @@ export const modifyTreatmentsAndPlans = (treatmentAndPlans: TreatmentsAndPlans) 
 export const createConsult = (
   newConsult: ConsultationBase
 ): AppThunkAction<T.CreateConsultKnownAction> => async (dispatch) => {
-  dispatch(createConsultRequest());
+  dispatch({ type: C.CREATE_CONSULTATION_REQUEST });
 
   try {
-    const consult = await consultationService.createConsultation(newConsult);
-    dispatch(createConsultSuccess(consult));
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
+    const consult = await consultationService.createConsultation(newConsult, token);
+    dispatch({ type: C.CREATE_CONSULTATION_SUCCESS, payload: consult });
     history.push(`/patients/${consult.patientId}/casefiles/${consult.casefileId}/consultations`);
   } catch (e) {
-    dispatch(getConsultsFailure());
+    dispatch({ type: C.CREATE_CONSULTATION_FAILURE });
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };
 
@@ -82,9 +72,14 @@ export const getConsults = (casefileId: string): AppThunkAction<T.GetConsultKnow
   dispatch(getConsultsRequest());
 
   try {
-    dispatch(await getConsultsSuccess(casefileId));
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
+    const consults = await consultationService.getConsultations(token, casefileId);
+    dispatch(getConsultsSuccess(consults));
   } catch (e) {
     dispatch(getConsultsFailure());
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };
 
@@ -97,9 +92,14 @@ export const getConsult = (id: string): AppThunkAction<T.GetConsultKnownAction> 
     dispatch(getConsultRequest());
 
     try {
-      dispatch(await getConsultSuccess(id));
+      const token = cookieService.getUserToken();
+      if (!token) throw NOT_LOGGED_IN;
+
+      const consult = await consultationService.getConsultation(id, token);
+      dispatch(getConsultSuccess(consult));
     } catch (e) {
       dispatch(getConsultFailure());
+      if (e === NOT_LOGGED_IN) handleNotLoggedInError();
     }
   }
 };
@@ -111,10 +111,14 @@ export const updateConsult = (
   dispatch({ type: C.UPDATE_CONSULTATION_REQUEST });
 
   try {
-    const newConsult = await consultationService.updateConsultation(id, consult);
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
+    const newConsult = await consultationService.updateConsultation(id, consult, token);
     dispatch({ type: C.UPDATE_CONSULTATION_SUCCESS, payload: newConsult });
   } catch (e) {
     dispatch({ type: C.UPDATE_CONSULTATION_FAILURE });
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };
 
@@ -124,11 +128,15 @@ export const deleteConsult = (id: string): AppThunkAction<T.DeleteConsultKnownAc
   dispatch({ type: C.DELETE_CONSULTATION_REQUEST });
 
   try {
-    const consult = await consultationService.deleteConsultation(id);
+    const token = cookieService.getUserToken();
+    if (!token) throw NOT_LOGGED_IN;
+
+    const consult = await consultationService.deleteConsultation(id, token);
     dispatch({ type: C.DELETE_CONSULTATION_SUCCESS, payload: id });
     history.push(`/patients/${consult.patientId}/casefiles/${consult.casefileId}/consultations`);
   } catch (e) {
     dispatch({ type: C.DELETE_CONSULTATION_FAILURE });
+    if (e === NOT_LOGGED_IN) handleNotLoggedInError();
   }
 };
 //#endregion
