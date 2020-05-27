@@ -6,8 +6,8 @@ const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/practitioners', async (req, res) => {
   const { accessLevel } = req.body;
-  if (accessLevel && accessLevel > 1) {
-    return res.status(403).send({ error: 'Forbidden to create with access level greater than 1' });
+  if (accessLevel && accessLevel > 3) {
+    return res.status(403).send({ error: 'Forbidden to create with access level greater than 3' });
   }
 
   const practitioner = new Practitioner(req.body);

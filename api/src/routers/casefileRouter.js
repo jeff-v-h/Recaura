@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/casefiles', auth, async (req, res) => {
-  const casefile = new Casefile(req.body);
+  const casefile = new Casefile({ ...req.body, clinicId: req.practitioner.clinicId });
 
   try {
     await casefile.save();

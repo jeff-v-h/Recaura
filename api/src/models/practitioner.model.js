@@ -12,8 +12,8 @@ const practitionerSchema = new mongoose.Schema(
       enum: honorifics,
       default: honorifics[0] // NoTitle
     },
-    firstName: { type: String, required: true, trim: true },
-    lastName: { type: String, required: true, trim: true },
+    firstName: { type: String, trim: true },
+    lastName: { type: String, trim: true },
     dob: { type: Date },
     email: {
       type: String,

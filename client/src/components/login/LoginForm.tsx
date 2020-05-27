@@ -6,13 +6,14 @@ import HookInputStandard from '../common/forms/HookInputStandard';
 import style from '../common/forms/hookForm.scss';
 import Spinner from '../common/Spinner';
 import * as V from '../../helpers/formHelper';
+import { Link } from 'react-router-dom';
 
 interface Props {
   onSubmit: (data: Login) => void;
   isSaving: boolean;
 }
 
-function CasefileForm({ onSubmit, isSaving }: Props) {
+function LoginForm({ onSubmit, isSaving }: Props) {
   const { register, handleSubmit, errors } = useForm<Login>();
 
   return (
@@ -42,14 +43,19 @@ function CasefileForm({ onSubmit, isSaving }: Props) {
           isPrivate
         />
       </div>
-      <div className={style.submitRow}>
-        <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
-        <Button type="primary" disabled={isSaving} htmlType="submit">
-          Login
-        </Button>
+      <div className={style.loginRow}>
+        <Link to="/signup" className={style.signupLink}>
+          Create Account
+        </Link>
+        <div className={style.submitButtonContainer}>
+          <div className={style.spinner}>{isSaving && <Spinner fontSize={18} />}</div>
+          <Button type="primary" disabled={isSaving} htmlType="submit">
+            Login
+          </Button>
+        </div>
       </div>
     </form>
   );
 }
 
-export default CasefileForm;
+export default LoginForm;

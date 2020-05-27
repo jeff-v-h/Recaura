@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { unloadedState } from './patientReducer';
 import * as patientActions from './patientActions';
 import patientService from '../../services/patientsService';
+import cookieService from '../../services/cookieService';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { C } from './patientTypes';
@@ -18,6 +19,11 @@ describe('Patient Redux Actions', () => {
   };
   let store: any;
   const mockAxios = new MockAdapter(axios);
+
+  beforeAll(() => {
+    const cookieSpy = jest.spyOn(cookieService, 'getUserToken');
+    cookieSpy.mockReturnValue('faketoken');
+  });
 
   beforeEach(() => {
     store = mockStore(initialState);

@@ -6,6 +6,8 @@ import consultationReducer from './consultations/consultationReducer';
 import { ConsultationState } from './consultations/consultationTypes';
 import practitionerReducer from './practitioners/practitionerReducer';
 import { PractitionerState } from './practitioners/practitionerTypes';
+import clinicReducer from './clinics/clinicReducer';
+import { ClinicState } from './clinics/clinicTypes';
 
 // The top-level state object
 export interface ApplicationState {
@@ -13,13 +15,15 @@ export interface ApplicationState {
   casefile: CasefileState | undefined;
   consultation: ConsultationState | undefined;
   practitioner: PractitionerState | undefined;
+  clinic: ClinicState | undefined;
 }
 
 export const reducers = {
   patient: patientReducer,
   casefile: casefileReducer,
   consultation: consultationReducer,
-  practitioner: practitionerReducer
+  practitioner: practitionerReducer,
+  clinic: clinicReducer
 };
 
 export interface AppThunkAction<TAction> {

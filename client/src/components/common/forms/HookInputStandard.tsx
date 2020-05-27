@@ -10,12 +10,14 @@ interface Props {
   errorMsg?: string;
   placeholder?: string;
   isPrivate?: boolean;
+  labelStyle?: string;
 }
 
 HookInputStandard.defaultProps = {
   required: false,
   errorMsg: '',
-  private: false
+  private: false,
+  labelStyle: style.hookLabelDiv
 };
 
 function HookInputStandard({
@@ -26,12 +28,13 @@ function HookInputStandard({
   error,
   errorMsg,
   placeholder,
-  isPrivate
+  isPrivate,
+  labelStyle
 }: Props) {
   return (
     <div className={style.hookInputContainer}>
       <div>
-        <div className={style.hookLabelDiv}>
+        <div className={labelStyle}>
           <label className={style.hookInputLabel} htmlFor={name}>
             {required && <span className={style.asterisk}>*</span>}
             {label}:
