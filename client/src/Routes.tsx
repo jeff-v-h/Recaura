@@ -9,12 +9,14 @@ import ConsultationsPage from './components/consultations/ConsultationsPage';
 import PatientsPage from './components/patients/PatientsPage';
 import CasefilePage from './components/casefile/CasefilePage';
 import LoginPage from './components/login/LoginPage';
+import SignUpPage from './components/signup/SignupPage';
 
 export default class Routes extends React.Component {
   render() {
     return (
       <Switch>
         <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/signup" component={SignUpPage} />
         <PrivateRoute
           path="/patients/:patientId/casefiles/:casefileId/consultations/:consultId"
           component={ConsultationPage}

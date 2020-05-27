@@ -123,6 +123,17 @@ $error-height: 20rem;
   padding: 0 10rem;
 }
 
+.loginRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10rem;
+}
+
+.submitButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .asterisk {
   color: red;
   font-weight: bold;

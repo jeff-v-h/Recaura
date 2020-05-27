@@ -14,7 +14,7 @@ const connector = connect(mapStateToProps, practitionerActions);
 
 type Props = ConnectedProps<typeof connector> & RouteComponentProps<{}>;
 
-class SignUp extends React.Component<Props, {}> {
+class SignUpPage extends React.Component<Props, {}> {
   onSubmit = async (values: SignUpValues) => {
     const { createPractitioner, history } = this.props;
     if (values.password !== values.confirmPassword) {
@@ -40,4 +40,4 @@ class SignUp extends React.Component<Props, {}> {
   }
 }
 
-export default compose<React.ComponentType>(withRouter, connector)(SignUp);
+export default compose<React.ComponentType>(withRouter, connector)(SignUpPage);
