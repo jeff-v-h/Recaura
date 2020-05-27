@@ -17,7 +17,7 @@ HookInputStandard.defaultProps = {
   required: false,
   errorMsg: '',
   private: false,
-  labelStyle: style.hookLabelDivLong
+  labelStyle: style.hookLabelDiv
 };
 
 function HookInputStandard({

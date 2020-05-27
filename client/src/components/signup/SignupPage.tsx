@@ -12,8 +12,13 @@ const mapStateToProps = (state: ApplicationState) => state.practitioner;
 const connector = connect(mapStateToProps, practitionerActions);
 
 type Props = ConnectedProps<typeof connector> & RouteComponentProps<{}>;
+type State = { showClinic: boolean };
 
-class SignUpPage extends React.Component<Props, {}> {
+class SignUpPage extends React.Component<Props, State> {
+  state = {
+    showClinic: false
+  };
+
   onSubmit = async (values: SignUpValues) => {
     const { createPractitioner, history } = this.props;
 
@@ -26,12 +31,19 @@ class SignUpPage extends React.Component<Props, {}> {
     } catch (e) {} // errors displayed via service
   };
 
+  toggleClinicDisplay = () => this.setState((prevState) => ({ showClinic: !prevState.showClinic }));
+
   render() {
     const { isFetching } = this.props;
 
     return (
       <div className={style.signup}>
-        <SignUpForm onSubmit={this.onSubmit} isSaving={isFetching} />
+        <SignUpForm
+          onSubmit={this.onSubmit}
+          isSaving={isFetching}
+          showClinic={this.state.showClinic}
+          toggleClinic={this.toggleClinicDisplay}
+        />
       </div>
     );
   }

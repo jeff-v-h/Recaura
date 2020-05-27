@@ -95,6 +95,11 @@ export interface SignUpValues {
   email: string;
   password: string;
   confirmPassword: string;
-  asSolePractitioner: boolean;
+  registerType: RegisterType;
   clinicName: string;
+}
+
+export enum RegisterType {
+  solePractitioner = 'As sole practitioner',
+  withClinic = 'With clinic'
 }
