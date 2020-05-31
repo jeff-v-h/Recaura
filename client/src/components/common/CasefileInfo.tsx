@@ -43,7 +43,7 @@ class CasefileInfo extends React.Component<Props> {
             <h3>{capitalise(name)}</h3>
           </Link>
           {!consultId && (
-            <Link to={casefileUrl} className={style.editLink}>
+            <Link to={casefileUrl} className={consultId ? style.editLinkInvis : style.editLink}>
               <EditOutlined />
             </Link>
           )}

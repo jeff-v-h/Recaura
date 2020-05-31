@@ -6,6 +6,10 @@
   justify-content: center;
 }
 
+.headerLink {
+  margin-right: 10rem;
+}
+
 .headerLink h3 {
   margin: 0;
   color: $link-color;
@@ -18,5 +22,10 @@
 .editLink {
   display: flex;
   align-items: center;
-  margin-left: 10rem;
+  min-width: 10rem;
+}
+
+.editLinkInvis {
+  @extend .editLink;
+  visibility: hidden;
 }
