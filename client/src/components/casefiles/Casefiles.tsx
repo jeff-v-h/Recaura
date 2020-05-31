@@ -14,7 +14,7 @@ interface Props {
 const Casefiles = ({ files, patientId, isFetching }: Props) => (
   <div className={style.list}>
     <div className={style.header}>
-      <h3>Case Files</h3>
+      <h3>Casefiles</h3>
       <Button type="primary">
         <Link to={`/patients/${patientId}/casefiles/new`}>New Casefile</Link>
       </Button>
