@@ -6,7 +6,6 @@ import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { ApplicationState } from '../../stores';
 import style from './casefileInfo.scss';
 import { capitalise } from '../../helpers/utils';
-import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 
 const mapStateToProps = (state: ApplicationState) => state.casefile;

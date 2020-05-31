@@ -3,4 +3,16 @@
 .description {
   margin: 20rem auto;
   max-width: $form-max-width;
+  display: flex;
+}
+
+.editLink {
+  display: flex;
+  padding: 5rem;
+  min-width: 10rem;
+}
+
+.editLinkInvis {
+  @extend .editLink;
+  visibility: hidden;
 }
