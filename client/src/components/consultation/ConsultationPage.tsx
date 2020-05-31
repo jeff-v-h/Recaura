@@ -62,7 +62,7 @@ class ConsultationPage extends React.Component<Props, State> {
           plans,
           patientId,
           casefileId,
-          practitionerId: '5eba9093e047213db0cbcd38',
+          practitionerId,
           date: date ? date : moment().format()
         })
       : this.props.updateConsult(id, {

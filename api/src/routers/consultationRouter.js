@@ -5,7 +5,13 @@ const auth = require('../middleware/auth');
 const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/consultations', auth, async (req, res) => {
-  const consultation = new Consultation({ ...req.body, clinicId: req.practitioner.clinicId });
+  const data = req.body;
+  if (req.practitioner.accessLevel < 4) {
+    data.clinicId = req.practitioner.clinicId;
+    data.practitionerId = req.practitioner.id;
+  }
+
+  const consultation = new Consultation(data);
 
   try {
     await consultation.save();
