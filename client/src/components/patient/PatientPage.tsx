@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'redux';
 import * as patientActions from '../../stores/patients/patientActions';
 import { ApplicationState } from '../../stores';
@@ -37,6 +37,17 @@ class PatientPage extends React.Component<Props, State> {
 
       getPatient(patientId);
     }
+  };
+
+  getHeaderValue = () => {
+    if (this.state.isNew) return 'New Patient';
+
+    const { firstName, lastName, match } = this.props;
+    return (
+      <Link to={`/patients/${match.params.patientId}/casefiles`}>
+        {firstName} {lastName}
+      </Link>
+    );
   };
 
   save = (values: PatientBaseForm) => {
@@ -78,14 +89,14 @@ class PatientPage extends React.Component<Props, State> {
   };
 
   render() {
-    const { isFetching, error } = this.props;
+    const { isFetching, error, match } = this.props;
     const { isNew } = this.state;
     const data = isNew ? undefined : this.getPatientData();
 
     return (
       <>
         <div className={style.header}>
-          <h3>{isNew ? 'New Patient' : 'Patient Details'}</h3>
+          <h3>{this.getHeaderValue()}</h3>
         </div>
         {!isNew && (
           <div className={style.deleteRow}>
