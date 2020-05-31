@@ -16,3 +16,28 @@ export const emptyPractitioner = {
   accessLevel: AccessLevel.normal,
   clinicId: ''
 };
+
+export const emptySubjective = {
+  moi: '',
+  currentHistory: '',
+  bodyChart: '',
+  aggravatingFactors: '',
+  easingFactors: '',
+  vas: 0,
+  pastHistory: '',
+  socialHistory: '',
+  imaging: '',
+  generalHealth: ''
+};
+
+export const emptyObjective = {
+  observation: '',
+  active: '',
+  passive: '',
+  resistedIsometric: '',
+  functionalTests: '',
+  neurologicalTests: '',
+  specialTests: '',
+  palpation: '',
+  additional: ''
+};
