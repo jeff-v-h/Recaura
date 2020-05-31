@@ -1,9 +1,22 @@
+@import '../common/variables';
+
 .subHeader {
   padding: 10rem 10rem 0 10rem;
   display: flex;
   justify-content: center;
 }
 
-.subHeader h3 {
+.headerLink h3 {
   margin: 0;
+  color: $link-color;
+}
+
+.headerLink h3:hover {
+  opacity: 0.6;
+}
+
+.editLink {
+  display: flex;
+  align-items: center;
+  margin-left: 10rem;
 }

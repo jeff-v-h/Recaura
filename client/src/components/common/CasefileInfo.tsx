@@ -6,12 +6,14 @@ import * as casefileActions from '../../stores/casefiles/casefileActions';
 import { ApplicationState } from '../../stores';
 import style from './casefileInfo.scss';
 import { capitalise } from '../../helpers/utils';
+import { Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 
 const mapStateToProps = (state: ApplicationState) => state.casefile;
 const connector = connect(mapStateToProps, casefileActions);
 
 type Props = ConnectedProps<typeof connector> &
-  RouteComponentProps<{ patientId: string; casefileId: string }>;
+  RouteComponentProps<{ patientId: string; casefileId: string; consultId: string }>;
 
 class CasefileInfo extends React.Component<Props> {
   componentDidMount() {
@@ -31,13 +33,21 @@ class CasefileInfo extends React.Component<Props> {
   };
 
   render() {
-    const { patientId, casefileId } = this.props.match.params;
+    const { name, match } = this.props;
+    const { patientId, casefileId, consultId } = match.params;
+    const casefileUrl = `/patients/${patientId}/casefiles/${casefileId}`;
+
     return (
       <>
         <div className={style.subHeader}>
-          <Link to={`/patients/${patientId}/casefiles/${casefileId}`}>
-            <h3 className="sub-header">{capitalise(this.props.name)}</h3>
+          <Link to={`${casefileUrl}/consultations`} className={style.headerLink}>
+            <h3>{capitalise(name)}</h3>
           </Link>
+          {!consultId && (
+            <Link to={casefileUrl} className={style.editLink}>
+              <EditOutlined />
+            </Link>
+          )}
         </div>
       </>
     );
