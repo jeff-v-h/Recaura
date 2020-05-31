@@ -77,10 +77,6 @@ router.patch('/consultations/:id', auth, async (req, res) => {
     return res.status(403).send({ error: 'Forbidden to change clinicId' });
   }
 
-  if (practitionerId && req.practitioner.accessLevel < 2) {
-    return res.status(403).send({ error: 'Forbidden to change practitionerId' });
-  }
-
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'patientId',
@@ -104,6 +100,10 @@ router.patch('/consultations/:id', auth, async (req, res) => {
 
     if (!consultation) {
       return res.status(404).send({ error: 'Consultation not found' });
+    }
+
+    if (practitionerId && practitionerId != consultation.practitionerId && req.practitioner.accessLevel < 2) {
+      return res.status(403).send({ error: 'Forbidden to change practitionerId' });
     }
 
     updates.forEach((update) => (consultation[update] = req.body[update]));
