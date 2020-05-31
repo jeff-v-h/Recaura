@@ -72,9 +72,13 @@ router.get('/consultations/:id', auth, async (req, res) => {
 });
 
 router.patch('/consultations/:id', auth, async (req, res) => {
-  const { clinicId } = req.body;
+  const { clinicId, practitionerId } = req.body;
   if (clinicId && clinicId != req.practitioner.clinicId && req.practitioner.accessLevel < 4) {
     return res.status(403).send({ error: 'Forbidden to change clinicId' });
+  }
+
+  if (practitionerId && req.practitioner.accessLevel < 2) {
+    return res.status(403).send({ error: 'Forbidden to change practitionerId' });
   }
 
   const updates = Object.keys(req.body);
