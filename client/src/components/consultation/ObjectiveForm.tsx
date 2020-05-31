@@ -7,6 +7,7 @@ import style from '../common/forms/hookForm.scss';
 import NavPills from './NavPills';
 import { ConsultPart } from '../../helpers/utils';
 import { RadioChangeEvent } from 'antd/lib/radio';
+import { emptyObjective } from '../../stores/common/objects';
 
 interface Props {
   data?: ObjectiveAssessment;
@@ -16,18 +17,7 @@ interface Props {
 }
 
 function ObjectiveForm({ data, display, changeSection, saveValues }: Props) {
-  const defaultValues = data ?? {
-    observation: '',
-    active: '',
-    passive: '',
-    resistedIsometric: '',
-    functionalTests: '',
-    neurologicalTests: '',
-    specialTests: '',
-    palpation: '',
-    additional: ''
-  };
-
+  const defaultValues = data ?? emptyObjective;
   const { register, handleSubmit } = useForm<ObjectiveAssessment>({ defaultValues });
 
   const onChangeSection = (e: RadioChangeEvent) => {

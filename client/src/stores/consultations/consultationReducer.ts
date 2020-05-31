@@ -1,5 +1,6 @@
 import { Reducer } from 'redux';
 import * as T from './consultationTypes';
+import { emptySubjective, emptyObjective } from './../common/objects';
 
 const { C } = T;
 
@@ -12,8 +13,8 @@ export const unloadedState: T.ConsultationState = {
   practitionerId: '',
   date: '',
   practitioner: undefined,
-  subjectiveAssessment: undefined,
-  objectiveAssessment: undefined,
+  subjectiveAssessment: emptySubjective,
+  objectiveAssessment: emptyObjective,
   treatments: '',
   plans: ''
 };

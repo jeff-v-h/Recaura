@@ -5,7 +5,13 @@ const auth = require('../middleware/auth');
 const { getInitialMatch, getFindByIdMatch } = require('../helpers/utils');
 
 router.post('/consultations', auth, async (req, res) => {
-  const consultation = new Consultation({ ...req.body, clinicId: req.practitioner.clinicId });
+  const data = req.body;
+  if (req.practitioner.accessLevel < 4) {
+    data.clinicId = req.practitioner.clinicId;
+    data.practitionerId = req.practitioner.id;
+  }
+
+  const consultation = new Consultation(data);
 
   try {
     await consultation.save();
@@ -66,7 +72,7 @@ router.get('/consultations/:id', auth, async (req, res) => {
 });
 
 router.patch('/consultations/:id', auth, async (req, res) => {
-  const { clinicId } = req.body;
+  const { clinicId, practitionerId } = req.body;
   if (clinicId && clinicId != req.practitioner.clinicId && req.practitioner.accessLevel < 4) {
     return res.status(403).send({ error: 'Forbidden to change clinicId' });
   }
@@ -94,6 +100,10 @@ router.patch('/consultations/:id', auth, async (req, res) => {
 
     if (!consultation) {
       return res.status(404).send({ error: 'Consultation not found' });
+    }
+
+    if (practitionerId && practitionerId != consultation.practitionerId && req.practitioner.accessLevel < 2) {
+      return res.status(403).send({ error: 'Forbidden to change practitionerId' });
     }
 
     updates.forEach((update) => (consultation[update] = req.body[update]));

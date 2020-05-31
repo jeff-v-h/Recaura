@@ -8,6 +8,7 @@ import HookVasSelect from '../common/forms/HookVasSelect';
 import NavPills from './NavPills';
 import { ConsultPart } from '../../helpers/utils';
 import { RadioChangeEvent } from 'antd/lib/radio';
+import { emptySubjective } from '../../stores/common/objects';
 
 interface Props {
   data?: SubjectiveAssessment;
@@ -17,19 +18,7 @@ interface Props {
 }
 
 function SubjectiveForm({ data, display, changeSection, saveValues }: Props) {
-  const defaultValues = data ?? {
-    moi: '',
-    currentHistory: '',
-    bodyChart: '',
-    aggravatingFactors: '',
-    easingFactors: '',
-    pastHistory: '',
-    socialHistory: '',
-    imaging: '',
-    generalHealth: '',
-    vas: 0
-  };
-
+  const defaultValues = data ?? emptySubjective;
   const form = useForm<SubjectiveAssessment>({ defaultValues });
   const { register, handleSubmit, control } = form;
 
