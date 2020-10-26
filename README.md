@@ -29,8 +29,9 @@ The project can be built and run on local machine or using docker. Setting up to
 
 1. Change directory to client `cd client`
 2. Install dependencies `npm i`
-3. Run development `npm run dev`
-4. Open browser to [localhost:3000](http://localhost:3000)
+3. Copy .env.example into the same directory (in client directory) and rename to .env.development. If the API url for the backend has changed, update the environment variable accordingly.
+4. Run development `npm run dev`
+5. Open browser to [localhost:3000](http://localhost:3000)
 
 #### API Local Development
 
